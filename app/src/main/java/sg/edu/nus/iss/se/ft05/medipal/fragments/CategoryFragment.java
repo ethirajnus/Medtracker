@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddCategory;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddMedicine;
+import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 
 
 /**
@@ -17,6 +20,8 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.category_fragment, container, false);
+        View view = inflater.inflate(R.layout.category_fragment, container, false);
+        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddCategory.class);
+        return view;
     }
 }
