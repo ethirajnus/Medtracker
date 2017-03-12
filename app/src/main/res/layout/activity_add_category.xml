@@ -1,92 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory">
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddCategory">
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:weightSum="1"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/categoryLabelName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        android:weightSum="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        android:layout_weight="0.01"
+        android:text="@string/categoryName"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/categoryLabelName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:text="@string/categoryName"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/categoryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:maxLength="30" />
 
-        <EditText
-            android:id="@+id/categoryName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:maxLength="30" />
+    <TextView
+        android:id="@+id/categoryLabelCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:text="@string/categoryCode"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/categoryLabelCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:text="@string/categoryCode"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/categoryCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:ems="3"
+        android:inputType="textCapWords" />
 
-        <EditText
-            android:id="@+id/categoryCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:ems="3"
-            android:inputType="textCapWords" />
+    <TextView
+        android:id="@+id/categoryLabelDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:text="@string/categoryDescription"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/categoryLabelDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:text="@string/categoryDescription"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/categoryDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:inputType="text"
+        android:maxLength="50" />
 
-        <EditText
-            android:id="@+id/categoryDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:inputType="text"
-            android:maxLength="50" />
+    <CheckBox
+        android:id="@+id/categoryReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_marginLeft="-5dp"
+        android:textStyle="bold"
+        android:text="Reminder"/>
 
-        <CheckBox
-            android:id="@+id/categoryReminder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorSecondaryText"
-            android:textStyle="bold"
-            android:text="Reminder"/>
+    <Button
+        android:id="@+id/saveCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/side_nav_bar"
+        android:text="@string/save" />
 
-        <Button
-            android:id="@+id/savePersonalBio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/side_nav_bar"
-            android:text="@string/save" />
 
-    </LinearLayout>
+</LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
+

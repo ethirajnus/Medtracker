@@ -18,4 +18,15 @@
     <string name="categoryCode">Code</string>
     <string name="categoryDescription">Description</string>
     <string name="categoryReminder">Reminder</string>
+    <string name="medicineName">Name</string>
+    <string name="medicineDescription">Description</string>
+    <string name="medicineCategory">Category</string>
+    <string name="medicineReminder">Reminder</string>
+    <string name="medicineQuantity">Quantity</string>
+    <string name="medicineDosage">Dosage</string>
+    <string name="medicineConsumeQuantity">Consume Quantity</string>
+    <string name="medicineThreshold">Threshold</string>
+    <string name="medicineDateIssued">Date Issued</string>
+    <string name="medicineExpireFactor">ExpireFactor</string>
+    <string name="update">Update</string>
 </resources>
