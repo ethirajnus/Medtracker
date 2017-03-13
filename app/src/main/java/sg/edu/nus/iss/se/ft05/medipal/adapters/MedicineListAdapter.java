@@ -15,76 +15,77 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.Category;
+import sg.edu.nus.iss.se.ft05.medipal.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 /**
  * Created by ethi on 11/03/17.
  */
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
+public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
 
     // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
 
-    public CategoryListAdapter(Context context, Cursor cursor) {
+    public MedicineListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
         this.mCursor = cursor;
     }
 
     @Override
-    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MedicineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Get the RecyclerView item layout
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.category_list_item, parent, false);
-        return new CategoryViewHolder(view);
+        View view = inflater.inflate(R.layout.medicine_list_item, parent, false);
+        return new MedicineViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CategoryListAdapter.CategoryViewHolder holder, int position) {
+    public void onBindViewHolder(MedicineListAdapter.MedicineViewHolder holder, int position) {
         // Move the mCursor to the position of the item to be displayed
         if (!mCursor.moveToPosition(position))
             return; // bail if returned null
 
         // Update the view holder with the information needed to display
-        String name = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_CATEGORY));
-        String code = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_CODE));
-        String description = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_DESCRIPTION));
-        Boolean remind = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_REMIND)) == 1;
-        final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_ID));
-        Log.v("category id", String.valueOf(id));
+        String name = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_MEDICINE));
+        String category = Category.findById(mContext,mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_CATID))).getCategoryName();
+        String description = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_DESCRIPTION));
+        Boolean remind = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_REMIND)) == 1;
+        String dateIssued=mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_DATE_ISSUED));
+        String expireFactor=mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_EXPIRE_FACTOR));
+
+        final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID));
 
 
         holder.textName.setText(name);
-        holder.textCode.setText("Code: " + code.toUpperCase());
+        holder.textCategory.setText(category);
         holder.textDescription.setText(description);
         holder.switchReminder.setChecked(remind);
+        holder.textDateIssued.setText(dateIssued);
+        holder.textExpireFactor.setText(expireFactor);
         holder.itemView.setTag(id);
 
-        holder.switchReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Category category = Category.findById(mContext, id);
-                category.updateReminder(mContext, isChecked);
-            }
-        });
+
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Category category = Category.findById(mContext, id);
-                category.delete(mContext);
+                Medicine medicine = Medicine.findById(mContext, id);
+                medicine.delete(mContext);
                 //update the list
-                swapCursor(Category.findAll(mContext));
+                swapCursor(Medicine.findAll(mContext));
             }
         });
 
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AddOrUpdateCategory.class);
+                Intent intent = new Intent(mContext, AddOrUpdateMedicine.class);
                 Bundle b = new Bundle();
                 b.putString("action", "edit");
                 b.putInt("id", id);
@@ -93,6 +94,19 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
             }
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ShowMedicine.class);
+                Bundle b = new Bundle();
+                b.putInt("id",id);
+                intent.putExtras(b);
+                mContext.startActivity(intent);
+            }
+        });
+
+
 
 
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
@@ -126,24 +140,25 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }
     }
 
-    class CategoryViewHolder extends RecyclerView.ViewHolder {
+    class MedicineViewHolder extends RecyclerView.ViewHolder  {
 
-        TextView textName, textCode, textDescription;
+        TextView textName, textDescription, textCategory, textQuantity, textPrescribed ,textConsumeQuality, textThreshold ,textDateIssued ,textExpireFactor;
         ImageView icon, editIcon, deleteIcon;
         Switch switchReminder;
 
-
-        public CategoryViewHolder(View itemView) {
+        public MedicineViewHolder(View itemView) {
             super(itemView);
-            textName = (TextView) itemView.findViewById(R.id.categoryName);
-            textCode = (TextView) itemView.findViewById(R.id.categoryCode);
-            textDescription = (TextView) itemView.findViewById(R.id.categoryDescription);
-            switchReminder = (Switch) itemView.findViewById(R.id.categoryReminder);
-            icon = (ImageView) itemView.findViewById(R.id.categoryImageIcon);
+            textName = (TextView) itemView.findViewById(R.id.medicineName);
+            icon = (ImageView) itemView.findViewById(R.id.medicineImageIcon);
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon);
             deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon);
-
+            textDescription = (TextView) itemView.findViewById(R.id.medicineDescription);
+            textCategory = (TextView) itemView.findViewById(R.id.medicineCategory);
+            switchReminder = (Switch) itemView.findViewById(R.id.medicineReminder);
+            textDateIssued = (TextView) itemView.findViewById(R.id.medicineDateIssued);
+            textExpireFactor = (TextView) itemView.findViewById(R.id.medicineExpireFactor);
 
         }
+
     }
 }

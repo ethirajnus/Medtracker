@@ -59,7 +59,7 @@ public class CategoryFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 // COMPLETED (8) Inside, get the viewHolder's itemView's tag and store in a long variable id
                 //get the id of the item being swiped
-                long id = (long) viewHolder.itemView.getTag();
+                int id = (int) viewHolder.itemView.getTag();
                 // COMPLETED (9) call removeGuest and pass through that id
                 //remove from DB
                 Category category = Category.findById(context, id);

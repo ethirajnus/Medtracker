@@ -1,207 +1,165 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
-
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_weight="0.01"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical">
             <TextView
                 android:id="@+id/medicineLabelName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
                 android:text="@string/fullName"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/medicineName"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:maxLength="30" />
+                />
 
             <TextView
                 android:id="@+id/medinceLabelDescription"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
                 android:text="@string/medicineDescription"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/medicineDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="text" />
+                android:layout_marginTop="8dp"
+                />
 
             <TextView
                 android:id="@+id/medicineLabelCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
+                android:layout_marginTop="8dp"
                 android:text="@string/medicineCategory"
                 android:textStyle="bold" />
 
 
-            <Spinner
+            <TextView
                 android:id="@+id/medicineCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="?attr/colorAccent"
-                android:dropDownWidth="match_parent"
-                />
+                android:layout_marginTop="8dp"                />
 
-            <CheckBox
-                android:id="@+id/medicineReminder"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/medicineLabelReminder"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="-5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Reminder"
-                android:textColor="@color/colorSecondaryText"
-                android:textStyle="bold" />
+                android:text="@string/medicineReminder"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                />
+            <TextView
+                android:id="@+id/medicineReminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                />
 
             <TextView
                 android:id="@+id/medicineLabelQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
+                android:layout_marginTop="8dp"
                 android:text="@string/medicineQuantity"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/medicineQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="number"
-                android:maxLength="6" />
+                android:layout_marginTop="8dp"
+                />
 
             <TextView
                 android:id="@+id/medicineLabelDosage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
+                android:layout_marginTop="8dp"
                 android:text="@string/medicineDosage"
                 android:textStyle="bold" />
 
 
-            <Spinner
+            <TextView
                 android:id="@+id/medicineDosage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-
-                android:backgroundTint="?attr/colorAccent"
-                android:dropDownWidth="match_parent"></Spinner>
+                android:layout_marginTop="8dp"/>
 
             <TextView
                 android:id="@+id/medicineLabelConsumeQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
+                android:layout_marginTop="8dp"
+
                 android:text="@string/medicineConsumeQuantity"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/medicineConsumeQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="number" />
+                android:layout_marginTop="8dp"
+               />
 
             <TextView
                 android:id="@+id/medicineLabelThreshold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
+                android:layout_marginTop="8dp"
                 android:text="@string/medicineThreshold"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/medicineThreshold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="number" />
+                android:layout_marginTop="8dp"
+               />
 
             <TextView
                 android:id="@+id/medicineLabelDateIssued"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
+                android:layout_marginTop="8dp"
                 android:text="@string/medicineDateIssued"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/medicineDateIssued"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:inputType="date"
-                android:focusable="false"/>
-
+                android:layout_marginTop="8dp"
+                />
             <TextView
                 android:id="@+id/medicineLabelExpireFactor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
+                android:layout_marginTop="8dp"
                 android:text="@string/medicineExpireFactor"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/medicineExpireFactor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-
-
-            <Button
-                android:id="@+id/saveMedicine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/side_nav_bar"
-                android:text="@string/save" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+               />
 
 
 
-        </LinearLayout>
+</LinearLayout>
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
-
