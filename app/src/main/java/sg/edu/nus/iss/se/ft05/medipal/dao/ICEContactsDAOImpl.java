@@ -75,7 +75,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         contacts.setId(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_ID)));
         contacts.setName((cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_NAME))));
         contacts.setDescription(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_DESC)));
-        contacts.setPhone(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_PHONE)));
+        contacts.setPhone(cursor.getLong(cursor.getColumnIndex(ICE_CONTACTS_KEY_PHONE)));
         contacts.setType(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_TYPE)));
         contacts.setPriority(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_PRIORITY)));
 

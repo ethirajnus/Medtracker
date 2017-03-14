@@ -77,7 +77,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
             contact = Contacts.findById(getApplicationContext(), bundle.getLong(ICE_BUNDLE_ACTION_ID));
             name.setText(contact.getName());
             description.setText(contact.getDescription());
-            phone.setText(contact.getPhone());
+            phone.setText(contact.getPhone().toString());
             name.setTag(bundle.getLong(ICE_BUNDLE_ACTION_ID));
 
             setTitle(ICE_HEADER_EDIT);
@@ -116,7 +116,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         if (button.getTag().toString().equalsIgnoreCase(ICE_BUTTON_NEW)) {
 
-            Contacts newContact = new Contacts(contactsName, contactsDesc, Integer.getInteger(contactsPhone), contactsType);
+            Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType);
 
             if (-1 == newContact.save(getApplicationContext())) {
 
@@ -130,7 +130,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
             contact.setName(contactsName);
             contact.setDescription(contactsDesc);
-            contact.setPhone(Integer.getInteger(contactsPhone));
+            contact.setPhone(Long.parseLong(contactsPhone));
             contact.setType(contactsType);
 
             if (-1 == contact.update(getApplicationContext())) {

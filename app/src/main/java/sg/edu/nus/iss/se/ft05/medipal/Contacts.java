@@ -16,7 +16,7 @@ public class Contacts {
 
     private Integer id;
     private Integer priority;
-    private Integer phone;
+    private Long phone;
     private String name;
     private String description;
     private String type;
@@ -37,11 +37,11 @@ public class Contacts {
         this.priority = priority;
     }
 
-    public Integer getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
@@ -69,7 +69,7 @@ public class Contacts {
         this.type = type;
     }
 
-    public Contacts(String name, String description, Integer phone, String type) {
+    public Contacts(String name, String description, Long phone, String type) {
 
         this.name = name;
         this.description = description;
