@@ -156,9 +156,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
                />
 
+            <TextView
+                android:id="@+id/reminderLabelFrequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/reminderFrequency"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/reminderFrequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+/>
+            <TextView
+                android:id="@+id/reminderLabelStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/reminderStartTime"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/reminderStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+/>
+            <TextView
+                android:id="@+id/reminderLabelInterval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/reminderInterval"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/reminderInterval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+
+                />
 
 
 </LinearLayout>

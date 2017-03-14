@@ -29,4 +29,7 @@
     <string name="medicineDateIssued">Date Issued</string>
     <string name="medicineExpireFactor">ExpireFactor</string>
     <string name="update">Update</string>
+    <string name="reminderFrequency">Frequency</string>
+    <string name="reminderStartTime">StartTime</string>
+    <string name="reminderInterval">Interval</string>
 </resources>

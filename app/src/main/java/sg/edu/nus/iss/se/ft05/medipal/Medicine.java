@@ -157,7 +157,7 @@ public class Medicine {
         return medicineDAO.insert(this);
     }
 
-    public long update(Context context){
+    public int update(Context context){
         medicineDAO = new MedicineDAOImpl(context);
         return medicineDAO.update(this);
     }

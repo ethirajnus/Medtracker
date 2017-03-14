@@ -65,7 +65,7 @@ public class Category {
         return categoryDAO.insert(this);
     }
 
-    public long update(Context context){
+    public int update(Context context){
         categoryDAO = new CategoryDAOImpl(context);
         return categoryDAO.update(this);
     }

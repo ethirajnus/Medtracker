@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +33,7 @@ import java.util.Map;
 import sg.edu.nus.iss.se.ft05.medipal.Category;
 import sg.edu.nus.iss.se.ft05.medipal.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 
@@ -38,11 +41,11 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
-    private EditText name, description, quantity, consumeQuality, threshold, expirefactor, dateIssued;
+    private EditText name, description, quantity, consumeQuality, threshold, expirefactor, dateIssued,frequency,startTime,interval;
     private CheckBox reminder;
     private Spinner dosage,category;
     DatePickerDialog datePickerDialog;
-    Calendar dateCalendar;
+    Calendar dateCalendar,timeCalendar;
     private Medicine medicine;
     private Button saveButton;
     private HashMap<String, Integer> categoriesMap;
@@ -54,6 +57,8 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
     private static final HashMap<String, Integer> DOSAGE_HASH_MAP = createDosageHashMap();
     static final HashMap<Integer,String > DOSAGE_REVERSE_HASH_MAP = createDosageReverseHashMap();
+    private TimePickerDialog timePickerDialog;
+    private Reminder reminderMedicine;
 
     private static HashMap<Integer,String> createDosageReverseHashMap() {
         HashMap<Integer,String> result = new HashMap<Integer, String>();
@@ -107,7 +112,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     }
 
     private void populateDropDownList() {
-        Cursor mCursor = Category.fetchAllCategoriesWithId(getApplicationContext());
+        Cursor mCursor = Category.fetchAllCategoriesWithId(context);
         categoryList = new ArrayList<String>();
         categoriesMap = new HashMap<String, Integer>();
         while(mCursor.moveToNext()) {
@@ -136,8 +141,8 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     }
 
     private void updateMedicineValues(int id) {
-        medicine = Medicine.findById(getApplicationContext(), id);
-        Log.v("category iD",String.valueOf(medicine.getCategoryId()));
+        medicine = Medicine.findById(context, id);
+        reminderMedicine = Reminder.findById(context, medicine.getReminderId());
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
         category.setSelection(categoryList.indexOf(Category.findById(context,medicine.getCategoryId()).getCategoryName()));
@@ -148,6 +153,9 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         threshold.setText(String.valueOf(medicine.getThreshold()));
         dateIssued.setText(medicine.getDateIssued());
         expirefactor.setText(String.valueOf(medicine.getExpireFactor()));
+        frequency.setText(String.valueOf(reminderMedicine.getFrequency()));
+        startTime.setText(reminderMedicine.getStartTime());
+        interval.setText(String.valueOf(reminderMedicine.getInterval()));
         name.setTag(id);
     }
 
@@ -167,13 +175,25 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         threshold = (EditText) findViewById(R.id.medicineThreshold);
         dateIssued = (EditText) findViewById(R.id.medicineDateIssued);
         expirefactor = (EditText) findViewById(R.id.medicineExpireFactor);
+        frequency = (EditText) findViewById(R.id.reminderFrequency);
+        startTime = (EditText) findViewById(R.id.reminderStartTime);
+        interval = (EditText) findViewById(R.id.reminderInterval);
         saveButton = (Button) findViewById(R.id.saveMedicine);
         saveButton.setTag("New");
     }
 
     private void setListeners() {
         dateIssued.setOnClickListener(this);
+        startTime.setOnClickListener(this);
         Calendar newCalendar = Calendar.getInstance();
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                startTime.setText( hourOfDay + ":" + minute);
+            }
+        },
+                newCalendar.get(Calendar.HOUR_OF_DAY),
+                newCalendar.get(Calendar.MINUTE),true);
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 dateCalendar = Calendar.getInstance();
@@ -194,6 +214,9 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             case R.id.medicineDateIssued:
                 datePickerDialog.show();
                 break;
+            case R.id.reminderStartTime:
+                timePickerDialog.show();
+                break;
             case R.id.saveMedicine:
                 saveMedicine();
                 break;
@@ -211,11 +234,18 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         int medicinceThreshold = Integer.parseInt(threshold.getText().toString());
         String medicinceDateIssued = dateIssued.getText().toString();
         int medicinceExpireFactor = Integer.parseInt(expirefactor.getText().toString());
+        int reminderFrequency = Integer.parseInt(frequency.getText().toString());
+        String reminderStartTime = startTime.getText().toString();
+        Log.v("reminderStartTime", reminderStartTime);
+        int reminderInterval = Integer.parseInt(interval.getText().toString());
 
         if (saveButton.getTag().toString().equalsIgnoreCase("New")) {
-            Medicine medicine = new Medicine(medicineName, medicineDescription, medicineCategory, medicinceDosage, medicineRemind, medicinceQuantity, medicinceDosage, medicinceConsumeQuality, medicinceThreshold, medicinceDateIssued, medicinceExpireFactor);
-            if (medicine.save(getApplicationContext()) == -1) {
-                Toast.makeText(getApplicationContext(), "Medicine was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
+            Reminder reminder = new Reminder(reminderFrequency,reminderStartTime,reminderInterval);
+            int medicineReminderId = (int) reminder.save(context);
+            Log.v("medicine reminder id ",String.valueOf(medicineReminderId));
+            Medicine medicine = new Medicine(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicinceQuantity, medicinceDosage, medicinceConsumeQuality, medicinceThreshold, medicinceDateIssued, medicinceExpireFactor);
+            if (medicine.save(context) == -1 ) {
+                Toast.makeText(context, "Medicine was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
             } else {
                 navigateToMainAcitivity();
             }
@@ -230,8 +260,12 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             medicine.setThreshold(medicinceThreshold);
             medicine.setDateIssued(medicinceDateIssued);
             medicine.setExpireFactor(medicinceExpireFactor);
-            if (medicine.update(getApplicationContext()) == -1) {
-                Toast.makeText(getApplicationContext(), "Medicine was not updated properly,Please try again later", Toast.LENGTH_SHORT).show();
+            reminderMedicine.setFrequency(reminderFrequency);
+            reminderMedicine.setStartTime(reminderStartTime);
+            reminderMedicine.setInterval(reminderInterval);
+            reminderMedicine.update(context);
+            if (medicine.update(context) == -1) {
+                Toast.makeText(context, "Medicine was not updated properly,Please try again later", Toast.LENGTH_SHORT).show();
             } else {
                 navigateToMainAcitivity();
             }
@@ -240,7 +274,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     }
 
     public void navigateToMainAcitivity() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = MedicineFragment.class.getName();
         startActivity(intent);
 
