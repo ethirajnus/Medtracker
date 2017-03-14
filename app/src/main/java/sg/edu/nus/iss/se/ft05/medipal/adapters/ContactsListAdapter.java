@@ -10,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Contacts;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
-import sg.edu.nus.iss.se.ft05.medipal.Util.TextDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
@@ -51,46 +52,48 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         if (!cursor.moveToPosition(position))
             return; // bail if returned null
 
-            // Update the view holder with the information needed to display
-            String name = cursor.getString(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_NAME));
-            String phone = new String("" + cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_PHONE)));
-            final long id = cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_ID));
+        // Update the view holder with the information needed to display
+        String name = cursor.getString(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_NAME));
+        String phone = new String("" + cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_PHONE)));
+        final long id = cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_ID));
 
+        holder.textName.setText(name);
+        holder.textPhone.setText("Phone: " + phone);
+        holder.itemView.setTag(id);
 
-            holder.textName.setText(name);
-            holder.textPhone.setText("Phone: " + phone);
-            holder.itemView.setTag(id);
+        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
 
-            holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+            public void onClick(View v) {
 
-                    Contacts contacts = Contacts.findById(context, id);
-                    contacts.delete(context);
-                    //update the list
-                    swapCursor(Contacts.findAll(context));
-                }
-            });
+                Contacts contacts = Contacts.findById(context, id);
+                contacts.delete(context);
+                //update the list
+                swapCursor(Contacts.findAll(context));
+            }
+        });
 
-            holder.editIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        holder.editIcon.setOnClickListener(new View.OnClickListener() {
 
-                    Intent intent = new Intent(context, ICEAdditionActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(ICEAdditionActivity.ICE_BUNDLE_ACTION, ICEAdditionActivity.ICE_BUNDLE_ACTION_EDIT);
-                    bundle.putLong(ICEAdditionActivity.ICE_BUNDLE_ACTION_ID, id);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                }
-            });
+            public void onClick(View v) {
 
-            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-            // generate random color
-            int color = generator.getRandomColor();
+                Toast.makeText(context, new String("hi :"), Toast.LENGTH_SHORT).show();
 
-            TextDrawable drawable = TextDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
+                Intent intent = new Intent(context, ICEAdditionActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(ICEAdditionActivity.ICE_BUNDLE_ACTION, ICEAdditionActivity.ICE_BUNDLE_ACTION_EDIT);
+                bundle.putLong(ICEAdditionActivity.ICE_BUNDLE_ACTION_ID, id);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
 
-            holder.icon.setImageDrawable(drawable);
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        // generate random color
+        int color = generator.getRandomColor();
+
+        InitialDrawable drawable = InitialDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
+
+        holder.icon.setImageDrawable(drawable);
 
 
     }

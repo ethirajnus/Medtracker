@@ -95,10 +95,10 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         values.put(ICE_CONTACTS_KEY_DESC, contacts.getDescription());
         values.put(ICE_CONTACTS_KEY_PHONE, contacts.getPhone());
         values.put(ICE_CONTACTS_KEY_TYPE, contacts.getType());
-        values.put(ICE_CONTACTS_KEY_TYPE, contacts.getPriority());
+        values.put(ICE_CONTACTS_KEY_PRIORITY, contacts.getPriority());
 
         // insert row
-        long result = sqLiteDatabase.insert(TABLE_CATEGORY, null, values);
+        long result = sqLiteDatabase.insert(TABLE_ICE_CONTACTS, null, values);
 
         return result;
     }
@@ -115,7 +115,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         values.put(ICE_CONTACTS_KEY_TYPE, contacts.getPriority());
 
         // updating row
-        int result = db.update(TABLE_CATEGORY, values, CATEGORY_KEY_ID + DATABASE_COMMAND_SYMBOL,
+        int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(contacts.getId())});
 
         return result;
@@ -132,7 +132,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         values.put(ICE_CONTACTS_KEY_TYPE, contacts.getPriority());
 
         // updating row
-        int result = db.update(TABLE_CATEGORY, values, CATEGORY_KEY_ID + DATABASE_COMMAND_SYMBOL,
+        int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(contacts.getId())});
 
         return result;
