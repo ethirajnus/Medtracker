@@ -34,7 +34,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         Bundle b = getIntent().getExtras();
         if(b != null && b.getString("action").equalsIgnoreCase("edit")){
             updateSaveButton();
-            updateCategoryValues(b.getLong("id"));
+            updateCategoryValues(b.getInt("id"));
             setTitle("Edit Category");
         }else{
             setTitle("New Category");
@@ -42,7 +42,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void updateCategoryValues(Long id) {
+    private void updateCategoryValues(int id) {
         category = Category.findById(getApplicationContext(),id);
         name.setText(category.getCategoryName());
         code.setText(category.getCode());

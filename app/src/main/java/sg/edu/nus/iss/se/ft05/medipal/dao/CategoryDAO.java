@@ -11,9 +11,10 @@ import sg.edu.nus.iss.se.ft05.medipal.Category;
  */
 
 public interface CategoryDAO {
-    public int delete(long id);
-    public Cursor findAll();
-    public Category findById(long id);
-    public long insert(Category category);
-    public int update(Category category);
+    int delete(int id);
+    Cursor findAll();
+    Category findById(int id);
+    long insert(Category category);
+    int update(Category category);
+    Cursor fetchAllCategoriesWithId();
 }

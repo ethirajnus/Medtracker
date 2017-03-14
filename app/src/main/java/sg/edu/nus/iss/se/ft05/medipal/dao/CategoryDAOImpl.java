@@ -30,30 +30,26 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
     }
 
     @Override
-    public int delete(long id) {
+    public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int result =  db.delete(TABLE_CATEGORY, CATEGORY_KEY_ID + " = ?",
+        return db.delete(TABLE_CATEGORY, CATEGORY_KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
-        return result;
     }
 
     @Override
     public Cursor findAll() {
-        List<Category> categories = new ArrayList<Category>();
-
         String selectQuery = "SELECT  * FROM " + TABLE_CATEGORY;
 
         Log.e(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        return cursor;
+        return db.rawQuery(selectQuery, null);
 
 
     }
 
     @Override
-    public Category findById(long id) {
+    public Category findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_CATEGORY + " WHERE "
@@ -63,8 +59,10 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)
+        if (c != null) {
+
             c.moveToFirst();
+        }
 
         Category category = new Category();
         category.setId(c.getInt(c.getColumnIndex(CATEGORY_KEY_ID)));
@@ -89,8 +87,7 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
         values.put(CATEGORY_KEY_REMIND, category.getRemind());
 
         // insert row
-        long result = db.insert(TABLE_CATEGORY, null, values);
-        return  result;
+       return db.insert(TABLE_CATEGORY, null, values);
     }
 
     @Override
@@ -103,9 +100,16 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
         values.put(CATEGORY_KEY_DESCRIPTION, category.getDescription());
         values.put(CATEGORY_KEY_REMIND, category.getRemind());
         // updating row
-        int result = db.update(TABLE_CATEGORY, values, CATEGORY_KEY_ID + " = ?",
+        return db.update(TABLE_CATEGORY, values, CATEGORY_KEY_ID + " = ?",
                 new String[] { String.valueOf(category.getId()) });
-        return result;
+    }
+
+
+    public Cursor fetchAllCategoriesWithId(){
+        String selectQuery = "SELECT  id,category FROM " + TABLE_CATEGORY;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+
     }
 
 }

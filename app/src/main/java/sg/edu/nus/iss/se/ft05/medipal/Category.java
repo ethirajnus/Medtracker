@@ -13,7 +13,7 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 public class Category {
 
     private static CategoryDAO categoryAll;
-    private Integer id;
+    private int id;
     private String categoryName,code,description;
     private Boolean remind;
     private CategoryDAO categoryDAO;
@@ -35,12 +35,12 @@ public class Category {
         return categoryAll.findAll();
     }
 
-    public static Category findById(Context context, long id){
+    public static Category findById(Context context, int id){
         categoryAll = new CategoryDAOImpl(context);
         return  categoryAll.findById(id);
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -65,7 +65,7 @@ public class Category {
         return categoryDAO.insert(this);
     }
 
-    public long update(Context context){
+    public int update(Context context){
         categoryDAO = new CategoryDAOImpl(context);
         return categoryDAO.update(this);
     }
@@ -91,7 +91,7 @@ public class Category {
         return remind;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -100,5 +100,10 @@ public class Category {
         setRemind(isChecked);
         return categoryDAO.update(this);
 
+    }
+
+    public static  Cursor fetchAllCategoriesWithId(Context context){
+        categoryAll = new CategoryDAOImpl(context);
+        return categoryAll.fetchAllCategoriesWithId();
     }
 }
