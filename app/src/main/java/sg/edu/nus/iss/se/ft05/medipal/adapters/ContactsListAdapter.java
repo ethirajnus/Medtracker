@@ -85,13 +85,21 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             }
         });
 
-        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        // generate random color
-        int color = generator.getRandomColor();
+        holder.icon.setOnClickListener(new View.OnClickListener() {
 
-        InitialDrawable drawable = InitialDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
+            public void onClick(View v) {
 
-        holder.icon.setImageDrawable(drawable);
+                Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+//        // generate random color
+//        int color = generator.getRandomColor();
+//
+//        InitialDrawable drawable = InitialDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
+//
+//        holder.icon.setImageDrawable(drawable);
 
 
     }
