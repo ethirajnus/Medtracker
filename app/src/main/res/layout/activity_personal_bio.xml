@@ -43,15 +43,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
                 android:text="@string/dob"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:focusable="false"/>
 
             <EditText
                 android:id="@+id/dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="date" />
+                android:ems="10" />
 
             <TextView
                 android:id="@+id/tv_idNo"
