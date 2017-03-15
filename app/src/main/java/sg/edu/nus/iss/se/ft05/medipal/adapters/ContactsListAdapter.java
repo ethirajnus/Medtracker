@@ -3,8 +3,10 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     // Holds on to the cursor to display the wait list
     private Cursor cursor;
     private Context context;
+
+    private static final String LOG = "ContactsListAdapter";
 
     public ContactsListAdapter(Context context, Cursor cursor) {
 
@@ -54,7 +58,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
         // Update the view holder with the information needed to display
         String name = cursor.getString(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_NAME));
-        String phone = new String("" + cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_PHONE)));
+        final long phone = cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_PHONE));
         final long id = cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_ID));
 
         holder.textName.setText(name);
@@ -90,18 +94,19 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             public void onClick(View v) {
 
                 Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
+
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + phone));
+                try {
+                    context.startActivity(callIntent);
+
+                } catch (Exception e) {
+
+                    Log.e(LOG, e.getMessage());
+                    Toast.makeText(context, "Calling Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-//        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-//        // generate random color
-//        int color = generator.getRandomColor();
-//
-//        InitialDrawable drawable = InitialDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
-//
-//        holder.icon.setImageDrawable(drawable);
-
-
     }
 
     @Override
