@@ -17,6 +17,17 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
 
     private static final String LOG = "ICEContactsDAOImpl";
 
+    protected static final String DATABASE_COMMAND_SYMBOL = " = ?";
+    protected static final String DATABASE_COMMAND_SYMBOL_EQUAL = " = ";
+    protected static final String DATABASE_COMMAND_SELECT_ALL = "SELECT  * FROM ";
+    protected static final String DATABASE_COMMAND_SELECT_WHERE = " WHERE ";
+    protected static final String DATABASE_COMMAND_SELECT_MAXP = "MAXP";
+    protected static final String DATABASE_COMMAND_ORDER_BY = " ORDER BY ";
+    protected static final String DATABASE_COMMAND_SELECT_MAX_BEFORE = " SELECT  MAX(";
+    protected static final String DATABASE_COMMAND_SELECT_MAX_BETWEEN = ") AS ";
+    protected static final String DATABASE_COMMAND_SELECT_MAX_AFTER = " FROM ";
+    protected static final String DATABASE_COMMAND_ASC = " ASC";
+
     public ICEContactsDAOImpl(Context context) {
 
         super(context);
@@ -38,7 +49,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
     @Override
     public Cursor findAll() {
 
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_ICE_CONTACTS;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_ICE_CONTACTS + DATABASE_COMMAND_ORDER_BY + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_ASC;
 
         Log.e(LOG, selectQuery);
 
@@ -82,6 +93,27 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         return contacts;
     }
 
+    @Override
+    public int findMaxPriority() {
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String selectQuery = DATABASE_COMMAND_SELECT_MAX_BEFORE + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_SELECT_MAX_BETWEEN + DATABASE_COMMAND_SELECT_MAXP + DATABASE_COMMAND_SELECT_MAX_AFTER + TABLE_ICE_CONTACTS;
+
+        Log.e(LOG, selectQuery);
+
+        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        int priority = cursor.getInt(cursor.getColumnIndex(DATABASE_COMMAND_SELECT_MAXP));
+
+        return priority;
+    }
+
     /*
      * Creating a Contacts
      */
@@ -112,7 +144,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         values.put(ICE_CONTACTS_KEY_DESC, contacts.getDescription());
         values.put(ICE_CONTACTS_KEY_PHONE, contacts.getPhone());
         values.put(ICE_CONTACTS_KEY_TYPE, contacts.getType());
-        values.put(ICE_CONTACTS_KEY_TYPE, contacts.getPriority());
+        values.put(ICE_CONTACTS_KEY_PRIORITY, contacts.getPriority());
 
         // updating row
         int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
@@ -129,7 +161,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ICE_CONTACTS_KEY_TYPE, contacts.getPriority());
+        values.put(ICE_CONTACTS_KEY_PRIORITY, contacts.getPriority());
 
         // updating row
         int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,

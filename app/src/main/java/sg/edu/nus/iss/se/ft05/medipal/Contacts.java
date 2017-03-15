@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
@@ -69,23 +70,29 @@ public class Contacts {
         this.type = type;
     }
 
-    public Contacts(String name, String description, Long phone, String type) {
+    public Contacts(String name, String description, Long phone, String type, Context context) {
 
         this.name = name;
         this.description = description;
         this.phone = phone;
         this.type = type;
-        this.priority = getNewPriority();
+        this.priority = getNewPriority(context);
     }
 
     public Contacts() {
 
     }
 
-    public int getNewPriority() {
+    public int getNewPriority(Context context) {
 
-        // TODO
-        return 1;
+
+        iceContactsDAO = new ICEContactsDAOImpl(context);
+        int priority = iceContactsDAO.findMaxPriority();
+
+        Toast.makeText(context, new String("priority :" + priority), Toast.LENGTH_SHORT).show();
+
+
+        return priority;
     }
 
     public static Cursor findAll(Context context) {

@@ -21,4 +21,6 @@ public interface ICEContactsDAO {
     public int update(Contacts contact);
 
     public int updatePriority(Contacts contact);
+
+    public int findMaxPriority();
 }

@@ -76,8 +76,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
             public void onClick(View v) {
 
-                Toast.makeText(context, new String("hi :"), Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(context, ICEAdditionActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(ICEAdditionActivity.ICE_BUNDLE_ACTION, ICEAdditionActivity.ICE_BUNDLE_ACTION_EDIT);

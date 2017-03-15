@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,10 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     public static final String ICE_HEADER_EDIT = "Edit Contact";
     public static final String ICE_ERROR_INSERT = "Error adding Contact,Please try again later";
 
+    public static final String ICE_TYPE_NOK = "Next of Keen";
+    public static final String ICE_TYPE_GP = "General Physician";
+    public static final String ICE_ERROR_OTHER = "Other";
+
     private EditText name;
     private EditText description;
     private EditText phone;
@@ -50,8 +55,9 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         spinner = (Spinner) findViewById(R.id.spinner_ice_type);
 
         List<String> types = new ArrayList<>();
-        types.add("Father");
-        types.add("Mother");
+        types.add(ICE_TYPE_NOK);
+        types.add(ICE_TYPE_GP);
+        types.add(ICE_ERROR_OTHER);
 
         spinner.setAdapter(
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, types));
@@ -114,13 +120,17 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         String contactsPhone = phone.getText().toString();
         String contactsType = (String) spinner.getSelectedItem();
 
+        Context context = getApplicationContext();
+
         if (button.getTag().toString().equalsIgnoreCase(ICE_BUTTON_NEW)) {
 
-            Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType);
+            Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType, context);
 
-            if (-1 == newContact.save(getApplicationContext())) {
+            Toast.makeText(context, new String("hi :" + newContact.getPriority()), Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getApplicationContext(), ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
+            if (-1 == newContact.save(context)) {
+
+                Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
 
             } else {
 

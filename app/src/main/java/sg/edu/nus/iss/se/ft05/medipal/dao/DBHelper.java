@@ -19,10 +19,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "medipal";
 
     private static final String DATABASE_COMMAND_DROP = "DROP TABLE IF EXISTS ";
-    protected static final String DATABASE_COMMAND_SYMBOL = " = ?";
-    protected static final String DATABASE_COMMAND_SYMBOL_EQUAL = " = ";
-    protected static final String DATABASE_COMMAND_SELECT_ALL = "SELECT  * FROM ";
-    protected static final String DATABASE_COMMAND_SELECT_WHERE = " WHERE ";
 
     // ICE CONTACTS
     protected static final String TABLE_ICE_CONTACTS = "icecontacts";
