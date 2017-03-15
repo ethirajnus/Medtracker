@@ -4,6 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Personal Bio -->
     <string name="title_activity_add_personalBio">Personal Details</string>
     <string name="fullName">Name</string>
     <string name="dob">Date of Birth</string>
@@ -18,4 +20,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="categoryName">Name</string>
+    <string name="categoryCode">Code</string>
+    <string name="categoryDescription">Description</string>
+    <string name="categoryReminder">Reminder</string>
+    <string name="medicineName">Name</string>
+    <string name="medicineDescription">Description</string>
+    <string name="medicineCategory">Category</string>
+    <string name="medicineReminder">Reminder</string>
+    <string name="medicineQuantity">Quantity</string>
+    <string name="medicineDosage">Dosage</string>
+    <string name="medicineConsumeQuantity">Consume Quantity</string>
+    <string name="medicineThreshold">Threshold</string>
+    <string name="medicineDateIssued">Date Issued</string>
+    <string name="medicineExpireFactor">ExpireFactor</string>
+    <string name="update">Update</string>
+    <string name="reminderFrequency">Frequency</string>
+    <string name="reminderStartTime">StartTime</string>
+    <string name="reminderInterval">Interval</string>
 </resources>

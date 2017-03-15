@@ -3,7 +3,6 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -27,24 +26,16 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    static String currentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent i = new Intent(this, PersonalBioActivity.class);
-        startActivity(i);
-        /*setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setFloatingActionButtonAction(AddOrUpdateMedicine.class);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,21 +51,20 @@ public class MainActivity extends AppCompatActivity
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
+//            if (savedInstanceState != null) {
+//                return;
+//            }
+
+            Bundle b = getIntent().getExtras();
+            if (currentFragment == null) {
+                setFragment(new MedicineFragment());
+            } else {
+                updateFragment(currentFragment);
             }
 
-            // Create a new Fragment to be placed in the activity layout
-            MedicineFragment firstFragment = new MedicineFragment();
 
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+        }
 
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
-        }*/
     }
 
     @Override
@@ -83,8 +73,20 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finish();
         }
+    }
+
+    public void setFloatingActionButtonAction(final Class activityclass) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), activityclass);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -109,6 +111,19 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void updateFragment(String fragmentType) {
+        Class<?> clazz = null;
+        try {
+            clazz = Class.forName(fragmentType);
+            setFragment((Fragment) clazz.newInstance());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setFragment(Fragment fragment) {
         Bundle args = new Bundle();
@@ -123,6 +138,7 @@ public class MainActivity extends AppCompatActivity
 
 // Commit the transaction
         transaction.commit();
+        currentFragment = fragment.getClass().getName();
 
     }
 
