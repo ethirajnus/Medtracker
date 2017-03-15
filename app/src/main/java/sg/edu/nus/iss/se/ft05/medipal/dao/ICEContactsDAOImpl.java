@@ -127,7 +127,20 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         values.put(ICE_CONTACTS_KEY_DESC, contacts.getDescription());
         values.put(ICE_CONTACTS_KEY_PHONE, contacts.getPhone());
         values.put(ICE_CONTACTS_KEY_TYPE, contacts.getType());
-        values.put(ICE_CONTACTS_KEY_PRIORITY, contacts.getPriority());
+
+        int priority = 0;
+
+        try {
+
+            priority = findMaxPriority();
+            priority++;
+
+        } catch (Exception e) {
+
+            priority = 1;
+        }
+
+        values.put(ICE_CONTACTS_KEY_PRIORITY, (priority));
 
         // insert row
         long result = sqLiteDatabase.insert(TABLE_ICE_CONTACTS, null, values);

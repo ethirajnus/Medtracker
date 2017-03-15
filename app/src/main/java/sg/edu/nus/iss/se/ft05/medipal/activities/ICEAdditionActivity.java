@@ -126,7 +126,6 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
             Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType, context);
 
-            Toast.makeText(context, new String("hi :" + newContact.getPriority()), Toast.LENGTH_SHORT).show();
 
             if (-1 == newContact.save(context)) {
 

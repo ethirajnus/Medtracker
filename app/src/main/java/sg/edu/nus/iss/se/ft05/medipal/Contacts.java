@@ -92,7 +92,7 @@ public class Contacts {
         Toast.makeText(context, new String("priority :" + priority), Toast.LENGTH_SHORT).show();
 
 
-        return priority;
+        return priority++;
     }
 
     public static Cursor findAll(Context context) {
@@ -112,7 +112,6 @@ public class Contacts {
     public long save(Context context) {
 
         iceContactsDAO = new ICEContactsDAOImpl(context);
-
         return iceContactsDAO.insert(this);
     }
 
