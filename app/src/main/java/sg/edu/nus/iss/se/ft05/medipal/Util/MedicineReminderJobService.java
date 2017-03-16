@@ -16,32 +16,13 @@ import sg.edu.nus.iss.se.ft05.medipal.Medicine;
  */
 
 public class MedicineReminderJobService extends JobService {
-    private AsyncTask mBackgroundTask;
 
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
-
-        // COMPLETED (5) By default, jobs are executed on the main thread, so make an anonymous class extending
-        //  AsyncTask called mBackgroundTask.
-        // Here's where we make an AsyncTask so that this is no longer on the main thread
-        mBackgroundTask = new AsyncTask() {
-
-            @Override
-            protected Object doInBackground(Object[] params) {
-                Context context = MedicineReminderJobService.this;
-                ReminderTasks.executeTask(context, ReminderTasks.ACTION_MEDICINE_REMINDER);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                jobFinished(jobParameters, false);
-            }
-        };
-
-        // COMPLETED (9) Execute the AsyncTask
-        mBackgroundTask.execute();
-        // COMPLETED (10) Return true
+        Log.v("inside reminder","jobservice");
+        ReminderTasks.executeTask(MedicineReminderJobService.this, ReminderTasks.ACTION_MEDICINE_REMINDER);
+//        NotificationUtils.remindUserForConsumption(getApplicationContext(),"calpal");
+        jobFinished(jobParameters, false);
         return true;
     }
 
@@ -49,7 +30,6 @@ public class MedicineReminderJobService extends JobService {
     public boolean onStopJob(JobParameters jobParameters) {
         // COMPLETED (12) If mBackgroundTask is valid, cancel it
         // COMPLETED (13) Return true to signify the job should be retried
-        if (mBackgroundTask != null) mBackgroundTask.cancel(true);
         return true;
     }
 }

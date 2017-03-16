@@ -8,6 +8,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -25,6 +28,7 @@ public class ReminderTasks {
 
     public static int medicineConsumptionReminder = 0;
     public static final String ACTION_MEDICINE_REMINDER = "notifyMedicineConsumption";
+    static JobScheduler jobScheduler;
 
     public static void executeTask(Context context, String action) {
         if (ACTION_MEDICINE_REMINDER.equals(action)) {
@@ -32,31 +36,40 @@ public class ReminderTasks {
         }
     }
 
-    private static void medicineConsumptionReminder(Context context) {
-        HashMap<Integer,Integer> medicineList = Medicine.listAllMedicine(context);
-        for(Map.Entry<Integer, Integer> entry : medicineList.entrySet()) {
+    synchronized public static void medicineConsumptionReminder(Context context) {
+
+        Map<Integer, Integer> medicineList = Medicine.listAllMedicine(context);
+        for (Map.Entry<Integer, Integer> entry : medicineList.entrySet())
+        {
             int medicineId = entry.getKey();
             int reminderId = entry.getValue();
             Reminder reminder = Reminder.findById(context,reminderId);
-            int index;
-//            for(index=0;index<reminder.getFrequency();index++)
-//            {
-
-            AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, ConsumptionReminderJobService.class);
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-// Set the alarm to start at 8:30 a.m.
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 8);
-            calendar.set(Calendar.MINUTE, 5);
+            long current_time = calendar.getTimeInMillis();
+            String time[] = reminder.getStartTime().split(":");
+            int hour = Integer.parseInt(time[0]);
+            int minute = Integer.parseInt(time[1]);
+            calendar.set(Calendar.HOUR_OF_DAY,hour);
+            calendar.set(Calendar.MINUTE,minute);
+            long set_time = calendar.getTimeInMillis();
+            long interval = set_time - current_time;
+            PersistableBundle b = new PersistableBundle();
+            b.putString("medicineName",Medicine.findById(context,medicineId).getName());
+            int frequency;
+            for(frequency=0;frequency<reminder.getFrequency();frequency++){
+                long intervalBetweenConsumption = reminder.getInterval() * frequency * 60000;
+                ComponentName mServiceComponent = new ComponentName(context, MedicineConsumptionReminderJobService.class);
+                JobInfo.Builder builder = new JobInfo.Builder(medicineConsumptionReminder++, mServiceComponent);
+                builder.setMinimumLatency(interval + intervalBetweenConsumption );
+                builder.setOverrideDeadline(interval + intervalBetweenConsumption + 60000 );
+                builder.setExtras(b);
+                jobScheduler = (JobScheduler)context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+                jobScheduler.schedule(builder.build());
 
-// setRepeating() lets you specify a precise custom interval--in this case,
-// 20 minutes.
-            alarmMgr.setExact(AlarmManager.RTC_WAKEUP, , alarmIntent);
-//            }
+            }
+
         }
 
     }
+
 }

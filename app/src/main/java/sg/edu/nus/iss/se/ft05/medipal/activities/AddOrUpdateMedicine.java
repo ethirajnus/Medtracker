@@ -34,6 +34,7 @@ import sg.edu.nus.iss.se.ft05.medipal.Category;
 import sg.edu.nus.iss.se.ft05.medipal.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 
@@ -247,6 +248,8 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             if (medicine.save(context) == -1 ) {
                 Toast.makeText(context, "Medicine was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
             } else {
+                ReminderUtils.syncMedicineReminder(context);
+
                 navigateToMainAcitivity();
             }
         } else {
@@ -267,6 +270,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             if (medicine.update(context) == -1) {
                 Toast.makeText(context, "Medicine was not updated properly,Please try again later", Toast.LENGTH_SHORT).show();
             } else {
+                ReminderUtils.syncMedicineReminder(context);
                 navigateToMainAcitivity();
             }
 
