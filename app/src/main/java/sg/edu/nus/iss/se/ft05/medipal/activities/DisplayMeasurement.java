@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,9 @@ import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.dao.MeasurementDAO;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 
 public class DisplayMeasurement extends AppCompatActivity {
 
@@ -25,6 +29,14 @@ public class DisplayMeasurement extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Measurement");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToMainAcitivity();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt(MEASUREMENT_ID);
@@ -52,5 +64,11 @@ public class DisplayMeasurement extends AppCompatActivity {
         temperature = (TextView) findViewById(R.id.measurementTemperature);
         weight = (TextView) findViewById(R.id.measurementWeight);
         measuredOn = (TextView) findViewById(R.id.measurementMeasuredOn);
+    }
+
+    public void navigateToMainAcitivity(){
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        MainActivity.currentFragment= MeasurementFragment.class.getName();
+        startActivity(intent);
     }
 }

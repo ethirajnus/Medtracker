@@ -33,6 +33,14 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_add_measurement);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToMainActivity();
+            }
+        });
 
         /*super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_measurement);
@@ -127,7 +135,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         //String measure = measurement.toString();
         //Toast.makeText(getApplicationContext(),measure, Toast.LENGTH_SHORT).show();
             if(measurement.save(getApplicationContext())== -1){
-                Toast.makeText(getApplicationContext(), "Category was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Measurement was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
             }
             else {
                 navigateToMainActivity();

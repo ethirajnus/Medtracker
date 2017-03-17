@@ -14,12 +14,10 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.Category;
 import sg.edu.nus.iss.se.ft05.medipal.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
 import sg.edu.nus.iss.se.ft05.medipal.activities.DisplayMeasurement;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 

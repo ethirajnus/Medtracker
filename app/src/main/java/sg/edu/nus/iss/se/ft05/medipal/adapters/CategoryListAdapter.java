@@ -142,8 +142,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             icon = (ImageView) itemView.findViewById(R.id.categoryImageIcon);
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon);
             deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon);
-
-
         }
     }
 }

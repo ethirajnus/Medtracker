@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,34 @@ public class MeasurementFragment extends Fragment {
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            // Override onMove and simply return false inside
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                //do nothing, we only care about swiping
+                return false;
+            }
+
+            // Override onSwiped
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                // Inside, get the viewHolder's itemView's tag and store in a long variable id
+                //get the id of the item being swiped
+                int id = (int) viewHolder.itemView.getTag();
+                // call removeGuest and pass through that id
+                //remove from DB
+                Measurement measurement = Measurement.findById(context, id);
+                measurement.delete(context);
+                // call swapCursor on mAdapter passing in getAllGuests() as the argument
+                //update the list
+                mAdapter.swapCursor(Measurement.findAll(context));
+            }
+
+            //attach the ItemTouchHelper to the waitlistRecyclerView
+        }).attachToRecyclerView(measurementRecyclerView);
+
         getActivity().setTitle("Measurement");
 
         // Inflate the layout for this fragment
