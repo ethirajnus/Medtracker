@@ -73,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_condType"
+                android:paddingTop="10dp"
                 android:paddingBottom="5dp"
                 android:orientation="horizontal">
                 <RadioButton
@@ -98,12 +99,13 @@
                 android:id="@+id/addAnother"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/radioBtnGroup"
                 android:layout_weight="0.03"
                 android:checked="false"
                 android:paddingBottom="5dp"
-                android:paddingTop="15dp" />
+                android:paddingTop="50dp"
+                android:layout_marginTop="31dp"
+                android:layout_below="@+id/radioBtnGroup"
+                android:layout_alignParentStart="true" />
 
             <CheckedTextView
                 android:id="@+id/tv_addAnother"
@@ -115,20 +117,20 @@
                 android:gravity="center_horizontal"
                 android:paddingTop="12dp"
                 android:paddingBottom="5dp"
-                android:layout_below="@+id/radioBtnGroup"
-                android:layout_toRightOf="@+id/addAnother"/>
+                android:layout_alignTop="@+id/addAnother"
+                android:layout_toEndOf="@+id/addAnother"
+                android:layout_marginTop="17dp" />
 
             <Button
                 android:id="@+id/saveHealthBio"
-                android:layout_below="@+id/addAnother"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/addAnother"
                 android:layout_gravity="bottom|center"
-                android:layout_marginTop="10dp"
                 android:layout_weight="0.02"
                 android:background="@color/colorPrimary"
                 android:text="@string/save" />
-
 
 
         </RelativeLayout>
