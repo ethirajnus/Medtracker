@@ -9,14 +9,16 @@ import android.util.Log;
 import sg.edu.nus.iss.se.ft05.medipal.Contacts;
 
 /**
+ * Implementation class for emergency contacts database operations
  * Created by Ashish Katre
  */
 
 public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
 
-
+    // Logger name
     private static final String LOG = "ICEContactsDAOImpl";
 
+    // Constants
     protected static final String DATABASE_COMMAND_SYMBOL = " = ?";
     protected static final String DATABASE_COMMAND_SYMBOL_EQUAL = " = ";
     protected static final String DATABASE_COMMAND_SELECT_ALL = "SELECT  * FROM ";
@@ -28,11 +30,22 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
     protected static final String DATABASE_COMMAND_SELECT_MAX_AFTER = " FROM ";
     protected static final String DATABASE_COMMAND_ASC = " ASC";
 
+    /**
+     * Constructor for ICEContactsDAOImpl
+     *
+     * @param context
+     */
     public ICEContactsDAOImpl(Context context) {
 
         super(context);
     }
 
+    /**
+     * delete operation
+     *
+     * @param id int
+     * @return int
+     */
     @Override
     public int delete(int id) {
 
@@ -46,6 +59,11 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         return result;
     }
 
+    /**
+     * select all operation
+     *
+     * @return Cursor
+     */
     @Override
     public Cursor findAll() {
 
@@ -65,6 +83,12 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         return cursor;
     }
 
+    /**
+     * select operation with where clause using ID
+     *
+     * @param id int
+     * @return Contacts
+     */
     @Override
     public Contacts findById(int id) {
 
@@ -93,6 +117,106 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         return contacts;
     }
 
+
+    /**
+     * insert operation
+     *
+     * @param contact Contacts
+     * @return long
+     */
+    @Override
+    public long insert(Contacts contact) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ICE_CONTACTS_KEY_NAME, contact.getName());
+        values.put(ICE_CONTACTS_KEY_DESC, contact.getDescription());
+        values.put(ICE_CONTACTS_KEY_PHONE, contact.getPhone());
+        values.put(ICE_CONTACTS_KEY_TYPE, contact.getType());
+
+        int priority = 0;
+
+        try {
+
+            priority = findMaxPriority();
+            priority++;
+
+        } catch (Exception e) {
+
+            // TODO
+            priority = 1;
+        }
+
+        values.put(ICE_CONTACTS_KEY_PRIORITY, (priority));
+
+        // insert row
+        long result = sqLiteDatabase.insert(TABLE_ICE_CONTACTS, null, values);
+
+        Log.d(LOG, " Result of Insertion : " + result);
+
+        return result;
+    }
+
+    /**
+     * update operation
+     *
+     * @param contact Contacts
+     * @return int
+     */
+    @Override
+    public int update(Contacts contact) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ICE_CONTACTS_KEY_NAME, contact.getName());
+        values.put(ICE_CONTACTS_KEY_DESC, contact.getDescription());
+        values.put(ICE_CONTACTS_KEY_PHONE, contact.getPhone());
+        values.put(ICE_CONTACTS_KEY_TYPE, contact.getType());
+        values.put(ICE_CONTACTS_KEY_PRIORITY, contact.getPriority());
+
+        // updating row
+        int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
+                new String[]{String.valueOf(contact.getId())});
+
+        Log.d(LOG, " Result of Update : " + result);
+
+        return result;
+    }
+
+
+    /**
+     * update operation for priority update
+     *
+     * @param currentPriority int
+     * @param newPriority     int
+     * @return int
+     */
+    @Override
+    public int updatePriority(int currentPriority, int newPriority) {
+
+        // TODO
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ICE_CONTACTS_KEY_PRIORITY, newPriority);
+
+        // updating row
+        int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_SYMBOL,
+                new String[]{String.valueOf(currentPriority)});
+
+        Log.d(LOG, " Result of Update priority : " + result);
+
+        return result;
+    }
+
+    /**
+     * select operation with groupby priority to get maximum priority value
+     *
+     * @return int
+     */
     @Override
     public int findMaxPriority() {
 
@@ -112,81 +236,5 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         int priority = cursor.getInt(cursor.getColumnIndex(DATABASE_COMMAND_SELECT_MAXP));
 
         return priority;
-    }
-
-    /*
-     * Creating a Contacts
-     */
-    @Override
-    public long insert(Contacts contacts) {
-
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(ICE_CONTACTS_KEY_NAME, contacts.getName());
-        values.put(ICE_CONTACTS_KEY_DESC, contacts.getDescription());
-        values.put(ICE_CONTACTS_KEY_PHONE, contacts.getPhone());
-        values.put(ICE_CONTACTS_KEY_TYPE, contacts.getType());
-
-        int priority = 0;
-
-        try {
-
-            priority = findMaxPriority();
-            priority++;
-
-        } catch (Exception e) {
-
-            priority = 1;
-        }
-
-        values.put(ICE_CONTACTS_KEY_PRIORITY, (priority));
-
-        // insert row
-        long result = sqLiteDatabase.insert(TABLE_ICE_CONTACTS, null, values);
-
-        Log.d(LOG, " Result of Insertion : " + result);
-
-        return result;
-    }
-
-    @Override
-    public int update(Contacts contacts) {
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(ICE_CONTACTS_KEY_NAME, contacts.getName());
-        values.put(ICE_CONTACTS_KEY_DESC, contacts.getDescription());
-        values.put(ICE_CONTACTS_KEY_PHONE, contacts.getPhone());
-        values.put(ICE_CONTACTS_KEY_TYPE, contacts.getType());
-        values.put(ICE_CONTACTS_KEY_PRIORITY, contacts.getPriority());
-
-        // updating row
-        int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
-                new String[]{String.valueOf(contacts.getId())});
-
-        Log.d(LOG, " Result of Update : " + result);
-
-        return result;
-    }
-
-    @Override
-    public int updatePriority(Contacts contacts) {
-
-        // TODO
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(ICE_CONTACTS_KEY_PRIORITY, contacts.getPriority());
-
-        // updating row
-        int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
-                new String[]{String.valueOf(contacts.getId())});
-
-        Log.d(LOG, " Result of Update priority : " + result);
-
-        return result;
     }
 }

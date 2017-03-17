@@ -19,10 +19,14 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 
 /**
+ * Class for adding and updating new Emergency Contact
+ *
  * @author Ashish Katre
  */
 public class ICEAdditionActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    //Constants for class
     public static final String ICE_BUNDLE_ACTION = "medipal_ice_action";
     public static final String ICE_BUNDLE_ACTION_EDIT = "edit";
     public static final String ICE_BUNDLE_ACTION_ID = "medipal_ice_id";
@@ -33,24 +37,34 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     public static final String ICE_HEADER_EDIT = "Edit Contact";
     public static final String ICE_ERROR_INSERT = "Error adding Contact,Please try again later";
 
+    // Contact types
     public static final String ICE_TYPE_NOK = "Next of Keen";
     public static final String ICE_TYPE_GP = "General Physician";
     public static final String ICE_ERROR_OTHER = "Other";
 
+    // Elements of UI
     private EditText name;
     private EditText description;
     private EditText phone;
     private Spinner spinner;
     private Button button;
 
+    // Domain class
     private Contacts contact;
 
+    /**
+     * Method to run while creating UI for addition/Edit
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_ice_contacts);
+
+        Context context = getApplicationContext();
 
         spinner = (Spinner) findViewById(R.id.spinner_ice_type);
 
@@ -75,12 +89,13 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         Bundle bundle = getIntent().getExtras();
 
+        // Check if its addition or edit
         if (null != bundle && bundle.getString(ICE_BUNDLE_ACTION).equalsIgnoreCase(ICE_BUNDLE_ACTION_EDIT)) {
 
             button.setTag(ICE_BUTTON_UPDATE);
             button.setText(ICE_BUTTON_UPDATE_TEXT);
 
-            contact = Contacts.findById(getApplicationContext(), bundle.getInt(ICE_BUNDLE_ACTION_ID));
+            contact = Contacts.findById(context, bundle.getInt(ICE_BUNDLE_ACTION_ID));
             name.setText(contact.getName());
             description.setText(contact.getDescription());
             phone.setText("" + contact.getPhone());
@@ -95,18 +110,21 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * @param view
+     */
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void onClick(View view) {
 
-            case R.id.button_ice_addition:
+        if (R.id.button_ice_addition == view.getId()) {
 
-                saveOrUpdateContact();
-
-                break;
+            saveOrUpdateContact();
         }
     }
 
+    /**
+     * Processing of save or update contact
+     */
     private void saveOrUpdateContact() {
 
         String contactsName = name.getText().toString();
@@ -116,10 +134,9 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         Context context = getApplicationContext();
 
-        if (button.getTag().toString().equalsIgnoreCase(ICE_BUTTON_NEW)) {
+        if (ICE_BUTTON_NEW.equalsIgnoreCase(button.getTag().toString())) {
 
             Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType, context);
-
 
             if (-1 == newContact.save(context)) {
 
@@ -147,6 +164,11 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * Navigation to main activity
+     *
+     * @param context
+     */
     private void navigateToMainAcitivity(Context context) {
 
         Intent intent = new Intent(context, MainActivity.class);

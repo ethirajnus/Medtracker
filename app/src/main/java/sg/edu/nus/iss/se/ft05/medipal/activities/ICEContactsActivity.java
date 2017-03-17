@@ -12,6 +12,11 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 
 public class ICEContactsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * on create method
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,15 +28,17 @@ public class ICEContactsActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
+    /**
+     * On click method
+     *
+     * @param view
+     */
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        switch (v.getId()) {
+        if (R.id.button_ice_addition == view.getId()) {
 
-            case R.id.button_ice_addition:
-                //saveOrUpdateContacts();
-                break;
-
+            //saveOrUpdateContacts();
         }
     }
 }

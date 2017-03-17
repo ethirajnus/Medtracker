@@ -102,9 +102,9 @@ public class Contacts {
 
         int priority = iceContactsDAO.findMaxPriority();
 
-        Toast.makeText(context, new String("priority :" + priority), Toast.LENGTH_SHORT).show();
-
         priority++;
+
+        Toast.makeText(context, "Priority: " + priority, Toast.LENGTH_SHORT).show();
 
         return priority;
     }
@@ -143,14 +143,18 @@ public class Contacts {
         // TODO Priority
     }
 
-    public int updatePriority(Context context, int priority) {
+    public void updatePriority(Context context) {
 
         iceContactsDAO = new ICEContactsDAOImpl(context);
 
-        this.priority = priority;
+        int maxPriority = this.getNewPriority(context);
 
-        return iceContactsDAO.updatePriority(this);
+        for (int currentPriority = this.priority + 1; currentPriority < maxPriority; currentPriority++) {
 
+            iceContactsDAO.updatePriority(currentPriority, (currentPriority - 1));
+        }
+
+        Toast.makeText(context, "Last Priority: " + (maxPriority - 2), Toast.LENGTH_SHORT).show();
         // TODO Priority
     }
 }

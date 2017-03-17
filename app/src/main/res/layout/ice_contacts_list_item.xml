@@ -27,23 +27,33 @@
 
     <ImageView
         android:id="@+id/deleteIcon_list_ice_delete"
-        android:layout_height="20dp"
         android:layout_width="20dp"
-        android:layout_weight="1"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="22dp"
+        android:layout_weight="1"
         android:src="@android:drawable/ic_menu_delete" />
 
     <ImageView
         android:id="@+id/editIcon_list_ice_edit"
-        android:layout_height="20dp"
         android:layout_width="20dp"
-        android:layout_weight="1"
+        android:layout_height="20dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="22dp"
         android:layout_toLeftOf="@id/deleteIcon_list_ice_delete"
+        android:layout_weight="1"
         android:src="@android:drawable/ic_menu_edit" />
+
+    <TextView
+        android:id="@+id/textView_list_ice_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_list_ice_name"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/imageIcon_list_ice_contacts"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/textView_list_ice_phone"
@@ -52,7 +62,7 @@
         android:layout_below="@id/textView_list_ice_name"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
-        android:layout_toRightOf="@id/imageIcon_list_ice_contacts"
+        android:layout_toRightOf="@id/textView_list_ice_type"
         android:layout_weight="1" />
 
 </RelativeLayout>
