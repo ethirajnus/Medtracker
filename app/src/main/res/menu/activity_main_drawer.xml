@@ -14,5 +14,7 @@
             android:title="Consumption" />
         <item android:id="@+id/heathbio" android:icon="@drawable/ic_menu_manage"
             android:title="HealthBio" />
+        <item android:id="@+id/measure" android:icon="@drawable/ic_menu_manage"
+            android:title="Measurement" />
     </group>
 </menu>

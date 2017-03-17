@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
@@ -166,6 +167,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.ice) {
             setFragment(new IceFragment());
 
+        } else if (id == R.id.measure) {
+            setFragment(new MeasurementFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

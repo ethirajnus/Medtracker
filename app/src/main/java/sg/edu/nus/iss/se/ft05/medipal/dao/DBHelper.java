@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     protected static final String TABLE_CATEGORY = "categories";
     protected static final String TABLE_MEDICINE = "medicines";
     protected static final String TABLE_REMINDER = "reminders";
+    protected static final String TABLE_MEASUREMENT = "measurement";
     private static final String DATABASE_NAME = "medipal";
 
     private static final int DATABASE_VERSION = 1;
@@ -41,6 +42,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String REMINDER_KEY_STARTTIME = "startTime";
     public static final String REMINDER_KEY_FREQUENCY = "frequency";
 
+    public static final String MEASUREMENT_KEY_ID = "id";
+    public static final String MEASUREMENT_KEY_SYSTOLIC = "systolic";
+    public static final String MEASUREMENT_KEY_DIASTOLIC = "diastolic";
+    public static final String MEASUREMENT_KEY_PULSE = "pulse";
+    public static final String MEASUREMENT_KEY_TEMPERATURE = "temperature";
+    public static final String MEASUREMENT_KEY_WEIGHT = "weight";
+    public static final String MEASUREMENT_KEY_MEASURED_ON = "measuredOn";
+
 
     public static final String REMINDER_KEY_INTERVAL = "interval";
 
@@ -61,6 +70,11 @@ public class DBHelper extends SQLiteOpenHelper {
             + TABLE_REMINDER + "(" + REMINDER_KEY_ID + " INTEGER PRIMARY KEY," + REMINDER_KEY_FREQUENCY
             + " INTEGER," + REMINDER_KEY_STARTTIME + " TEXT," + REMINDER_KEY_INTERVAL
             + " INTEGER" + ")";
+    private static final String CREATE_TABLE_MEASUREMENT = "CREATE TABLE "
+            + TABLE_MEASUREMENT + "(" + MEASUREMENT_KEY_ID + " INTEGER PRIMARY KEY," + MEASUREMENT_KEY_SYSTOLIC
+            + " INTEGER," + MEASUREMENT_KEY_DIASTOLIC + " INTEGER," + MEASUREMENT_KEY_PULSE + " INTEGER,"
+            + MEASUREMENT_KEY_TEMPERATURE + " INTEGER," + MEASUREMENT_KEY_WEIGHT + " INTEGER,"
+            + MEASUREMENT_KEY_MEASURED_ON + " TEXT" + ")";
     Connection connection = null;
 
     public DBHelper(Context context) {
@@ -74,6 +88,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CATEGORY);
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
+        db.execSQL(CREATE_TABLE_MEASUREMENT);
 
     }
 
@@ -82,6 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEASUREMENT);
         onCreate(db);
     }
 

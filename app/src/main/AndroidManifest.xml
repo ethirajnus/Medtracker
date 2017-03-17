@@ -20,13 +20,23 @@
         </activity>
         <activity
             android:name=".activities.AddOrUpdateMedicine"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.AddOrUpdateCategory"
-            android:parentActivityName=".activities.MainActivity"></activity>
-        <activity android:name=".activities.ShowMedicine"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.ShowMedicine"
             android:parentActivityName=".activities.MainActivity">
-            ></activity>
+            >
+        </activity>
+        <activity
+            android:name=".activities.AddMeasurement"
+            android:label="@string/title_activity_add_measurement"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.DisplayMeasurement"
+            android:label="@string/title_activity_display_measurement"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
