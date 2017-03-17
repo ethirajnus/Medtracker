@@ -42,11 +42,11 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
-    private EditText name, description, quantity, consumeQuality, threshold, expirefactor, dateIssued,frequency,startTime,interval;
+    private EditText name, description, quantity, consumeQuality, threshold, expirefactor, dateIssued, frequency, startTime, interval;
     private CheckBox reminder;
-    private Spinner dosage,category;
+    private Spinner dosage, category;
     DatePickerDialog datePickerDialog;
-    Calendar dateCalendar,timeCalendar;
+    Calendar dateCalendar, timeCalendar;
     private Medicine medicine;
     private Button saveButton;
     private HashMap<String, Integer> categoriesMap;
@@ -57,37 +57,38 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
 
     private static final HashMap<String, Integer> DOSAGE_HASH_MAP = createDosageHashMap();
-    static final HashMap<Integer,String > DOSAGE_REVERSE_HASH_MAP = createDosageReverseHashMap();
+    static final HashMap<Integer, String> DOSAGE_REVERSE_HASH_MAP = createDosageReverseHashMap();
     private TimePickerDialog timePickerDialog;
     private Reminder reminderMedicine;
 
-    private static HashMap<Integer,String> createDosageReverseHashMap() {
-        HashMap<Integer,String> result = new HashMap<Integer, String>();
+    private static HashMap<Integer, String> createDosageReverseHashMap() {
+        HashMap<Integer, String> result = new HashMap<Integer, String>();
         for (Map.Entry<String, Integer> entry : DOSAGE_HASH_MAP.entrySet()) {
-            result.put(entry.getValue(),entry.getKey());
+            result.put(entry.getValue(), entry.getKey());
         }
-        return  result;
+        return result;
     }
 
-    private ArrayList<String> categoryList,dosageList;
+    private ArrayList<String> categoryList, dosageList;
+
     private static HashMap<String, Integer> createDosageHashMap() {
-        HashMap<String,Integer> result = new HashMap<String, Integer>();
-        result.put("pills",1);
-        result.put("cc",2);
-        result.put("ml",3);
-        result.put("gr",4);
-        result.put("mg",5);
-        result.put("drops",6);
-        result.put("pieces",7);
-        result.put("puffs",8);
-        result.put("units",9);
-        result.put("teaspoon",10);
-        result.put("tablespoon",11);
-        result.put("patch",12);
-        result.put("mcg",13);
-        result.put("I",14);
-        result.put("meq",15);
-        result.put("spray",16);
+        HashMap<String, Integer> result = new HashMap<String, Integer>();
+        result.put("pills", 1);
+        result.put("cc", 2);
+        result.put("ml", 3);
+        result.put("gr", 4);
+        result.put("mg", 5);
+        result.put("drops", 6);
+        result.put("pieces", 7);
+        result.put("puffs", 8);
+        result.put("units", 9);
+        result.put("teaspoon", 10);
+        result.put("tablespoon", 11);
+        result.put("patch", 12);
+        result.put("mcg", 13);
+        result.put("I", 14);
+        result.put("meq", 15);
+        result.put("spray", 16);
         return result;
     }
 
@@ -116,11 +117,11 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         Cursor mCursor = Category.fetchAllCategoriesWithId(context);
         categoryList = new ArrayList<String>();
         categoriesMap = new HashMap<String, Integer>();
-        while(mCursor.moveToNext()) {
+        while (mCursor.moveToNext()) {
             int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_ID));
             String categoryName = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_CATEGORY));
             categoryList.add(categoryName); //add the item
-            categoriesMap.put(categoryName,id);
+            categoriesMap.put(categoryName, id);
         }
 
         ArrayAdapter<String> categoryDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryList);
@@ -146,7 +147,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         reminderMedicine = Reminder.findById(context, medicine.getReminderId());
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
-        category.setSelection(categoryList.indexOf(Category.findById(context,medicine.getCategoryId()).getCategoryName()));
+        category.setSelection(categoryList.indexOf(Category.findById(context, medicine.getCategoryId()).getCategoryName()));
         reminder.setChecked(medicine.getRemind());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setSelection(dosageList.indexOf(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage())));
@@ -187,14 +188,14 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         dateIssued.setOnClickListener(this);
         startTime.setOnClickListener(this);
         Calendar newCalendar = Calendar.getInstance();
-        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                startTime.setText( hourOfDay + ":" + minute);
+                startTime.setText(hourOfDay + ":" + minute);
             }
         },
                 newCalendar.get(Calendar.HOUR_OF_DAY),
-                newCalendar.get(Calendar.MINUTE),true);
+                newCalendar.get(Calendar.MINUTE), true);
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 dateCalendar = Calendar.getInstance();
@@ -241,15 +242,13 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         int reminderInterval = Integer.parseInt(interval.getText().toString());
 
         if (saveButton.getTag().toString().equalsIgnoreCase("New")) {
-            Reminder reminder = new Reminder(reminderFrequency,reminderStartTime,reminderInterval);
+            Reminder reminder = new Reminder(reminderFrequency, reminderStartTime, reminderInterval);
             int medicineReminderId = (int) reminder.save(context);
-            Log.v("medicine reminder id ",String.valueOf(medicineReminderId));
             Medicine medicine = new Medicine(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicinceQuantity, medicinceDosage, medicinceConsumeQuality, medicinceThreshold, medicinceDateIssued, medicinceExpireFactor);
-            if (medicine.save(context) == -1 ) {
+            if (medicine.save(context) == -1) {
                 Toast.makeText(context, "Medicine was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
             } else {
                 ReminderUtils.syncMedicineReminder(context);
-
                 navigateToMainAcitivity();
             }
         } else {

@@ -18,6 +18,7 @@ import sg.edu.nus.iss.se.ft05.medipal.Category;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
@@ -69,15 +70,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Category category = Category.findById(mContext, id);
                 category.updateReminder(mContext, isChecked);
-            }
-        });
 
-        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Category category = Category.findById(mContext, id);
-                category.delete(mContext);
-                //update the list
-                swapCursor(Category.findAll(mContext));
             }
         });
 

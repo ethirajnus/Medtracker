@@ -19,17 +19,13 @@ public class MedicineReminderJobService extends JobService {
 
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
-        Log.v("inside reminder","jobservice");
         ReminderTasks.executeTask(MedicineReminderJobService.this, ReminderTasks.ACTION_MEDICINE_REMINDER);
-//        NotificationUtils.remindUserForConsumption(getApplicationContext(),"calpal");
         jobFinished(jobParameters, false);
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
-        // COMPLETED (12) If mBackgroundTask is valid, cancel it
-        // COMPLETED (13) Return true to signify the job should be retried
         return true;
     }
 }

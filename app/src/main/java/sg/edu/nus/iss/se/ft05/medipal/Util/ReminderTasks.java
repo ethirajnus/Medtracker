@@ -39,37 +39,34 @@ public class ReminderTasks {
     synchronized public static void medicineConsumptionReminder(Context context) {
 
         Map<Integer, Integer> medicineList = Medicine.listAllMedicine(context);
-        for (Map.Entry<Integer, Integer> entry : medicineList.entrySet())
-        {
+        for (Map.Entry<Integer, Integer> entry : medicineList.entrySet()) {
             int medicineId = entry.getKey();
             int reminderId = entry.getValue();
-            Reminder reminder = Reminder.findById(context,reminderId);
-            Calendar calendar = Calendar.getInstance();
-            long current_time = calendar.getTimeInMillis();
-            String time[] = reminder.getStartTime().split(":");
-            int hour = Integer.parseInt(time[0]);
-            int minute = Integer.parseInt(time[1]);
-            calendar.set(Calendar.HOUR_OF_DAY,hour);
-            calendar.set(Calendar.MINUTE,minute);
-            long set_time = calendar.getTimeInMillis();
-            long interval = set_time - current_time;
-            PersistableBundle b = new PersistableBundle();
-            b.putString("medicineName",Medicine.findById(context,medicineId).getName());
-            int frequency;
-            for(frequency=0;frequency<reminder.getFrequency();frequency++){
-                long intervalBetweenConsumption = reminder.getInterval() * frequency * 60000;
-                ComponentName mServiceComponent = new ComponentName(context, MedicineConsumptionReminderJobService.class);
-                JobInfo.Builder builder = new JobInfo.Builder(medicineConsumptionReminder++, mServiceComponent);
-                builder.setMinimumLatency(interval + intervalBetweenConsumption );
-                builder.setOverrideDeadline(interval + intervalBetweenConsumption + 60000 );
-                builder.setExtras(b);
-                jobScheduler = (JobScheduler)context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-                jobScheduler.schedule(builder.build());
-
+            Medicine medicine = Medicine.findById(context, medicineId);
+            if (medicine.getRemind()) {
+                Reminder reminder = Reminder.findById(context, reminderId);
+                Calendar calendar = Calendar.getInstance();
+                long current_time = calendar.getTimeInMillis();
+                String time[] = reminder.getStartTime().split(":");
+                int hour = Integer.parseInt(time[0]);
+                int minute = Integer.parseInt(time[1]);
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                long set_time = calendar.getTimeInMillis();
+                long interval = set_time - current_time;
+                PersistableBundle b = new PersistableBundle();
+                b.putString("medicineName", medicine.getName());
+                for (int frequency = 0; frequency < reminder.getFrequency(); frequency++) {
+                    long intervalBetweenConsumption = reminder.getInterval() * frequency * 60000;
+                    ComponentName mServiceComponent = new ComponentName(context, MedicineConsumptionReminderJobService.class);
+                    JobInfo.Builder builder = new JobInfo.Builder(medicineConsumptionReminder++, mServiceComponent);
+                    builder.setMinimumLatency(interval + intervalBetweenConsumption);
+                    builder.setOverrideDeadline(interval + intervalBetweenConsumption + 60000);
+                    builder.setExtras(b);
+                    jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+                    jobScheduler.schedule(builder.build());
+                }
             }
-
         }
-
     }
-
 }

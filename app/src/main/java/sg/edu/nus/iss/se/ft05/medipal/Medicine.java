@@ -179,4 +179,11 @@ public class Medicine {
     public int getId() {
         return id;
     }
+
+    public int updateReminder(Context context,boolean isChecked) {
+        medicineDAO = new MedicineDAOImpl(context);
+        setRemind(isChecked);
+        return medicineDAO.update(this);
+
+    }
 }

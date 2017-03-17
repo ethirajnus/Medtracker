@@ -45,7 +45,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
     private void updateCategoryValues(int id) {
         category = Category.findById(getApplicationContext(),id);
         name.setText(category.getCategoryName());
-        code.setText(category.getCode());
+        code.setText(category.getCode().toUpperCase());
         description.setText(category.getDescription());
         reminder.setChecked(category.getRemind());
         name.setTag(id);
@@ -81,8 +81,8 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
 
     public void saveOrUpdateCategory(){
         String categoryName = name.getText().toString();
-        String categoryCode = code.getText().toString();
-        String categoryDescription = code.getText().toString();
+        String categoryCode = code.getText().toString().toUpperCase();
+        String categoryDescription = description.getText().toString();
         Boolean categoryReminder = reminder.isChecked();
         if(saveButton.getTag().toString().equalsIgnoreCase("New")){
             Category category = new Category(categoryName,categoryCode,categoryDescription,categoryReminder);

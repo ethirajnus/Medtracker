@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -7,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import sg.edu.nus.iss.se.ft05.medipal.Category;
 
 /**
  * Created by ethi on 10/03/17.
@@ -48,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Todo table create statement
     private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE "
             + TABLE_CATEGORY + "(" + CATEGORY_KEY_ID + " INTEGER PRIMARY KEY," + CATEGORY_KEY_CATEGORY
-            + " TEXT," + CATEGORY_KEY_CODE + " TEXT," + CATEGORY_KEY_DESCRIPTION
+            + " TEXT UNIQUE," + CATEGORY_KEY_CODE + " TEXT," + CATEGORY_KEY_DESCRIPTION
             + " TEXT," + CATEGORY_KEY_REMIND + " INTEGER DEFAULT 0"+")";
     private static final String CREATE_TABLE_MEDICINE = "CREATE TABLE "
             + TABLE_MEDICINE + "(" + MEDICINE_KEY_ID + " INTEGER PRIMARY KEY," + MEDICINE_KEY_MEDICINE
@@ -74,6 +78,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CATEGORY);
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
+        insertDefaultValues(db);
 
     }
 
@@ -83,6 +88,25 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDER);
         onCreate(db);
+    }
+
+
+    public static void insertDefaultValues(SQLiteDatabase db){
+        ArrayList<Category> categoryList = new ArrayList<Category>();
+        categoryList.add(new Category("Supplement","SUP","Supplement type of medicines",true));
+        categoryList.add(new Category("Chronic","CHR","Chronice type of medicines",true));
+        categoryList.add(new Category("Incidental","INC","Incidental type of medicines",true));
+        categoryList.add(new Category("Complete Course","COM","Complete type of medicines",true));
+        categoryList.add(new Category("Self Apply","SEL","Self Apply type of medicines",true));
+        for(Category category : categoryList){
+            ContentValues values = new ContentValues();
+            values.put(CATEGORY_KEY_CATEGORY, category.getCategoryName());
+            values.put(CATEGORY_KEY_CODE, category.getCode());
+            values.put(CATEGORY_KEY_DESCRIPTION, category.getDescription());
+            values.put(CATEGORY_KEY_REMIND, category.getRemind());
+            // insert row
+            db.insert(TABLE_CATEGORY, null, values);
+        }
     }
 
 }

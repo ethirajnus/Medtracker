@@ -20,7 +20,8 @@ import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 public class NotificationUtils {
 
     private static final int MEDICINE_REMINDER_PENDING_INTENT_ID = 3417;
-    private static  int MEDICINE_REMINDER_NOTIFICATION_ID = 0;
+    private static int MEDICINE_REMINDER_NOTIFICATION_ID = 0;
+
     private static PendingIntent contentIntent(Context context) {
         Intent startActivityIntent = new Intent(context, MainActivity.class);
         return PendingIntent.getActivity(
@@ -33,10 +34,10 @@ public class NotificationUtils {
     public static void remindUserForConsumption(Context context, String name) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setContentText("Please consume"+ name + "medicine")
+                .setContentText("Please consume " + name + " medicine")
                 .setSmallIcon(R.drawable.ic_menu_gallery)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(
-                        "Please consume"+ name + "medicine"))
+                        "Please consume " + name + " medicine"))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
                 .setAutoCancel(true);
@@ -47,15 +48,8 @@ public class NotificationUtils {
 
 
         NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        /* MEDICINE_REMINDER_NOTIFICATION_ID allows you to update or cancel the notification later on */
+        context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(MEDICINE_REMINDER_NOTIFICATION_ID++, notificationBuilder.build());
     }
 
-    public static void clearAllNotifications(Context context) {
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
-    }
 }

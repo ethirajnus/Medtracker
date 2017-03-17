@@ -19,6 +19,7 @@ import sg.edu.nus.iss.se.ft05.medipal.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
@@ -92,6 +93,14 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
                 intent.putExtras(b);
                 mContext.startActivity(intent);
 
+            }
+        });
+
+        holder.switchReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Medicine medicine = Medicine.findById(mContext, id);
+                medicine.updateReminder(mContext, isChecked);
+                ReminderUtils.syncMedicineReminder(mContext);
             }
         });
 

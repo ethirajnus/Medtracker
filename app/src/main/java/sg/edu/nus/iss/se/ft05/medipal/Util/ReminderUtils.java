@@ -20,7 +20,7 @@ import java.util.Calendar;
 
 public class ReminderUtils {
 
-    private static final long REFRESH_INTERVAL = 3000 ;
+    private static final long REFRESH_INTERVAL = 3000;
     private static boolean sInitialized;
 
     private static AlarmManager alarmMgr;
@@ -30,24 +30,21 @@ public class ReminderUtils {
     private static JobScheduler jobScheduler;
 
     synchronized public static void scheduleMedicineReminder(@NonNull final Context context) {
-
         if (sInitialized) return;
         ComponentName mServiceComponent = new ComponentName(context, MedicineReminderJobService.class);
         JobInfo.Builder builder = new JobInfo.Builder(jobId++, mServiceComponent);
-            builder.setPeriodic(1000 * 60 * 60 * 24);
-        jobScheduler = (JobScheduler)context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        builder.setPeriodic(1000 * 60 * 60 * 24);
+        jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(builder.build());
-
         sInitialized = true;
     }
 
     public static void syncMedicineReminder(Context context) {
-        if(jobScheduler != null)
-        {
+        if (jobScheduler != null) {
             jobScheduler.cancelAll();
             sInitialized = false;
         }
-        if(ReminderTasks.jobScheduler !=null) {
+        if (ReminderTasks.jobScheduler != null) {
             ReminderTasks.jobScheduler.cancelAll();
         }
         ReminderUtils.scheduleMedicineReminder(context);

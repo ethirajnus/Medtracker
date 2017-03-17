@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 
     static String currentFragment;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,26 +52,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if (findViewById(R.id.fragment_container) != null) {
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-//            if (savedInstanceState != null) {
-//                return;
-//            }
-
-            Bundle b = getIntent().getExtras();
             if (currentFragment == null) {
                 setFragment(new MedicineFragment());
             } else {
                 updateFragment(currentFragment);
             }
-
         }
-
-        //scheduler
-
-
     }
 
     @Override

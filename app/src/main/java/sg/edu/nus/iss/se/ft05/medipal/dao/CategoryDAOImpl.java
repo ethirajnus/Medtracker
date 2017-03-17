@@ -33,7 +33,7 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_CATEGORY, CATEGORY_KEY_ID + " = ?",
-                new String[] { String.valueOf(id) });
+                new String[]{String.valueOf(id)});
     }
 
     @Override
@@ -87,7 +87,7 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
         values.put(CATEGORY_KEY_REMIND, category.getRemind());
 
         // insert row
-       return db.insert(TABLE_CATEGORY, null, values);
+        return db.insert(TABLE_CATEGORY, null, values);
     }
 
     @Override
@@ -101,11 +101,11 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
         values.put(CATEGORY_KEY_REMIND, category.getRemind());
         // updating row
         return db.update(TABLE_CATEGORY, values, CATEGORY_KEY_ID + " = ?",
-                new String[] { String.valueOf(category.getId()) });
+                new String[]{String.valueOf(category.getId())});
     }
 
 
-    public Cursor fetchAllCategoriesWithId(){
+    public Cursor fetchAllCategoriesWithId() {
         String selectQuery = "SELECT  id,category FROM " + TABLE_CATEGORY;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
