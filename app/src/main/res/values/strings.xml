@@ -38,4 +38,19 @@
     <string name="reminderFrequency">Frequency</string>
     <string name="reminderStartTime">StartTime</string>
     <string name="reminderInterval">Interval</string>
+
+    <!-- Health Bio -->
+    <string name="condition">Condition</string>
+    <string name="startDate">Diagnosed on</string>
+    <string name="conditionType">Condition Type</string>
+    <string name="add_another">Add another medical condition</string>
+    <string name="conditionTypeAllergy">Allergy</string>
+
+    <!-- Error Messages -->
+    <string name="warning">All fields are mandatory!</string>
+
+
+    <!-- Date picker -->
+    <string name="datePickerTitle">Set Date</string>
+    <string name="setBtn">Set</string>
 </resources>

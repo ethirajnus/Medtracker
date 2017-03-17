@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateHealthBioActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.01"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="@string/condition"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/condition"
+                android:layout_below="@+id/tv_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:maxLength="30" />
+
+            <TextView
+                android:id="@+id/tv_startDate"
+                android:layout_below="@+id/condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:focusable="false"
+                android:text="@string/startDate"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/startDate"
+                android:layout_below="@+id/tv_startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:ems="10"
+                android:editable="false"/>
+
+
+            <TextView
+                android:id="@+id/tv_condType"
+                android:layout_below="@+id/startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="@string/conditionType"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radioBtnGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_condType"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/radioBtnAllergy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_condType"
+                    android:layout_alignParentStart="true"
+                    android:paddingRight="20dp"
+                    android:text="@string/conditionTypeAllergy"
+                    android:tag="A"/>
+                <RadioButton
+                    android:id="@+id/radioBtnCondition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/condition"
+                    android:tag="C"/>
+
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/addAnother"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/radioBtnGroup"
+                android:layout_weight="0.03"
+                android:checked="false"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp" />
+
+            <CheckedTextView
+                android:id="@+id/tv_addAnother"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_another"
+                android:textStyle="italic"
+                android:typeface="normal"
+                android:gravity="center_horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="5dp"
+                android:layout_below="@+id/radioBtnGroup"
+                android:layout_toRightOf="@+id/addAnother"/>
+
+            <Button
+                android:id="@+id/saveHealthBio"
+                android:layout_below="@+id/addAnother"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.02"
+                android:background="@color/colorPrimary"
+                android:text="@string/save" />
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

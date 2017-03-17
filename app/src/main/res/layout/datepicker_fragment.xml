@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/linearLayout2"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:elevation="0dp"
         android:minHeight="40dp"
         android:theme="?attr/actionBarTheme"
-        app:title="Set Date" />
+        app:title="@string/datePickerTitle"/>
 
     <DatePicker
         android:id="@+id/picker"
@@ -30,32 +29,14 @@
         android:datePickerMode="spinner"
         android:paddingLeft="8dp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/setBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/picker"
-        android:id="@+id/linearLayout2">
+        android:background="@color/colorPrimary"
+        android:gravity="top|bottom|center"
+        android:text="@string/setBtn"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/picker" />
 
-        <Button
-            android:id="@+id/cancelBtn"
-            android:layout_width="145dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentTop="false"
-            android:background="@color/colorPrimary"
-            android:text="Cancel"
-            android:textColor="#FFFFFF" />
-
-        <Button
-            android:id="@+id/setBtn"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:gravity="top|bottom|center"
-            android:text="Set"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

@@ -44,7 +44,7 @@
                 android:layout_weight="0.01"
                 android:text="@string/dob"
                 android:textStyle="bold"
-                android:focusable="false"/>
+                android:focusableInTouchMode="false" />
 
             <EditText
                 android:id="@+id/dob"

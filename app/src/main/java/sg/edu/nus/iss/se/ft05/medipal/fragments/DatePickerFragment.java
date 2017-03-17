@@ -25,7 +25,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 public class DatePickerFragment extends DialogFragment{
 
     private DatePicker mDatePicker;
-    private Button mCancelBtn, mSetBtn;
+    private Button mSetBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
