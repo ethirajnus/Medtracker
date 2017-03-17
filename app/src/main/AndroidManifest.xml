@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sg.edu.nus.iss.se.ft05.medipal">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,9 +26,16 @@
         <activity
             android:name=".activities.AddOrUpdateCategory"
             android:parentActivityName=".activities.MainActivity"></activity>
-        <activity android:name=".activities.ShowMedicine"
+        <activity
+            android:name=".activities.ShowMedicine"
             android:parentActivityName=".activities.MainActivity">
-            ></activity>
+        </activity>
+
+        <activity
+            android:name=".activities.ICEAdditionActivity"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
+
     </application>
 
 </manifest>
