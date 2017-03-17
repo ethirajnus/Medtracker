@@ -80,11 +80,11 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
             button.setTag(ICE_BUTTON_UPDATE);
             button.setText(ICE_BUTTON_UPDATE_TEXT);
 
-            contact = Contacts.findById(getApplicationContext(), bundle.getLong(ICE_BUNDLE_ACTION_ID));
+            contact = Contacts.findById(getApplicationContext(), bundle.getInt(ICE_BUNDLE_ACTION_ID));
             name.setText(contact.getName());
             description.setText(contact.getDescription());
-            phone.setText(contact.getPhone().toString());
-            name.setTag(bundle.getLong(ICE_BUNDLE_ACTION_ID));
+            phone.setText("" + contact.getPhone());
+            name.setTag(bundle.getInt(ICE_BUNDLE_ACTION_ID));
 
             setTitle(ICE_HEADER_EDIT);
 
@@ -102,12 +102,6 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
             case R.id.button_ice_addition:
 
                 saveOrUpdateContact();
-
-                break;
-
-            default:
-
-                navigateToMainAcitivity();
 
                 break;
         }
@@ -133,7 +127,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
             } else {
 
-                navigateToMainAcitivity();
+                navigateToMainAcitivity(context);
             }
         } else {
 
@@ -142,20 +136,20 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
             contact.setPhone(Long.parseLong(contactsPhone));
             contact.setType(contactsType);
 
-            if (-1 == contact.update(getApplicationContext())) {
+            if (-1 == contact.update(context)) {
 
-                Toast.makeText(getApplicationContext(), ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
 
             } else {
 
-                navigateToMainAcitivity();
+                navigateToMainAcitivity(context);
             }
         }
     }
 
-    private void navigateToMainAcitivity() {
+    private void navigateToMainAcitivity(Context context) {
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = IceFragment.class.getName();
         startActivity(intent);
     }

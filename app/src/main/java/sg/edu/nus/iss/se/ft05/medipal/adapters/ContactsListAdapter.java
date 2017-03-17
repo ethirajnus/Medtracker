@@ -59,7 +59,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         // Update the view holder with the information needed to display
         String name = cursor.getString(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_NAME));
         final long phone = cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_PHONE));
-        final long id = cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_ID));
+        final int id = cursor.getInt(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_ID));
 
         holder.textName.setText(name);
         holder.textPhone.setText("Phone: " + phone);
@@ -83,7 +83,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                 Intent intent = new Intent(context, ICEAdditionActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(ICEAdditionActivity.ICE_BUNDLE_ACTION, ICEAdditionActivity.ICE_BUNDLE_ACTION_EDIT);
-                bundle.putLong(ICEAdditionActivity.ICE_BUNDLE_ACTION_ID, id);
+                bundle.putInt(ICEAdditionActivity.ICE_BUNDLE_ACTION_ID, id);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

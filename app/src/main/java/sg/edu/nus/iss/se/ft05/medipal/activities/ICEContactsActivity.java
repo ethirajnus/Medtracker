@@ -18,7 +18,7 @@ public class ICEContactsActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_category);
+        setContentView(R.layout.activity_add_ice_contacts);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -28,8 +28,8 @@ public class ICEContactsActivity extends AppCompatActivity implements View.OnCli
 
         switch (v.getId()) {
 
-            case R.id.saveCategory:
-                //saveOrUpdateCategory();
+            case R.id.button_ice_addition:
+                //saveOrUpdateContacts();
                 break;
 
         }

@@ -34,7 +34,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
     }
 
     @Override
-    public int delete(long id) {
+    public int delete(int id) {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -66,7 +66,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
     }
 
     @Override
-    public Contacts findById(long id) {
+    public Contacts findById(int id) {
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -145,11 +145,14 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         // insert row
         long result = sqLiteDatabase.insert(TABLE_ICE_CONTACTS, null, values);
 
+        Log.d(LOG, " Result of Insertion : " + result);
+
         return result;
     }
 
     @Override
     public int update(Contacts contacts) {
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -162,6 +165,8 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         // updating row
         int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(contacts.getId())});
+
+        Log.d(LOG, " Result of Update : " + result);
 
         return result;
     }
@@ -179,6 +184,8 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         // updating row
         int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(contacts.getId())});
+
+        Log.d(LOG, " Result of Update priority : " + result);
 
         return result;
     }

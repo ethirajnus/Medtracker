@@ -15,58 +15,70 @@ public class Contacts {
 
     private static ICEContactsDAO iceContactsDAO;
 
-    private Integer id;
-    private Integer priority;
-    private Long phone;
+    private int id;
+    private int priority;
+    private long phone;
     private String name;
     private String description;
     private String type;
 
-    public Integer getId() {
+    public int getId() {
+
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
+
         this.id = id;
     }
 
-    public Integer getPriority() {
+    public int getPriority() {
+
         return priority;
     }
 
-    public void setPriority(Integer priority) {
+    public void setPriority(int priority) {
+
         this.priority = priority;
     }
 
-    public Long getPhone() {
+    public long getPhone() {
+
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(long phone) {
+
         this.phone = phone;
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public String getDescription() {
+
         return description;
     }
 
     public void setDescription(String description) {
+
         this.description = description;
     }
 
     public String getType() {
+
         return type;
     }
 
     public void setType(String type) {
+
         this.type = type;
     }
 
@@ -87,12 +99,14 @@ public class Contacts {
 
 
         iceContactsDAO = new ICEContactsDAOImpl(context);
+
         int priority = iceContactsDAO.findMaxPriority();
 
         Toast.makeText(context, new String("priority :" + priority), Toast.LENGTH_SHORT).show();
 
+        priority++;
 
-        return priority++;
+        return priority;
     }
 
     public static Cursor findAll(Context context) {
@@ -102,7 +116,7 @@ public class Contacts {
         return iceContactsDAO.findAll();
     }
 
-    public static Contacts findById(Context context, long id) {
+    public static Contacts findById(Context context, int id) {
 
         iceContactsDAO = new ICEContactsDAOImpl(context);
 

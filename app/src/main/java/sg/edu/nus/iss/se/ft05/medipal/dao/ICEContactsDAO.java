@@ -10,11 +10,11 @@ import sg.edu.nus.iss.se.ft05.medipal.Contacts;
 
 public interface ICEContactsDAO {
 
-    public int delete(long id);
+    public int delete(int id);
 
     public Cursor findAll();
 
-    public Contacts findById(long id);
+    public Contacts findById(int id);
 
     public long insert(Contacts contact);
 
