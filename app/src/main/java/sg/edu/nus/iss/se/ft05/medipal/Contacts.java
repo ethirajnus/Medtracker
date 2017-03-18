@@ -98,15 +98,13 @@ public class Contacts {
     public int getNewPriority(Context context) {
 
 
-        iceContactsDAO = new ICEContactsDAOImpl(context);
+        int newPriority = Contacts.getMaxPriority(context);
 
-        int priority = iceContactsDAO.findMaxPriority();
+        newPriority++;
 
-        priority++;
+        Toast.makeText(context, "Priority: " + newPriority, Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(context, "Priority: " + priority, Toast.LENGTH_SHORT).show();
-
-        return priority;
+        return newPriority;
     }
 
     public static Cursor findAll(Context context) {
@@ -156,5 +154,15 @@ public class Contacts {
 
         Toast.makeText(context, "Last Priority: " + (maxPriority - 2), Toast.LENGTH_SHORT).show();
         // TODO Priority
+    }
+
+    /**
+     * Get maximum priority number
+     *
+     * @param context
+     */
+    public static int getMaxPriority(Context context) {
+
+        return new ICEContactsDAOImpl(context).findMaxPriority();
     }
 }

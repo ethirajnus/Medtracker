@@ -1,10 +1,13 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import sg.edu.nus.iss.se.ft05.medipal.Listeners.PhoneCallListener;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
@@ -62,10 +66,12 @@ public class MainActivity extends AppCompatActivity
             } else {
                 updateFragment(currentFragment);
             }
-
-
         }
 
+        PhoneCallListener phoneListener = new PhoneCallListener(getApplicationContext());
+        TelephonyManager telephonyManager = (TelephonyManager) this
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
     @Override
@@ -78,16 +84,15 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void setFloatingActionButtonAction(final Class activityclass) {
+    public void setFloatingActionButtonAction(final Class activityClass) {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), activityclass);
+                Intent intent = new Intent(getApplicationContext(), activityClass);
                 startActivity(intent);
             }
         });
-
     }
 
     @Override

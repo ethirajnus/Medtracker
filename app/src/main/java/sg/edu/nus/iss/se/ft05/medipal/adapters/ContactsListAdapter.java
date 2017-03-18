@@ -31,6 +31,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
     // logger name
     private static final String LOG = "ContactsListAdapter";
+    private static final String PHONE = "Phone: ";
 
     private final OnStartDragListener mDragStartListener;
 
@@ -88,7 +89,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
             holder.textName.setText(name);
             holder.textType.setText(type);
-            holder.textPhone.setText("Phone: " + phone);
+            holder.textPhone.setText(PHONE + phone);
             holder.itemView.setTag(id);
 
             // delete icon onclick listener
@@ -130,7 +131,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                     Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
 
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse("tel:" + phone));
 
                     try {
@@ -149,15 +150,19 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
 
-                    if (MotionEvent.ACTION_DOWN == MotionEventCompat.getActionMasked(event) || MotionEvent.ACTION_UP == MotionEventCompat.getActionMasked(event)) {
+                    //
+
+                    if (MotionEvent.ACTION_UP == MotionEventCompat.getActionMasked(event) || MotionEvent.ACTION_DOWN == MotionEventCompat.getActionMasked(event)) {
 
                         mDragStartListener.onStartDrag(holder);
                     }
 
-                    return false;
+                    return true;
                 }
             });
         }
+
+
     }
 
     /**

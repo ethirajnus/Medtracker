@@ -98,12 +98,18 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
             contact = Contacts.findById(context, bundle.getInt(ICE_BUNDLE_ACTION_ID));
             name.setText(contact.getName());
             description.setText(contact.getDescription());
-            phone.setText("" + contact.getPhone());
+            phone.setText(String.valueOf(contact.getPhone()));
             name.setTag(bundle.getInt(ICE_BUNDLE_ACTION_ID));
 
             setTitle(ICE_HEADER_EDIT);
 
         } else {
+
+            if (5 <= Contacts.getMaxPriority(context)) {
+
+                Toast.makeText(context, "Maximum 5 Contacts Allowed Please delete atleast 1 existing contact to add new contact", Toast.LENGTH_SHORT).show();
+                navigateToMainAcitivity(context);
+            }
 
             button.setTag(ICE_BUTTON_NEW);
             setTitle(ICE_HEADER_NEW);

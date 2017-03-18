@@ -15,6 +15,7 @@ public class ContactsTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public ContactsTouchHelperCallback(ItemTouchHelperAdapter adapter) {
 
+        super();
         mAdapter = adapter;
     }
 
@@ -31,11 +32,20 @@ public class ContactsTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isLongPressDragEnabled() {
+
         return true;
     }
 
     @Override
+    public int interpolateOutOfBoundsScroll(RecyclerView recyclerView, int viewSize, int viewSizeOutOfBounds, int totalSize, long msSinceStartScroll) {
+
+        final int direction = (int) Math.signum(viewSizeOutOfBounds);
+        return 10 * direction;
+    }
+
+    @Override
     public boolean isItemViewSwipeEnabled() {
+
         return true;
     }
 
@@ -50,6 +60,7 @@ public class ContactsTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 }

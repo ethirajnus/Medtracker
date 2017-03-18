@@ -68,47 +68,71 @@ public class IceFragment extends Fragment implements OnStartDragListener {
 
         // TODO change
 
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.ANIMATION_TYPE_DRAG | ItemTouchHelper.ACTION_STATE_DRAG ) {
-//
-//            // COMPLETED (4) Override onMove and simply return false inside
-//
-//            @Override
-//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//
-//                // COMPLETED (8) Inside, get the viewHolder's itemView's tag and store in a long variable id
-//
-//
-//                //adapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition()) {
-//
-//                Toast.makeText(context, "priority from : " + viewHolder.getAdapterPosition() + " to : " + target.getAdapterPosition(), Toast.LENGTH_SHORT).show();
-//
-//                return true;
-//            }
-//
-//            // COMPLETED (5) Override onSwiped
-//
-//            @Override
-//            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//
-//                // COMPLETED (8) Inside, get the viewHolder's itemView's tag and store in a long variable id
-//                //get the id of the item being swiped
-//
-//                int id = (int) viewHolder.itemView.getTag();
-//
-//                // COMPLETED (9) call removeGuest and pass through that id
-//                //remove from DB
-//
-//                Contacts contacts = Contacts.findById(context, id);
-//                contacts.delete(context);
-//
-//                // COMPLETED (10) call swapCursor on mAdapter passing in getAllGuests() as the argument
-//                //update the list
-//
-//                adapter.swapCursor(Contacts.findAll(context));
-//            }
-//
-//            //COMPLETED (11) attach the ItemTouchHelper to the waitlistRecyclerView
-//        }).attachToRecyclerView(iceRecyclerView);
+        /*new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.ACTION_STATE_DRAG, 0) {
+
+            // COMPLETED (4) Override onMove and simply return false inside
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
+                // COMPLETED (8) Inside, get the viewHolder's itemView's tag and store in a long variable id
+
+
+                //adapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition()) {
+
+                Toast.makeText(context, "priority from : " + viewHolder.getAdapterPosition() + " to : " + target.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                adapter.onItemMove(viewHolder.getAdapterPosition(),
+                        target.getAdapterPosition());
+
+                return true;
+            }
+
+            // COMPLETED (5) Override onSwiped
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
+                // COMPLETED (8) Inside, get the viewHolder's itemView's tag and store in a long variable id
+                //get the id of the item being swiped
+
+                int id = (int) viewHolder.itemView.getTag();
+
+                // COMPLETED (9) call removeGuest and pass through that id
+                //remove from DB
+
+                // Contacts contacts = Contacts.findById(context, id);
+                //contacts.delete(context);
+
+                // COMPLETED (10) call swapCursor on mAdapter passing in getAllGuests() as the argument
+                //update the list
+
+                adapter.swapCursor(Contacts.findAll(context));
+            }
+
+
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+
+                return true;
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+
+                return true;
+            }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder contactsViewHolder) {
+
+                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+
+                return makeMovementFlags(dragFlags, swipeFlags);
+            }
+
+            //COMPLETED (11) attach the ItemTouchHelper to the waitlistRecyclerView
+        }).attachToRecyclerView(iceRecyclerView);*/
 
         ItemTouchHelper.Callback callback = new ContactsTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
@@ -123,6 +147,7 @@ public class IceFragment extends Fragment implements OnStartDragListener {
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+
         mItemTouchHelper.startDrag(viewHolder);
     }
 }
