@@ -31,7 +31,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Systolic"
+        android:text=" Systolic (mm Hg)"
          />
 
     <EditText
@@ -45,7 +45,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Diastolic" />
+        android:text=" Diastolic (mm Hg)" />
 
     <EditText
         android:id="@+id/measurementDiastolic"
@@ -58,7 +58,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Pulse" />
+        android:text=" Pulse (bpm)" />
 
     <EditText
         android:id="@+id/measurementPulse"
@@ -71,20 +71,20 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Temperature" />
+        android:text=" Temperature (Degree Celcius)" />
 
-    <EditText
-        android:id="@+id/measurementTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" />
+        <EditText
+            android:id="@+id/measurementTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Weight" />
+        android:text=" Weight (Kg)" />
 
     <EditText
         android:id="@+id/measurementWeight"
@@ -97,7 +97,7 @@
         android:id="@+id/saveMeasurement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="Submit" />
 
     </LinearLayout>

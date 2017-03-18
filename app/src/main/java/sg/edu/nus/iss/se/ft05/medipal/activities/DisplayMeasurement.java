@@ -46,13 +46,13 @@ public class DisplayMeasurement extends AppCompatActivity {
 
         measurement=Measurement.findById(getApplicationContext(),id);
 
-        this.id.setText("Id : "+id);
-        this.systolic.setText("Systolic : "+measurement.getSystolic());
-        this.diastolic.setText("Diastolic : "+measurement.getDiastolic());
-        this.pulse.setText("Pulse : "+measurement.getPulse());
+        this.id.setText         ("Id : "+id);
+        this.systolic.setText   ("Systolic : "+measurement.getSystolic());
+        this.diastolic.setText  ("Diastolic : "+measurement.getDiastolic());
+        this.pulse.setText      ("Pulse : "+measurement.getPulse());
         this.temperature.setText("Temperature : "+measurement.getTemperature());
-        this.weight.setText("Weight : "+measurement.getWeight());
-        this.measuredOn.setText("MeasuredOn : "+measurement.getMeasuredOn());
+        this.weight.setText     ("Weight : "+measurement.getWeight());
+        this.measuredOn.setText ("MeasuredOn : "+measurement.getMeasuredOn());
 
 
     }
