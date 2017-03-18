@@ -1,10 +1,13 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,8 +22,10 @@ import android.widget.Toast;
 import sg.edu.nus.iss.se.ft05.medipal.Contacts;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
+import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.listeners.PhoneCallListener;
 
 /**
  * Class for Contact List processing
@@ -39,6 +44,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     private Cursor cursor;
     private Context context;
 
+
     /**
      * Constructor
      *
@@ -50,6 +56,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         this.mDragStartListener = dragStartListener;
         this.context = context;
         this.cursor = cursor;
+
     }
 
     /**
@@ -128,11 +135,17 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                 public void onClick(View v) {
 
                     // TODO Temp
-
                     Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
 
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse("tel:" + phone));
+
+                    if (ActivityCompat.checkSelfPermission(context,
+                            Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+                        Toast.makeText(context, "No Permission to call", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
                     try {
 
@@ -226,6 +239,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon_list_ice_edit);
             deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon_list_ice_delete);
         }
+
     }
 
     @Override

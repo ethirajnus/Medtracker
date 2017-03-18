@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Contacts;
+import sg.edu.nus.iss.se.ft05.medipal.listeners.PhoneCallListener;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
@@ -26,7 +28,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.OnStartDragListener;
  */
 public class IceFragment extends Fragment implements OnStartDragListener {
 
-    public static final String TCE_VIEW_TITLE = "In case of emergency contacts";
+    public static final String TCE_VIEW_TITLE = "In case of emergency";
 
     // Holds on to the cursor to display the wait list
     private Context context;
@@ -61,6 +63,11 @@ public class IceFragment extends Fragment implements OnStartDragListener {
 
         // Get all guest info from the database and save in a cursor
         Cursor cursor = Contacts.findAll(context);
+
+        PhoneCallListener phoneListener = new PhoneCallListener(context);
+        TelephonyManager telephonyManager = (TelephonyManager) context
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 
         adapter = new ContactsListAdapter(context, cursor, this);
 
@@ -141,6 +148,7 @@ public class IceFragment extends Fragment implements OnStartDragListener {
         // TODO Chnage
 
         getActivity().setTitle(TCE_VIEW_TITLE);
+
 
         return view;
     }
