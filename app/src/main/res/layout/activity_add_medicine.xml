@@ -58,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
                 android:ems="10"
+                android:maxLength="100"
+                android:maxLines="3"
                 android:inputType="text" />
 
             <TextView
@@ -120,7 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-
                 android:backgroundTint="?attr/colorAccent"
                 android:dropDownWidth="match_parent"></Spinner>
 
@@ -203,6 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
                 android:ems="10"
+                android:maxLength="2"
                 android:inputType="number" />
 
             <TextView
