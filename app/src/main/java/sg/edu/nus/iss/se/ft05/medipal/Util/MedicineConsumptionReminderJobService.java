@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE_NAME;
+
 /**
  * Created by ethi on 15/03/17.
  */
@@ -18,7 +20,7 @@ public class MedicineConsumptionReminderJobService  extends JobService {
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
         PersistableBundle b = jobParameters.getExtras();
-        String medicineName = b.getString("medicineName");
+        String medicineName = b.getString(MEDICINE_NAME);
         NotificationUtils.remindUserForConsumption(MedicineConsumptionReminderJobService.this,medicineName);
         jobFinished(jobParameters, false);
         return true;

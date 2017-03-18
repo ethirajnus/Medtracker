@@ -1,18 +1,13 @@
 package sg.edu.nus.iss.se.ft05.medipal.Util;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import java.sql.Driver;
-import java.util.Calendar;
+
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Created by ethi on 15/03/17.
@@ -20,12 +15,7 @@ import java.util.Calendar;
 
 public class ReminderUtils {
 
-    private static final long REFRESH_INTERVAL = 3000;
     private static boolean sInitialized;
-
-    private static AlarmManager alarmMgr;
-    private static PendingIntent alarmIntent;
-
     private static int jobId = 0;
     private static JobScheduler jobScheduler;
 
@@ -33,7 +23,7 @@ public class ReminderUtils {
         if (sInitialized) return;
         ComponentName mServiceComponent = new ComponentName(context, MedicineReminderJobService.class);
         JobInfo.Builder builder = new JobInfo.Builder(jobId++, mServiceComponent);
-        builder.setPeriodic(1000 * 60 * 60 * 24);
+        builder.setPeriodic(MINUTE * HOUR * DAY);
         jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(builder.build());
         sInitialized = true;

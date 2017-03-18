@@ -22,9 +22,6 @@ import sg.edu.nus.iss.se.ft05.medipal.Category;
 
 public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
 
-
-    private static final String LOG = "CategoryDAOImpl";
-
     public CategoryDAOImpl(Context context) {
         super(context);
     }
@@ -39,9 +36,6 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
     @Override
     public Cursor findAll() {
         String selectQuery = "SELECT  * FROM " + TABLE_CATEGORY;
-
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 
@@ -54,16 +48,10 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
 
         String selectQuery = "SELECT  * FROM " + TABLE_CATEGORY + " WHERE "
                 + CATEGORY_KEY_ID + " = " + id;
-
-        Log.e(LOG, selectQuery);
-
         Cursor c = db.rawQuery(selectQuery, null);
-
         if (c != null) {
-
             c.moveToFirst();
         }
-
         Category category = new Category();
         category.setId(c.getInt(c.getColumnIndex(CATEGORY_KEY_ID)));
         category.setCategoryName((c.getString(c.getColumnIndex(CATEGORY_KEY_CATEGORY))));
@@ -79,7 +67,6 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
     @Override
     public long insert(Category category) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(CATEGORY_KEY_CATEGORY, category.getCategoryName());
         values.put(CATEGORY_KEY_CODE, category.getCode());

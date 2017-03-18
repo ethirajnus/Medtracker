@@ -1,25 +1,28 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import sg.edu.nus.iss.se.ft05.medipal.Category;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
+
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 public class AddOrUpdateCategory extends AppCompatActivity implements View.OnClickListener {
 
     Button saveButton;
     EditText name,code,description;
     CheckBox reminder;
+    private Context context;
 
     private Category category;
     @Override
@@ -28,22 +31,22 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_add_category);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        context = getApplicationContext();
         findViewsById();
         setListeners();
         Bundle b = getIntent().getExtras();
-        if(b != null && b.getString("action").equalsIgnoreCase("edit")){
+        if(b != null && b.getString(ACTION).equalsIgnoreCase(EDIT)){
             updateSaveButton();
-            updateCategoryValues(b.getInt("id"));
-            setTitle("Edit Category");
+            updateCategoryValues(b.getInt(ID));
+            setTitle(EDIT_CATEGORY);
         }else{
-            setTitle("New Category");
+            setTitle(NEW_CATEGORY);
         }
 
     }
 
     private void updateCategoryValues(int id) {
-        category = Category.findById(getApplicationContext(),id);
+        category = Category.findById(context,id);
         name.setText(category.getCategoryName());
         code.setText(category.getCode().toUpperCase());
         description.setText(category.getDescription());
@@ -52,8 +55,8 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
     }
 
     private void updateSaveButton() {
-        saveButton.setTag("update");
-        saveButton.setText("Update");
+        saveButton.setTag(UPDATE);
+        saveButton.setText(UPDATE);
     }
 
     private void setListeners() {
@@ -66,7 +69,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         description = (EditText) findViewById(R.id.categoryDescription);
         reminder = (CheckBox) findViewById(R.id.categoryReminder);
         saveButton = (Button) findViewById(R.id.saveCategory);
-        saveButton.setTag("New");
+        saveButton.setTag(NEW);
     }
 
     @Override
@@ -84,10 +87,10 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         String categoryCode = code.getText().toString().toUpperCase();
         String categoryDescription = description.getText().toString();
         Boolean categoryReminder = reminder.isChecked();
-        if(saveButton.getTag().toString().equalsIgnoreCase("New")){
+        if(saveButton.getTag().toString().equalsIgnoreCase(NEW)){
             Category category = new Category(categoryName,categoryCode,categoryDescription,categoryReminder);
-            if(category.save(getApplicationContext())== -1){
-                Toast.makeText(getApplicationContext(), "Category was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
+            if(category.save(context)== -1){
+                Toast.makeText(context, CATEGORY_NOT_SAVED, Toast.LENGTH_SHORT).show();
             }
             else {
                 navigateToMainAcitivity();
@@ -99,8 +102,8 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
             category.setCategoryName(categoryName);
             category.setCode(categoryCode);
             category.setDescription(categoryDescription);
-            if(category.update(getApplicationContext())== -1){
-                Toast.makeText(getApplicationContext(), "Category was not updated properly,Please try again later", Toast.LENGTH_SHORT).show();
+            if(category.update(context)== -1){
+                Toast.makeText(context, CATEGORY_NOT_UPDATED, Toast.LENGTH_SHORT).show();
             }
             else {
                 navigateToMainAcitivity();
@@ -111,7 +114,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
     }
 
     public void navigateToMainAcitivity(){
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent = new Intent(context,MainActivity.class);
         MainActivity.currentFragment= CategoryFragment.class.getName();
         startActivity(intent);
 

@@ -13,6 +13,9 @@ import sg.edu.nus.iss.se.ft05.medipal.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CONSUMPTION_MESSAGE;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE;
+
 /**
  * Created by ethi on 14/03/17.
  */
@@ -34,10 +37,10 @@ public class NotificationUtils {
     public static void remindUserForConsumption(Context context, String name) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setContentText("Please consume " + name + " medicine")
+                .setContentText(constructNotificationMessage(name))
                 .setSmallIcon(R.drawable.ic_menu_gallery)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(
-                        "Please consume " + name + " medicine"))
+                        constructNotificationMessage(name)))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
                 .setAutoCancel(true);
@@ -50,6 +53,10 @@ public class NotificationUtils {
         NotificationManager notificationManager = (NotificationManager)
         context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(MEDICINE_REMINDER_NOTIFICATION_ID++, notificationBuilder.build());
+    }
+
+    public static String constructNotificationMessage(String medicineName){
+        return CONSUMPTION_MESSAGE + " " +medicineName + " " + MEDICINE;
     }
 
 }

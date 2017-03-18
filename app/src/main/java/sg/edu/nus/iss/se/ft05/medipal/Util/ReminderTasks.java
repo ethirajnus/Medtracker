@@ -20,6 +20,8 @@ import sg.edu.nus.iss.se.ft05.medipal.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
 
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+
 /**
  * Created by ethi on 15/03/17.
  */
@@ -37,11 +39,11 @@ public class ReminderTasks {
     }
 
     synchronized public static void medicineConsumptionReminder(Context context) {
-
+        int medicineId,reminderId;
         Map<Integer, Integer> medicineList = Medicine.listAllMedicine(context);
         for (Map.Entry<Integer, Integer> entry : medicineList.entrySet()) {
-            int medicineId = entry.getKey();
-            int reminderId = entry.getValue();
+            medicineId = entry.getKey();
+            reminderId = entry.getValue();
             Medicine medicine = Medicine.findById(context, medicineId);
             if (medicine.getRemind()) {
                 Reminder reminder = Reminder.findById(context, reminderId);
@@ -55,13 +57,13 @@ public class ReminderTasks {
                 long set_time = calendar.getTimeInMillis();
                 long interval = set_time - current_time;
                 PersistableBundle b = new PersistableBundle();
-                b.putString("medicineName", medicine.getName());
+                b.putString(MEDICINE_NAME, medicine.getName());
                 for (int frequency = 0; frequency < reminder.getFrequency(); frequency++) {
-                    long intervalBetweenConsumption = reminder.getInterval() * frequency * 60000;
+                    long intervalBetweenConsumption = reminder.getInterval() * frequency * MINUTE;
                     ComponentName mServiceComponent = new ComponentName(context, MedicineConsumptionReminderJobService.class);
                     JobInfo.Builder builder = new JobInfo.Builder(medicineConsumptionReminder++, mServiceComponent);
                     builder.setMinimumLatency(interval + intervalBetweenConsumption);
-                    builder.setOverrideDeadline(interval + intervalBetweenConsumption + 60000);
+                    builder.setOverrideDeadline(interval + intervalBetweenConsumption + MINUTE);
                     builder.setExtras(b);
                     jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
                     jobScheduler.schedule(builder.build());

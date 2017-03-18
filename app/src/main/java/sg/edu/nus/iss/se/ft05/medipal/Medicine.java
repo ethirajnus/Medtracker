@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
@@ -166,11 +167,11 @@ public class Medicine {
         return medicineDAO.update(this);
     }
 
-    public static HashMap<Integer,Integer> listAllMedicine(Context context){
+    public static Map<Integer,Integer> listAllMedicine(Context context){
         Cursor cursor = Medicine.findAll(context);
-        HashMap<Integer,Integer > medicineHashMap = new HashMap<Integer,Integer>();
+        Map<Integer,Integer > medicineHashMap = new HashMap();
         for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            medicineHashMap.put((Integer)cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_ID)),(Integer)cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_REMINDERID)));
+            medicineHashMap.put(cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_ID)),cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_REMINDERID)));
         }
         return  medicineHashMap;
     }
