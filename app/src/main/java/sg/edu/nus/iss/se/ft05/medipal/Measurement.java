@@ -12,53 +12,46 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.MeasurementDAOImpl;
 
 public class Measurement {
 
-    private int id;
-    private int systolic;
-    private int diastolic;
-    private int pulse;
+    private int id, systolic, diastolic, pulse, weight;
     private float temperature;
-    private int weight;
     private String measuredOn;
 
     private static MeasurementDAO measurementAll;
     private MeasurementDAO measurementDAO;
 
-    public Measurement(int systolic,int diastolic,int pulse,float temperature,int weight,String measuredOn){
-        //this.id=id;
-        this.systolic=systolic;
-        this.diastolic=diastolic;
-        this.pulse=pulse;
-        this.temperature=temperature;
-        this.weight=weight;
-        this.measuredOn=measuredOn;
+    public Measurement(int systolic, int diastolic, int pulse, float temperature, int weight, String measuredOn) {
+        this.systolic = systolic;
+        this.diastolic = diastolic;
+        this.pulse = pulse;
+        this.temperature = temperature;
+        this.weight = weight;
+        this.measuredOn = measuredOn;
     }
 
-    public Measurement() {}
-
-    public String toString(){
-        return id+"-"+systolic+"-"+diastolic+"-"+pulse+"-"+temperature+"-"+weight+"-"+measuredOn;
+    public Measurement() {
     }
-    public static Cursor findAll(Context context){
+
+    public static Cursor findAll(Context context) {
         measurementAll = new MeasurementDAOImpl(context);
         return measurementAll.findAll();
     }
 
-    public static Measurement findById(Context context, int id){
+    public static Measurement findById(Context context, int id) {
         measurementAll = new MeasurementDAOImpl(context);
-        return  measurementAll.findById(id);
+        return measurementAll.findById(id);
     }
 
-    public long save(Context context){
+    public long save(Context context) {
         measurementDAO = new MeasurementDAOImpl(context);
         return measurementDAO.insert(this);
     }
 
-    public int update(Context context){
+    public int update(Context context) {
         measurementDAO = new MeasurementDAOImpl(context);
         return measurementDAO.update(this);
     }
 
-    public int delete(Context context){
+    public int delete(Context context) {
         measurementDAO = new MeasurementDAOImpl(context);
         return measurementDAO.delete(this.getId());
     }

@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,44 +22,21 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 public class AddMeasurement extends AppCompatActivity implements View.OnClickListener {
 
     Button saveButton;
-    EditText systolic,diastolic,pulse,temperature,weight,measuredOn;
-    //CheckBox reminder;
+    EditText systolic, diastolic, pulse, temperature, weight, measuredOn;
 
     private Measurement measurement;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_measurement);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToMainActivity();
-            }
-        });*/
-
-        /*super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_measurement);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);*/
 
         findViewsById();
         setListeners();
 
-        /*Bundle b = getIntent().getExtras();
-        if(b != null && b.getString("action").equalsIgnoreCase("edit")){
-            updateSaveButton();
-            updateCategoryValues(b.getInt("id"));
-            setTitle("Edit Category");
-        }else{
-            setTitle("New Category");
-        }*/
-
         setTitle("New Measurement");
-
     }
 
     /*private void updateCategoryValues(int id) {
@@ -88,8 +64,6 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         pulse = (EditText) findViewById(R.id.measurementPulse);
         temperature = (EditText) findViewById(R.id.measurementTemperature);
         weight = (EditText) findViewById(R.id.measurementWeight);
-        //measuredOn = (EditText) findViewById(R.id.measurementMeasuredOn);
-        //reminder = (CheckBox) findViewById(R.id.categoryReminder);
         saveButton = (Button) findViewById(R.id.saveMeasurement);
         saveButton.setTag("New");
     }
@@ -106,16 +80,8 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void saveMeasurement(){
-        /*String categoryName = name.getText().toString();
-        String categoryCode = code.getText().toString();
-        String categoryDescription = code.getText().toString();
-        Boolean categoryReminder = reminder.isChecked();
-        */
-
+    public void saveMeasurement() {
         String temp = systolic.getText().toString();
-        //int measurementId = Integer.parseInt(temp);
-        //temp = systolic.getText().toString();
         int measurementSystolic = Integer.parseInt(temp);
         temp = diastolic.getText().toString();
         int measurementDiastolic = Integer.parseInt(temp);
@@ -125,22 +91,17 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         int measurementTemperature = Integer.parseInt(temp);
         temp = weight.getText().toString();
         int measurementWeight = Integer.parseInt(temp);
-        //String measurementMeasuredOn = measuredOn.getText().toString();
         String measurementMeasuredOn = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        Measurement measurement = new Measurement(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
 
-        //Toast.makeText(getApplicationContext(), measurementSystolic+"-"+measurementDiastolic+"-"+measurementPulse+"-"+measurementTemperature+"-"+measurementWeight, Toast.LENGTH_SHORT).show();
-      //  if(saveButton.getTag().toString().equalsIgnoreCase("New")){
+        //  if(saveButton.getTag().toString().equalsIgnoreCase("New")){
 
-        Measurement measurement = new Measurement(measurementSystolic,measurementDiastolic,measurementPulse,measurementTemperature,measurementWeight,measurementMeasuredOn);
-        //String measure = measurement.toString();
-        //Toast.makeText(getApplicationContext(),measure, Toast.LENGTH_SHORT).show();
-            if(measurement.save(getApplicationContext())== -1){
-                Toast.makeText(getApplicationContext(), "Measurement was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                navigateToMainActivity();
+        if (measurement.save(getApplicationContext()) == -1) {
+            Toast.makeText(getApplicationContext(), "Measurement was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
+        } else {
+            navigateToMainActivity();
 
-            }
+        }
         //}
         /*else {
             category.setRemind(categoryReminder);
@@ -153,15 +114,12 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
             else {
                 navigateToMainAcitivity();
             }
-
         }*/
-
     }
 
-        public void navigateToMainActivity(){
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            MainActivity.currentFragment= MeasurementFragment.class.getName();
-            startActivity(intent);
-
-        }
+    public void navigateToMainActivity() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        MainActivity.currentFragment = MeasurementFragment.class.getName();
+        startActivity(intent);
+    }
 }

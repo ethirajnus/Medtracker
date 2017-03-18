@@ -21,10 +21,25 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_toRightOf="@+id/measurementHard"
+        android:layout_weight="1"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/measurementHard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/measurementImageIcon"
         android:layout_weight="1"
         android:textAllCaps="true"
         android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="Measured on"
         android:textStyle="bold" />
 
     <ImageView
