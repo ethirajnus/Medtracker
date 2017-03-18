@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +32,12 @@ public class ShowAppointment extends AppCompatActivity {
         actionBar.setTitle("APPOINTMENT INFO");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+        TextView date,time,clinic,test,pre_test;
+        date=(TextView) findViewById(R.id.appointment_date);
+        time=(TextView) findViewById(R.id.appointment_time);
+        clinic=(TextView) findViewById(R.id.appointment_clinic);
+        test=(TextView) findViewById(R.id.appointment_test);
+        pre_test=(TextView) findViewById(R.id.appointment_pre_test);
     }
     public void openEditAppointment(View view)
     {

@@ -18,8 +18,7 @@ public class Appointment {
 
     }
 
-    public Appointment(Integer id, String date, String time, String clinic, String test, String pre_test) {
-        this.id = id;
+    public Appointment(String date, String time, String clinic, String test, String pre_test) {
         this.date = date;
         this.time = time;
         this.clinic = clinic;

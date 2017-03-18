@@ -14,10 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import sg.edu.nus.iss.se.ft05.medipal.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.Category;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentListAdapter.AppointmentViewHolder> {
@@ -52,8 +53,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Category category = Category.findById(mContext, id);
-                category.delete(mContext);
+                Appointment appointment = Appointment.findById(mContext, id);
+                appointment.delete(mContext);
                 //update the list
                 swapCursor(Category.findAll(mContext));
             }
@@ -69,12 +70,23 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             }
         });
 
+        holder.appointmentInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ShowAppointment.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return mCursor.getCount();
     }
+
     public void swapCursor(Cursor newCursor) {
         // Always close the previous mCursor first
         if (mCursor != null) mCursor.close();

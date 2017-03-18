@@ -102,7 +102,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
-        Appointment appointment=new Appointment(id,adate,atime,aclinic,atest,apre_test);
+        Appointment appointment=new Appointment(adate,atime,aclinic,atest,apre_test);
         appointment.save(getApplicationContext());
 
         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
