@@ -31,6 +31,8 @@
             android:id="@+id/measurementId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginTop="8dp"
             android:text=" Id :" />
 
         <TextView
@@ -38,12 +40,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Sytolic :"
+            android:textSize="25dp"
+            android:layout_marginTop="8dp"
             android:ems="10"        />
 
         <TextView
             android:id="@+id/measurementDiastolic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginTop="8dp"
             android:text=" Diastolic" />
 
 
@@ -51,18 +57,24 @@
             android:id="@+id/measurementPulse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginTop="8dp"
             android:text=" Pulse :" />
 
         <TextView
             android:id="@+id/measurementTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginTop="8dp"
             android:text=" Temperature :" />
 
         <TextView
             android:id="@+id/measurementWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginTop="8dp"
             android:text=" Weight :" />
 
         <TextView
@@ -70,6 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Measured On :"
+            android:textSize="25dp"
+            android:layout_marginTop="8dp"
             android:ems="10" />
 
     </LinearLayout>

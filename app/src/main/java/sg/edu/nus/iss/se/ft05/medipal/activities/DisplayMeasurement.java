@@ -28,20 +28,20 @@ public class DisplayMeasurement extends AppCompatActivity {
         setContentView(R.layout.activity_display_measurement);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Measurement");
+        setTitle("Measurement Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToMainAcitivity();
             }
-        });
+        });*/
 
         Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt(MEASUREMENT_ID);
 
-        Toast.makeText(getApplicationContext(), "Selected Id:"+id, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Selected Id:"+id, Toast.LENGTH_SHORT).show();
         findViewsById();
 
         measurement=Measurement.findById(getApplicationContext(),id);
@@ -66,9 +66,9 @@ public class DisplayMeasurement extends AppCompatActivity {
         measuredOn = (TextView) findViewById(R.id.measurementMeasuredOn);
     }
 
-    public void navigateToMainAcitivity(){
+    /*public void navigateToMainAcitivity(){
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         MainActivity.currentFragment= MeasurementFragment.class.getName();
         startActivity(intent);
-    }
+    }*/
 }

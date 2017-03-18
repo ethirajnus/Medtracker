@@ -77,7 +77,7 @@ public class MeasurementFragment extends Fragment {
             //attach the ItemTouchHelper to the waitlistRecyclerView
         }).attachToRecyclerView(measurementRecyclerView);
 
-        getActivity().setTitle("Measurement");
+        getActivity().setTitle("Measurements");
 
         // Inflate the layout for this fragment
         return view;

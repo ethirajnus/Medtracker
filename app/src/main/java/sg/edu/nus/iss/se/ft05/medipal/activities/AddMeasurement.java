@@ -35,12 +35,12 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToMainActivity();
             }
-        });
+        });*/
 
         /*super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_measurement);
@@ -158,10 +158,10 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void navigateToMainActivity(){
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        MainActivity.currentFragment= MeasurementFragment.class.getName();
-        startActivity(intent);
+        public void navigateToMainActivity(){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            MainActivity.currentFragment= MeasurementFragment.class.getName();
+            startActivity(intent);
 
-    }
+        }
 }
