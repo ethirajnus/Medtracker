@@ -46,10 +46,8 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
 
     DatePickerDialog datePickerDialog;
 
-
+    private Context context;
     private HealthBio healthBio;
-
-    Context context = getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         setContentView(R.layout.activity_add_or_update_health_bio);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        context = getApplicationContext();
         findViewsById();
         setListeners();
         Bundle b = getIntent().getExtras();
