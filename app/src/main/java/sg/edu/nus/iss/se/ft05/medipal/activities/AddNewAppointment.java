@@ -25,6 +25,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     EditText date,time,clinic,test,pre_test;
     private int mHour,mMinute;
     private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat timeFormatter;
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
     @Override
@@ -36,6 +37,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        ;
 
 
         findViewsById();
@@ -80,8 +82,17 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                         String hour="",minutes="";
+                        if(hourOfDay<10)
+                            hour="0"+hourOfDay;
+                        else
+                            hour+=hourOfDay;
+                        if(minute<10)
+                            minutes="0"+minute;
+                        else
+                            minutes+=minute;
 
-                        time.setText(hourOfDay + ":" + minute);
+                        time.setText(hour + ":" + minutes);
                     }
                 }, mHour, mMinute, false);
 

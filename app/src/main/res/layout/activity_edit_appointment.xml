@@ -115,6 +115,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="49dp"
         android:id="@+id/button"
-        android:onClick="editAppointment"/>
+        android:onClick="editAppointment"
+        android:background="@drawable/side_nav_bar"/>
 
 </RelativeLayout>

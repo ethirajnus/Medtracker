@@ -74,6 +74,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ShowAppointment.class);
+                Bundle b=new Bundle();
+                b.putLong("id",id);
+                intent.putExtras(b);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
@@ -89,9 +92,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     public void swapCursor(Cursor newCursor) {
         // Always close the previous mCursor first
-        if (mCursor != null) mCursor.close();
+        if (mCursor != null &&mCursor.moveToFirst()) mCursor.close();
         mCursor = newCursor;
-        if (newCursor != null) {
+        if (newCursor != null &&newCursor.moveToFirst()) {
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
