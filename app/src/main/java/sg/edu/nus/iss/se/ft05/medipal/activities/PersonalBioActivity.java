@@ -18,7 +18,6 @@ import java.util.Locale;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.enums.BloodType;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.DatePickerFragment;
 
 /**
  * @author Moushumi Seal
