@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
+            android:maxLength="3"
             android:textStyle="bold" />
 
         <TextView
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
+            android:maxLength="3"
             android:textStyle="bold" />
 
         <TextView
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
+            android:maxLength="3"
             android:textStyle="bold" />
 
         <TextView
@@ -71,6 +74,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="numberDecimal"
+            android:maxLength="5"
             android:textStyle="bold" />
 
         <TextView
@@ -86,6 +90,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
+            android:maxLength="3"
             android:textStyle="bold" />
 
         <Button
