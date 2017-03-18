@@ -31,7 +31,6 @@
         <activity
             android:name=".activities.ShowMedicine"
             android:parentActivityName=".activities.MainActivity">
-            >
         </activity>
         <activity
             android:name=".activities.AddOrUpdateHealthBioActivity"

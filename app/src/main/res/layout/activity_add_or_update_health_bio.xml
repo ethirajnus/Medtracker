@@ -55,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
                 android:ems="10"
-                android:editable="false"/>
+                android:inputType="date"
+                android:focusable="false"/>
 
 
             <TextView
@@ -80,18 +81,17 @@
                     android:id="@+id/radioBtnAllergy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_condType"
                     android:layout_alignParentStart="true"
                     android:paddingRight="20dp"
                     android:text="@string/conditionTypeAllergy"
-                    android:tag="A"/>
+                    android:tag="@string/tagAllergy"/>
                 <RadioButton
                     android:id="@+id/radioBtnCondition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="@string/condition"
-                    android:tag="C"/>
+                    android:tag="@string/tagCondition"/>
 
             </RadioGroup>
 
@@ -131,9 +131,6 @@
                 android:layout_weight="0.02"
                 android:background="@color/colorPrimary"
                 android:text="@string/save" />
-
-
         </RelativeLayout>
     </ScrollView>
-
 </RelativeLayout>

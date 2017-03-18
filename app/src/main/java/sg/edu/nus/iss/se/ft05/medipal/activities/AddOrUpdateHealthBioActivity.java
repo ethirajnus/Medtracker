@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -29,12 +32,13 @@ import sg.edu.nus.iss.se.ft05.medipal.model.HealthBio;
 /**
  * @author Moushumi Seal
  */
-public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener{
+public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener /*, View.OnFocusChangeListener*/{
 
     private EditText mCondition, mStartDate;
     private RadioGroup mRG_ConditionType;
     private RadioButton mRadioBtn_ConditionType, mRadio_Condition, mRadio_Allergy;
     private CheckBox mAddAnother;
+    private CheckedTextView mTV_addAnother;
     private Button mSaveBtn;
     private Calendar dateCalendar;
 
@@ -60,6 +64,8 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             updateSaveButton();
             updateHealthbioValues(b.getInt("id"));
             setTitle(Constants.TITLE_EDIT_HEALTHBIO);
+            mAddAnother.setVisibility(View.INVISIBLE);
+            mTV_addAnother.setVisibility(View.INVISIBLE);
         }else{
             mSaveBtn.setText(Constants.SAVE);
             setTitle(Constants.TITLE_NEW_HEALTHBIO);
@@ -69,7 +75,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     private void setListeners() {
         mSaveBtn.setOnClickListener(this);
         mStartDate.setOnClickListener(this);
-        mStartDate.setOnFocusChangeListener(this);
+        //mStartDate.setOnFocusChangeListener(this);
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -91,12 +97,13 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                 saveOrUpdateHealthbio();
                 break;
             case R.id.startDate:
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
                 break;
         }
     }
 
-    @Override
+    /*@Override
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case R.id.startDate:
@@ -104,7 +111,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                     datePickerDialog.show();
                 break;
         }
-    }
+    }*/
 
     private void updateHealthbioValues(int id) {
         healthBio = HealthBio.findById(getApplicationContext(),id);
@@ -128,6 +135,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         mRadio_Condition = (RadioButton) findViewById(R.id.radioBtnCondition);
         mRadio_Allergy = (RadioButton) findViewById(R.id.radioBtnAllergy);
         mAddAnother = (CheckBox) findViewById(R.id.addAnother);
+        mTV_addAnother = (CheckedTextView) findViewById(R.id.tv_addAnother);
         mSaveBtn = (Button) findViewById(R.id.saveHealthBio);
         mSaveBtn.setTag(Constants.NEW);
     }
@@ -143,23 +151,30 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
 
         Context context = getApplicationContext();
 
-        healthBio = new HealthBio(condition,conditionType,startDate);
-        if(isValid()){
-            if(mSaveBtn.getTag().toString().equalsIgnoreCase(Constants.NEW)){
+
+        if(mSaveBtn.getTag().toString().equalsIgnoreCase(Constants.NEW)){
+            healthBio = new HealthBio(condition,conditionType,startDate);
+            if(isValid()){
                 if(healthBio.save(context)== -1)
-                    Toast.makeText(context, "Health was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,R.string.insert_error, Toast.LENGTH_SHORT).show();
                 else {
-                    Toast.makeText(context, "health bio add", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show();
                     navigate();
                 }
             }
-            else {
+        }
+        else {
+            if(isValid()){
+                healthBio.setCondition(condition);
+                healthBio.setConditionType(conditionType);
+                healthBio.setStartDate(startDate);
                 if(healthBio.update(context)== -1)
-                    Toast.makeText(context, "Healthbio  was not updated properly,Please try again later", Toast.LENGTH_SHORT).show();
-                else
+                    Toast.makeText(context, R.string.update_error, Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
                     navigate();
+                }
             }
-
         }
     }
 
@@ -176,19 +191,26 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     }
 
     private boolean isValid() {
-        if(healthBio.getCondition().isEmpty() || healthBio.getStartDate().isEmpty()) {
+        boolean isvalid = true;
+        if(healthBio.getCondition().isEmpty() && healthBio.getStartDate().isEmpty()) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(R.string.warning);
-            warningDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int which) {
                     alert.dismiss();
                 }
             });
             warningDialog.show();
-            return false;
+            isvalid = false;
+        } else if(TextUtils.isEmpty(healthBio.getCondition())) {
+            mCondition.setError("Please provide a condition!");
+            isvalid = false;
+        } else if(TextUtils.isEmpty(healthBio.getStartDate())) { //TODO message not displayed :(
+            mStartDate.setError("Please specify the date!");
+            isvalid = false;
         }
-        return true;
+        return isvalid;
     }
 }

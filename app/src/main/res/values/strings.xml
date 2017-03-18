@@ -45,9 +45,19 @@
     <string name="conditionType">Condition Type</string>
     <string name="add_another">Add another medical condition</string>
     <string name="conditionTypeAllergy">Allergy</string>
+    <string name="tagAllergy">A</string>
+    <string name="tagCondition">C</string>
 
     <!-- Error Messages -->
     <string name="warning">All fields are mandatory!</string>
+    <string name="insert_error">Details were not inserted properly. Please try again later.</string>
+    <string name="update_error">Details were not updated properly. Please try again later.</string>
+    <string name="empty_condition">Please provide a condition!</string>
+    <string name="empty_startDate">Please provide a condition!</string>
+
+    <!-- Success Messages -->
+    <string name="add_success">Details added successfully!</string>
+    <string name="update_success">Details updated successfully!</string>
 
 
     <!-- Date picker -->

@@ -62,16 +62,6 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
         holder.textCondition.setText(condition);
         holder.itemView.setTag(id);
 
-
-        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                HealthBio healthBio = HealthBio.findById(mContext, id);
-                healthBio.delete(mContext);
-                //update the list
-                swapCursor(HealthBio.findAll(mContext));
-            }
-        });
-
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +110,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
     class HealthBioViewHolder extends RecyclerView.ViewHolder {
 
         TextView textCondition;
-        ImageView icon, editIcon, deleteIcon;
+        ImageView icon, editIcon;
 
 
         public HealthBioViewHolder(View itemView) {
@@ -128,7 +118,6 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
             textCondition = (TextView) itemView.findViewById(R.id.condition);
             icon = (ImageView) itemView.findViewById(R.id.healthbioImageIcon);
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon);
-            deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon);
         }
     }
 }
