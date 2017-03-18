@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -39,6 +42,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     private static final String PHONE = "Phone: ";
 
     private final OnStartDragListener mDragStartListener;
+
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
     // Holds on to the cursor to display the wait list
     private Cursor cursor;
@@ -115,6 +120,28 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                 }
             });
 
+            // delete icon onclick listener
+            holder.smsIcon.setOnClickListener(new View.OnClickListener() {
+
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                public void onClick(View v) {
+
+                    Toast.makeText(context, "SMS Sent", Toast.LENGTH_SHORT).show();
+//                    SmsManager smsManager = SmsManager.getDefault();
+//                    smsManager.sendTextMessage("" + phone, null, "Sender is in emergency please contact back immidiately", null, null);
+
+                    if (context.checkSelfPermission(Manifest.permission.SEND_SMS)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        Toast.makeText(context, "Unable to send SMS", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        SmsManager smsManager = SmsManager.getDefault();
+                        smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergancy please call immidiately", null, null);
+                    }
+                }
+            });
+
             // edit icon onclick listener
             holder.editIcon.setOnClickListener(new View.OnClickListener() {
 
@@ -137,29 +164,34 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     // TODO Temp
                     Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
 
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:" + phone));
 
                     if (ActivityCompat.checkSelfPermission(context,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
                         Toast.makeText(context, "No Permission to call", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
 
-                    try {
 
-                        context.startActivity(callIntent);
+                    } else {
 
-                    } catch (Exception e) {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:" + phone));
 
-                        Log.e(LOG, e.getMessage());
+                        try {
+
+                            context.startActivity(callIntent);
+
+                        } catch (Exception e) {
+
+                            Log.e(LOG, e.getMessage());
+                        }
                     }
                 }
             });
 
             // Start a drag whenever the handle view it touched
-            holder.itemView.setOnTouchListener(new View.OnTouchListener() {
+            holder.itemView.setOnTouchListener(new View.OnTouchListener()
+
+            {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
 
@@ -195,6 +227,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
      *
      * @param newCursor the new cursor that will replace the existing one
      */
+
     public void swapCursor(Cursor newCursor) {
 
         // Always close the previous mCursor first
@@ -223,6 +256,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         ImageView imageIcon;
         ImageView editIcon;
         ImageView deleteIcon;
+        ImageView smsIcon;
 
         /**
          * Constructor of ContactsViewHolder
@@ -238,16 +272,26 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             imageIcon = (ImageView) itemView.findViewById(R.id.imageIcon_list_ice_contacts);
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon_list_ice_edit);
             deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon_list_ice_delete);
+            smsIcon = (ImageView) itemView.findViewById(R.id.smsIcon_list_ice_sms);
         }
 
     }
 
+    /**
+     * @param position
+     */
     @Override
     public void onItemDismiss(int position) {
-        // delete item
+
     }
 
-
+    /**
+     * Method on move by touch
+     *
+     * @param fromPosition
+     * @param toPosition
+     * @return boolean
+     */
     public boolean onItemMove(int fromPosition, int toPosition) {
 
         Toast.makeText(context, "Positions: from : " + fromPosition + "to : " + toPosition, Toast.LENGTH_SHORT).show();
