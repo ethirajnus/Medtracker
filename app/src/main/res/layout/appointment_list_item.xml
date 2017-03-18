@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/appointmentInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_weight="1"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/deleteIcon"
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_weight="1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="22dp"
+        android:src="@android:drawable/ic_menu_delete"
+        />
+
+    <ImageView
+        android:id="@+id/editIcon"
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_weight="1"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_alignTop="@+id/deleteIcon"
+        android:layout_toStartOf="@+id/deleteIcon"
+        android:layout_marginEnd="19dp" />
+
+</RelativeLayout>

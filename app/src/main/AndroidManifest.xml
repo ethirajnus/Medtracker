@@ -19,11 +19,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AddMedicine" />
-        <activity android:name=".activities.AddOrUpdateCategory"
-            android:parentActivityName=".activities.MainActivity">
-
-        </activity>
-        <activity android:name=".activities.ShowCategory"></activity>
+        <activity
+            android:name=".activities.AddOrUpdateCategory"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.ShowCategory" />
+        <activity
+            android:name=".activities.AddNewAppointment"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.EditAppointment"
+            android:parentActivityName=".activities.MainActivity"/>
+        <activity android:name=".activities.ShowAppointment"
+            android:parentActivityName=".activities.MainActivity"></activity>
     </application>
 
 </manifest>
