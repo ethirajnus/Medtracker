@@ -6,11 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.se.ft05.medipal.Category;
+import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
 /**
  * Created by ethi on 10/03/17.
@@ -65,6 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + TABLE_REMINDER + "(" + REMINDER_KEY_ID + " INTEGER PRIMARY KEY," + REMINDER_KEY_FREQUENCY
             + " INTEGER," + REMINDER_KEY_STARTTIME + " TEXT," + REMINDER_KEY_INTERVAL
             + " INTEGER" + ")";
+
     Connection connection = null;
 
     public DBHelper(Context context) {
@@ -79,7 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
         insertDefaultValues(db);
-
+        db.execSQL(getCreateTableHealthBioQuery());
     }
 
     @Override
@@ -87,18 +87,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDER);
+        db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_HEALTH_BIO);
         onCreate(db);
     }
 
 
-    public static void insertDefaultValues(SQLiteDatabase db){
+    public static void insertDefaultValues(SQLiteDatabase db) {
         ArrayList<Category> categoryList = new ArrayList<Category>();
-        categoryList.add(new Category("Supplement","SUP","Supplement type of medicines",true));
-        categoryList.add(new Category("Chronic","CHR","Chronice type of medicines",true));
-        categoryList.add(new Category("Incidental","INC","Incidental type of medicines",true));
-        categoryList.add(new Category("Complete Course","COM","Complete type of medicines",true));
-        categoryList.add(new Category("Self Apply","SEL","Self Apply type of medicines",true));
-        for(Category category : categoryList){
+        categoryList.add(new Category("Supplement", "SUP", "Supplement type of medicines", true));
+        categoryList.add(new Category("Chronic", "CHR", "Chronice type of medicines", true));
+        categoryList.add(new Category("Incidental", "INC", "Incidental type of medicines", true));
+        categoryList.add(new Category("Complete Course", "COM", "Complete type of medicines", true));
+        categoryList.add(new Category("Self Apply", "SEL", "Self Apply type of medicines", true));
+        for (Category category : categoryList) {
             ContentValues values = new ContentValues();
             values.put(CATEGORY_KEY_CATEGORY, category.getCategoryName());
             values.put(CATEGORY_KEY_CODE, category.getCode());
@@ -107,6 +108,23 @@ public class DBHelper extends SQLiteOpenHelper {
             // insert row
             db.insert(TABLE_CATEGORY, null, values);
         }
+    }
+    //Creating HealthBio table
+    private String getCreateTableHealthBioQuery(){
+        final StringBuilder CREATE_TABLE_HEALTHBIO = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(DbConstants.TABLE_HEALTH_BIO)
+                .append(" (")
+                .append(DbConstants.HEALTH_BIO_KEY_ID)
+                .append(" INTEGER PRIMARY KEY,")
+                .append(DbConstants.HEALTH_BIO_KEY_CONDITION)
+                .append(" TEXT,")
+                .append(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE)
+                .append(" TEXT,")
+                .append(DbConstants.HEALTH_BIO_KEY_START_DATE)
+                .append(" TEXT")
+                .append(")");
+        return CREATE_TABLE_HEALTHBIO.toString();
     }
 
 }
