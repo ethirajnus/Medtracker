@@ -3,8 +3,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
+
+    <!-- Personal Bio -->
+    <string name="title_activity_add_personalBio">Personal Details</string>
     <string name="fullName">Name</string>
     <string name="dob">Date of Birth</string>
     <string name="idNo">Passport/ NRIC No.</string>
@@ -14,6 +16,10 @@
     <string name="bloodType">Blood Group</string>
     <string name="personalBio">Personal Bio</string>
     <string name="save">Save</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="categoryName">Name</string>
     <string name="categoryCode">Code</string>
     <string name="categoryDescription">Description</string>
@@ -32,4 +38,30 @@
     <string name="reminderFrequency">Frequency</string>
     <string name="reminderStartTime">StartTime</string>
     <string name="reminderInterval">Interval</string>
+
+    <!-- Health Bio -->
+    <string name="condition">Condition</string>
+    <string name="startDate">Diagnosed on</string>
+    <string name="conditionType">Condition Type</string>
+    <string name="add_another">Add another medical condition</string>
+    <string name="conditionTypeAllergy">Allergy</string>
+    <string name="tagAllergy">A</string>
+    <string name="tagCondition">C</string>
+
+    <!-- Error Messages -->
+    <string name="warning">All fields are mandatory!</string>
+    <string name="insert_error">Details were not inserted properly. Please try again later.</string>
+    <string name="update_error">Details were not updated properly. Please try again later.</string>
+    <string name="empty_condition">Please provide a condition!</string>
+    <string name="empty_startDate">Please provide a condition!</string>
+
+    <!-- Success Messages -->
+    <string name="add_success">Details added successfully!</string>
+    <string name="update_success">Details updated successfully!</string>
+    <string name="delete_success">Deleted!</string>
+
+
+    <!-- Date picker -->
+    <string name="datePickerTitle">Set Date</string>
+    <string name="setBtn">Set</string>
 </resources>

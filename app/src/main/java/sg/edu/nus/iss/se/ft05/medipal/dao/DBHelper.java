@@ -5,8 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
 /**
  * Created by ethi on 10/03/17.
@@ -61,6 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + TABLE_REMINDER + "(" + REMINDER_KEY_ID + " INTEGER PRIMARY KEY," + REMINDER_KEY_FREQUENCY
             + " INTEGER," + REMINDER_KEY_STARTTIME + " TEXT," + REMINDER_KEY_INTERVAL
             + " INTEGER" + ")";
+
     Connection connection = null;
 
     public DBHelper(Context context) {
@@ -74,6 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CATEGORY);
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
+        db.execSQL(getCreateTableHealthBioQuery());
 
     }
 
@@ -82,7 +83,26 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDER);
+        db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_HEALTH_BIO);
         onCreate(db);
+    }
+
+    //Creating HealthBio table
+    private String getCreateTableHealthBioQuery(){
+        final StringBuilder CREATE_TABLE_HEALTHBIO = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(DbConstants.TABLE_HEALTH_BIO)
+                .append(" (")
+                .append(DbConstants.HEALTH_BIO_KEY_ID)
+                .append(" INTEGER PRIMARY KEY,")
+                .append(DbConstants.HEALTH_BIO_KEY_CONDITION)
+                .append(" VARCHAR(255),")
+                .append(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE)
+                .append(" VARCHAR(1),")
+                .append(DbConstants.HEALTH_BIO_KEY_START_DATE)
+                .append(" TEXT")
+                .append(")");
+        return CREATE_TABLE_HEALTHBIO.toString();
     }
 
 }
