@@ -10,6 +10,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateHealthBioActivity;
@@ -65,6 +66,7 @@ public class HealthBioFragment extends Fragment {
                 //remove from DB
                 HealthBio healthBio = HealthBio.findById(context, id);
                 healthBio.delete(context);
+                Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                 //update the list
                 mAdapter.swapCursor(HealthBio.findAll(context));
             }

@@ -58,6 +58,7 @@
     <!-- Success Messages -->
     <string name="add_success">Details added successfully!</string>
     <string name="update_success">Details updated successfully!</string>
+    <string name="delete_success">Deleted!</string>
 
 
     <!-- Date picker -->

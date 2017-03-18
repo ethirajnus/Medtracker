@@ -49,6 +49,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
 
     private HealthBio healthBio;
 
+    Context context = getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +180,6 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     }
 
     public void navigate(){
-        Context context = getApplicationContext();
         Intent intent;
         if(mAddAnother.isChecked()) {
             intent = new Intent(this,AddOrUpdateHealthBioActivity.class);
