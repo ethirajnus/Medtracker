@@ -19,6 +19,8 @@ import android.app.TimePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import java.text.SimpleDateFormat;
 import android.text.InputType;
+
+import java.util.Date;
 import java.util.Locale;
 
 public class AddNewAppointment extends AppCompatActivity implements View.OnClickListener {
@@ -51,6 +53,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             fromDatePickerDialog.show();
         else if(view==time)
             timePickerDialog.show();
+
 
     }
     private void findViewsById() {
@@ -107,12 +110,15 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         test=(EditText) findViewById(R.id.new_appointment_test);
         pre_test=(EditText) findViewById(R.id.new_appointment_pre_test);
         String adate="",atime="",aclinic="",atest="",apre_test="";
-        Integer id=0;
         adate=date.getText().toString();
         atime=time.getText().toString();
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
+        if(clinic.getText().toString().length()==0)
+            clinic.setError("Clinic name required");
+        if(test.getText().toString().length()==0)
+            test.setError("Test name required");
         Appointment appointment=new Appointment(adate,atime,aclinic,atest,apre_test);
         appointment.save(getApplicationContext());
 
