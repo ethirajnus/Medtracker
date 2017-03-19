@@ -15,8 +15,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.Contacts;
+import sg.edu.nus.iss.se.ft05.medipal.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 
 /**
@@ -56,12 +57,8 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     private Button button;
 
     // Domain class
-    private Contacts contact;
-
-    String contactsName;
-    String contactsDesc;
-    String contactsPhone;
-    String contactsType;
+    private ICEContactsManager contactManager;
+    private ICEContact contact;
 
     /**
      * Method to run while creating UI for addition/Edit
@@ -100,13 +97,15 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         Bundle bundle = getIntent().getExtras();
 
+        contactManager = new ICEContactsManager();
+
         // Check if its addition or edit
         if (null != bundle && bundle.getString(ICE_BUNDLE_ACTION).equalsIgnoreCase(ICE_BUNDLE_ACTION_EDIT)) {
 
             button.setTag(ICE_BUTTON_UPDATE);
             button.setText(ICE_BUTTON_UPDATE_TEXT);
 
-            contact = Contacts.findById(context, bundle.getInt(ICE_BUNDLE_ACTION_ID));
+            contact = contactManager.findById(context, bundle.getInt(ICE_BUNDLE_ACTION_ID));
             name.setText(contact.getName());
             description.setText(contact.getDescription());
             phone.setText(String.valueOf(contact.getPhone()));
@@ -116,9 +115,9 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         } else {
 
-            if (5 <= Contacts.getMaxPriority(context)) {
+            if (5 <= contactManager.getMaxPriority(context)) {
 
-                Toast.makeText(context, "Maximum 5 Contacts Allowed Please delete atleast 1 existing contact to add new contact", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Maximum 5 ICEContactsManager Allowed Please delete atleast 1 existing contactManager to add new contactManager", Toast.LENGTH_SHORT).show();
                 navigateToMainAcitivity(context);
             }
 
@@ -143,16 +142,16 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     }
 
     /**
-     * Processing of save or update contact
+     * Processing of save or update contactManager
      */
     private void saveOrUpdateContact() {
 
 
         if (ICE_BUTTON_NEW.equalsIgnoreCase(button.getTag().toString())) {
 
-            Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType, this);
+            ICEContactsManager newContactManager = new ICEContactsManager(contact, this);
 
-            if (-1 == newContact.save(this)) {
+            if (-1 == newContactManager.save(this)) {
 
                 Toast.makeText(this, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
 
@@ -162,12 +161,10 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
             }
         } else {
 
-            contact.setName(contactsName);
-            contact.setDescription(contactsDesc);
-            contact.setPhone(Long.parseLong(contactsPhone));
-            contact.setType(contactsType);
+            contactManager = new ICEContactsManager();
+            contactManager.setICEContact(contact);
 
-            if (-1 == contact.update(this)) {
+            if (-1 == contactManager.update(this)) {
 
                 Toast.makeText(this, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
 
@@ -185,27 +182,40 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         boolean checkFields = true;
 
-        contactsName = name.getText().toString();
-        contactsDesc = description.getText().toString();
-        contactsPhone = phone.getText().toString();
-        contactsType = (String) spinner.getSelectedItem();
+        String contactName = name.getText().toString();
+        String contactDesc = description.getText().toString();
+        String contactPhone = phone.getText().toString();
+        String contactType = (String) spinner.getSelectedItem();
 
-        if (TextUtils.isEmpty(contactsName)) {
+        if (TextUtils.isEmpty(contactName)) {
 
             name.setError(ICE_ERROR_NAME);
             checkFields = false;
         }
 
-        if (TextUtils.isEmpty(contactsDesc)) {
+        if (TextUtils.isEmpty(contactDesc)) {
 
             description.setError(ICE_ERROR_DESC);
             checkFields = false;
         }
 
-        if (TextUtils.isEmpty(contactsPhone)) {
+        if (TextUtils.isEmpty(contactPhone)) {
 
             phone.setError(ICE_ERROR_PHONE);
             checkFields = false;
+        }
+
+        if (checkFields) {
+
+            if (null == contact) {
+
+                contact = new ICEContact();
+            }
+
+            contact.setName(contactName);
+            contact.setDescription(contactDesc);
+            contact.setPhone(Long.parseLong(contactPhone));
+            contact.setType(contactType);
         }
 
         return checkFields;

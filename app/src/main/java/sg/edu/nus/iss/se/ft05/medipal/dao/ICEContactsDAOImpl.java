@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import sg.edu.nus.iss.se.ft05.medipal.Contacts;
+import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 
 /**
  * Implementation class for emergency contacts database operations
@@ -87,10 +87,10 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
      * select operation with where clause using ID
      *
      * @param id int
-     * @return Contacts
+     * @return ICEContact
      */
     @Override
-    public Contacts findById(int id) {
+    public ICEContact findById(int id) {
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -106,26 +106,26 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
             cursor.moveToFirst();
         }
 
-        Contacts contacts = new Contacts();
-        contacts.setId(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_ID)));
-        contacts.setName((cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_NAME))));
-        contacts.setDescription(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_DESC)));
-        contacts.setPhone(cursor.getLong(cursor.getColumnIndex(ICE_CONTACTS_KEY_PHONE)));
-        contacts.setType(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_TYPE)));
-        contacts.setPriority(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_PRIORITY)));
+        ICEContact contact = new ICEContact();
+        contact.setId(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_ID)));
+        contact.setName((cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_NAME))));
+        contact.setDescription(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_DESC)));
+        contact.setPhone(cursor.getLong(cursor.getColumnIndex(ICE_CONTACTS_KEY_PHONE)));
+        contact.setType(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_TYPE)));
+        contact.setPriority(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_PRIORITY)));
 
-        return contacts;
+        return contact;
     }
 
 
     /**
      * insert operation
      *
-     * @param contact Contacts
+     * @param contact ICEContactsManager
      * @return long
      */
     @Override
-    public long insert(Contacts contact) {
+    public long insert(ICEContact contact) {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -161,11 +161,11 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
     /**
      * update operation
      *
-     * @param contact Contacts
+     * @param contact ICEContactsManager
      * @return int
      */
     @Override
-    public int update(Contacts contact) {
+    public int update(ICEContact contact) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 

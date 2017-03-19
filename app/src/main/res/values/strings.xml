@@ -35,8 +35,8 @@
     <string name="reminderStartTime">StartTime</string>
     <string name="reminderInterval">Interval</string>
 
-    <!-- ICE Contacts  -->
-    <string name="ice_header">In case of emergancy contacts</string>
+    <!-- ICE ICEContactsManager  -->
+    <string name="ice_header">In case of emergency</string>
     <string name="description">Description</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="ice_spinner_header">Type of contact</string>

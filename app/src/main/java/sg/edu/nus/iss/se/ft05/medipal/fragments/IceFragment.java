@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.Contacts;
+import sg.edu.nus.iss.se.ft05.medipal.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.listeners.PhoneCallListener;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
@@ -39,16 +39,16 @@ public class IceFragment extends Fragment implements OnStartDragListener {
     /**
      * method for processing when creating view
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater           LayoutInflater
+     * @param container          ViewGroup
+     * @param savedInstanceState savedInstanceState
      * @return View
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Set view for ICE Contacts fragment
+        // Set view for ICE ICEContactsManager fragment
         View view = inflater.inflate(R.layout.ice_fragment, container, false);
 
         // Set floating action button
@@ -61,8 +61,9 @@ public class IceFragment extends Fragment implements OnStartDragListener {
 
         iceRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+
         // Get all guest info from the database and save in a cursor
-        Cursor cursor = Contacts.findAll(context);
+        Cursor cursor = ICEContactsManager.findAll(context);
 
         PhoneCallListener phoneListener = new PhoneCallListener(context);
         TelephonyManager telephonyManager = (TelephonyManager) context
@@ -107,13 +108,13 @@ public class IceFragment extends Fragment implements OnStartDragListener {
                 // COMPLETED (9) call removeGuest and pass through that id
                 //remove from DB
 
-                // Contacts contacts = Contacts.findById(context, id);
+                // ICEContactsManager contacts = ICEContactsManager.findById(context, id);
                 //contacts.delete(context);
 
                 // COMPLETED (10) call swapCursor on mAdapter passing in getAllGuests() as the argument
                 //update the list
 
-                adapter.swapCursor(Contacts.findAll(context));
+                adapter.swapCursor(ICEContactsManager.findAll(context));
             }
 
 
@@ -145,14 +146,16 @@ public class IceFragment extends Fragment implements OnStartDragListener {
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(iceRecyclerView);
 
-        // TODO Chnage
-
         getActivity().setTitle(TCE_VIEW_TITLE);
-
 
         return view;
     }
 
+    /**
+     * method for starting drag
+     *
+     * @param viewHolder
+     */
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
 

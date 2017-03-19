@@ -22,13 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.Contacts;
+import sg.edu.nus.iss.se.ft05.medipal.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
-import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.listeners.PhoneCallListener;
 
 /**
  * Class for Contact List processing
@@ -109,14 +107,16 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                 public void onClick(View v) {
 
-                    Contacts contacts = Contacts.findById(context, id);
+                    ICEContactsManager iceContactsManager = new ICEContactsManager();
 
-                    contacts.updatePriority(context);
+                    iceContactsManager.findById(context, id);
 
-                    contacts.delete(context);
+                    iceContactsManager.updatePriority(context);
+
+                    iceContactsManager.delete(context);
 
                     //update the list
-                    swapCursor(Contacts.findAll(context));
+                    swapCursor(ICEContactsManager.findAll(context));
                 }
             });
 
@@ -126,18 +126,15 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                 @RequiresApi(api = Build.VERSION_CODES.M)
                 public void onClick(View v) {
 
-                    Toast.makeText(context, "SMS Sent", Toast.LENGTH_SHORT).show();
-//                    SmsManager smsManager = SmsManager.getDefault();
-//                    smsManager.sendTextMessage("" + phone, null, "Sender is in emergency please contact back immidiately", null, null);
-
                     if (context.checkSelfPermission(Manifest.permission.SEND_SMS)
                             != PackageManager.PERMISSION_GRANTED) {
 
-                        Toast.makeText(context, "Unable to send SMS", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "App does not have Permission to send SMS", Toast.LENGTH_SHORT).show();
                     } else {
 
                         SmsManager smsManager = SmsManager.getDefault();
                         smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergancy please call immidiately", null, null);
+                        Toast.makeText(context, "SMS Sent", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -162,16 +159,14 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                 public void onClick(View v) {
 
                     // TODO Temp
-                    Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
-
-
                     if (ActivityCompat.checkSelfPermission(context,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
-                        Toast.makeText(context, "No Permission to call", Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(context, "App does not have Permission to CALL", Toast.LENGTH_SHORT).show();
 
                     } else {
+
+                        Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
 
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
                         callIntent.setData(Uri.parse("tel:" + phone));
@@ -323,7 +318,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
         iceContactsDAOImpl.updatePriority(-1, toPosition);
 
-        swapCursor(Contacts.findAll(context));
+        swapCursor(ICEContactsManager.findAll(context));
 
         return true;
     }

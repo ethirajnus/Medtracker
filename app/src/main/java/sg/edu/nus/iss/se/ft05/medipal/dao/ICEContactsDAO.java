@@ -2,13 +2,12 @@ package sg.edu.nus.iss.se.ft05.medipal.dao;
 
 import android.database.Cursor;
 
-import sg.edu.nus.iss.se.ft05.medipal.Contacts;
+import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 
 /**
  * Interface for emergency contacts database operations
  * Created by Ashish Katre
  */
-
 public interface ICEContactsDAO {
 
     /**
@@ -30,25 +29,25 @@ public interface ICEContactsDAO {
      * select operation with where clause using ID
      *
      * @param id int
-     * @return Contacts
+     * @return ICEContactsManager
      */
-    public Contacts findById(int id);
+    public ICEContact findById(int id);
 
     /**
      * insert operation
      *
-     * @param contact Contacts
+     * @param contact ICEContactsManager
      * @return long
      */
-    public long insert(Contacts contact);
+    public long insert(ICEContact contact);
 
     /**
      * update operation
      *
-     * @param contact Contacts
+     * @param contact ICEContactsManager
      * @return int
      */
-    public int update(Contacts contact);
+    public int update(ICEContact contact);
 
     /**
      * update operation for priority update

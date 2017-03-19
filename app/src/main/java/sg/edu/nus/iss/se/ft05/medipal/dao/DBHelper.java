@@ -19,6 +19,13 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "medipal";
 
     private static final String DATABASE_COMMAND_DROP = "DROP TABLE IF EXISTS ";
+    private static final String DATABASE_COMMAND_CREATE = "CREATE TABLE ";
+    private static final String DATABASE_COMMAND_LEFT_BRACKET = "(";
+    private static final String DATABASE_COMMAND_INTEGER = " INTEGER";
+    private static final String DATABASE_COMMAND_INTEGER_COMMA = " INTEGER,";
+    private static final String DATABASE_COMMAND_PRIMARY_KEY = " INTEGER,";
+    private static final String DATABASE_COMMAND_TEXT = " TEXT,";
+    private static final String DATABASE_COMMAND_RIGHT_BRACKET = ")";
 
     // ICE CONTACTS
     protected static final String TABLE_ICE_CONTACTS = "icecontacts";
@@ -64,11 +71,11 @@ public class DBHelper extends SQLiteOpenHelper {
             + " TEXT," + CATEGORY_KEY_CODE + " TEXT," + CATEGORY_KEY_DESCRIPTION
             + " TEXT," + CATEGORY_KEY_REMIND + " INTEGER DEFAULT 0" + ")";
 
-    // Create table ICE Contacts
-    private static final String CREATE_TABLE_ICE_CONTACTS = "CREATE TABLE "
-            + TABLE_ICE_CONTACTS + "(" + ICE_CONTACTS_KEY_ID + " INTEGER PRIMARY KEY," + ICE_CONTACTS_KEY_NAME
-            + " TEXT," + ICE_CONTACTS_KEY_DESC + " TEXT," + ICE_CONTACTS_KEY_PHONE
-            + " INTEGER," + ICE_CONTACTS_KEY_TYPE + " TEXT," + ICE_CONTACTS_KEY_PRIORITY + " INTEGER" + ")";
+    // Create table ICE ICEContactsManager
+    private static final String CREATE_TABLE_ICE_CONTACTS = DATABASE_COMMAND_CREATE
+            + TABLE_ICE_CONTACTS + DATABASE_COMMAND_LEFT_BRACKET + ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_INTEGER + DATABASE_COMMAND_PRIMARY_KEY + ICE_CONTACTS_KEY_NAME
+            + DATABASE_COMMAND_TEXT + ICE_CONTACTS_KEY_DESC + DATABASE_COMMAND_TEXT + ICE_CONTACTS_KEY_PHONE
+            + DATABASE_COMMAND_INTEGER_COMMA + ICE_CONTACTS_KEY_TYPE + DATABASE_COMMAND_TEXT + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_INTEGER + DATABASE_COMMAND_RIGHT_BRACKET;
 
     private static final String CREATE_TABLE_MEDICINE = "CREATE TABLE "
             + TABLE_MEDICINE + "(" + MEDICINE_KEY_ID + " INTEGER PRIMARY KEY," + MEDICINE_KEY_MEDICINE
