@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,7 +41,12 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     // Contact types
     public static final String ICE_TYPE_NOK = "Next of Keen";
     public static final String ICE_TYPE_GP = "General Physician";
-    public static final String ICE_ERROR_OTHER = "Other";
+    public static final String ICE_TYPE_OTHER = "Other";
+
+    // Error messages
+    public static final String ICE_ERROR_NAME = "Please Enter Name";
+    public static final String ICE_ERROR_DESC = "Please Enter Description";
+    public static final String ICE_ERROR_PHONE = "Please enter Contact Number";
 
     // Elements of UI
     private EditText name;
@@ -51,6 +57,11 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
     // Domain class
     private Contacts contact;
+
+    String contactsName;
+    String contactsDesc;
+    String contactsPhone;
+    String contactsType;
 
     /**
      * Method to run while creating UI for addition/Edit
@@ -71,7 +82,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         List<String> types = new ArrayList<>();
         types.add(ICE_TYPE_NOK);
         types.add(ICE_TYPE_GP);
-        types.add(ICE_ERROR_OTHER);
+        types.add(ICE_TYPE_OTHER);
 
         spinner.setAdapter(
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, types));
@@ -124,7 +135,10 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         if (R.id.button_ice_addition == view.getId()) {
 
-            saveOrUpdateContact();
+            if (validate()) {
+
+                saveOrUpdateContact();
+            }
         }
     }
 
@@ -133,24 +147,18 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
      */
     private void saveOrUpdateContact() {
 
-        String contactsName = name.getText().toString();
-        String contactsDesc = description.getText().toString();
-        String contactsPhone = phone.getText().toString();
-        String contactsType = (String) spinner.getSelectedItem();
-
-        Context context = getApplicationContext();
 
         if (ICE_BUTTON_NEW.equalsIgnoreCase(button.getTag().toString())) {
 
-            Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType, context);
+            Contacts newContact = new Contacts(contactsName, contactsDesc, Long.parseLong(contactsPhone), contactsType, this);
 
-            if (-1 == newContact.save(context)) {
+            if (-1 == newContact.save(this)) {
 
-                Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
 
             } else {
 
-                navigateToMainAcitivity(context);
+                navigateToMainAcitivity(this);
             }
         } else {
 
@@ -159,15 +167,48 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
             contact.setPhone(Long.parseLong(contactsPhone));
             contact.setType(contactsType);
 
-            if (-1 == contact.update(context)) {
+            if (-1 == contact.update(this)) {
 
-                Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
 
             } else {
 
-                navigateToMainAcitivity(context);
+                navigateToMainAcitivity(this);
             }
         }
+    }
+
+    /**
+     * Validate Fields
+     */
+    private boolean validate() {
+
+        boolean checkFields = true;
+
+        contactsName = name.getText().toString();
+        contactsDesc = description.getText().toString();
+        contactsPhone = phone.getText().toString();
+        contactsType = (String) spinner.getSelectedItem();
+
+        if (TextUtils.isEmpty(contactsName)) {
+
+            name.setError(ICE_ERROR_NAME);
+            checkFields = false;
+        }
+
+        if (TextUtils.isEmpty(contactsDesc)) {
+
+            description.setError(ICE_ERROR_DESC);
+            checkFields = false;
+        }
+
+        if (TextUtils.isEmpty(contactsPhone)) {
+
+            phone.setError(ICE_ERROR_PHONE);
+            checkFields = false;
+        }
+
+        return checkFields;
     }
 
     /**
