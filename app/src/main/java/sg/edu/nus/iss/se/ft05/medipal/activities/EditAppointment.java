@@ -126,7 +126,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         appointment.setClinic(clinic.getText().toString());
         appointment.setTest(test.getText().toString());
         appointment.setPreTest(pre_test.getText().toString());
-        appointment.save(getApplicationContext());
+        appointment.update(getApplicationContext());
         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
         MainActivity.currentFragment=AppointmentFragment.class.getName();
         startActivity(intent);
