@@ -17,8 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Util.NotificationUtils;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,16 +69,17 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void setFloatingActionButtonAction(final Class activityclass) {
+    public void setFloatingActionButtonAction(final Class activityClass) {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, activityclass);
+
+                Intent intent = new Intent(getApplicationContext(), activityClass);
+
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
