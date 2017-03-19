@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,16 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.Category;
+import java.util.Arrays;
+
+import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Created by ethi on 11/03/17.
@@ -57,12 +59,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         String description = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_DESCRIPTION));
         Boolean remind = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_REMIND)) == 1;
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_ID));
-        Log.v("category id", String.valueOf(id));
 
 
         holder.textName.setText(name);
-        holder.textCode.setText("Code: " + code.toUpperCase());
+        holder.textCode.setText(CODE+COLON+" " + code.toUpperCase());
         holder.textDescription.setText(description);
+        if (Arrays.asList(Category.safeCategoryCodes).contains(code)) {
+            holder.switchReminder.setEnabled(false);
+        }
         holder.switchReminder.setChecked(remind);
         holder.itemView.setTag(id);
 
@@ -79,8 +83,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AddOrUpdateCategory.class);
                 Bundle b = new Bundle();
-                b.putString("action", "edit");
-                b.putInt("id", id);
+                b.putString(ACTION, EDIT);
+                b.putInt(ID, id);
                 intent.putExtras(b);
                 mContext.startActivity(intent);
 

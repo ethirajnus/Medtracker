@@ -4,13 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import sg.edu.nus.iss.se.ft05.medipal.Category;
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 
 /**
  * Created by ethi on 12/03/17.

@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;

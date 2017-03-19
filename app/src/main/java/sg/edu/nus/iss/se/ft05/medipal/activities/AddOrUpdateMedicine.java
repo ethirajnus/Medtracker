@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.Category;
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;

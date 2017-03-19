@@ -4,17 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import sg.edu.nus.iss.se.ft05.medipal.Category;
+import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 
 /**
  * Created by ethi on 10/03/17.
@@ -43,21 +34,26 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
     }
 
     @Override
-    public Category findById(int id) {
+    public Category findByField(String column,Object value) {
         SQLiteDatabase db = this.getReadableDatabase();
+        if(column == CATEGORY_KEY_CATEGORY || column == CATEGORY_KEY_CODE) {
+            value = "'" + value + "'";
+        }
 
         String selectQuery = "SELECT  * FROM " + TABLE_CATEGORY + " WHERE "
-                + CATEGORY_KEY_ID + " = " + id;
+                + column + " = " + value;
         Cursor c = db.rawQuery(selectQuery, null);
         if (c != null) {
             c.moveToFirst();
         }
         Category category = new Category();
-        category.setId(c.getInt(c.getColumnIndex(CATEGORY_KEY_ID)));
-        category.setCategoryName((c.getString(c.getColumnIndex(CATEGORY_KEY_CATEGORY))));
-        category.setCode(c.getString(c.getColumnIndex(CATEGORY_KEY_CODE)));
-        category.setDescription(c.getString(c.getColumnIndex(CATEGORY_KEY_DESCRIPTION)));
-        category.setRemind(c.getInt(c.getColumnIndex(CATEGORY_KEY_REMIND)) == 1);
+        if (c.getCount() > 0 ){
+            category.setId(c.getInt(c.getColumnIndex(CATEGORY_KEY_ID)));
+            category.setCategoryName((c.getString(c.getColumnIndex(CATEGORY_KEY_CATEGORY))));
+            category.setCode(c.getString(c.getColumnIndex(CATEGORY_KEY_CODE)));
+            category.setDescription(c.getString(c.getColumnIndex(CATEGORY_KEY_DESCRIPTION)));
+            category.setRemind(c.getInt(c.getColumnIndex(CATEGORY_KEY_REMIND)) == 1);
+        }
         return category;
     }
 

@@ -1,7 +1,7 @@
 package sg.edu.nus.iss.se.ft05.medipal.dao;
 
 
-import sg.edu.nus.iss.se.ft05.medipal.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
 /**
  * Created by ethi on 13/03/17.

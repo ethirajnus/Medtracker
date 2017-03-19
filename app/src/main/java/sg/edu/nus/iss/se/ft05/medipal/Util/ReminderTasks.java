@@ -1,24 +1,16 @@
 package sg.edu.nus.iss.se.ft05.medipal.Util;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.util.Log;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
-import sg.edu.nus.iss.se.ft05.medipal.Reminder;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 

@@ -1,16 +1,11 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.model;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 

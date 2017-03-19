@@ -39,11 +39,12 @@ public class Constants {
     public static final int DAY = 24;
     public static final String ID = "id";
     public static final String COLON = ":";
-
+    public static final String CODE ="Code";
 
     //Category
     public static final String EDIT_CATEGORY = "Edit Category";
     public static final String NEW_CATEGORY = "New Category";
     public static final String CATEGORY_NOT_SAVED = "Category was not inserted properly,Please try again later";
     public static final String CATEGORY_NOT_UPDATED = "Category was not updated properly,Please try again later";
+
 }

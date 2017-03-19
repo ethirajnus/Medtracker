@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import sg.edu.nus.iss.se.ft05.medipal.Category;
+import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
 /**
@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Todo table create statement
     private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE "
             + TABLE_CATEGORY + "(" + CATEGORY_KEY_ID + " INTEGER PRIMARY KEY," + CATEGORY_KEY_CATEGORY
-            + " TEXT UNIQUE," + CATEGORY_KEY_CODE + " TEXT," + CATEGORY_KEY_DESCRIPTION
+            + " TEXT UNIQUE," + CATEGORY_KEY_CODE + " TEXT UNIQUE," + CATEGORY_KEY_DESCRIPTION
             + " TEXT," + CATEGORY_KEY_REMIND + " INTEGER DEFAULT 0"+")";
     private static final String CREATE_TABLE_MEDICINE = "CREATE TABLE "
             + TABLE_MEDICINE + "(" + MEDICINE_KEY_ID + " INTEGER PRIMARY KEY," + MEDICINE_KEY_MEDICINE
