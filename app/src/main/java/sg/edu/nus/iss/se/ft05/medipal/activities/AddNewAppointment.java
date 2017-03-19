@@ -38,7 +38,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         actionBar.setTitle("NEW APPOINTMENT");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("dd/mm/yyyy", Locale.US);
         ;
 
 
@@ -102,7 +102,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
-    public void createAppointment(View view)
+    public void createAppointment(View view) throws java.text.ParseException
     {
         date=(EditText) findViewById(R.id.new_appointment_date);
         time=(EditText) findViewById(R.id.new_appointment_time);
@@ -110,12 +110,22 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         test=(EditText) findViewById(R.id.new_appointment_test);
         pre_test=(EditText) findViewById(R.id.new_appointment_pre_test);
         String adate="",atime="",aclinic="",atest="",apre_test="";
+        Calendar calendar=Calendar.getInstance();
+        Date d2=calendar.getTime();
+        String secondDate=new SimpleDateFormat("dd/mm/yyyy").format(d2);
         boolean flag=true;
         adate=date.getText().toString();
         atime=time.getText().toString();
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
+        Date d1=new SimpleDateFormat("dd/mm/yyyy").parse(adate);
+        d2=new SimpleDateFormat("dd/mm/yyyy").parse(secondDate);
+        if(d1.before(d2))
+        {
+            date.setError("Date cannot be before today");
+            flag=false;
+        }
         if(clinic.getText().toString().length()==0)
         {clinic.setError("Clinic name required");
             flag=false;}
@@ -126,7 +136,6 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         {
         Appointment appointment=new Appointment(adate,atime,aclinic,atest,apre_test);
         appointment.save(getApplicationContext());
-
         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
         MainActivity.currentFragment=AppointmentFragment.class.getName();
         startActivity(intent);}
