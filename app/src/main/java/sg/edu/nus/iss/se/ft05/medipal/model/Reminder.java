@@ -1,10 +1,7 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.model;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.CheckBox;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ReminderDAOImpl;
 
 /**

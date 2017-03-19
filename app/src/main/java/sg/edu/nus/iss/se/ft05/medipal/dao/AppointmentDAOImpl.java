@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.Appointment;
-import sg.edu.nus.iss.se.ft05.medipal.Category;
 
 /**
  * Created by Dhruv on 18/3/2017.

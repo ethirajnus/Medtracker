@@ -4,13 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import sg.edu.nus.iss.se.ft05.medipal.Category;
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 
 /**
  * Created by ethi on 12/03/17.
@@ -32,7 +27,6 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
     @Override
     public Cursor findAll(){
         String selectQuery = "SELECT  * FROM " + TABLE_MEDICINE;
-
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
@@ -40,11 +34,8 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
     @Override
     public Medicine findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         String selectQuery = "SELECT  * FROM " + TABLE_MEDICINE + " WHERE "
                 + MEDICINE_KEY_ID + " = " + id;
-
-
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c != null) {
