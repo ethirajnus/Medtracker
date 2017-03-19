@@ -47,6 +47,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         String info=date+"\n"+time+"\n"+clinic;
 
         holder.appointmentInfo.setText(info);
+        holder.itemView.setTag(id);
 
 
 
