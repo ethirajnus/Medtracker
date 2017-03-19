@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Connection;
 
+import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
+
+
 /**
  * Created by ethi on 10/03/17.
  * Updated by Ashish Katre on 13-03-17.
@@ -103,6 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
+        db.execSQL(getCreateTableHealthBioQuery());
 
         db.execSQL(CREATE_TABLE_ICE_CONTACTS);
 
@@ -116,18 +120,27 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDER);
         db.execSQL(DATABASE_COMMAND_DROP + TABLE_ICE_CONTACTS);
+        db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_HEALTH_BIO);
         onCreate(db);
     }
 
-    // closing database
-    public void closeDB() {
+    //Creating HealthBio table
+    private String getCreateTableHealthBioQuery(){
+        final StringBuilder CREATE_TABLE_HEALTHBIO = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(DbConstants.TABLE_HEALTH_BIO)
+                .append(" (")
+                .append(DbConstants.HEALTH_BIO_KEY_ID)
+                .append(" INTEGER PRIMARY KEY,")
+                .append(DbConstants.HEALTH_BIO_KEY_CONDITION)
+                .append(" VARCHAR(255),")
+                .append(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE)
+                .append(" VARCHAR(1),")
+                .append(DbConstants.HEALTH_BIO_KEY_START_DATE)
+                .append(" TEXT")
+                .append(")");
+        return CREATE_TABLE_HEALTHBIO.toString();
 
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-
-        if (null != sqLiteDatabase && sqLiteDatabase.isOpen()) {
-
-            sqLiteDatabase.close();
-        }
     }
 
 }

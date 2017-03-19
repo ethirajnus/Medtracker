@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:theme="@style/AppTheme"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:elevation="0dp"
+        android:minHeight="40dp"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/datePickerTitle"/>
+
+    <DatePicker
+        android:id="@+id/picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar3"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorAccent"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:paddingLeft="8dp" />
+
+    <Button
+        android:id="@+id/setBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="top|bottom|center"
+        android:text="@string/setBtn"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/picker" />
+
+</LinearLayout>
