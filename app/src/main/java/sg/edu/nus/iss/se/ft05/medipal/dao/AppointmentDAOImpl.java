@@ -54,7 +54,7 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)
+        if (c != null && c.moveToFirst())
             c.moveToFirst();
 
         Appointment appointment = new Appointment();

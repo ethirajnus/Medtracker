@@ -56,7 +56,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
                 Appointment appointment = Appointment.findById(mContext, id);
                 appointment.delete(mContext);
                 //update the list
-                swapCursor(Category.findAll(mContext));
+                swapCursor(Appointment.findAll(mContext));
             }
         });
 
@@ -95,9 +95,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     public void swapCursor(Cursor newCursor) {
         // Always close the previous mCursor first
-        if (mCursor != null &&mCursor.moveToFirst()) mCursor.close();
+        if (mCursor != null) mCursor.close();
         mCursor = newCursor;
-        if (newCursor != null &&newCursor.moveToFirst()) {
+        if (newCursor != null) {
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
