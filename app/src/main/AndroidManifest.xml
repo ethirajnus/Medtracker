@@ -18,11 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AddMedicine" />
-        <activity
-            android:name=".activities.AddOrUpdateCategory"
-            android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.ShowCategory" />
         <activity
             android:name=".activities.AddNewAppointment"
             android:parentActivityName=".activities.MainActivity" />
@@ -30,6 +25,23 @@
             android:parentActivityName=".activities.MainActivity"/>
         <activity android:name=".activities.ShowAppointment"
             android:parentActivityName=".activities.MainActivity"></activity>
+        <activity
+            android:name=".activities.PersonalBioActivity"
+            android:label="@string/title_activity_add_personalBio"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activities.AddOrUpdateMedicine"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.AddOrUpdateCategory"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.ShowMedicine"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
+        <activity
+            android:name=".activities.AddOrUpdateHealthBioActivity"
+            android:parentActivityName=".activities.MainActivity" ></activity>
     </application>
 
 </manifest>

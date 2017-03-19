@@ -17,7 +17,7 @@ import android.graphics.drawable.shapes.RoundRectShape;
  * Created by ethi on 06/03/17.
  */
 
-public class TextDrawable extends ShapeDrawable {
+public class InitialDrawable extends ShapeDrawable {
 
     private final Paint textPaint;
     private final Paint borderPaint;
@@ -31,7 +31,7 @@ public class TextDrawable extends ShapeDrawable {
     private final float radius;
     private final int borderThickness;
 
-    private TextDrawable(Builder builder) {
+    private InitialDrawable(Builder builder) {
         super(builder.shape);
 
         // shape properties
@@ -254,28 +254,28 @@ public class TextDrawable extends ShapeDrawable {
         }
 
         @Override
-        public TextDrawable buildRect(String text, int color) {
+        public InitialDrawable buildRect(String text, int color) {
             rect();
             return build(text, color);
         }
 
         @Override
-        public TextDrawable buildRoundRect(String text, int color, int radius) {
+        public InitialDrawable buildRoundRect(String text, int color, int radius) {
             roundRect(radius);
             return build(text, color);
         }
 
         @Override
-        public TextDrawable buildRound(String text, int color) {
+        public InitialDrawable buildRound(String text, int color) {
             round();
             return build(text, color);
         }
 
         @Override
-        public TextDrawable build(String text, int color) {
+        public InitialDrawable build(String text, int color) {
             this.color = color;
             this.text = text;
-            return new TextDrawable(this);
+            return new InitialDrawable(this);
         }
     }
 
@@ -301,7 +301,7 @@ public class TextDrawable extends ShapeDrawable {
 
     public static interface IBuilder {
 
-        public TextDrawable build(String text, int color);
+        public InitialDrawable build(String text, int color);
     }
 
     public static interface IShapeBuilder {
@@ -314,10 +314,10 @@ public class TextDrawable extends ShapeDrawable {
 
         public IBuilder roundRect(int radius);
 
-        public TextDrawable buildRect(String text, int color);
+        public InitialDrawable buildRect(String text, int color);
 
-        public TextDrawable buildRoundRect(String text, int color, int radius);
+        public InitialDrawable buildRoundRect(String text, int color, int radius);
 
-        public TextDrawable buildRound(String text, int color);
+        public InitialDrawable buildRound(String text, int color);
     }
 }
