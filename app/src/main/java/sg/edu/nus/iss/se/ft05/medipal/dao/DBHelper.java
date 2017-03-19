@@ -1,10 +1,14 @@
 package sg.edu.nus.iss.se.ft05.medipal.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+
+import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
 /**
@@ -47,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Todo table create statement
     private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE "
             + TABLE_CATEGORY + "(" + CATEGORY_KEY_ID + " INTEGER PRIMARY KEY," + CATEGORY_KEY_CATEGORY
-            + " TEXT," + CATEGORY_KEY_CODE + " TEXT," + CATEGORY_KEY_DESCRIPTION
+            + " TEXT UNIQUE," + CATEGORY_KEY_CODE + " TEXT UNIQUE," + CATEGORY_KEY_DESCRIPTION
             + " TEXT," + CATEGORY_KEY_REMIND + " INTEGER DEFAULT 0"+")";
     private static final String CREATE_TABLE_MEDICINE = "CREATE TABLE "
             + TABLE_MEDICINE + "(" + MEDICINE_KEY_ID + " INTEGER PRIMARY KEY," + MEDICINE_KEY_MEDICINE
@@ -74,8 +78,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CATEGORY);
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
+        insertDefaultValues(db);
         db.execSQL(getCreateTableHealthBioQuery());
-
     }
 
     @Override
@@ -87,6 +91,24 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+    public static void insertDefaultValues(SQLiteDatabase db) {
+        ArrayList<Category> categoryList = new ArrayList<Category>();
+        categoryList.add(new Category("Supplement", "SUP", "Supplement type of medicines", true));
+        categoryList.add(new Category("Chronic", "CHR", "Chronice type of medicines", true));
+        categoryList.add(new Category("Incidental", "INC", "Incidental type of medicines", true));
+        categoryList.add(new Category("Complete Course", "COM", "Complete type of medicines", true));
+        categoryList.add(new Category("Self Apply", "SEL", "Self Apply type of medicines", true));
+        for (Category category : categoryList) {
+            ContentValues values = new ContentValues();
+            values.put(CATEGORY_KEY_CATEGORY, category.getCategoryName());
+            values.put(CATEGORY_KEY_CODE, category.getCode());
+            values.put(CATEGORY_KEY_DESCRIPTION, category.getDescription());
+            values.put(CATEGORY_KEY_REMIND, category.getRemind());
+            // insert row
+            db.insert(TABLE_CATEGORY, null, values);
+        }
+    }
     //Creating HealthBio table
     private String getCreateTableHealthBioQuery(){
         final StringBuilder CREATE_TABLE_HEALTHBIO = new StringBuilder()
@@ -96,9 +118,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 .append(DbConstants.HEALTH_BIO_KEY_ID)
                 .append(" INTEGER PRIMARY KEY,")
                 .append(DbConstants.HEALTH_BIO_KEY_CONDITION)
-                .append(" VARCHAR(255),")
+                .append(" TEXT,")
                 .append(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE)
-                .append(" VARCHAR(1),")
+                .append(" TEXT,")
                 .append(DbConstants.HEALTH_BIO_KEY_START_DATE)
                 .append(" TEXT")
                 .append(")");

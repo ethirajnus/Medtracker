@@ -6,8 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import sg.edu.nus.iss.se.ft05.medipal.Category;
-import sg.edu.nus.iss.se.ft05.medipal.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
 /**
  * Created by ethi on 13/03/17.

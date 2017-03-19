@@ -25,16 +25,7 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/deleteIcon"
-        android:layout_height="20dp"
-        android:layout_width="20dp"
-        android:layout_weight="1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="22dp"
-        android:src="@android:drawable/ic_menu_delete"
-        />
+
     <ImageView
         android:id="@+id/editIcon"
         android:layout_height="20dp"
@@ -42,7 +33,7 @@
         android:layout_weight="1"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="22dp"
-        android:layout_toLeftOf="@id/deleteIcon"
+        android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_menu_edit"
          />
 
@@ -85,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/categoryCode"
+        android:maxLines="3"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"

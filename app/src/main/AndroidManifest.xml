@@ -31,7 +31,17 @@
         <activity
             android:name=".activities.ShowMedicine"
             android:parentActivityName=".activities.MainActivity">
-        </activity>
+            ></activity>
+        <service
+            android:name=".Util.MedicineReminderJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false">
+        </service>
+        <service
+            android:name=".Util.MedicineConsumptionReminderJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false">
+        </service>
         <activity
             android:name=".activities.AddOrUpdateHealthBioActivity"
             android:parentActivityName=".activities.MainActivity" ></activity>
