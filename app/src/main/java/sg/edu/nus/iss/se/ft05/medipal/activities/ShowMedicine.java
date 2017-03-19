@@ -39,7 +39,7 @@ public class ShowMedicine extends AppCompatActivity {
         this.reminder.setText(medicine.getRemind().toString());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setText(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage()));
-        consumeQuantity.setText(String.valueOf(medicine.getConsumeQuality()));
+        consumeQuantity.setText(String.valueOf(medicine.getConsumeQuantity()));
         threshold.setText(String.valueOf(medicine.getThreshold()));
         dateIssued.setText(medicine.getDateIssued());
         expireFactor.setText(String.valueOf(medicine.getExpireFactor()));
