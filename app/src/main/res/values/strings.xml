@@ -35,9 +35,18 @@
     <string name="medicineDateIssued">Date Issued</string>
     <string name="medicineExpireFactor">ExpireFactor</string>
     <string name="update">Update</string>
+
+    <!-- Reminder  -->
     <string name="reminderFrequency">Frequency</string>
     <string name="reminderStartTime">StartTime</string>
     <string name="reminderInterval">Interval</string>
+
+
+    <!-- ICE ICEContactsManager  -->
+    <string name="ice_header">In case of emergency</string>
+    <string name="description">Description</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="ice_spinner_header">Type of contact</string>
 
     <!-- Health Bio -->
     <string name="condition">Condition</string>
@@ -64,4 +73,5 @@
     <!-- Date picker -->
     <string name="datePickerTitle">Set Date</string>
     <string name="setBtn">Set</string>
+
 </resources>
