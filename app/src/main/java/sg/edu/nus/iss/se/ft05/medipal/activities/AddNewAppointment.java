@@ -110,21 +110,26 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         test=(EditText) findViewById(R.id.new_appointment_test);
         pre_test=(EditText) findViewById(R.id.new_appointment_pre_test);
         String adate="",atime="",aclinic="",atest="",apre_test="";
+        boolean flag=true;
         adate=date.getText().toString();
         atime=time.getText().toString();
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
         if(clinic.getText().toString().length()==0)
-            clinic.setError("Clinic name required");
+        {clinic.setError("Clinic name required");
+            flag=false;}
         if(test.getText().toString().length()==0)
-            test.setError("Test name required");
+        {test.setError("Test name required");
+            flag=false;}
+        if(flag==true)
+        {
         Appointment appointment=new Appointment(adate,atime,aclinic,atest,apre_test);
         appointment.save(getApplicationContext());
 
         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
         MainActivity.currentFragment=AppointmentFragment.class.getName();
-        startActivity(intent);
+        startActivity(intent);}
     }
 
 }
