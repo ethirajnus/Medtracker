@@ -50,8 +50,9 @@ tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.01"
-        android:ems="3"
-        android:inputType="textCapWords" />
+        android:textAllCaps="true"
+        android:maxLength="3"
+        android:inputType="textCapCharacters" />
 
     <TextView
         android:id="@+id/categoryLabelDescription"
@@ -66,8 +67,10 @@ tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.01"
-        android:inputType="text"
-        android:maxLength="50" />
+        android:inputType="textMultiLine"
+        android:maxLines="3"
+        android:maxLength="100"
+        />
 
     <CheckBox
         android:id="@+id/categoryReminder"

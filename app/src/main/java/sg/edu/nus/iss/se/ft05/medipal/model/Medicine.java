@@ -1,15 +1,16 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.model;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERID;
 
 
 /**
@@ -139,7 +140,6 @@ public class Medicine {
     public static Cursor findAll(Context context) {
         medicineAll = new MedicineDAOImpl(context);
         Cursor cursor = medicineAll.findAll();
-        Log.v("medicine find all",String.valueOf(cursor.getCount()));
         return cursor;
     }
 
@@ -162,7 +162,24 @@ public class Medicine {
         return medicineDAO.update(this);
     }
 
+    public static Map<Integer,Integer> listAllMedicine(Context context){
+        Cursor cursor = Medicine.findAll(context);
+        Map<Integer,Integer > medicineHashMap = new HashMap();
+        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            medicineHashMap.put(cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_ID)),cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_REMINDERID)));
+        }
+        return  medicineHashMap;
+    }
+
+
     public int getId() {
         return id;
+    }
+
+    public int updateReminder(Context context,boolean isChecked) {
+        medicineDAO = new MedicineDAOImpl(context);
+        setRemind(isChecked);
+        return medicineDAO.update(this);
+
     }
 }
