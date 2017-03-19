@@ -13,14 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.manager.ICEContactsManager;
+import sg.edu.nus.iss.se.ft05.medipal.model.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.listeners.PhoneCallListener;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ContactsListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.adapters.ContactsTouchHelperCallback;
-import sg.edu.nus.iss.se.ft05.medipal.adapters.OnStartDragListener;
+import sg.edu.nus.iss.se.ft05.medipal.listeners.ContactsTouchHelperCallback;
+import sg.edu.nus.iss.se.ft05.medipal.listeners.OnStartDragListener;
 
 /**
  * Class for ICE Fragment operations

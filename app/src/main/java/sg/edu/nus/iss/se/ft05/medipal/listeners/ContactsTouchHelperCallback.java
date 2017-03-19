@@ -1,8 +1,10 @@
-package sg.edu.nus.iss.se.ft05.medipal.adapters;
+package sg.edu.nus.iss.se.ft05.medipal.listeners;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Toast;
+
+import sg.edu.nus.iss.se.ft05.medipal.adapters.ItemTouchHelperAdapter;
 
 /**
  * class for implementing touch functionality

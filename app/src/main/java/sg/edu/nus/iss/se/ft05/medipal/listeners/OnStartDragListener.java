@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.adapters;
+package sg.edu.nus.iss.se.ft05.medipal.listeners;
 
 import android.support.v7.widget.RecyclerView;
 

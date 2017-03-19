@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.domain;
+package sg.edu.nus.iss.se.ft05.medipal.model;
 
 /**
  * Domain class of contact
