@@ -30,13 +30,11 @@
             android:parentActivityName=".activities.MainActivity"></activity>
         <activity
             android:name=".activities.ShowMedicine"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.MainActivity"></activity>
 
         <activity
             android:name=".activities.ICEAdditionActivity"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.MainActivity"></activity>
 
     </application>
 

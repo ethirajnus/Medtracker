@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.ICEContactsManager;
+import sg.edu.nus.iss.se.ft05.medipal.manager.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;

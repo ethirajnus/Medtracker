@@ -1,8 +1,7 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.manager;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;

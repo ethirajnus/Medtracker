@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.ICEContactsManager;
+import sg.edu.nus.iss.se.ft05.medipal.manager.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;

@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.ICEContactsManager;
+import sg.edu.nus.iss.se.ft05.medipal.manager.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.listeners.PhoneCallListener;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
