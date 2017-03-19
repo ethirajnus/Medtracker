@@ -182,4 +182,8 @@ public class Medicine {
         return medicineDAO.update(this);
 
     }
+
+    public Category getCategory(Context context){
+        return Category.findById(context,getCategoryId());
+    }
 }

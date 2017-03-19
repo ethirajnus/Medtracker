@@ -3,8 +3,10 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -341,6 +344,19 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         else if (medicine.getExpireFactor() > 24 ) {
             expirefactor.setError("Expire Factor should be less than 25");
             expirefactor.requestFocus();
+            isValid = false;
+        }
+        else if (medicine.getCategory(context).getRemind() == true && medicine.getRemind() == false ){
+            AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+            warningDialog.setTitle(Constants.TITLE_WARNING);
+            warningDialog.setMessage("Reminder cannot be true off for this category of medicine");
+            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface alert, int which) {
+                    alert.dismiss();
+                }
+            });
+            warningDialog.show();
             isValid = false;
         }
         else{
