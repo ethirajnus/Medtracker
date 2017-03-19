@@ -64,6 +64,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EditAppointment.class);
+                Bundle b=new Bundle();
+                b.putLong("id",id);
+                intent.putExtras(b);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 

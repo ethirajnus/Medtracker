@@ -29,13 +29,13 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/new_appointment_date" />
+        android:id="@+id/appointment_date" />
 
     <TextView
         android:text="Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_appointment_date"
+        android:layout_below="@+id/appointment_date"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView2" />
@@ -48,13 +48,13 @@
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/new_appointment_time" />
+        android:id="@+id/appointment_time" />
 
     <TextView
         android:text="Clinic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_appointment_time"
+        android:layout_below="@+id/appointment_time"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView3" />
@@ -67,32 +67,22 @@
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/new_appointment_clinic" />
+        android:id="@+id/appointment_clinic" />
 
     <TextView
         android:text="Test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_appointment_clinic"
+        android:layout_below="@+id/appointment_clinic"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView4" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/new_appointment_test" />
 
     <TextView
         android:text="Pre Test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_appointment_test"
+        android:layout_below="@+id/appointment_test"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView5" />
@@ -105,17 +95,26 @@
         android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/new_appointment_pre_test" />
+        android:id="@+id/appointment_pre_test" />
 
     <Button
         android:text="MODIFY"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_appointment_pre_test"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="27dp"
         android:id="@+id/button"
         android:onClick="editAppointment"
-        android:background="@drawable/side_nav_bar"/>
+        android:background="@drawable/side_nav_bar"
+        android:layout_below="@+id/appointment_pre_test"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/appointment_test"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

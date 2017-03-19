@@ -50,7 +50,7 @@ public class ShowAppointment extends AppCompatActivity {
         test=(TextView) findViewById(R.id.appointment_test);
         pre_test=(TextView) findViewById(R.id.appointment_pre_test);
         context=getApplicationContext();
-        Appointment appointment=Appointment.findById(context,id);
+        Appointment appointment=Appointment.findById(context,l);
         date.setText(appointment.getDate());
         time.setText(appointment.getTime());
         clinic.setText(appointment.getClinic());
