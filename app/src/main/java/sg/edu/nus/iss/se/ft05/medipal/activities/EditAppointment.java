@@ -11,14 +11,14 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import sg.edu.nus.iss.se.ft05.medipal.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 
@@ -31,6 +31,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
     private TimePickerDialog timePickerDialog;
     EditText date,time,clinic,test,pre_test;
     Appointment appointment;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,8 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         actionBar.setTitle("APPOINTMENT INFO");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        context = getApplicationContext();
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         Intent intent=getIntent();
         Bundle b=intent.getExtras();
         long l=b.getLong("id");
@@ -126,7 +128,8 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         appointment.setClinic(clinic.getText().toString());
         appointment.setTest(test.getText().toString());
         appointment.setPreTest(pre_test.getText().toString());
-        appointment.update(getApplicationContext());
+        appointment.update(context);
+        ReminderUtils.syncAppointmentReminder(context);
         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
         MainActivity.currentFragment=AppointmentFragment.class.getName();
         startActivity(intent);
