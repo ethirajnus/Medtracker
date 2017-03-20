@@ -14,7 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
@@ -55,6 +56,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             public void onClick(View v) {
                 Appointment appointment = Appointment.findById(mContext, id);
                 appointment.delete(mContext);
+                ReminderUtils.syncAppointmentReminder(mContext);
                 //update the list
                 swapCursor(Appointment.findAll(mContext));
             }

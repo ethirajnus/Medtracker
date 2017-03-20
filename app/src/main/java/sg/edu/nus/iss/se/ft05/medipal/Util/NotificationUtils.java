@@ -23,6 +23,7 @@ public class NotificationUtils {
 
     private static final int MEDICINE_REMINDER_PENDING_INTENT_ID = 3417;
     private static int MEDICINE_REMINDER_NOTIFICATION_ID = 0;
+    private static int APPOINTMENT_REMINDER_NOTIFICATION_ID = 0;
 
     private static PendingIntent contentIntent(Context context) {
         Intent startActivityIntent = new Intent(context, MainActivity.class);
@@ -36,17 +37,15 @@ public class NotificationUtils {
     public static void remindUserForConsumption(Context context, String name) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setContentText(constructNotificationMessage(name))
+                .setContentText(constructNotificationMessageForConsumption(name))
                 .setSmallIcon(R.drawable.ic_menu_gallery)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(
-                        constructNotificationMessage(name)))
+                        constructNotificationMessageForConsumption(name)))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
                 .setAutoCancel(true);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
-        }
 
 
         NotificationManager notificationManager = (NotificationManager)
@@ -54,8 +53,30 @@ public class NotificationUtils {
         notificationManager.notify(MEDICINE_REMINDER_NOTIFICATION_ID++, notificationBuilder.build());
     }
 
-    public static String constructNotificationMessage(String medicineName){
+    public static String constructNotificationMessageForConsumption(String medicineName){
         return CONSUMPTION_MESSAGE + " " +medicineName + " " + MEDICINE;
     }
 
+    public static void remindUserForAppointment(Context context, String clinicName) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setContentText(constructNotificationMessageForAppointment(clinicName))
+                .setSmallIcon(R.drawable.ic_menu_gallery)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(
+                        constructNotificationMessageForAppointment(clinicName)))
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setContentIntent(contentIntent(context))
+                .setAutoCancel(true);
+
+            notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+
+
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(APPOINTMENT_REMINDER_NOTIFICATION_ID++, notificationBuilder.build());
+    }
+
+    private static String constructNotificationMessageForAppointment(String clinicName) {
+        return "It is time to visit" + clinicName;
+    }
 }

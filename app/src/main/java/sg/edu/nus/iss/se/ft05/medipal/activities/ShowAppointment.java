@@ -1,32 +1,14 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import sg.edu.nus.iss.se.ft05.medipal.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
-
-import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
-
-import static android.R.attr.id;
 
 public class ShowAppointment extends AppCompatActivity {
     Context context;
