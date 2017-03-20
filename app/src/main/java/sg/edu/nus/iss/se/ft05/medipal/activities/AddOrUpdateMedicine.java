@@ -3,8 +3,10 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -40,7 +43,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
-    private EditText name, description, quantity, consumeQuality, threshold, expirefactor, dateIssued, frequency, startTime, interval;
+    private EditText name, description, quantity, consumeQuantity, threshold, expirefactor, dateIssued, frequency, startTime, interval;
     private CheckBox reminder;
     private Spinner dosage, category;
     DatePickerDialog datePickerDialog;
@@ -149,7 +152,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         reminder.setChecked(medicine.getRemind());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setSelection(dosageList.indexOf(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage())));
-        consumeQuality.setText(String.valueOf(medicine.getConsumeQuality()));
+        consumeQuantity.setText(String.valueOf(medicine.getConsumeQuantity()));
         threshold.setText(String.valueOf(medicine.getThreshold()));
         dateIssued.setText(medicine.getDateIssued());
         expirefactor.setText(String.valueOf(medicine.getExpireFactor()));
@@ -171,7 +174,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         reminder = (CheckBox) findViewById(R.id.medicineReminder);
         quantity = (EditText) findViewById(R.id.medicineQuantity);
         dosage = (Spinner) findViewById(R.id.medicineDosage);
-        consumeQuality = (EditText) findViewById(R.id.medicineConsumeQuantity);
+        consumeQuantity = (EditText) findViewById(R.id.medicineConsumeQuantity);
         threshold = (EditText) findViewById(R.id.medicineThreshold);
         dateIssued = (EditText) findViewById(R.id.medicineDateIssued);
         expirefactor = (EditText) findViewById(R.id.medicineExpireFactor);
@@ -224,53 +227,161 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     }
 
     private void saveMedicine() {
+        boolean isValidFormat = checkFormat();
+        if (!isValidFormat) {
+            return;
+        }
         String medicineName = name.getText().toString();
         String medicineDescription = description.getText().toString();
         int medicineCategory = categoriesMap.get(category.getSelectedItem());
         Boolean medicineRemind = reminder.isChecked();
-        int medicinceQuantity = Integer.parseInt(quantity.getText().toString());
-        int medicinceDosage = DOSAGE_HASH_MAP.get(dosage.getSelectedItem());
-        int medicinceConsumeQuality = Integer.parseInt(consumeQuality.getText().toString());
-        int medicinceThreshold = Integer.parseInt(threshold.getText().toString());
-        String medicinceDateIssued = dateIssued.getText().toString();
+        int medicineQuantity = Integer.parseInt(quantity.getText().toString());
+        int medicineDosage = DOSAGE_HASH_MAP.get(dosage.getSelectedItem());
+        int medicineConsumeQuantity = Integer.parseInt(consumeQuantity.getText().toString());
+        int medicineThreshold = Integer.parseInt(threshold.getText().toString());
+        String medicineDateIssued = dateIssued.getText().toString();
         int medicinceExpireFactor = Integer.parseInt(expirefactor.getText().toString());
         int reminderFrequency = Integer.parseInt(frequency.getText().toString());
         String reminderStartTime = startTime.getText().toString();
         int reminderInterval = Integer.parseInt(interval.getText().toString());
 
         if (saveButton.getTag().toString().equalsIgnoreCase(NEW)) {
-            Reminder reminder = new Reminder(reminderFrequency, reminderStartTime, reminderInterval);
-            int medicineReminderId = (int) reminder.save(context);
-            Medicine medicine = new Medicine(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicinceQuantity, medicinceDosage, medicinceConsumeQuality, medicinceThreshold, medicinceDateIssued, medicinceExpireFactor);
-            if (medicine.save(context) == -1) {
-                Toast.makeText(context, MEDICINE_NOT_SAVED, Toast.LENGTH_SHORT).show();
-            } else {
-                ReminderUtils.syncMedicineReminder(context);
-                navigateToMainAcitivity();
+            reminderMedicine = new Reminder(reminderFrequency, reminderStartTime, reminderInterval);
+            int medicineReminderId = (int) reminderMedicine.save(context);
+            medicine = new Medicine(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicineQuantity, medicineDosage, medicineConsumeQuantity, medicineThreshold, medicineDateIssued, medicinceExpireFactor);
+            if (isValid()) {
+                if (medicine.save(context) == -1) {
+                    Toast.makeText(context, MEDICINE_NOT_SAVED, Toast.LENGTH_SHORT).show();
+                } else {
+                    ReminderUtils.syncMedicineReminder(context);
+                    navigateToMainAcitivity();
+                }
             }
         } else {
             medicine.setName(medicineName);
             medicine.setDescription(medicineDescription);
             medicine.setCategoryId(medicineCategory);
             medicine.setRemind(medicineRemind);
-            medicine.setQuantity(medicinceQuantity);
-            medicine.setDosage(medicinceDosage);
-            medicine.setConsumeQuality(medicinceConsumeQuality);
-            medicine.setThreshold(medicinceThreshold);
-            medicine.setDateIssued(medicinceDateIssued);
+            medicine.setQuantity(medicineQuantity);
+            medicine.setDosage(medicineDosage);
+            medicine.setConsumeQuantity(medicineConsumeQuantity);
+            medicine.setThreshold(medicineThreshold);
+            medicine.setDateIssued(medicineDateIssued);
             medicine.setExpireFactor(medicinceExpireFactor);
             reminderMedicine.setFrequency(reminderFrequency);
             reminderMedicine.setStartTime(reminderStartTime);
             reminderMedicine.setInterval(reminderInterval);
             reminderMedicine.update(context);
-            if (medicine.update(context) == -1) {
-                Toast.makeText(context, MEDICINE_NOT_UPDATED, Toast.LENGTH_SHORT).show();
-            } else {
-                ReminderUtils.syncMedicineReminder(context);
-                navigateToMainAcitivity();
+            if (isValid()) {
+                if (medicine.update(context) == -1) {
+                    Toast.makeText(context, MEDICINE_NOT_UPDATED, Toast.LENGTH_SHORT).show();
+                } else {
+                    ReminderUtils.syncMedicineReminder(context);
+                    navigateToMainAcitivity();
+                }
+            }
+
+
+        }
+    }
+
+    private boolean checkFormat() {
+
+        boolean isValid = true;
+        if (name.getText().toString().isEmpty()) {
+            name.setError("Please provide medicine name!");
+            name.requestFocus();
+            isValid = false;
+        } else if (description.getText().toString().isEmpty()) {
+            description.setError("Please enter description!");
+            description.requestFocus();
+            isValid = false;
+        } else if (quantity.getText().toString().isEmpty()) {
+            quantity.setError("Please enter quantity");
+            quantity.requestFocus();
+            isValid = false;
+        } else if (consumeQuantity.getText().toString().isEmpty()) {
+            consumeQuantity.setError("Please enter consume quantity");
+            consumeQuantity.requestFocus();
+            isValid = false;
+        } else if (threshold.getText().toString().isEmpty()) {
+            threshold.setError("Please enter expire factor");
+            threshold.requestFocus();
+            isValid = false;
+        } else if (expirefactor.getText().toString().isEmpty()) {
+            expirefactor.setError("Please enter threshold");
+            expirefactor.requestFocus();
+            isValid = false;
+        } else if (frequency.getText().toString().isEmpty()) {
+            frequency.setError("Please enter frequency");
+            frequency.requestFocus();
+            isValid = false;
+        } else if (interval.getText().toString().isEmpty()) {
+            interval.setError("Please enter interval");
+            interval.requestFocus();
+            isValid = false;
+        } else if (dateIssued.getText().toString().isEmpty()) {
+            dateIssued.setError("Please enter date Issued");
+            isValid = false;
+        } else if (startTime.getText().toString().isEmpty()) {
+            startTime.setError("Please enter start time");
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    private boolean isValid() {
+        boolean isValid = true;
+        if (medicine.getConsumeQuantity() > medicine.getQuantity()) {
+            consumeQuantity.setError("Consume Quantity should be less than Quantity");
+            consumeQuantity.requestFocus();
+            isValid = false;
+        } else if (medicine.getThreshold() > medicine.getQuantity()) {
+            threshold.setError("Threshold should be less than Quantity");
+            threshold.requestFocus();
+            isValid = false;
+        }
+        else if (medicine.getExpireFactor() > 24 ) {
+            expirefactor.setError("Expire Factor should be less than 25");
+            expirefactor.requestFocus();
+            isValid = false;
+        }
+        else if (medicine.getCategory(context).getRemind() == true && medicine.getRemind() == false ){
+            AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+            warningDialog.setTitle(Constants.TITLE_WARNING);
+            warningDialog.setMessage("Reminder cannot be true off for this category of medicine");
+            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface alert, int which) {
+                    alert.dismiss();
+                }
+            });
+            warningDialog.show();
+            isValid = false;
+        }
+        else{
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY,23);
+            calendar.set(Calendar.MINUTE,59);
+            calendar.set(Calendar.SECOND,59);
+            long fullDayTime = calendar.getTimeInMillis();
+            String time[] = startTime.getText().toString().split(":");
+            int hour = Integer.parseInt(time[0]);
+            int minute = Integer.parseInt(time[1]);
+            calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, hour);
+            calendar.set(Calendar.MINUTE, minute);
+            int frequencyReminder = Integer.parseInt(frequency.getText().toString());
+            int intervalReminder = Integer.parseInt(interval.getText().toString());
+            long maxTimeForReminder = calendar.getTimeInMillis() + (MINUTE * frequencyReminder * intervalReminder);
+            if(maxTimeForReminder>fullDayTime){
+                frequency.setError("Input proper combination of Frequency,Start Time and Interval");
+                frequency.requestFocus();
+                isValid = false;
             }
 
         }
+        return isValid;
     }
 
     public void navigateToMainAcitivity() {

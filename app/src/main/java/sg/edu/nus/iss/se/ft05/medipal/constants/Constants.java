@@ -47,4 +47,7 @@ public class Constants {
     public static final String CATEGORY_NOT_SAVED = "Category was not inserted properly,Please try again later";
     public static final String CATEGORY_NOT_UPDATED = "Category was not updated properly,Please try again later";
 
+    //Appointment
+    public static final String CLINIC = "clinic";
+
 }
