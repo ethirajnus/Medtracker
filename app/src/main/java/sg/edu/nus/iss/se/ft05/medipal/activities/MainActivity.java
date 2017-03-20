@@ -2,10 +2,13 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
@@ -30,12 +34,25 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static String currentFragment;
+
     Context context;
+
+    SharedPreferences settings;
+    static final int FIRST_RUN_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        settings = getSharedPreferences("activityPreference", Context.MODE_PRIVATE);
+        if(!settings.getBoolean("activity_executed", false)){
+            Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
+            Bundle b = new Bundle();
+            b.putString(Constants.ACTION, Constants.NEW);
+            intent.putExtras(b);
+            startActivityForResult(intent,FIRST_RUN_REQUEST);
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,6 +76,26 @@ public class MainActivity extends AppCompatActivity
                 updateFragment(currentFragment);
             }
         }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK){
+            Editor editor = settings.edit();
+            editor.putBoolean("activity_executed", true);
+            editor.commit();
+        } else
+            finish();
+    }
+
+    public void viewPersonalBio(View v){
+        Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
+        Bundle b = new Bundle();
+        b.putString(Constants.ACTION, Constants.VIEW);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
     @Override
