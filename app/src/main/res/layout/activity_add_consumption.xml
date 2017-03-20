@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption">
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:weightSum="1"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
+
+
+    <TextView
+        android:id="@+id/consumptionLabelMedicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:text="@string/consumptionMedicine"
+        android:textStyle="bold" />
+
+
+    <Spinner
+        android:id="@+id/consumptionMedicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="?attr/colorAccent"
+        android:dropDownWidth="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/consumptionLabelQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:text="@string/consumptionQuantity"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/consumptionQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="6" />
+    <TextView
+        android:id="@+id/consumptionLabelDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:text="@string/consumptionDate"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/consumptionDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:inputType="date"
+        android:focusable="false"/>
+
+    <TextView
+        android:id="@+id/consumptionLabelTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:text="@string/consumptionTime"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/consumptionTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:ems="10"
+        android:inputType="time"
+        android:focusable="false"/>
+
+    <Button
+        android:id="@+id/saveConsumption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/side_nav_bar"
+        android:text="@string/save" />
+
+
+</LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
+

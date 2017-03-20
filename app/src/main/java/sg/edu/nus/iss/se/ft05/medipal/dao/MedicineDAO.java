@@ -14,4 +14,5 @@ public interface MedicineDAO {
     Medicine findById(int id);
     long insert(Medicine medicine);
     int update(Medicine medicine);
+    Cursor fetchAllMedicinesWithId();
 }

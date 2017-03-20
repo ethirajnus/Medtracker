@@ -24,6 +24,7 @@ public class NotificationUtils {
     private static final int MEDICINE_REMINDER_PENDING_INTENT_ID = 3417;
     private static int MEDICINE_REMINDER_NOTIFICATION_ID = 0;
     private static int APPOINTMENT_REMINDER_NOTIFICATION_ID = 0;
+    private static int REPLENISH_REMINDER_NOTIFICATION_ID = 0;
 
     private static PendingIntent contentIntent(Context context) {
         Intent startActivityIntent = new Intent(context, MainActivity.class);
@@ -57,6 +58,26 @@ public class NotificationUtils {
         return CONSUMPTION_MESSAGE + " " +medicineName + " " + MEDICINE;
     }
 
+
+    public static void replenishReminder(Context context, String medicineName) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setContentText(constructNotificationMessageForReplenish(medicineName))
+                .setSmallIcon(R.drawable.ic_menu_gallery)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(
+                        constructNotificationMessageForReplenish(medicineName)))
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setContentIntent(contentIntent(context))
+                .setAutoCancel(true);
+
+        notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+
+
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(REPLENISH_REMINDER_NOTIFICATION_ID++, notificationBuilder.build());
+    }
+
     public static void remindUserForAppointment(Context context, String clinicName) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
@@ -78,5 +99,9 @@ public class NotificationUtils {
 
     private static String constructNotificationMessageForAppointment(String clinicName) {
         return "It is time to visit" + clinicName;
+    }
+
+    private static String constructNotificationMessageForReplenish(String medicineName) {
+        return "Please replenish this" + medicineName;
     }
 }
