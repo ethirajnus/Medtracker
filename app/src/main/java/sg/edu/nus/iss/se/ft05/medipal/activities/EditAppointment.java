@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.Appointment;
@@ -39,7 +40,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         actionBar.setTitle("APPOINTMENT INFO");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         Intent intent=getIntent();
         Bundle b=intent.getExtras();
         long l=b.getLong("id");
@@ -118,17 +119,35 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public void editAppointment(View view)
+    public void editAppointment(View view) throws java.text.ParseException
     {
-
-        appointment.setDate(date.getText().toString());
-        appointment.setTime(time.getText().toString());
-        appointment.setClinic(clinic.getText().toString());
-        appointment.setTest(test.getText().toString());
-        appointment.setPreTest(pre_test.getText().toString());
-        appointment.update(getApplicationContext());
-        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-        MainActivity.currentFragment=AppointmentFragment.class.getName();
-        startActivity(intent);
+        boolean flag=true;
+        Calendar calendar=Calendar.getInstance();
+        Date d2=calendar.getTime();
+        String secondDate=new SimpleDateFormat("dd-MM-yyyy").format(d2);
+        Date d1=new SimpleDateFormat("dd-MM-yyyy").parse(date.getText().toString());
+        d2=new SimpleDateFormat("dd-MM-yyyy").parse(secondDate);
+        if(d1.before(d2))
+        {
+            date.setError("Date cannot be before today");
+            flag=false;
+        }
+        if(clinic.getText().toString().length()==0)
+        {clinic.setError("Clinic name required");
+            flag=false;}
+        if(test.getText().toString().length()==0)
+        {test.setError("Test name required");
+            flag=false;}
+        if(flag==true) {
+            appointment.setDate(date.getText().toString());
+            appointment.setTime(time.getText().toString());
+            appointment.setClinic(clinic.getText().toString());
+            appointment.setTest(test.getText().toString());
+            appointment.setPreTest(pre_test.getText().toString());
+            appointment.update(getApplicationContext());
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            MainActivity.currentFragment = AppointmentFragment.class.getName();
+            startActivity(intent);
+        }
     }
 }

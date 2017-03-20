@@ -38,7 +38,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         actionBar.setTitle("NEW APPOINTMENT");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        dateFormatter = new SimpleDateFormat("dd/mm/yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         ;
 
 
@@ -110,17 +110,23 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         test=(EditText) findViewById(R.id.new_appointment_test);
         pre_test=(EditText) findViewById(R.id.new_appointment_pre_test);
         String adate="",atime="",aclinic="",atest="",apre_test="";
+        Date time1,time2;
+        time1=new SimpleDateFormat("hh:mm").parse(time.getText().toString());
         Calendar calendar=Calendar.getInstance();
         Date d2=calendar.getTime();
-        String secondDate=new SimpleDateFormat("dd/mm/yyyy").format(d2);
+        time2=calendar.getTime();
+        String secondTime=new SimpleDateFormat("hh:mm").format(time2);
+        time2=new SimpleDateFormat("hh:mm").parse(secondTime);
+        String secondDate=new SimpleDateFormat("dd-MM-yyyy").format(d2);
         boolean flag=true;
         adate=date.getText().toString();
         atime=time.getText().toString();
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
-        Date d1=new SimpleDateFormat("dd/mm/yyyy").parse(adate);
-        d2=new SimpleDateFormat("dd/mm/yyyy").parse(secondDate);
+        Date d1=new SimpleDateFormat("dd-MM-yyyy").parse(adate);
+        d2=new SimpleDateFormat("dd-MM-yyyy").parse(secondDate);
+
         if(d1.before(d2))
         {
             date.setError("Date cannot be before today");
