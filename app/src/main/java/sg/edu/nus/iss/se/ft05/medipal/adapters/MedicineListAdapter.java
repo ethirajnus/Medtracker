@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.Category;
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
@@ -77,6 +77,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             public void onClick(View v) {
                 Medicine medicine = Medicine.findById(mContext, id);
                 medicine.delete(mContext);
+                ReminderUtils.syncMedicineReminder(mContext);
                 //update the list
                 swapCursor(Medicine.findAll(mContext));
             }
@@ -92,6 +93,14 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
                 intent.putExtras(b);
                 mContext.startActivity(intent);
 
+            }
+        });
+
+        holder.switchReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Medicine medicine = Medicine.findById(mContext, id);
+                medicine.updateReminder(mContext, isChecked);
+                ReminderUtils.syncMedicineReminder(mContext);
             }
         });
 

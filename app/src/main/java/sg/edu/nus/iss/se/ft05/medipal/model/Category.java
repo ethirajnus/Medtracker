@@ -1,10 +1,14 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.model;
 
 import android.content.Context;
 import android.database.Cursor;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 /**
  * Created by ethi on 10/03/17.
@@ -17,6 +21,8 @@ public class Category {
     private String categoryName,code,description;
     private Boolean remind;
     private CategoryDAO categoryDAO;
+
+    public static final String[] safeCategoryCodes = {"CHR","INC","COM"};
 
 
     public Category(String categoryName, String code, String description, Boolean remind) {
@@ -37,7 +43,17 @@ public class Category {
 
     public static Category findById(Context context, int id){
         categoryAll = new CategoryDAOImpl(context);
-        return  categoryAll.findById(id);
+        return  categoryAll.findByField(DBHelper.CATEGORY_KEY_ID,id);
+    }
+
+    public static Category findByName(Context context, String name){
+        categoryAll = new CategoryDAOImpl(context);
+        return  categoryAll.findByField(DBHelper.CATEGORY_KEY_CATEGORY,name);
+    }
+
+    public static Category findByCode(Context context, String code){
+        categoryAll = new CategoryDAOImpl(context);
+        return  categoryAll.findByField(DBHelper.CATEGORY_KEY_CODE,code);
     }
 
     public void setId(int id) {

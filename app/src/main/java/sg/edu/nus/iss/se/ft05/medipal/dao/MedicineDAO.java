@@ -2,7 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.dao;
 
 import android.database.Cursor;
 
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 
 /**
  * Created by ethi on 12/03/17.

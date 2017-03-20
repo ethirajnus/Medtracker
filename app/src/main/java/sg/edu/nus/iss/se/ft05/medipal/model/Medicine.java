@@ -1,15 +1,16 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.model;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERID;
 
 
 /**
@@ -19,17 +20,17 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 public class Medicine {
     private static MedicineDAO medicineAll;
     private MedicineDAO medicineDAO;
-    private int id,categoryId,reminderId,quantity,dosage,consumeQuality,threshold,expireFactor;
+    private int id,categoryId,reminderId,quantity,dosage,consumeQuantity,threshold,expireFactor;
     private Boolean remind;
     private String dateIssued;
     private String name,description;
 
-    public Medicine(String name, String description, int categoryId, int reminderId, Boolean remind, int quantity, int dosage, int consumeQuality, int threshold, String dateIssued, int expireFactor) {
+    public Medicine(String name, String description, int categoryId, int reminderId, Boolean remind, int quantity, int dosage, int consumeQuantity, int threshold, String dateIssued, int expireFactor) {
         this.categoryId = categoryId;
         this.reminderId = reminderId;
         this.quantity = quantity;
         this.dosage = dosage;
-        this.consumeQuality = consumeQuality;
+        this.consumeQuantity = consumeQuantity;
         this.threshold = threshold;
         this.expireFactor = expireFactor;
         this.remind = remind;
@@ -78,12 +79,12 @@ public class Medicine {
         this.dosage = dosage;
     }
 
-    public int getConsumeQuality() {
-        return consumeQuality;
+    public int getConsumeQuantity() {
+        return consumeQuantity;
     }
 
-    public void setConsumeQuality(int consumeQuality) {
-        this.consumeQuality = consumeQuality;
+    public void setConsumeQuantity(int consumeQuality) {
+        this.consumeQuantity = consumeQuality;
     }
 
     public int getThreshold() {
@@ -139,7 +140,6 @@ public class Medicine {
     public static Cursor findAll(Context context) {
         medicineAll = new MedicineDAOImpl(context);
         Cursor cursor = medicineAll.findAll();
-        Log.v("medicine find all",String.valueOf(cursor.getCount()));
         return cursor;
     }
 
@@ -162,7 +162,28 @@ public class Medicine {
         return medicineDAO.update(this);
     }
 
+    public static Map<Integer,Integer> listAllMedicine(Context context){
+        Cursor cursor = Medicine.findAll(context);
+        Map<Integer,Integer > medicineHashMap = new HashMap();
+        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            medicineHashMap.put(cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_ID)),cursor.getInt(cursor.getColumnIndex(MEDICINE_KEY_REMINDERID)));
+        }
+        return  medicineHashMap;
+    }
+
+
     public int getId() {
         return id;
+    }
+
+    public int updateReminder(Context context,boolean isChecked) {
+        medicineDAO = new MedicineDAOImpl(context);
+        setRemind(isChecked);
+        return medicineDAO.update(this);
+
+    }
+
+    public Category getCategory(Context context){
+        return Category.findById(context,getCategoryId());
     }
 }

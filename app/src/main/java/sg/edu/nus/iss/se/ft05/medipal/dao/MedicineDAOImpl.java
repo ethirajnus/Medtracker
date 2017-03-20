@@ -4,13 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import sg.edu.nus.iss.se.ft05.medipal.Category;
-import sg.edu.nus.iss.se.ft05.medipal.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 
 /**
  * Created by ethi on 12/03/17.
@@ -32,7 +27,6 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
     @Override
     public Cursor findAll(){
         String selectQuery = "SELECT  * FROM " + TABLE_MEDICINE;
-
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
@@ -40,11 +34,8 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
     @Override
     public Medicine findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         String selectQuery = "SELECT  * FROM " + TABLE_MEDICINE + " WHERE "
                 + MEDICINE_KEY_ID + " = " + id;
-
-
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c != null) {
@@ -61,7 +52,7 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         medicine.setRemind(c.getInt(c.getColumnIndex(CATEGORY_KEY_REMIND)) == 1);
         medicine.setQuantity(c.getInt(c.getColumnIndex(MEDICINE_KEY_QUANTITY)));
         medicine.setDosage(c.getInt(c.getColumnIndex(MEDICINE_KEY_DOSAGE)));
-        medicine.setConsumeQuality(c.getInt(c.getColumnIndex(MEDICINE_KEY_CONSUME_QUALITY)));
+        medicine.setConsumeQuantity(c.getInt(c.getColumnIndex(MEDICINE_KEY_CONSUME_QUALITY)));
         medicine.setThreshold(c.getInt(c.getColumnIndex(MEDICINE_KEY_THRESHOLD)));
         medicine.setDateIssued(c.getString(c.getColumnIndex(MEDICINE_KEY_DATE_ISSUED)));
         medicine.setExpireFactor(c.getInt(c.getColumnIndex(MEDICINE_KEY_EXPIRE_FACTOR)));
@@ -80,7 +71,7 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         values.put(MEDICINE_KEY_REMIND, medicine.getRemind());
         values.put(MEDICINE_KEY_QUANTITY, medicine.getQuantity());
         values.put(MEDICINE_KEY_DOSAGE, medicine.getDosage());
-        values.put(MEDICINE_KEY_CONSUME_QUALITY, medicine.getConsumeQuality());
+        values.put(MEDICINE_KEY_CONSUME_QUALITY, medicine.getConsumeQuantity());
         values.put(MEDICINE_KEY_THRESHOLD, medicine.getThreshold());
         values.put(MEDICINE_KEY_DATE_ISSUED, medicine.getDateIssued());
         values.put(MEDICINE_KEY_EXPIRE_FACTOR, medicine.getExpireFactor());
@@ -101,7 +92,7 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         values.put(MEDICINE_KEY_REMIND, medicine.getRemind());
         values.put(MEDICINE_KEY_QUANTITY, medicine.getQuantity());
         values.put(MEDICINE_KEY_DOSAGE, medicine.getDosage());
-        values.put(MEDICINE_KEY_CONSUME_QUALITY, medicine.getConsumeQuality());
+        values.put(MEDICINE_KEY_CONSUME_QUALITY, medicine.getConsumeQuantity());
         values.put(MEDICINE_KEY_THRESHOLD, medicine.getThreshold());
         values.put(MEDICINE_KEY_DATE_ISSUED, medicine.getDateIssued());
         values.put(MEDICINE_KEY_EXPIRE_FACTOR, medicine.getExpireFactor());
