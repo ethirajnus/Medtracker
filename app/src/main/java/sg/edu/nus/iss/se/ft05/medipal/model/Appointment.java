@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.model;
 
 /**
  * Created by Dhruv on 18/3/2017.
@@ -6,8 +6,16 @@ package sg.edu.nus.iss.se.ft05.medipal;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAOImpl;
+
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERID;
+
 public class Appointment {
     private static AppointmentDAO appointmentAll;
     private Integer id;
@@ -104,4 +112,8 @@ public class Appointment {
         return appointmentDAO.update(this);
     }
 
+    public static List<Appointment> findByDate(Context context, String date) {
+        appointmentAll = new AppointmentDAOImpl(context);
+        return appointmentAll.findByDate(date);
+    }
 }

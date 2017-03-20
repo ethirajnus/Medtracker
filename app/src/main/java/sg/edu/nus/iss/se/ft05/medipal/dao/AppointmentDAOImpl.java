@@ -9,7 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 
 /**
  * Created by Dhruv on 18/3/2017.
@@ -94,5 +94,33 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         int result = db.update(TABLE_APPOINTMENT, values, APPOINTMENT_KEY_ID + " = ?",
                 new String[] { String.valueOf(appointment.getId()) });
         return result;
+    }
+
+    @Override
+    public List<Appointment> findByDate(String date) {
+        List<Appointment> appointments = new ArrayList();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date + "'";
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.v("count",String.valueOf(cursor.getCount()));
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+        }
+        while (!cursor.isAfterLast()) {
+            Appointment appointment = new Appointment();
+            appointment.setId(cursor.getInt(cursor.getColumnIndex(APPOINTMENT_KEY_ID)));
+            appointment.setDate((cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DATE))));
+            appointment.setTime(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TIME)));
+            appointment.setClinic(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_CLINIC)));
+            appointments.add(appointment);
+            cursor.moveToNext();
+        }
+        return  appointments;
+
     }
 }

@@ -1,14 +1,18 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import sg.edu.nus.iss.se.ft05.medipal.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
+import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -36,16 +40,20 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_appointment);
+
+        context = getApplicationContext();
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("NEW APPOINTMENT");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        dateFormatter = new SimpleDateFormat("dd/mm/yyyy", Locale.US);
-        ;
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 
 
         findViewsById();
@@ -85,55 +93,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                 date.setText(dateFormatter.format(newDate.getTime()));
             }
 
-
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)){
-
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth){
-
-                if (year > now.get(Calendar.YEAR))
-
-                    view.updateDate(newCalendar
-                            .get(Calendar.YEAR), newCalendar
-                            .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-                if (monthOfYear > now.get(Calendar.MONTH) && year == now.get(Calendar.YEAR))
-                    view.updateDate(newCalendar
-                            .get(Calendar.YEAR), newCalendar
-                            .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-                if (dayOfMonth > now.get(Calendar.DAY_OF_MONTH) && year == now.get(Calendar.YEAR) &&
-                        monthOfYear == now.get(Calendar.MONTH))
-                    view.updateDate(newCalendar
-                            .get(Calendar.YEAR), newCalendar
-                            .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-            }
-
-        };
-
-
-        time.setOnClickListener(this);
-        timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
-                        String hour = "", minutes = "";
-                        if (hourOfDay < 10)
-                            hour = "0" + hourOfDay;
-                        else
-                            hour += hourOfDay;
-                        if (minute < 10)
-                            minutes = "0" + minute;
-                        else
-                            minutes += minute;
-
-                        time.setText(hour + ":" + minutes);
-                    }
-                }, mHour, mMinute, false);
-
-
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public void createAppointment(View view) throws java.text.ParseException {
@@ -145,15 +105,19 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         String adate = "", atime = "", aclinic = "", atest = "", apre_test = "";
         Calendar calendar = Calendar.getInstance();
         Date d2 = calendar.getTime();
-        String secondDate = new SimpleDateFormat("dd/mm/yyyy").format(d2);
+
+        String secondDate = new SimpleDateFormat("dd-MM-yyyy").format(d2);
+
         boolean flag = true;
         adate = date.getText().toString();
         atime = time.getText().toString();
         aclinic = clinic.getText().toString();
         atest = test.getText().toString();
         apre_test = pre_test.getText().toString();
-        Date d1 = new SimpleDateFormat("dd/mm/yyyy").parse(adate);
-        d2 = new SimpleDateFormat("dd/mm/yyyy").parse(secondDate);
+
+        Date d1 = new SimpleDateFormat("dd-MM-yyyy").parse(adate);
+        d2 = new SimpleDateFormat("dd-MM-yyyy").parse(secondDate);
+
         if (d1.before(d2)) {
             date.setError("Date cannot be before today");
             flag = false;
@@ -167,8 +131,13 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             flag = false;
         }
         if (flag == true) {
+
+
             Appointment appointment = new Appointment(adate, atime, aclinic, atest, apre_test);
-            appointment.save(getApplicationContext());
+            Log.v("date",adate);
+            appointment.save(context);
+            ReminderUtils.syncAppointmentReminder(context);
+
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();
             startActivity(intent);

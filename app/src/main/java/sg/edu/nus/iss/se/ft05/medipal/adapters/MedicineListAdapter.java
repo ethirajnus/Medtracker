@@ -77,6 +77,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             public void onClick(View v) {
                 Medicine medicine = Medicine.findById(mContext, id);
                 medicine.delete(mContext);
+                ReminderUtils.syncMedicineReminder(mContext);
                 //update the list
                 swapCursor(Medicine.findAll(mContext));
             }
