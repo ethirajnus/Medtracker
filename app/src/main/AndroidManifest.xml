@@ -23,6 +23,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.AddNewAppointment"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.EditAppointment"
+            android:parentActivityName=".activities.MainActivity"/>
+        <activity android:name=".activities.ShowAppointment"
+            android:parentActivityName=".activities.MainActivity"></activity>
+        <activity
             android:name=".activities.PersonalBioActivity"
             android:label="@string/title_activity_add_personalBio"
             android:theme="@style/AppTheme"></activity>

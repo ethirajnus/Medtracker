@@ -20,17 +20,17 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERI
 public class Medicine {
     private static MedicineDAO medicineAll;
     private MedicineDAO medicineDAO;
-    private int id,categoryId,reminderId,quantity,dosage,consumeQuality,threshold,expireFactor;
+    private int id,categoryId,reminderId,quantity,dosage,consumeQuantity,threshold,expireFactor;
     private Boolean remind;
     private String dateIssued;
     private String name,description;
 
-    public Medicine(String name, String description, int categoryId, int reminderId, Boolean remind, int quantity, int dosage, int consumeQuality, int threshold, String dateIssued, int expireFactor) {
+    public Medicine(String name, String description, int categoryId, int reminderId, Boolean remind, int quantity, int dosage, int consumeQuantity, int threshold, String dateIssued, int expireFactor) {
         this.categoryId = categoryId;
         this.reminderId = reminderId;
         this.quantity = quantity;
         this.dosage = dosage;
-        this.consumeQuality = consumeQuality;
+        this.consumeQuantity = consumeQuantity;
         this.threshold = threshold;
         this.expireFactor = expireFactor;
         this.remind = remind;
@@ -79,12 +79,12 @@ public class Medicine {
         this.dosage = dosage;
     }
 
-    public int getConsumeQuality() {
-        return consumeQuality;
+    public int getConsumeQuantity() {
+        return consumeQuantity;
     }
 
-    public void setConsumeQuality(int consumeQuality) {
-        this.consumeQuality = consumeQuality;
+    public void setConsumeQuantity(int consumeQuality) {
+        this.consumeQuantity = consumeQuality;
     }
 
     public int getThreshold() {

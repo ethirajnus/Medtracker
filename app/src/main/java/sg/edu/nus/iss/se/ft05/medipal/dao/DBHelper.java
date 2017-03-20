@@ -22,8 +22,11 @@ import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 public class DBHelper extends SQLiteOpenHelper {
 
     protected static final String TABLE_CATEGORY = "categories";
+
+    protected static final String TABLE_APPOINTMENT="appointments";
     protected static final String TABLE_MEDICINE = "medicines";
     protected static final String TABLE_REMINDER = "reminders";
+
     private static final String DATABASE_NAME = "medipal";
 
     private static final String DATABASE_COMMAND_DROP = "DROP TABLE IF EXISTS ";
@@ -51,6 +54,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CATEGORY_KEY_CODE = "code";
     public static final String CATEGORY_KEY_DESCRIPTION = "description";
     public static final String CATEGORY_KEY_REMIND = "remind";
+
+
+
+    public static final String APPOINTMENT_KEY_ID="id";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_DATE="date";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_TIME="time";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_CLINIC="clinic";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_TEST="test";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_PRE_TEST="pre_test";
+
 
     public static final String MEDICINE_KEY_ID = "id";
     public static final String MEDICINE_KEY_MEDICINE = "medicine";
@@ -86,6 +99,13 @@ public class DBHelper extends SQLiteOpenHelper {
             + DATABASE_COMMAND_TEXT + ICE_CONTACTS_KEY_DESC + DATABASE_COMMAND_TEXT + ICE_CONTACTS_KEY_PHONE
             + DATABASE_COMMAND_INTEGER_COMMA + ICE_CONTACTS_KEY_TYPE + DATABASE_COMMAND_TEXT + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_INTEGER + DATABASE_COMMAND_RIGHT_BRACKET;
 
+
+
+    private static final String CREATE_TABLE_APPOINTMENT = "CREATE TABLE "
+            + TABLE_APPOINTMENT + "(" + APPOINTMENT_KEY_ID + " INTEGER PRIMARY KEY," + APPOINTMENT_KEY_APPOINTMENT_DATE
+            + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_TIME + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_CLINIC
+            + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_TEST + " TEXT,"+ APPOINTMENT_KEY_APPOINTMENT_PRE_TEST+ " TEXT"+")";
+
     private static final String CREATE_TABLE_MEDICINE = "CREATE TABLE "
             + TABLE_MEDICINE + "(" + MEDICINE_KEY_ID + " INTEGER PRIMARY KEY," + MEDICINE_KEY_MEDICINE
             + " TEXT," + MEDICINE_KEY_DESCRIPTION + " TEXT," + MEDICINE_KEY_CATID + " INTEGER,"
@@ -112,11 +132,15 @@ public class DBHelper extends SQLiteOpenHelper {
         // creating required tables
         db.execSQL(CREATE_TABLE_CATEGORY);
 
+
+        db.execSQL(CREATE_TABLE_APPOINTMENT);
+
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
         insertDefaultValues(db);
         db.execSQL(getCreateTableHealthBioQuery());
         db.execSQL(CREATE_TABLE_ICE_CONTACTS);
+
 
     }
 
@@ -124,10 +148,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
+
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_APPOINTMENT);
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDER);
         db.execSQL(DATABASE_COMMAND_DROP + TABLE_ICE_CONTACTS);
         db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_HEALTH_BIO);
+
         onCreate(db);
     }
 
