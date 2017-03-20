@@ -39,6 +39,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
     Context context;
+    boolean flag=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +78,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     private void setDateTimeField() {
         date.setOnClickListener(this);
-
-        Calendar newCalendar = Calendar.getInstance();
-        fromDatePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
+        final Calendar now = Calendar.getInstance();
+        final Calendar newCalendar = Calendar.getInstance();
+        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
@@ -87,7 +88,30 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                 date.setText(dateFormatter.format(newDate.getTime()));
             }
 
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)) {
+
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                if (year < now.get(Calendar.YEAR))
+
+                    view.updateDate(newCalendar
+                            .get(Calendar.YEAR), newCalendar
+                            .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+                if (monthOfYear < now.get(Calendar.MONTH) && year == now.get(Calendar.YEAR))
+                    view.updateDate(newCalendar
+                            .get(Calendar.YEAR), newCalendar
+                            .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+                if (dayOfMonth < now.get(Calendar.DAY_OF_MONTH) && year == now.get(Calendar.YEAR) &&
+                        monthOfYear == now.get(Calendar.MONTH))
+                    view.updateDate(newCalendar
+                            .get(Calendar.YEAR), newCalendar
+                            .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+            }
+
+        };
         time.setOnClickListener(this);
         timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -105,9 +129,24 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                         else
                             minutes += minute;
 
-                        time.setText(hour + ":" + minutes);
+                        if((newCalendar.get(Calendar.HOUR_OF_DAY)+1) < hourOfDay){
+                            time.setError(null);
+                            time.setText(hour + ":" + minutes);
+                            flag=true;
+                        }else if((newCalendar.get(Calendar.HOUR_OF_DAY)+1) == hourOfDay && (newCalendar.get(Calendar.MINUTE)) < minute){
+                           time.setError(null);
+                            time.setText(hour + ":" + minutes);
+                            flag=true;
+                        }
+                        else
+                        {
+                            time.setError("Please choose a slot at least one hour from now");
+                        }
+
                     }
-                }, mHour, mMinute, false);
+                }, mHour, mMinute, false) ;
+
+
     }
 
     public void createAppointment(View view) throws java.text.ParseException
@@ -118,35 +157,49 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         test=(EditText) findViewById(R.id.new_appointment_test);
         pre_test=(EditText) findViewById(R.id.new_appointment_pre_test);
         String adate="",atime="",aclinic="",atest="",apre_test="";
-        Date time1,time2;
-        time1=new SimpleDateFormat("hh:mm").parse(time.getText().toString());
+        //Date time1,time2;
+        //time1=new SimpleDateFormat("hh:mm").parse(time.getText().toString());
         Calendar calendar=Calendar.getInstance();
-        Date d2=calendar.getTime();
-        time2=calendar.getTime();
-        String secondTime=new SimpleDateFormat("hh:mm").format(time2);
-        time2=new SimpleDateFormat("hh:mm").parse(secondTime);
+        Date d1=calendar.getTime(),d2=calendar.getTime();
+        //time2=calendar.getTime();
+        //String secondTime=new SimpleDateFormat("hh:mm").format(time2);
+        //time2=new SimpleDateFormat("hh:mm").parse(secondTime);
         String secondDate=new SimpleDateFormat("dd-MM-yyyy").format(d2);
-        boolean flag=true;
         adate=date.getText().toString();
         atime=time.getText().toString();
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
-        Date d1=new SimpleDateFormat("dd-MM-yyyy").parse(adate);
-        d2=new SimpleDateFormat("dd-MM-yyyy").parse(secondDate);
 
-        if(d1.before(d2))
-        {
+       // long diff=time1.getTime()-time2.getTime();
+        //if(diff<=3600000)
+        /*{
+            time.setError("Appointment should be at least one hour from now");
+            flag=false;
+        }*/
 
-            date.setError("Date cannot be before today");
-            flag = false;
-        }
+
         if (clinic.getText().toString().length() == 0) {
             clinic.setError("Clinic name required");
             flag = false;
         }
+        if (time.getText().toString().length() == 0) {
+            clinic.setError("Apointment time required");
+            flag = false;
+        }
+        if (date.getText().toString().length() == 0) {
+            date.setError("Appointment date required");
+            flag = false;
+        }
         if (test.getText().toString().length() == 0) {
             test.setError("Test name required");
+            flag = false;
+        }
+        d1=new SimpleDateFormat("dd-MM-yyyy").parse(adate);
+        d2=new SimpleDateFormat("dd-MM-yyyy").parse(secondDate);
+        if(d1.before(d2))
+        {
+            date.setError("Date cannot be before today");
             flag = false;
         }
         if (flag == true) {
