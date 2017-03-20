@@ -24,12 +24,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.AddOrUpdateMedicine"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
             android:name=".activities.AddNewAppointment"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.EditAppointment"
             android:parentActivityName=".activities.MainActivity"/>
         <activity android:name=".activities.ShowAppointment"
             android:parentActivityName=".activities.MainActivity"></activity>
+
         <activity
             android:name=".activities.PersonalBioActivity"
             android:label="@string/title_activity_add_personalBio"
@@ -43,7 +47,17 @@
         <activity
             android:name=".activities.ShowMedicine"
             android:parentActivityName=".activities.MainActivity">
-            ></activity>
+            >
+        </activity>
+        <activity
+            android:name=".activities.AddMeasurement"
+            android:label="@string/title_activity_add_measurement"
+            android:parentActivityName=".activities.MainActivity"/>
+        <activity
+            android:name=".activities.DisplayMeasurement"
+            android:label="@string/title_activity_display_measurement"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
         <service
             android:name=".Util.MedicineReminderJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"

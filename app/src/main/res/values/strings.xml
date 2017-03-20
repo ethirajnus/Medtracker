@@ -41,6 +41,11 @@
     <string name="reminderStartTime">StartTime</string>
     <string name="reminderInterval">Interval</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Measurement Fragment</string>
+    <string name="title_activity_add_measurement">AddMeasurement</string>
+    <string name="title_activity_display_measurement">DisplayMeasurement</string>
+
 
     <!-- ICE ICEContactsManager  -->
     <string name="ice_header">In case of emergency</string>
@@ -73,5 +78,6 @@
     <!-- Date picker -->
     <string name="datePickerTitle">Set Date</string>
     <string name="setBtn">Set</string>
+
 
 </resources>
