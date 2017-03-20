@@ -35,11 +35,18 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     EditText date, time, clinic, test, pre_test;
     private int mHour, mMinute;
     private SimpleDateFormat dateFormatter;
-    private SimpleDateFormat timeFormatter;
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
     Context context;
-    boolean flag=true;
+    boolean flag=true;//To ensure that all input fields are valid
+    private static final String DATE_FORMAT="dd-MM-yyyy";
+    private static final String BLANK_DATE_MESSAGE="Appointment date required";
+    private static final String WRONG_TIME="Please choose a slot at least one hour from now";
+    private static final String BLANK_TIME_MESSAGE="Appointment time required";
+    private static final String BLANK_CLINIC_MESSAGE="Clinic Required";
+    private static final String BLANK_TEST_MESSAGE="Test Required";
+    private static final String WRONG_DATE="Date cannot be before today";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +54,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_add_new_appointment);
         context = getApplicationContext();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("NEW APPOINTMENT");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormatter = new SimpleDateFormat(DATE_FORMAT);
 
         findViewsById();
 
@@ -119,15 +125,15 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        String hour = "", minutes = "";
+                        String hour , minutes ;
                         if (hourOfDay < 10)
                             hour = "0" + hourOfDay;
                         else
-                            hour += hourOfDay;
+                            hour =""+ hourOfDay;
                         if (minute < 10)
                             minutes = "0" + minute;
                         else
-                            minutes += minute;
+                            minutes =""+ minute;
 
                         if((newCalendar.get(Calendar.HOUR_OF_DAY)+1) < hourOfDay){
                             time.setError(null);
@@ -140,7 +146,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                         }
                         else
                         {
-                            time.setError("Please choose a slot at least one hour from now");
+                            time.setError(WRONG_TIME);
                         }
 
                     }
@@ -157,53 +163,42 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         test=(EditText) findViewById(R.id.new_appointment_test);
         pre_test=(EditText) findViewById(R.id.new_appointment_pre_test);
         String adate="",atime="",aclinic="",atest="",apre_test="";
-        //Date time1,time2;
-        //time1=new SimpleDateFormat("hh:mm").parse(time.getText().toString());
         Calendar calendar=Calendar.getInstance();
         Date d1=calendar.getTime(),d2=calendar.getTime();
-        //time2=calendar.getTime();
-        //String secondTime=new SimpleDateFormat("hh:mm").format(time2);
-        //time2=new SimpleDateFormat("hh:mm").parse(secondTime);
-        String secondDate=new SimpleDateFormat("dd-MM-yyyy").format(d2);
+        String secondDate=new SimpleDateFormat(DATE_FORMAT).format(d2);
         adate=date.getText().toString();
         atime=time.getText().toString();
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
 
-       // long diff=time1.getTime()-time2.getTime();
-        //if(diff<=3600000)
-        /*{
-            time.setError("Appointment should be at least one hour from now");
-            flag=false;
-        }*/
-
 
         if (clinic.getText().toString().length() == 0) {
-            clinic.setError("Clinic name required");
+            clinic.setError(BLANK_CLINIC_MESSAGE);
             flag = false;
         }
         if (time.getText().toString().length() == 0) {
-            clinic.setError("Apointment time required");
+            clinic.setError(BLANK_TIME_MESSAGE);
             flag = false;
         }
         if (date.getText().toString().length() == 0) {
-            date.setError("Appointment date required");
+            date.setError(BLANK_DATE_MESSAGE);
             flag = false;
         }
         if (test.getText().toString().length() == 0) {
-            test.setError("Test name required");
+            test.setError(BLANK_TEST_MESSAGE);
             flag = false;
         }
-        d1=new SimpleDateFormat("dd-MM-yyyy").parse(adate);
-        d2=new SimpleDateFormat("dd-MM-yyyy").parse(secondDate);
+        d1=new SimpleDateFormat(DATE_FORMAT).parse(adate);
+        d2=new SimpleDateFormat(DATE_FORMAT).parse(secondDate);
         if(d1.before(d2))
         {
-            date.setError("Date cannot be before today");
+            date.setError(WRONG_DATE);
             flag = false;
         }
         if (flag == true) {
 
+            //All input fields are valid
             Appointment appointment = new Appointment(adate, atime, aclinic, atest, apre_test);
             Log.v("date",adate);
             appointment.save(context);

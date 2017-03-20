@@ -25,10 +25,13 @@
         </activity>
         <activity
             android:name=".activities.AddNewAppointment"
+            android:label="New Appointment"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.EditAppointment"
+            android:label="Edit Appointment Details"
             android:parentActivityName=".activities.MainActivity"/>
         <activity android:name=".activities.ShowAppointment"
+            android:label="Appointment Information"
             android:parentActivityName=".activities.MainActivity"></activity>
         <activity
             android:name=".activities.PersonalBioActivity"

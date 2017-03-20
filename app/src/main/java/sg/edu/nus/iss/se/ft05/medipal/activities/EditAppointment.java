@@ -30,35 +30,42 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
  */
 public class EditAppointment extends AppCompatActivity implements View.OnClickListener {
 
-    EditText date1, time1;
+
     private int mHour, mMinute;
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
-    EditText date, time, clinic, test, pre_test;
-    Appointment appointment;
-    Context context;
-    boolean flag = true;
+    private EditText date, time, clinic, test, pre_test;
+    private Appointment appointment;
+    private Context context;
+    private boolean flag = true; //flag is to ensure that all fields have been filled properly
+    private static final String DATE_FORMAT="dd-MM-yyyy";
+    private static final String BLANK_DATE_MESSAGE="Appointment date required";
+    private static final String WRONG_TIME="Please choose a slot at least one hour from now";
+    private static final String BLANK_TIME_MESSAGE="Appointment time required";
+    private static final String BLANK_CLINIC_MESSAGE="Clinic Required";
+    private static final String BLANK_TEST_MESSAGE="Test Required";
+    private static final String WRONG_DATE="Date cannot be before today";
 
     /**
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_appointment);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("APPOINTMENT INFO");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
         context = getApplicationContext();
 
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormatter = new SimpleDateFormat(DATE_FORMAT);
         Intent intent = getIntent();
-        Bundle b = intent.getExtras();
-        long l = b.getLong("id");
-        appointment = Appointment.findById(getApplicationContext(), l);
+        Bundle bundle = intent.getExtras();
+        int id = bundle.getInt("id");
+        appointment = Appointment.findById(getApplicationContext(), id);
 
         date = (EditText) findViewById(R.id.appointment_date);
         time = (EditText) findViewById(R.id.appointment_time);
@@ -92,21 +99,24 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
     }
 
     private void findViewsById() {
+
         date = (EditText) findViewById(R.id.appointment_date);
         date.setInputType(InputType.TYPE_NULL);
         date.requestFocus();
         time = (EditText) findViewById(R.id.appointment_time);
         time.setInputType(InputType.TYPE_NULL);
-
     }
 
     private void setDateTimeField() {
+
         date.setOnClickListener(this);
         final Calendar now = Calendar.getInstance();
         final Calendar newCalendar = Calendar.getInstance();
+
         fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 date.setText(dateFormatter.format(newDate.getTime()));
@@ -118,7 +128,6 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                 if (year < now.get(Calendar.YEAR))
-
                     view.updateDate(newCalendar
                             .get(Calendar.YEAR), newCalendar
                             .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
@@ -136,22 +145,25 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             }
 
         };
+
         time.setOnClickListener(this);
+
         timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        String hour = "", minutes = "";
+
+                        String hour , minutes;
                         if (hourOfDay < 10)
                             hour = "0" + hourOfDay;
                         else
-                            hour += hourOfDay;
+                            hour =""+ hourOfDay;
                         if (minute < 10)
                             minutes = "0" + minute;
                         else
-                            minutes += minute;
+                            minutes =""+ minute;
 
                         if ((newCalendar.get(Calendar.HOUR_OF_DAY) + 1) < hourOfDay) {
                             time.setError(null);
@@ -162,7 +174,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
                             time.setText(hour + ":" + minutes);
                             flag = true;
                         } else {
-                            time.setError("Please choose a slot at least one hour from now");
+                            time.setError(WRONG_TIME);
                         }
 
                     }
@@ -177,30 +189,38 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         Calendar calendar = Calendar.getInstance();
 
         if (clinic.getText().toString().length() == 0) {
-            clinic.setError("Clinic name required");
+            clinic.setError(BLANK_CLINIC_MESSAGE);
             flag = false;
         }
+
         if (time.getText().toString().length() == 0) {
-            clinic.setError("Apointment time required");
+            clinic.setError(BLANK_TIME_MESSAGE);
             flag = false;
         }
+
         if (date.getText().toString().length() == 0) {
-            date.setError("Appointment date required");
+            date.setError(BLANK_DATE_MESSAGE);
             flag = false;
         }
+
         if (test.getText().toString().length() == 0) {
-            test.setError("Test name required");
+            test.setError(BLANK_TEST_MESSAGE);
             flag = false;
         }
+
         Date d2 = calendar.getTime();
-        String secondDate = new SimpleDateFormat("dd-MM-yyyy").format(d2);
-        Date d1 = new SimpleDateFormat("dd-MM-yyyy").parse(date.getText().toString());
-        d2 = new SimpleDateFormat("dd-MM-yyyy").parse(secondDate);
+        String secondDate = new SimpleDateFormat(DATE_FORMAT).format(d2);
+        Date d1 = new SimpleDateFormat(DATE_FORMAT).parse(date.getText().toString());
+        d2 = new SimpleDateFormat(DATE_FORMAT).parse(secondDate);
+
         if (d1.before(d2)) {
-            date.setError("Date cannot be before today");
+            date.setError(WRONG_DATE);
             flag = false;
         }
+
         if (flag == true) {
+
+            //All input fields are valid
             appointment.setDate(date.getText().toString());
             appointment.setTime(time.getText().toString());
             appointment.setClinic(clinic.getText().toString());
