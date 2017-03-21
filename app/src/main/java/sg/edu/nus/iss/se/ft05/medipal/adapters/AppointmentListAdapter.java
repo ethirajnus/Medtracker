@@ -32,6 +32,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     @Override
     public AppointmentListAdapter.AppointmentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.appointment_list_item, parent, false);
         return new AppointmentListAdapter.AppointmentViewHolder(view);
@@ -39,18 +40,17 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     @Override
     public void onBindViewHolder(AppointmentListAdapter.AppointmentViewHolder holder, int position) {
+
         if (!mCursor.moveToPosition(position))
             return;
         String date = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DATE));
         String time = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TIME));
         String clinic = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_CLINIC));
-        final long id = mCursor.getLong(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID));
+        final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID));
         String info=date+"\n"+time+"\n"+clinic;
 
         holder.appointmentInfo.setText(info);
         holder.itemView.setTag(id);
-
-
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -66,9 +66,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EditAppointment.class);
-                Bundle b=new Bundle();
-                b.putLong("id",id);
-                intent.putExtras(b);
+                Bundle bundle=new Bundle();
+                bundle.putInt("id",id);
+                intent.putExtras(bundle);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
@@ -79,9 +79,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ShowAppointment.class);
-                Bundle b=new Bundle();
-                b.putLong("id",id);
-                intent.putExtras(b);
+                Bundle bundle=new Bundle();
+                bundle.putInt("id",id);
+                intent.putExtras(bundle);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 

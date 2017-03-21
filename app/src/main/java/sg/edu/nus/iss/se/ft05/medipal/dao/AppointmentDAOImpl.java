@@ -16,13 +16,16 @@ import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
  */
 
 public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
+
     private static final String LOG = "AppointmentDAOImpl";
+    private static final String SELECT="SELECT * FROM ";
     public AppointmentDAOImpl(Context context) {
 
         super(context);
     }
     @Override
     public int delete(long id) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         int result =  db.delete(TABLE_APPOINTMENT, APPOINTMENT_KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
@@ -30,9 +33,10 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
     }
     @Override
     public Cursor findAll() {
+
         List<Appointment> appointments = new ArrayList<Appointment>();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_APPOINTMENT;
+        String selectQuery = SELECT + TABLE_APPOINTMENT;
 
         Log.e(LOG, selectQuery);
 
@@ -44,16 +48,17 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
     }
     @Override
     public Appointment findById(long id) {
+
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_APPOINTMENT + " WHERE "
+        String selectQuery = SELECT + TABLE_APPOINTMENT + " WHERE "
                 + APPOINTMENT_KEY_ID + " = " + id;
 
         Log.e(LOG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null && c.moveToFirst())
+        if (c != null)
             c.moveToFirst();
 
         Appointment appointment = new Appointment();
@@ -67,6 +72,7 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
     }
     @Override
     public long insert(Appointment appointment) {
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -82,6 +88,7 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
     }
     @Override
     public int update(Appointment appointment) {
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -98,9 +105,10 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
     @Override
     public List<Appointment> findByDate(String date) {
+
         List<Appointment> appointments = new ArrayList();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date + "'";
+        String selectQuery = SELECT + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date + "'";
 
         Log.e(LOG, selectQuery);
 
@@ -112,6 +120,7 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
             cursor.moveToFirst();
         }
         while (!cursor.isAfterLast()) {
+
             Appointment appointment = new Appointment();
             appointment.setId(cursor.getInt(cursor.getColumnIndex(APPOINTMENT_KEY_ID)));
             appointment.setDate((cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DATE))));
@@ -121,6 +130,35 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
             cursor.moveToNext();
         }
         return  appointments;
+
+    }
+    @Override
+    public Cursor filterDate(String date) {
+
+        List<Appointment> appointments = new ArrayList();
+
+        String selectQuery = SELECT + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date + "'";
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.v("count",String.valueOf(cursor.getCount()));
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+        }
+       /* while (!cursor.isAfterLast()) {
+
+            Appointment appointment = new Appointment();
+            appointment.setId(cursor.getInt(cursor.getColumnIndex(APPOINTMENT_KEY_ID)));
+            appointment.setDate((cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DATE))));
+            appointment.setTime(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TIME)));
+            appointment.setClinic(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_CLINIC)));
+            appointments.add(appointment);
+            cursor.moveToNext();
+        }*/
+        return  cursor;
 
     }
 }

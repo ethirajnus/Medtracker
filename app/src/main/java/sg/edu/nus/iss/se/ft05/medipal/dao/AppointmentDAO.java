@@ -15,5 +15,6 @@ public interface AppointmentDAO {
     public Appointment findById(long id);
     public long insert(Appointment appointment);
     public int update(Appointment appointment);
-    List<Appointment> findByDate(String date);
+    public List<Appointment> findByDate(String date);
+    public Cursor filterDate(String date);
 }
