@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,13 +24,17 @@ import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 
 
 public class DefaultFragment extends Fragment {
-    private AppointmentListAdapter appointmentListAdapter;
+
     private Context context;
-    private LinearLayoutManager linearLayoutManager;
-    private RecyclerView appointmentRecyclerView;
+    private TextView textView;
     private Cursor cursor;
     private String date;
     private List<Appointment> appointments;
+    private static final String APPOINTMENTS="Today's Appointments";
+    private static final String MEASUREMENTS="Your most recent measurements";
+    private static final String CONSUMPTIONS="Your most recent consumption";
+    private String content="";
+
 
 
     @Override
@@ -38,15 +43,23 @@ public class DefaultFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_default,container,false);
         context=getActivity().getApplicationContext();
-        linearLayoutManager=new LinearLayoutManager(context);
-        appointmentRecyclerView=(RecyclerView) view.findViewById(R.id.default_view);
-        appointmentRecyclerView.setLayoutManager(linearLayoutManager);
+
         Calendar calendar=Calendar.getInstance();
         Date d=calendar.getTime();
         date=new SimpleDateFormat("dd-MM-yyyy").format(d);
-        cursor=Appointment.filterDate(context,date);
-        appointmentListAdapter=new AppointmentListAdapter(context,cursor);
-        appointmentRecyclerView.setAdapter(appointmentListAdapter);
+        appointments=Appointment.findByDate(context,date);
+        content=content+APPOINTMENTS+"\n";
+
+        for(int i=0;i<appointments.size();i++)
+        {
+            Appointment appointment=appointments.get(i);
+            content=content+"Time:"+appointment.getTime()+"\n";
+            content=content+"Clinic:"+appointment.getClinic()+"\n";
+
+        }
+        textView=(TextView) view.findViewById(R.id.default_view);
+        textView.setText(content);
+
         return view;
     }
 
