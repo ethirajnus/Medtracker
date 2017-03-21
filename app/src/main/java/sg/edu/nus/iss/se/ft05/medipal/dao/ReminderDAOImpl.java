@@ -38,20 +38,17 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
 
             c.moveToFirst();
         }
-        Log.v("reminder ciunt", String.valueOf(c.getCount()));
         Reminder reminder = new Reminder();
         reminder.setId(c.getInt(c.getColumnIndex(REMINDER_KEY_ID)));
         reminder.setFrequency((c.getInt(c.getColumnIndex(REMINDER_KEY_FREQUENCY))));
         reminder.setStartTime(c.getString(c.getColumnIndex(REMINDER_KEY_STARTTIME)));
         reminder.setInterval(c.getInt(c.getColumnIndex(REMINDER_KEY_INTERVAL)));
-        Log.v("reminder",reminder.getStartTime());
         return reminder;
     }
 
     @Override
     public long insert(Reminder reminder) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.v("starttme", reminder.getStartTime());
         ContentValues values = new ContentValues();
         values.put(REMINDER_KEY_FREQUENCY, reminder.getFrequency());
         values.put(REMINDER_KEY_STARTTIME, reminder.getStartTime());
@@ -66,7 +63,6 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        Log.v("reminder",String.valueOf(reminder.getFrequency()));
         values.put(REMINDER_KEY_FREQUENCY, reminder.getFrequency());
         values.put(REMINDER_KEY_STARTTIME, reminder.getStartTime());
         values.put(REMINDER_KEY_INTERVAL, reminder.getInterval());
