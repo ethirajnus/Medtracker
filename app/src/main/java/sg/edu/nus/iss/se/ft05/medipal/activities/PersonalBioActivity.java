@@ -2,31 +2,20 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-<<<<<<< HEAD
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-=======
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v4.app.DialogFragment;
->>>>>>> a6169a7... Personal bio added and shared Preference
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-<<<<<<< HEAD
 import android.widget.TextView;
-=======
->>>>>>> a6169a7... Personal bio added and shared Preference
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -36,12 +25,8 @@ import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-<<<<<<< HEAD
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
-=======
-import sg.edu.nus.iss.se.ft05.medipal.enums.BloodType;
->>>>>>> a6169a7... Personal bio added and shared Preference
 import sg.edu.nus.iss.se.ft05.medipal.model.PersonalBio;
 
 /**
@@ -53,11 +38,8 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
     private Spinner mSpn_bloodType;
     private Button mSaveBtn;
     private Calendar dateCalendar;
-<<<<<<< HEAD
     private TextView mTv_bloodType;
 
-=======
->>>>>>> a6169a7... Personal bio added and shared Preference
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH);
 
@@ -69,7 +51,6 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_bio);
-<<<<<<< HEAD
         setTitle(Constants.TITLE_PERSONAL_BIO);
         Context context = getApplicationContext();
         findViewsById();
@@ -90,11 +71,9 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-=======
 
         findViewsById();
         setListeners();
->>>>>>> a6169a7... Personal bio added and shared Preference
     }
 
     private void findViewsById(){
@@ -109,10 +88,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.blood_type_list, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpn_bloodType.setAdapter(adapter);
-<<<<<<< HEAD
         mTv_bloodType = (TextView) findViewById(R.id.tv_bloodType_value);
-=======
->>>>>>> a6169a7... Personal bio added and shared Preference
         mSaveBtn = (Button) findViewById(R.id.savePersonalBio);
     }
 
@@ -143,7 +119,6 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                 datePickerDialog.show();
                 break;
             case R.id.savePersonalBio:
-<<<<<<< HEAD
                 if(mSaveBtn.getText().equals(Constants.SAVE))
                  savePersonalbio();
                 else if(mSaveBtn.getText().equals(Constants.EDIT)){
@@ -162,14 +137,27 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                     datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     datePickerDialog.show();
                 }
-=======
                 savePersonalbio();
->>>>>>> a6169a7... Personal bio added and shared Preference
                 break;
         }
     }
 
-<<<<<<< HEAD
+
+
+    private void getPersonalbioValuesById(int id) {
+        personalBio = PersonalBio.findById(getApplicationContext(), id);
+        mName.setText(personalBio.getName());
+        mDob.setText(personalBio.getDob());
+        mIdNo.setText(personalBio.getIdNo());
+        mAddress.setText(personalBio.getAddress());
+        mPostalCode.setText(personalBio.getPostalCode());
+        mHeight.setText(personalBio.getHeight());
+        mSpn_bloodType.setSelection(Arrays.asList(
+                getResources().getStringArray(R.array.blood_type_list))
+                .indexOf(personalBio.getBloodType()));
+        mTv_bloodType.setText(personalBio.getBloodType());
+    }
+
     private void makeFieldsEditable(boolean enable) {
         mDob.setEnabled(enable);
         mDob.setOnClickListener(null);
@@ -187,26 +175,9 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
-    private void getPersonalbioValuesById(int id) {
-        personalBio = PersonalBio.findById(getApplicationContext(), id);
-        mName.setText(personalBio.getName());
-        mDob.setText(personalBio.getDob());
-        mIdNo.setText(personalBio.getIdNo());
-        mAddress.setText(personalBio.getAddress());
-        mPostalCode.setText(personalBio.getPostalCode());
-        mHeight.setText(personalBio.getHeight());
-        mSpn_bloodType.setSelection(Arrays.asList(
-                getResources().getStringArray(R.array.blood_type_list))
-                .indexOf(personalBio.getBloodType()));
-        mTv_bloodType.setText(personalBio.getBloodType());
-    }
-
     /**
      * Save Personal bio details
      */
-=======
->>>>>>> a6169a7... Personal bio added and shared Preference
     public void savePersonalbio() {
         String name = mName.getText().toString();
         String dob = mDob.getText().toString();
@@ -215,7 +186,6 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         String postalCode = mPostalCode.getText().toString();
         String height = mHeight.getText().toString();
         String bloodType = mSpn_bloodType.getSelectedItem().toString();
-<<<<<<< HEAD
         personalBio = new PersonalBio(name,dob,idNo,address,postalCode,height,bloodType);
         context = getApplicationContext();
         PersonalBioDAO personalBioDAO = new PersonalBioDAOImpl(context);
@@ -328,19 +298,5 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
             }
         }
         return isvalid;
-=======
-        Context context = getApplicationContext();
-        PersonalBio personalBio = new PersonalBio(name,dob,idNo,address,postalCode,height,bloodType);
-        if(personalBio.save(context) == -1)
-            Toast.makeText(context,R.string.insert_error, Toast.LENGTH_SHORT).show();
-        else {
-            Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show();
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(Constants.COMPLETION_STATUS,Constants.COMPLETION_STATUS_SUCCESS);
-            setResult(RESULT_OK,resultIntent);
-            finish();
-        }
-
->>>>>>> a6169a7... Personal bio added and shared Preference
     }
 }

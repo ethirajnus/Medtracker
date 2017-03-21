@@ -16,10 +16,6 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TITLE_WARNING = "Warning";
     public static final String OK_BUTTON = "OK";
-    public static final String COMPLETION_STATUS = "status";
-    public static final String COMPLETION_STATUS_SUCCESS = "success";
-    public static final String COMPLETION_STATUS_FAIL = "fail";
-
 
     //PersonalBio
     public static final String TITLE_PERSONAL_BIO = "Personal Details";
