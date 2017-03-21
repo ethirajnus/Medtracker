@@ -70,8 +70,9 @@ tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.01"
-        android:inputType="date"
-        android:focusable="false"/>
+        android:inputType="none"
+        android:textIsSelectable="true"
+        />
 
     <TextView
         android:id="@+id/consumptionLabelTime"
@@ -87,8 +88,8 @@ tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption"
         android:layout_height="wrap_content"
         android:layout_weight="0.01"
         android:ems="10"
-        android:inputType="time"
-        android:focusable="false"/>
+        android:inputType="none"
+        android:textIsSelectable="true"/>
 
     <Button
         android:id="@+id/saveConsumption"

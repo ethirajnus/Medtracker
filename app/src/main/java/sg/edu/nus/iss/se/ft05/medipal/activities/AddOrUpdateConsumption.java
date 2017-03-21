@@ -9,7 +9,10 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,9 +82,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         if (b != null && b.getString(ACTION).equalsIgnoreCase(EDIT)) {
             updateSaveButton();
             updateConsumptionValues(b.getInt(ID));
-            setTitle(EDIT_CATEGORY);
+            setTitle(EDIT_CONSUMPTION);
         } else {
-            setTitle(NEW_CATEGORY);
+            setTitle(NEW_CONSUMPTION);
         }
 
     }
@@ -89,14 +93,14 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         Cursor mCursor = Medicine.fetchAllMedicinesWithId(context);
         medicineList = new ArrayList<>();
         medicinesMap = new HashMap<>();
-        while (mCursor.moveToNext()) {
+        for (mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
             int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID));
             String categoryName = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_MEDICINE));
             medicineList.add(categoryName); //add the item
             medicinesMap.put(categoryName, id);
         }
 
-        ArrayAdapter<String> medicineDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, medicineList);
+        ArrayAdapter<String> medicineDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, medicineList);
 
         // Drop down layout style - list view with radio button
         medicineDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -143,6 +147,40 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                 newCalendar.get(Calendar.DAY_OF_MONTH));
         saveButton.setOnClickListener(this);
         medicine.setOnItemSelectedListener(this);
+        date.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0)
+                    date.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        time.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0)
+                    time.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void findViewsById() {
@@ -158,6 +196,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.consumptionDate:
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
                 break;
             case R.id.consumptionTime:
@@ -225,9 +264,11 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             isValid = false;
         } else if (date.getText().toString().isEmpty()) {
             date.setError("Please enter date ");
+            date.requestFocus();
             isValid = false;
         } else if (time.getText().toString().isEmpty()) {
             time.setError("Please enter time");
+            time.requestFocus();
             isValid = false;
         }
         return isValid;
@@ -249,24 +290,43 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             quantity.setError("Medicine should not be consumed more than" + consumeQuantity);
             quantity.requestFocus();
             isValid = false;
-        } else {
+        }
+        else {
 
             List<Consumption> consumptions = Consumption.findByDate(context, consumption.getDate());
-            Log.v("consumption size",String.valueOf(consumptions.size()));
             if(consumptions.size() >= frequency){
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage("Medicine should not be consumed more than" + frequency + "times");
                 warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface alert, int which) {
+                    public void onClick(DialogInterface alert, int button) {
                         alert.dismiss();
                     }
                 });
                 warningDialog.show();
                 isValid = false;
             }
+            else {
+               try {
+                   if ( formatter.parse(consumption.getDate()).before(formatter.parse(consumptionMedicine.getDateIssued()))) {
+                       AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+                       warningDialog.setTitle(Constants.TITLE_WARNING);
+                       warningDialog.setMessage("Medicine should not consumed before the date issued");
+                       warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface alert, int button) {
+                               alert.dismiss();
+                           }
+                       });
+                       warningDialog.show();
+                       isValid = false;
+                   }
 
+               } catch (Exception e){
+
+               }
+            }
         }
         return isValid;
     }

@@ -3,13 +3,9 @@ package sg.edu.nus.iss.se.ft05.medipal.model;
 import android.content.Context;
 import android.database.Cursor;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 /**
  * Created by ethi on 10/03/17.
@@ -18,8 +14,8 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 public class Consumption {
 
     private static ConsumptionDAOImpl consumptionAll;
-    private int id,medicineId,quantity;
-    private String date,time;
+    private int id, medicineId, quantity;
+    private String date, time;
 
     private ConsumptionDAOImpl consumptionDAO;
 
@@ -74,33 +70,33 @@ public class Consumption {
 
     }
 
-    public static Cursor findAll(Context context){
+    public static Cursor findAll(Context context) {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.findAll();
     }
 
-    public static Consumption findById(Context context, int id){
+    public static Consumption findById(Context context, int id) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return  consumptionAll.findById(id);
+        return consumptionAll.findById(id);
     }
 
-    public long save(Context context){
+    public long save(Context context) {
         consumptionDAO = new ConsumptionDAOImpl(context);
         return consumptionDAO.insert(this);
     }
 
-    public int update(Context context){
+    public int update(Context context) {
         consumptionDAO = new ConsumptionDAOImpl(context);
         return consumptionDAO.update(this);
     }
 
-    public int delete(Context context){
+    public int delete(Context context) {
         consumptionDAO = new ConsumptionDAOImpl(context);
         return consumptionDAO.delete(this.getId());
     }
 
     public Medicine getMedicine(Context context) {
-        return Medicine.findById(context,getMedicineId());
+        return Medicine.findById(context, getMedicineId());
     }
 
     public static List<Consumption> findByDate(Context context, String date) {
@@ -110,6 +106,6 @@ public class Consumption {
 
     public static int totalQuantityConsumed(Context context, int medicineId) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return  consumptionAll.totalQuantityConsumed(medicineId);
+        return consumptionAll.totalQuantityConsumed(medicineId);
     }
 }
