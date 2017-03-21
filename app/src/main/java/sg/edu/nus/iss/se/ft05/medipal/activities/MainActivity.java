@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
@@ -37,8 +38,9 @@ public class MainActivity extends AppCompatActivity
 
     Context context;
 
-    SharedPreferences settings;
     static final int FIRST_RUN_REQUEST = 0;
+    SharedPreferences settings;
+    TextView mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        mUserName = (TextView) header.findViewById(R.id.tv_personName);
+
         if (findViewById(R.id.fragment_container) != null) {
             if (currentFragment == null) {
                 setFragment(new DefaultFragment());
@@ -82,10 +87,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int userId = 0;
+        String userName = "";
         if(requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK){
+            userId = data.getIntExtra("personId",0);
+            userName = data.getStringExtra("personName");
             Editor editor = settings.edit();
             editor.putBoolean("activity_executed", true);
+            editor.putString("userName",userName);
+            editor.putInt("userId",userId);
             editor.commit();
+            mUserName.setText(settings.getString("userName",""));
         } else
             finish();
     }
@@ -94,6 +106,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
         Bundle b = new Bundle();
         b.putString(Constants.ACTION, Constants.VIEW);
+        b.putInt("userId",settings.getInt("userId",0));
         intent.putExtras(b);
         startActivity(intent);
     }

@@ -162,10 +162,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // creating required tables
         db.execSQL(CREATE_TABLE_CATEGORY);
-
-
         db.execSQL(CREATE_TABLE_APPOINTMENT);
-
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
 

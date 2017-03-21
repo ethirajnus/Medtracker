@@ -16,10 +16,9 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TITLE_WARNING = "Warning";
     public static final String OK_BUTTON = "OK";
-    public static final String COMPLETION_STATUS = "status";
-    public static final String COMPLETION_STATUS_SUCCESS = "success";
-    public static final String COMPLETION_STATUS_FAIL = "fail";
 
+    //PersonalBio
+    public static final String TITLE_PERSONAL_BIO = "Personal Details";
 
 
     //HealthBio
@@ -28,6 +27,8 @@ public class Constants {
     public static final String TITLE_VIEW_HEALTHBIO = "Health Details";
     public static final String CONDITION_TYPE_CONDITION = "C";
     public static final String CONDITION_TYPE_ALLERGY = "A";
+    public static final String ALLERGY = "ALLERGY";
+    public static final String CONDITION = "CONDITION";
 
     //Medicine
     public static final String MEDICINE_NAME = "medicineName";

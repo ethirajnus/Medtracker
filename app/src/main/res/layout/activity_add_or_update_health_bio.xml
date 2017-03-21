@@ -55,8 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
                 android:ems="10"
-                android:inputType="date"
-                android:focusable="false"/>
+                android:inputType="date"/>
 
 
             <TextView

@@ -86,7 +86,7 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO{
 
     @Override
     public int update(PersonalBio personalBio) {
-        SQLiteDatabase db = this.getWritableDatabase();
+          SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(DbConstants.PERSONAL_BIO_KEY_NAME, personalBio.getName());
@@ -99,5 +99,22 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO{
         // updating row
         return db.update(DbConstants.TABLE_PERSONAL_BIO, values, DbConstants.PERSONAL_BIO_KEY_ID + " = ?",
                 new String[] { String.valueOf(personalBio.getId()) });
+    }
+
+    @Override
+    public int findPersonalBioId(String name, String dob, String idNo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String columns[] = {DbConstants.PERSONAL_BIO_KEY_ID};
+        String whereClause = DbConstants.PERSONAL_BIO_KEY_NAME + "=? AND "
+                + DbConstants.PERSONAL_BIO_KEY_DOB + "=? AND "
+                +DbConstants.PERSONAL_BIO_KEY_IDNO + "=? ";
+        String whereArgs[] = {name, dob, idNo} ;
+
+        Cursor c = db.query(DbConstants.TABLE_PERSONAL_BIO,columns,whereClause,whereArgs, null, null,null);
+
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c.getInt(c.getColumnIndex(DbConstants.PERSONAL_BIO_KEY_ID));
     }
 }

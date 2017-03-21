@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,7 @@ import sg.edu.nus.iss.se.ft05.medipal.model.HealthBio;
 /**
  * @author Moushumi Seal
  */
-public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener /*, View.OnFocusChangeListener*/{
+public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener , View.OnFocusChangeListener{
 
     private EditText mCondition, mStartDate;
     private RadioGroup mRG_ConditionType;
@@ -74,7 +75,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     private void setListeners() {
         mSaveBtn.setOnClickListener(this);
         mStartDate.setOnClickListener(this);
-        //mStartDate.setOnFocusChangeListener(this);
+        mStartDate.setOnFocusChangeListener(this);
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -102,7 +103,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         }
     }
 
-    /*@Override
+    @Override
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case R.id.startDate:
@@ -110,7 +111,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                     datePickerDialog.show();
                 break;
         }
-    }*/
+    }
 
     private void updateHealthbioValues(int id) {
         healthBio = HealthBio.findById(getApplicationContext(),id);
@@ -130,6 +131,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     private void findViewsById() {
         mCondition = (EditText) findViewById(R.id.condition);
         mStartDate = (EditText) findViewById(R.id.startDate);
+        mStartDate.setInputType(InputType.TYPE_NULL);
         mRG_ConditionType = (RadioGroup) findViewById(R.id.radioBtnGroup);
         mRadio_Condition = (RadioButton) findViewById(R.id.radioBtnCondition);
         mRadio_Allergy = (RadioButton) findViewById(R.id.radioBtnAllergy);
@@ -186,6 +188,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             MainActivity.currentFragment= HealthBioFragment.class.getName();
         }
         startActivity(intent);
+        finish();
     }
 
     private boolean isValid() {
@@ -205,8 +208,9 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         } else if(TextUtils.isEmpty(healthBio.getCondition())) {
             mCondition.setError("Please provide a condition!");
             isvalid = false;
-        } else if(TextUtils.isEmpty(healthBio.getStartDate())) { //TODO message not displayed :(
+        } else if(TextUtils.isEmpty(healthBio.getStartDate())) {
             mStartDate.setError("Please specify the date!");
+            mStartDate.requestFocus();
             isvalid = false;
         }
         return isvalid;

@@ -14,4 +14,5 @@ public interface PersonalBioDAO {
     PersonalBio findById(int id);
     long insert(PersonalBio personalBio);
     int update(PersonalBio personalBio);
+    int findPersonalBioId(String name, String dob, String idNo);
 }
