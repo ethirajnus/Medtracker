@@ -101,4 +101,12 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
                 new String[] { String.valueOf(medicine.getId()) });
 
     }
+
+    @Override
+    public Cursor fetchAllMedicinesWithId() {
+        String selectQuery = "SELECT  id,medicine FROM " + TABLE_MEDICINE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+
+    }
 }

@@ -47,6 +47,11 @@ public class Constants {
     public static final String CATEGORY_NOT_SAVED = "Category was not inserted properly,Please try again later";
     public static final String CATEGORY_NOT_UPDATED = "Category was not updated properly,Please try again later";
 
+    //Consumption
+    public static final String EDIT_CONSUMPTION = "Edit Consumption";
+    public static final String NEW_CONSUMPTION = "New Consumption";
+    public static final String CONSUMPTION_NOT_SAVED = "Consumption was not inserted properly,Please try again later";
+    public static final String CONSUMPTION_NOT_UPDATED = "Consumption was not updated properly,Please try again later";
     //Appointment
     public static final String CLINIC = "clinic";
 
