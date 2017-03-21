@@ -153,7 +153,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                             minutes =""+ minute;
 
 
-                        //if(today.equals(appointment_date)) {
+                        if(today.equals(appointment_date)) {
                             if ((newCalendar.get(Calendar.HOUR_OF_DAY) + 1) < hourOfDay) {
                                 time.setError(null);
                                 time.setText(hour + ":" + minutes);
@@ -165,7 +165,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                             } else {
                                 time.setError(WRONG_TIME);
                             }
-                        //}
+                        }
+                        else
+                            time.setText(hour+":"+minutes);
 
                     }
                 }, mHour, mMinute, false)  ;

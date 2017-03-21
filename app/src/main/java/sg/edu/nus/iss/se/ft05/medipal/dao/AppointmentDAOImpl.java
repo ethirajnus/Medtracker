@@ -125,6 +125,7 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
             appointment.setId(cursor.getInt(cursor.getColumnIndex(APPOINTMENT_KEY_ID)));
             appointment.setDate((cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DATE))));
             appointment.setTime(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TIME)));
+            appointment.setTest(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TEST)));
             appointment.setClinic(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_CLINIC)));
             appointments.add(appointment);
             cursor.moveToNext();

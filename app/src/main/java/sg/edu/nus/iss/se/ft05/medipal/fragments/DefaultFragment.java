@@ -21,6 +21,7 @@ import java.util.List;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
 
 public class DefaultFragment extends Fragment {
@@ -30,9 +31,10 @@ public class DefaultFragment extends Fragment {
     private Cursor cursor;
     private String date;
     private List<Appointment> appointments;
+    private List<Consumption> consumptions;
     private static final String APPOINTMENTS="Today's Appointments";
     private static final String MEASUREMENTS="Your most recent measurements";
-    private static final String CONSUMPTIONS="Your most recent consumption";
+    private static final String CONSUMPTIONS="Your consumptions";
     private String content="";
 
 
@@ -47,16 +49,32 @@ public class DefaultFragment extends Fragment {
         Calendar calendar=Calendar.getInstance();
         Date d=calendar.getTime();
         date=new SimpleDateFormat("dd-MM-yyyy").format(d);
-        appointments=Appointment.findByDate(context,date);
+        int i;
+       appointments=Appointment.findByDate(context,date);
+        consumptions=Consumption.findByDate(context,date);
         content=content+APPOINTMENTS+"\n";
 
-        for(int i=0;i<appointments.size();i++)
+
+        for(i=0;i<appointments.size();i++)
         {
             Appointment appointment=appointments.get(i);
             content=content+"Time:"+appointment.getTime()+"\n";
             content=content+"Clinic:"+appointment.getClinic()+"\n";
+            content=content+"Test:"+appointment.getTest()+"\n";
 
         }
+
+        content=content+CONSUMPTIONS+"\n";
+
+
+
+        for(i=0;i<consumptions.size();i++)
+        {
+            Consumption consumption=consumptions.get(i);
+            content=content+consumption.getMedicine(context)+"\n";
+            content=content+consumption.getQuantity()+"\n";
+        }
+
         textView=(TextView) view.findViewById(R.id.default_view);
         textView.setText(content);
 
