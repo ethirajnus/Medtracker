@@ -167,7 +167,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                             }
                         }
                         else
-                            time.setText(hour+":"+minutes);
+                        {time.setText(hour+":"+minutes);}
 
                     }
                 }, mHour, mMinute, false)  ;
