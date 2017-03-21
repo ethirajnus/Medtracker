@@ -18,7 +18,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERI
 
 public class Appointment {
     private static AppointmentDAO appointmentAll;
-    private Integer id;
+    private int id;
     private String date, time, clinic, test, pre_test;
     private AppointmentDAO appointmentDAO;
 
@@ -103,7 +103,7 @@ public class Appointment {
         return pre_test;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -115,5 +115,9 @@ public class Appointment {
     public static List<Appointment> findByDate(Context context, String date) {
         appointmentAll = new AppointmentDAOImpl(context);
         return appointmentAll.findByDate(date);
+    }
+    public static Cursor filterDate(Context context,String date){
+        appointmentAll = new AppointmentDAOImpl(context);
+        return appointmentAll.filterDate(date);
     }
 }

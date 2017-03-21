@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import java.text.ParseException;
 import java.util.Calendar;
 
 import android.widget.DatePicker;
@@ -60,7 +61,11 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
         findViewsById();
 
-        setDateTimeField();
+        try {
+            setDateTimeField();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -82,7 +87,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void setDateTimeField() {
+    private void setDateTimeField() throws java.text.ParseException {
         date.setOnClickListener(this);
         final Calendar now = Calendar.getInstance();
         final Calendar newCalendar = Calendar.getInstance();
@@ -99,6 +104,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
+                //Ensure that date chosen is before today's date
                 if (year < now.get(Calendar.YEAR))
 
                     view.updateDate(newCalendar
@@ -125,7 +131,18 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+
+                        Date today=Calendar.getInstance().getTime(),appointment_date=Calendar.getInstance().getTime();
+                        //ensure that appointment time is at least one hour from the current time
                         String hour , minutes ;
+                        try {
+                            today=new SimpleDateFormat(DATE_FORMAT).
+                                    parse(new SimpleDateFormat(DATE_FORMAT).format(Calendar.getInstance().getTime()));
+                            appointment_date=new SimpleDateFormat(DATE_FORMAT).parse(date.getText().toString());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                         if (hourOfDay < 10)
                             hour = "0" + hourOfDay;
                         else
@@ -135,28 +152,30 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                         else
                             minutes =""+ minute;
 
-                        if((newCalendar.get(Calendar.HOUR_OF_DAY)+1) < hourOfDay){
-                            time.setError(null);
-                            time.setText(hour + ":" + minutes);
-                            flag=true;
-                        }else if((newCalendar.get(Calendar.HOUR_OF_DAY)+1) == hourOfDay && (newCalendar.get(Calendar.MINUTE)) < minute){
-                           time.setError(null);
-                            time.setText(hour + ":" + minutes);
-                            flag=true;
-                        }
-                        else
-                        {
-                            time.setError(WRONG_TIME);
-                        }
+
+                        //if(today.equals(appointment_date)) {
+                            if ((newCalendar.get(Calendar.HOUR_OF_DAY) + 1) < hourOfDay) {
+                                time.setError(null);
+                                time.setText(hour + ":" + minutes);
+                                flag = true;
+                            } else if ((newCalendar.get(Calendar.HOUR_OF_DAY) + 1) == hourOfDay && (newCalendar.get(Calendar.MINUTE)) < minute) {
+                                time.setError(null);
+                                time.setText(hour + ":" + minutes);
+                                flag = true;
+                            } else {
+                                time.setError(WRONG_TIME);
+                            }
+                        //}
 
                     }
-                }, mHour, mMinute, false) ;
+                }, mHour, mMinute, false)  ;
 
 
     }
 
     public void createAppointment(View view) throws java.text.ParseException
     {
+
         date=(EditText) findViewById(R.id.new_appointment_date);
         time=(EditText) findViewById(R.id.new_appointment_time);
         clinic=(EditText) findViewById(R.id.new_appointment_clinic);
@@ -171,7 +190,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         aclinic=clinic.getText().toString();
         atest=test.getText().toString();
         apre_test=pre_test.getText().toString();
-
+        flag=true;
 
         if (clinic.getText().toString().length() == 0) {
             clinic.setError(BLANK_CLINIC_MESSAGE);
