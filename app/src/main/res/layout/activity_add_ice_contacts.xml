@@ -11,10 +11,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
         android:layout_weight="0.01"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -117,6 +113,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:textColor="@color/colorAccent"
                 app:layout_constraintTop_toBottomOf="@+id/editText_ice_name" />
 
             <Spinner
@@ -146,7 +143,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_ice_description" />
+                app:layout_constraintTop_toBottomOf="@+id/editText_ice_description"
+                android:background="@color/colorPrimary"/>
 
         </LinearLayout>
     </ScrollView>
