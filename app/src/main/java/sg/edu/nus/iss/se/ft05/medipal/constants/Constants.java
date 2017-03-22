@@ -19,6 +19,14 @@ public class Constants {
 
     //PersonalBio
     public static final String TITLE_PERSONAL_BIO = "Personal Details";
+    public static final String EMPTY_PERSONAL_BIO_NAME = "Please enter your name!";
+    public static final String EMPTY_DOB = "Please enter your date of birth!";
+    public static final String EMPTY_IDNO = "Please enter your identity number!";
+    public static final String EMPTY_ADDRESS = "Please enter your address!";
+    public static final String EMPTY_POSTAL_CODE = "Please enter your postal code!";
+    public static final String EMPTY_HEIGHT = "Please enter your height!";
+    public static final String INVALID_HEIGHT = "Please enter a valid value for height!";
+    public static final String INVALID_POSTAL_CODE = "Please enter a valid value for postal code!";
 
 
     //HealthBio
@@ -29,6 +37,9 @@ public class Constants {
     public static final String CONDITION_TYPE_ALLERGY = "A";
     public static final String ALLERGY = "ALLERGY";
     public static final String CONDITION = "CONDITION";
+    public static final String EMPTY_CONDITION = "Please provide a condition!";
+    public static final String EMPTY_START_DATE = "Please specify the date!";
+
 
     //Medicine
     public static final String MEDICINE_NAME = "medicineName";

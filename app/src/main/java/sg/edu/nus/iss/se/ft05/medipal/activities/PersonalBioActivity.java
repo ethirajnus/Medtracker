@@ -2,10 +2,13 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,7 +33,7 @@ import sg.edu.nus.iss.se.ft05.medipal.model.PersonalBio;
 /**
  * @author Moushumi Seal
  */
-public class PersonalBioActivity extends AppCompatActivity implements View.OnClickListener{
+public class PersonalBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener{
 
     private EditText mName, mDob, mIdNo, mAddress, mPostalCode, mHeight;
     private Spinner mSpn_bloodType;
@@ -50,12 +53,16 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_bio);
         setTitle(Constants.TITLE_PERSONAL_BIO);
+        Context context = getApplicationContext();
         findViewsById();
         setListeners();
         Bundle b = getIntent().getExtras();
         if(b != null){
             switch(b.getString(Constants.ACTION)){
                 case Constants.VIEW:
+                    mName.setEnabled(false);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setHomeButtonEnabled(true);
                     mSaveBtn.setText(Constants.EDIT);
                     makeFieldsEditable(false);
                     getPersonalbioValuesById(b.getInt("userId"));
@@ -100,6 +107,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -119,8 +127,19 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
     }
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.dob:
+                if(hasFocus) {
+                    datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                    datePickerDialog.show();
+                }
+                break;
+        }
+    }
+
     private void makeFieldsEditable(boolean enable) {
-        mName.setEnabled(enable);
         mDob.setEnabled(enable);
         mDob.setOnClickListener(null);
         mIdNo.setEnabled(enable);
@@ -152,6 +171,9 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         mTv_bloodType.setText(personalBio.getBloodType());
     }
 
+    /**
+     * Save Personal bio details
+     */
     public void savePersonalbio() {
         String name = mName.getText().toString();
         String dob = mDob.getText().toString();
@@ -160,23 +182,27 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         String postalCode = mPostalCode.getText().toString();
         String height = mHeight.getText().toString();
         String bloodType = mSpn_bloodType.getSelectedItem().toString();
-        Context context = getApplicationContext();
-        PersonalBio personalBio = new PersonalBio(name,dob,idNo,address,postalCode,height,bloodType);
+        personalBio = new PersonalBio(name,dob,idNo,address,postalCode,height,bloodType);
+        context = getApplicationContext();
         PersonalBioDAO personalBioDAO = new PersonalBioDAOImpl(context);
-
-        if(personalBio.save(context) == -1)
-            Toast.makeText(context,R.string.insert_error, Toast.LENGTH_SHORT).show();
-        else {
-            Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show();
-            int id = personalBioDAO.findPersonalBioId(name, dob, idNo);
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("personId",id);
-            resultIntent.putExtra("personName",name);
-            setResult(RESULT_OK,resultIntent);
+        if(isValid()) {
+            if (personalBio.save(context) == -1)
+                Toast.makeText(context, R.string.insert_error, Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show();
+                int id = personalBioDAO.findPersonalBioId(name, dob, idNo);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("personId", id);
+                resultIntent.putExtra("personName", name);
+                setResult(RESULT_OK, resultIntent);
+            }
+            finish();
         }
-        finish();
     }
 
+    /**
+     * Update Personal bio details
+     */
     private void updatePersonalBio(){
         personalBio.setName(mName.getText().toString());
         personalBio.setDob(mDob.getText().toString());
@@ -186,13 +212,87 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         personalBio.setHeight(mHeight.getText().toString());
         personalBio.setBloodType(mSpn_bloodType.getSelectedItem().toString());
         mTv_bloodType.setText(mSpn_bloodType.getSelectedItem().toString());
-        if(personalBio.update(context) == -1){
-            Toast.makeText(context,R.string.insert_error, Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
-            Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
-            makeFieldsEditable(false);
-            mSaveBtn.setText(Constants.EDIT);
+        context = getApplicationContext();
+        if(isValid()) {
+            if (personalBio.update(context) == -1) {
+                Toast.makeText(context, R.string.insert_error, Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
+                makeFieldsEditable(false);
+                mSaveBtn.setText(Constants.EDIT);
+            }
         }
+    }
+
+    /**
+     * Validating fields
+     */
+    private boolean isValid() {
+        boolean isvalid = true;
+        if(isMandatoryFieldsFilled()) {
+            if (personalBio.getHeight().matches("^[0.]+?")) {
+                mHeight.setError(Constants.INVALID_HEIGHT);
+                mHeight.requestFocus();
+                isvalid = false;
+            }
+            if(personalBio.getPostalCode().matches("^[0.]+?")) {
+                mPostalCode.setError(Constants.INVALID_POSTAL_CODE);
+                mPostalCode.requestFocus();
+                isvalid = false;
+            }
+        }
+        return isvalid;
+    }
+
+    /**
+     * checking if mandatory fields are blank
+     */
+    private boolean isMandatoryFieldsFilled() {
+        boolean isvalid = true;
+        if (TextUtils.isEmpty(personalBio.getName())
+                && TextUtils.isEmpty(personalBio.getDob())
+                && TextUtils.isEmpty(personalBio.getIdNo())
+                && TextUtils.isEmpty(personalBio.getAddress())
+                && TextUtils.isEmpty(personalBio.getPostalCode())
+                && TextUtils.isEmpty(personalBio.getHeight())) {
+            AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+            warningDialog.setTitle(Constants.TITLE_WARNING);
+            warningDialog.setMessage(R.string.warning);
+            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface alert, int which) {
+                    alert.dismiss();
+                }
+            });
+            warningDialog.show();
+            isvalid = false;
+        } else {
+            if (TextUtils.isEmpty(personalBio.getName())) {
+                mName.setError(Constants.EMPTY_PERSONAL_BIO_NAME);
+                isvalid = false;
+            } else if (TextUtils.isEmpty(personalBio.getDob())) {
+                mDob.setError(Constants.EMPTY_DOB);
+                mDob.requestFocus();
+                isvalid = false;
+            } else if (TextUtils.isEmpty(personalBio.getIdNo())) {
+                mIdNo.setError(Constants.EMPTY_IDNO);
+                mIdNo.requestFocus();
+                isvalid = false;
+            } else if (TextUtils.isEmpty(personalBio.getAddress())) {
+                mAddress.setError(Constants.EMPTY_ADDRESS);
+                mAddress.requestFocus();
+                isvalid = false;
+            } else if (TextUtils.isEmpty(personalBio.getPostalCode())) {
+                mPostalCode.setError(Constants.EMPTY_POSTAL_CODE);
+                mPostalCode.requestFocus();
+                isvalid = false;
+            }else if (TextUtils.isEmpty(personalBio.getHeight())) {
+                mHeight.setError(Constants.EMPTY_HEIGHT);
+                mHeight.requestFocus();
+                isvalid = false;
+            }
+        }
+        return isvalid;
     }
 }

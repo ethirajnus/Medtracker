@@ -73,8 +73,6 @@
     <string name="warning">All fields are mandatory!</string>
     <string name="insert_error">Details were not inserted properly. Please try again later.</string>
     <string name="update_error">Details were not updated properly. Please try again later.</string>
-    <string name="empty_condition">Please provide a condition!</string>
-    <string name="empty_startDate">Please provide a condition!</string>
 
     <!-- Success Messages -->
     <string name="add_success">Details added successfully!</string>
