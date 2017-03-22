@@ -34,13 +34,13 @@ public class ICEContactsManagerTest {
 
     public ICEContactsManager iceContactsManager;
 
-    @Mock
-    ICEContactsDAO iceContactsDAO;
+//    @Mock
+//    ICEContactsDAO iceContactsDAO;
 
-    @BeforeClass
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+//    @BeforeClass
+//    public void setUp() {
+//        MockitoAnnotations.initMocks(this);
+//    }
 
   /*  @Mock
     Context context;*/
@@ -62,7 +62,7 @@ public class ICEContactsManagerTest {
     /*    when(new ICEContactsDAOImpl(context))
                 .thenReturn(iceContactsDAO);*/
 
-        iceContactsManager = new ICEContactsManager();
+    iceContactsManager = new ICEContactsManager();
 
         Assert.assertNotNull(iceContactsManager);
     }
