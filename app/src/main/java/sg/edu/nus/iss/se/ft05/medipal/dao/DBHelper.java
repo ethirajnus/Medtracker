@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_COMMAND_LEFT_BRACKET = "(";
     private static final String DATABASE_COMMAND_INTEGER = " INTEGER";
     private static final String DATABASE_COMMAND_INTEGER_COMMA = " INTEGER,";
-    private static final String DATABASE_COMMAND_PRIMARY_KEY = " INTEGER,";
+    private static final String DATABASE_COMMAND_PRIMARY_KEY = " PRIMARY KEY,";
     private static final String DATABASE_COMMAND_TEXT = " TEXT,";
     private static final String DATABASE_COMMAND_RIGHT_BRACKET = ")";
 
@@ -136,6 +136,8 @@ public class DBHelper extends SQLiteOpenHelper {
             + " INTEGER DEFAULT 0," + MEDICINE_KEY_QUANTITY + " INTEGER," + MEDICINE_KEY_DOSAGE + " INTEGER,"
             + MEDICINE_KEY_CONSUME_QUALITY + " INTEGER," + MEDICINE_KEY_THRESHOLD + " INTEGER," + MEDICINE_KEY_DATE_ISSUED + " TEXT," +
             MEDICINE_KEY_EXPIRE_FACTOR + " INTEGER" + ")";
+
+
     private static final String CREATE_TABLE_REMINDER = "CREATE TABLE "
             + TABLE_REMINDER + "(" + REMINDER_KEY_ID + " INTEGER PRIMARY KEY," + REMINDER_KEY_FREQUENCY
             + " INTEGER," + REMINDER_KEY_STARTTIME + " TEXT," + REMINDER_KEY_INTERVAL

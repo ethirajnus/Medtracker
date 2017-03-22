@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.model;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
@@ -107,5 +108,20 @@ public class Consumption {
     public static int totalQuantityConsumed(Context context, int medicineId) {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.totalQuantityConsumed(medicineId);
+    }
+
+    public static List<Consumption> findByMedicineID(Context context,int medicineId){
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.findByMedicineID(medicineId);
+    }
+
+    public static List<Consumption> filterByDate(List<Consumption> consumptions,String date){
+        List<Consumption> filteredConsumptions = new ArrayList<>();
+        for(Consumption consumption: consumptions){
+            if(consumption.getDate().contentEquals(date)){
+                filteredConsumptions.add(consumption);
+            }
+        }
+        return  filteredConsumptions;
     }
 }

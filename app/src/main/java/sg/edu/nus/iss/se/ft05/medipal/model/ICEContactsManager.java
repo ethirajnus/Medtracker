@@ -14,7 +14,7 @@ import sg.edu.nus.iss.se.ft05.medipal.model.ICEContact;
 public class ICEContactsManager {
 
     //Dao
-    private static ICEContactsDAO iceContactsDAO;
+    private ICEContactsDAO iceContactsDAO;
 
 
     private ICEContact iceContact;
@@ -80,7 +80,7 @@ public class ICEContactsManager {
      */
     public static Cursor findAll(Context context) {
 
-        iceContactsDAO = new ICEContactsDAOImpl(context);
+        ICEContactsDAO iceContactsDAO = new ICEContactsDAOImpl(context);
 
         return iceContactsDAO.findAll();
     }
@@ -164,6 +164,8 @@ public class ICEContactsManager {
      */
     public int getMaxPriority(Context context) {
 
-        return new ICEContactsDAOImpl(context).findMaxPriority();
+        iceContactsDAO = new ICEContactsDAOImpl(context);
+
+        return iceContactsDAO.findMaxPriority();
     }
 }

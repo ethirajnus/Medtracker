@@ -129,4 +129,31 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return  cursor.getInt(0);
 
     }
+
+    public List<Consumption> findByMedicineID(int medicineId) {
+
+        List<Consumption> consumptions = new ArrayList();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_CONSUMPTION + " where " + CONSUMPTION_KEY_MEDICINEID + " = " + medicineId;
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+        }
+        while (!cursor.isAfterLast()) {
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
+            consumptions.add(consumption);
+            cursor.moveToNext();
+        }
+        return  consumptions;
+
+    }
 }
