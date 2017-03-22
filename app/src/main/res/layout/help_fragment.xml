@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:text="FAQ" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:textStyle="bold"
+        android:text="Q:Who is this application for?" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:text="A:This application is for anyone in need of tracking their medical stuff." />
+
+</LinearLayout>
