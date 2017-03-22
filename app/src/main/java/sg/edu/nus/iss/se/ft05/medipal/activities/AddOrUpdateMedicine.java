@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -125,7 +127,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             categoriesMap.put(categoryName, id);
         }
 
-        ArrayAdapter<String> categoryDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryList);
+        ArrayAdapter<String> categoryDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
 
         // Drop down layout style - list view with radio button
         categoryDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,8 +135,8 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         // attaching data adapter to spinner
         category.setAdapter(categoryDataAdapter);
 
-        dosageList = new ArrayList<String>(DOSAGE_HASH_MAP.keySet());
-        ArrayAdapter<String> dosageDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dosageList);
+        dosageList = new ArrayList<>(DOSAGE_HASH_MAP.keySet());
+        ArrayAdapter<String> dosageDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dosageList);
         // Drop down layout style - list view with radio button
         dosageDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -209,12 +211,47 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
                 newCalendar.get(Calendar.DAY_OF_MONTH));
         saveButton.setOnClickListener(this);
         category.setOnItemSelectedListener(this);
+        dateIssued.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0)
+                    dateIssued.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        startTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0)
+                    startTime.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.medicineDateIssued:
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
                 break;
             case R.id.reminderStartTime:
@@ -308,6 +345,10 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             threshold.setError("Please enter expire factor");
             threshold.requestFocus();
             isValid = false;
+        } else if (dateIssued.getText().toString().isEmpty()) {
+            dateIssued.setError("Please enter date Issued");
+            dateIssued.requestFocus();
+            isValid = false;
         } else if (expirefactor.getText().toString().isEmpty()) {
             expirefactor.setError("Please enter threshold");
             expirefactor.requestFocus();
@@ -316,15 +357,13 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             frequency.setError("Please enter frequency");
             frequency.requestFocus();
             isValid = false;
+        } else if (startTime.getText().toString().isEmpty()) {
+            startTime.setError("Please enter start time");
+            startTime.requestFocus();
+            isValid = false;
         } else if (interval.getText().toString().isEmpty()) {
             interval.setError("Please enter interval");
             interval.requestFocus();
-            isValid = false;
-        } else if (dateIssued.getText().toString().isEmpty()) {
-            dateIssued.setError("Please enter date Issued");
-            isValid = false;
-        } else if (startTime.getText().toString().isEmpty()) {
-            startTime.setError("Please enter start time");
             isValid = false;
         }
         return isValid;
@@ -352,7 +391,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             warningDialog.setMessage("Reminder cannot be true off for this category of medicine");
             warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface alert, int which) {
+                public void onClick(DialogInterface alert, int button) {
                     alert.dismiss();
                 }
             });

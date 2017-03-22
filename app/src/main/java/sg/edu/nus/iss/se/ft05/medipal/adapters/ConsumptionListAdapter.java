@@ -15,12 +15,15 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
@@ -28,60 +31,50 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
  * Created by ethi on 11/03/17.
  */
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
+public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionListAdapter.ConsumptionViewHolder> {
 
     // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
 
-    public CategoryListAdapter(Context context, Cursor cursor) {
+    public ConsumptionListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
         this.mCursor = cursor;
     }
 
     @Override
-    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ConsumptionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Get the RecyclerView item layout
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.category_list_item, parent, false);
-        return new CategoryViewHolder(view);
+        View view = inflater.inflate(R.layout.consumption_list_item, parent, false);
+        return new ConsumptionViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CategoryListAdapter.CategoryViewHolder holder, int position) {
+    public void onBindViewHolder(ConsumptionListAdapter.ConsumptionViewHolder holder, int position) {
         // Move the mCursor to the position of the item to be displayed
         if (!mCursor.moveToPosition(position))
             return; // bail if returned null
 
         // Update the view holder with the information needed to display
-        String name = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_CATEGORY));
-        String code = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_CODE));
-        String description = mCursor.getString(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_DESCRIPTION));
-        Boolean remind = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_REMIND)) == 1;
-        final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_ID));
+        String medicineName = Medicine.findById(mContext,mCursor.getInt(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID))).getName();
+        String date = mCursor.getString(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE));
+        String time = mCursor.getString(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME));
+        String dateTime = date + " " + time;
+        String quantity = mCursor.getString(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY));
 
-
-        holder.textName.setText(name);
-        holder.textCode.setText(CODE+COLON+" " + code.toUpperCase());
-        holder.textDescription.setText(description);
-        if (Arrays.asList(Category.safeCategoryCodes).contains(code)) {
-            holder.switchReminder.setEnabled(false);
-        }
-        holder.switchReminder.setChecked(remind);
+        final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID));
+        holder.textMedicineName.setText(medicineName);
+        holder.textDateTime.setText(dateTime);
+        holder.textQuantity.setText(quantity);
         holder.itemView.setTag(id);
 
-        holder.switchReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Category category = Category.findById(mContext, id);
-                category.updateReminder(mContext, isChecked);
 
-            }
-        });
 
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AddOrUpdateCategory.class);
+                Intent intent = new Intent(mContext, AddOrUpdateConsumption.class);
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
@@ -91,12 +84,21 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             }
         });
 
+        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Consumption consumption = Consumption.findById(mContext, id);
+                consumption.delete(mContext);
+                //update the list
+                swapCursor(Consumption.findAll(mContext));
+            }
+        });
+
 
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
 
-        InitialDrawable drawable = InitialDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
+        InitialDrawable drawable = InitialDrawable.builder().buildRound(medicineName.toUpperCase().substring(0, 1), color);
 
         holder.icon.setImageDrawable(drawable);
 
@@ -123,20 +125,18 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }
     }
 
-    class CategoryViewHolder extends RecyclerView.ViewHolder {
+    class ConsumptionViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textName, textCode, textDescription;
+        TextView textMedicineName,textDateTime,textQuantity;
         ImageView icon, editIcon, deleteIcon;
-        Switch switchReminder;
 
 
-        public CategoryViewHolder(View itemView) {
+        public ConsumptionViewHolder(View itemView) {
             super(itemView);
-            textName = (TextView) itemView.findViewById(R.id.categoryName);
-            textCode = (TextView) itemView.findViewById(R.id.categoryCode);
-            textDescription = (TextView) itemView.findViewById(R.id.categoryDescription);
-            switchReminder = (Switch) itemView.findViewById(R.id.categoryReminder);
-            icon = (ImageView) itemView.findViewById(R.id.categoryImageIcon);
+            textMedicineName = (TextView) itemView.findViewById(R.id.consumptionMedicineName);
+            textDateTime = (TextView) itemView.findViewById(R.id.consumptionDateTime);
+            textQuantity = (TextView) itemView.findViewById(R.id.consumptionQuantity);
+            icon = (ImageView) itemView.findViewById(R.id.consumptionImageIcon);
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon);
             deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon);
         }
