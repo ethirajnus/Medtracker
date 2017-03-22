@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_COMMAND_LEFT_BRACKET = "(";
     private static final String DATABASE_COMMAND_INTEGER = " INTEGER";
     private static final String DATABASE_COMMAND_INTEGER_COMMA = " INTEGER,";
-    private static final String DATABASE_COMMAND_PRIMARY_KEY = " INTEGER,";
+    private static final String DATABASE_COMMAND_PRIMARY_KEY = " PRIMARY KEY,";
     private static final String DATABASE_COMMAND_TEXT = " TEXT,";
     private static final String DATABASE_COMMAND_RIGHT_BRACKET = ")";
 
