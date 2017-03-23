@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 import sg.edu.nus.iss.se.ft05.medipal.model.HealthBio;
 
 /**
@@ -24,13 +24,13 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
     @Override
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(DbConstants.TABLE_HEALTH_BIO, DbConstants.HEALTH_BIO_KEY_ID + " = ?",
+        return db.delete(TABLE_HEALTH_BIO, HEALTH_BIO_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(id) });
     }
 
     @Override
     public Cursor findAll() {
-        String selectQuery = "SELECT  * FROM " + DbConstants.TABLE_HEALTH_BIO;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_HEALTH_BIO;
         Log.e(LOG, selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
@@ -40,11 +40,11 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
     public HealthBio findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder selectQuery = new StringBuilder()
-                .append("SELECT  * FROM ")
-                .append(DbConstants.TABLE_HEALTH_BIO)
-                .append(" WHERE ")
-                .append(DbConstants.HEALTH_BIO_KEY_ID)
-                .append(" = ")
+                .append(DATABASE_COMMAND_SELECT_ALL)
+                .append(TABLE_HEALTH_BIO)
+                .append(DATABASE_COMMAND_SELECT_WHERE)
+                .append(HEALTH_BIO_KEY_ID)
+                .append(DATABASE_COMMAND_SYMBOL_EQUAL)
                 .append(id);
 
         Log.e(LOG, selectQuery.toString());
@@ -54,10 +54,10 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
         }
 
         HealthBio healthBio = new HealthBio();
-        healthBio.setId(c.getInt(c.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID)));
-        healthBio.setCondition(c.getString(c.getColumnIndex(DbConstants.HEALTH_BIO_KEY_CONDITION)));
-        healthBio.setConditionType(c.getString(c.getColumnIndex(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE)));
-        healthBio.setStartDate(c.getString(c.getColumnIndex(DbConstants.HEALTH_BIO_KEY_START_DATE)));
+        healthBio.setId(c.getInt(c.getColumnIndex(HEALTH_BIO_KEY_ID)));
+        healthBio.setCondition(c.getString(c.getColumnIndex(HEALTH_BIO_KEY_CONDITION)));
+        healthBio.setConditionType(c.getString(c.getColumnIndex(HEALTH_BIO_KEY_CONDITION_TYPE)));
+        healthBio.setStartDate(c.getString(c.getColumnIndex(HEALTH_BIO_KEY_START_DATE)));
 
         return healthBio;
     }
@@ -72,12 +72,12 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DbConstants.HEALTH_BIO_KEY_CONDITION, healthBio.getCondition());
-        values.put(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE, healthBio.getConditionType());
-        values.put(DbConstants.HEALTH_BIO_KEY_START_DATE, healthBio.getStartDate());
+        values.put(HEALTH_BIO_KEY_CONDITION, healthBio.getCondition());
+        values.put(HEALTH_BIO_KEY_CONDITION_TYPE, healthBio.getConditionType());
+        values.put(HEALTH_BIO_KEY_START_DATE, healthBio.getStartDate());
 
         // insert row
-        return db.insert(DbConstants.TABLE_HEALTH_BIO, null, values);
+        return db.insert(TABLE_HEALTH_BIO, null, values);
     }
 
     /**
@@ -90,11 +90,11 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DbConstants.HEALTH_BIO_KEY_CONDITION, healthBio.getCondition());
-        values.put(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE, healthBio.getConditionType());
-        values.put(DbConstants.HEALTH_BIO_KEY_START_DATE, healthBio.getStartDate());
+        values.put(HEALTH_BIO_KEY_CONDITION, healthBio.getCondition());
+        values.put(HEALTH_BIO_KEY_CONDITION_TYPE, healthBio.getConditionType());
+        values.put(HEALTH_BIO_KEY_START_DATE, healthBio.getStartDate());
         // updating row
-        return db.update(DbConstants.TABLE_HEALTH_BIO, values, DbConstants.HEALTH_BIO_KEY_ID + " = ?",
+        return db.update(TABLE_HEALTH_BIO, values, HEALTH_BIO_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(healthBio.getId()) });
     }
 
@@ -104,7 +104,7 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
      */
     @Override
     public Cursor fetchAllHealthBioWithId() {
-        String selectQuery = "SELECT  id,condition FROM " + DbConstants.TABLE_HEALTH_BIO;
+        String selectQuery = "SELECT  id,condition FROM " + TABLE_HEALTH_BIO;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
