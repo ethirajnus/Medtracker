@@ -54,8 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="date"/>
+                android:ems="10"/>
 
 
             <TextView

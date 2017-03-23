@@ -34,7 +34,8 @@ import sg.edu.nus.iss.se.ft05.medipal.model.PersonalBio;
  */
 public class PersonalBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener{
 
-    private EditText mName, mDob, mIdNo, mAddress, mPostalCode, mHeight;
+    private EditText mName, mDob, mIdNo, mBuildingName, mLocation,
+            mStreetName, mLevel, mUnitNo, mPostalCode, mHeight;
     private Spinner mSpn_bloodType;
     private Button mSaveBtn;
     private Calendar dateCalendar;
@@ -81,7 +82,11 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         mDob = (EditText)findViewById(R.id.dob);
         mDob.setInputType(InputType.TYPE_NULL);
         mIdNo = (EditText)findViewById(R.id.idNo);
-        mAddress = (EditText) findViewById(R.id.address);
+        mBuildingName = (EditText) findViewById(R.id.buildingName);
+        mLocation= (EditText) findViewById(R.id.location);
+        mStreetName = (EditText) findViewById(R.id.streetName);
+        mLevel = (EditText) findViewById(R.id.level);
+        mUnitNo = (EditText) findViewById(R.id.unitNo);
         mPostalCode = (EditText) findViewById(R.id.postalCode);
         mHeight = (EditText) findViewById(R.id.height);
         mSpn_bloodType = (Spinner) findViewById(R.id.spn_bloodType);
@@ -95,6 +100,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
     private void setListeners() {
         mSaveBtn.setOnClickListener(this);
         mDob.setOnClickListener(this);
+        mDob.setOnFocusChangeListener(this);
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -141,29 +147,18 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
     }
-
-
-
-    private void getPersonalbioValuesById(int id) {
-        personalBio = PersonalBio.findById(getApplicationContext(), id);
-        mName.setText(personalBio.getName());
-        mDob.setText(personalBio.getDob());
-        mIdNo.setText(personalBio.getIdNo());
-        mAddress.setText(personalBio.getAddress());
-        mPostalCode.setText(personalBio.getPostalCode());
-        mHeight.setText(personalBio.getHeight());
-        mSpn_bloodType.setSelection(Arrays.asList(
-                getResources().getStringArray(R.array.blood_type_list))
-                .indexOf(personalBio.getBloodType()));
-        mTv_bloodType.setText(personalBio.getBloodType());
-    }
+    
 
     private void makeFieldsEditable(boolean enable) {
         mDob.setEnabled(enable);
         mDob.setOnClickListener(null);
         mIdNo.setEnabled(enable);
         mIdNo.setEnabled(enable);
-        mAddress.setEnabled(enable);
+        mBuildingName.setEnabled(enable);
+        mLocation.setEnabled(enable);
+        mStreetName.setEnabled(enable);
+        mLevel.setEnabled(enable);
+        mUnitNo.setEnabled(enable);
         mPostalCode.setEnabled(enable);
         mHeight.setEnabled(enable);
         if(!enable) {
@@ -175,21 +170,41 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+
+    private void getPersonalbioValuesById(int id) {
+        personalBio = PersonalBio.findById(getApplicationContext(), id);
+        mName.setText(personalBio.getName());
+        mDob.setText(personalBio.getDob());
+        mIdNo.setText(personalBio.getIdNo());
+        String address[] = personalBio.getAddress().split(",");
+        mBuildingName.setText(address[0]);
+        mLocation.setText(address[1]);
+        mStreetName.setText(address[2]);
+        mLevel.setText(address[3]);
+        mUnitNo.setText(address[4]);
+        mPostalCode.setText(personalBio.getPostalCode());
+        mHeight.setText(personalBio.getHeight());
+        mSpn_bloodType.setSelection(Arrays.asList(
+                getResources().getStringArray(R.array.blood_type_list))
+                .indexOf(personalBio.getBloodType()));
+        mTv_bloodType.setText(personalBio.getBloodType());
+    }
+
     /**
      * Save Personal bio details
      */
     public void savePersonalbio() {
-        String name = mName.getText().toString();
-        String dob = mDob.getText().toString();
-        String idNo = mIdNo.getText().toString();
-        String address = mAddress.getText().toString();
-        String postalCode = mPostalCode.getText().toString();
-        String height = mHeight.getText().toString();
-        String bloodType = mSpn_bloodType.getSelectedItem().toString();
-        personalBio = new PersonalBio(name,dob,idNo,address,postalCode,height,bloodType);
-        context = getApplicationContext();
-        PersonalBioDAO personalBioDAO = new PersonalBioDAOImpl(context);
         if(isValid()) {
+            String name = mName.getText().toString();
+            String dob = mDob.getText().toString();
+            String idNo = mIdNo.getText().toString();
+            String address = getAddress();
+            String postalCode = mPostalCode.getText().toString();
+            String height = mHeight.getText().toString();
+            String bloodType = mSpn_bloodType.getSelectedItem().toString();
+            personalBio = new PersonalBio(name,dob,idNo,address,postalCode,height,bloodType);
+            context = getApplicationContext();
+            PersonalBioDAO personalBioDAO = new PersonalBioDAOImpl(context);
             if (personalBio.save(context) == -1)
                 Toast.makeText(context, R.string.insert_error, Toast.LENGTH_SHORT).show();
             else {
@@ -204,20 +219,30 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private String getAddress() {
+        String buildingName = mBuildingName.getText().toString();
+        String location = mLocation.getText().toString();
+        String streetName = mStreetName.getText().toString();
+        String level = mLevel.getText().toString();
+        String unitNo = mUnitNo.getText().toString();
+        return (buildingName + "," + location + "," + streetName + "," + level + "," + unitNo);
+    }
+
     /**
      * Update Personal bio details
      */
     private void updatePersonalBio(){
-        personalBio.setName(mName.getText().toString());
-        personalBio.setDob(mDob.getText().toString());
-        personalBio.setIdNo(mIdNo.getText().toString());
-        personalBio.setAddress(mAddress.getText().toString());
-        personalBio.setPostalCode(mPostalCode.getText().toString());
-        personalBio.setHeight(mHeight.getText().toString());
-        personalBio.setBloodType(mSpn_bloodType.getSelectedItem().toString());
-        mTv_bloodType.setText(mSpn_bloodType.getSelectedItem().toString());
-        context = getApplicationContext();
         if(isValid()) {
+            personalBio.setName(mName.getText().toString());
+            personalBio.setDob(mDob.getText().toString());
+            personalBio.setIdNo(mIdNo.getText().toString());
+            String address = getAddress();
+            personalBio.setAddress(address);
+            personalBio.setPostalCode(mPostalCode.getText().toString());
+            personalBio.setHeight(mHeight.getText().toString());
+            personalBio.setBloodType(mSpn_bloodType.getSelectedItem().toString());
+            mTv_bloodType.setText(mSpn_bloodType.getSelectedItem().toString());
+            context = getApplicationContext();
             if (personalBio.update(context) == -1) {
                 Toast.makeText(context, R.string.insert_error, Toast.LENGTH_SHORT).show();
                 finish();
@@ -233,14 +258,40 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
      * Validating fields
      */
     private boolean isValid() {
-        boolean isvalid = true;
+        boolean isvalid = false;
         if(isMandatoryFieldsFilled()) {
-            if (personalBio.getHeight().matches("^[0.]+?")) {
+            isvalid = true;
+            if(!mName.getText().toString().matches(Constants.PATTERN_LETTERS_ONLY)){
+                mName.setError(Constants.INVALID_NAME);
+                mName.requestFocus();
+                isvalid = false;
+            }
+            if(!mIdNo.getText().toString().matches(Constants.PATTERN_ALPHANUMERIC)){
+                mIdNo.setError(Constants.INVALID_ID_NO);
+                mIdNo.requestFocus();
+                isvalid = false;
+            }
+            if(mBuildingName.getText().toString().matches(Constants.PATTERN_COMMA)){
+                mBuildingName.setError(Constants.INVALID_BUILDING_NAME);
+                mBuildingName.requestFocus();
+                isvalid = false;
+            }
+            if(mLocation.getText().toString().matches(Constants.PATTERN_COMMA)){
+                mLocation.setError(Constants.INVALID_LOCATION);
+                mLocation.requestFocus();
+                isvalid = false;
+            }
+            if(mStreetName.getText().toString().matches(Constants.PATTERN_COMMA)){
+                mStreetName.setError(Constants.INVALID_STREET_NAME);
+                mStreetName.requestFocus();
+                isvalid = false;
+            }
+            if (mHeight.getText().toString().matches(Constants.PATTERN_ZERO)) {
                 mHeight.setError(Constants.INVALID_HEIGHT);
                 mHeight.requestFocus();
                 isvalid = false;
             }
-            if(personalBio.getPostalCode().matches("^[0.]+?")) {
+            if(mPostalCode.getText().toString().matches(Constants.PATTERN_ZERO)) {
                 mPostalCode.setError(Constants.INVALID_POSTAL_CODE);
                 mPostalCode.requestFocus();
                 isvalid = false;
@@ -253,13 +304,17 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
      * checking if mandatory fields are blank
      */
     private boolean isMandatoryFieldsFilled() {
-        boolean isvalid = true;
-        if (TextUtils.isEmpty(personalBio.getName())
-                && TextUtils.isEmpty(personalBio.getDob())
-                && TextUtils.isEmpty(personalBio.getIdNo())
-                && TextUtils.isEmpty(personalBio.getAddress())
-                && TextUtils.isEmpty(personalBio.getPostalCode())
-                && TextUtils.isEmpty(personalBio.getHeight())) {
+        boolean isValid = true;
+        if (TextUtils.isEmpty(mName.getText().toString().trim())
+                && TextUtils.isEmpty(mDob.getText().toString().trim())
+                && TextUtils.isEmpty(mIdNo.getText().toString().trim())
+                && TextUtils.isEmpty(mBuildingName.getText().toString().trim())
+                && TextUtils.isEmpty(mLocation.getText().toString().trim())
+                && TextUtils.isEmpty(mStreetName.getText().toString().trim())
+                && TextUtils.isEmpty(mLevel.getText().toString().trim())
+                && TextUtils.isEmpty(mUnitNo.getText().toString().trim())
+                && TextUtils.isEmpty(mPostalCode.getText().toString().trim())
+                && TextUtils.isEmpty(mHeight.getText().toString().trim())) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(R.string.warning);
@@ -270,33 +325,58 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                 }
             });
             warningDialog.show();
-            isvalid = false;
+            isValid = false;
         } else {
-            if (TextUtils.isEmpty(personalBio.getName())) {
+            if (TextUtils.isEmpty(mName.getText().toString().trim())) {
                 mName.setError(Constants.EMPTY_PERSONAL_BIO_NAME);
-                isvalid = false;
-            } else if (TextUtils.isEmpty(personalBio.getDob())) {
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mDob.getText())) {
                 mDob.setError(Constants.EMPTY_DOB);
                 mDob.requestFocus();
-                isvalid = false;
-            } else if (TextUtils.isEmpty(personalBio.getIdNo())) {
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mIdNo.getText().toString().trim())) {
                 mIdNo.setError(Constants.EMPTY_IDNO);
                 mIdNo.requestFocus();
-                isvalid = false;
-            } else if (TextUtils.isEmpty(personalBio.getAddress())) {
-                mAddress.setError(Constants.EMPTY_ADDRESS);
-                mAddress.requestFocus();
-                isvalid = false;
-            } else if (TextUtils.isEmpty(personalBio.getPostalCode())) {
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mBuildingName.getText().toString().trim())) {
+                mBuildingName.setError(Constants.EMPTY_BUILDING_NAME);
+                mBuildingName.requestFocus();
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mLocation.getText().toString().trim())) {
+                mLocation.setError(Constants.EMPTY_LOCATION);
+                mLocation.requestFocus();
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mStreetName.getText().toString().trim())) {
+                mStreetName.setError(Constants.EMPTY_STREET_NAME);
+                mStreetName.requestFocus();
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mLevel.getText().toString().trim())) {
+                mLevel.setError(Constants.EMPTY_LEVEL);
+                mLevel.requestFocus();
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mUnitNo.getText().toString().trim())) {
+                mUnitNo.setError(Constants.EMPTY_UNIT_NO);
+                mUnitNo.requestFocus();
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mPostalCode.getText().toString().trim())) {
                 mPostalCode.setError(Constants.EMPTY_POSTAL_CODE);
                 mPostalCode.requestFocus();
-                isvalid = false;
-            }else if (TextUtils.isEmpty(personalBio.getHeight())) {
+                isValid = false;
+            }
+            if (TextUtils.isEmpty(mHeight.getText().toString().trim())) {
                 mHeight.setError(Constants.EMPTY_HEIGHT);
                 mHeight.requestFocus();
-                isvalid = false;
+                isValid = false;
             }
         }
-        return isvalid;
+        return isValid;
     }
 }

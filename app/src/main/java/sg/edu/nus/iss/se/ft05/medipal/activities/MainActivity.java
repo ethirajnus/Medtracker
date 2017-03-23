@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity
             editor.putInt("userId",userId);
             editor.commit();
             mUserName.setText(settings.getString("userName",""));
+            Intent i = new Intent(this,AddOrUpdateHealthBioActivity.class);
+            i.putExtra("firstRun",true);
+            startActivity(i);
         } else
             finish();
     }

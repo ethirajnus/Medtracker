@@ -16,17 +16,32 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TITLE_WARNING = "Warning";
     public static final String OK_BUTTON = "OK";
+    public static final String PATTERN_ZERO = "^[0.]+?";
+    public static final String PATTERN_COMMA = "^.*[,].*$";
+    public static final String PATTERN_LETTERS_ONLY = "^[a-zA-Z\\s]+$";
+    public static final String PATTERN_ALPHANUMERIC = "^[a-zA-Z0-9]+$";
 
     //PersonalBio
     public static final String TITLE_PERSONAL_BIO = "Personal Details";
     public static final String EMPTY_PERSONAL_BIO_NAME = "Please enter your name!";
     public static final String EMPTY_DOB = "Please enter your date of birth!";
     public static final String EMPTY_IDNO = "Please enter your identity number!";
-    public static final String EMPTY_ADDRESS = "Please enter your address!";
+    public static final String EMPTY_BUILDING_NAME = "Please enter your building's name!";
+    public static final String EMPTY_LOCATION = "Please enter location!";
+    public static final String EMPTY_STREET_NAME = "Please enter your street's name!";
+    public static final String EMPTY_LEVEL = "Please enter level!";
+    public static final String EMPTY_UNIT_NO = "Please enter your unit no.!";
     public static final String EMPTY_POSTAL_CODE = "Please enter your postal code!";
     public static final String EMPTY_HEIGHT = "Please enter your height!";
+    public static final String INVALID_NAME = "Please enter a valid name!";
+    public static final String INVALID_ID_NO = "Please enter a valid identity number!";
     public static final String INVALID_HEIGHT = "Please enter a valid value for height!";
     public static final String INVALID_POSTAL_CODE = "Please enter a valid value for postal code!";
+    public static final String INVALID_BUILDING_NAME = "Building name cannot contain ','!";
+    public static final String INVALID_LOCATION = "Location name cannot contain ','!";
+    public static final String INVALID_STREET_NAME = "Street name cannot contain ','!";
+    public static final String INVALID_LEVEL = "Please enter a valid value for level!";
+    public static final String INVALID_UNIT_NO = "Please enter a valid value for unit no.!";
 
 
     //HealthBio

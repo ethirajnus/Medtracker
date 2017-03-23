@@ -10,7 +10,11 @@
     <string name="fullName">Name</string>
     <string name="dob">Date of Birth</string>
     <string name="idNo">Passport/ NRIC No.</string>
-    <string name="address">Address</string>
+    <string name="buildingName">Building Name</string>
+    <string name="location">Location</string>
+    <string name="streetName">Street Name</string>
+    <string name="level">Level</string>
+    <string name="unitNo">Unit</string>
     <string name="postalCode">Postal Code</string>
     <string name="height">Height (in cm)</string>
     <string name="bloodType">Blood Group</string>
