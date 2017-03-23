@@ -96,7 +96,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
 
-        Log.e(LOG, selectQuery);
+        //Log.e(LOG, selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null)
