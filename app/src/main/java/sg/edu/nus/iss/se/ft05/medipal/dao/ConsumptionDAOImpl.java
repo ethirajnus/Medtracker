@@ -19,6 +19,8 @@ import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 
 public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
+    private static final String LOG = "ConsumptionDAOImpl";
+
     public ConsumptionDAOImpl(Context context) {
         super(context);
     }
@@ -96,7 +98,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
         String selectQuery = "SELECT  * FROM " + TABLE_CONSUMPTION + " where " + CONSUMPTION_KEY_DATE + " = '" + date + "'";
 
-
+        Log.e(LOG, selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null)

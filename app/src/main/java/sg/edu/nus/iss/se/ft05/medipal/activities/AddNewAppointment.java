@@ -40,7 +40,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private TimePickerDialog timePickerDialog;
     Context context;
     boolean flag=true;//To ensure that all input fields are valid
-    private static final String DATE_FORMAT="dd/MM/yyyy";
+    private static final String DATE_FORMAT="dd-MM-yyyy";
     private static final String BLANK_DATE_MESSAGE="Appointment date required";
     private static final String WRONG_TIME="Please choose a slot at least one hour from now";
     private static final String BLANK_TIME_MESSAGE="Appointment time required";
