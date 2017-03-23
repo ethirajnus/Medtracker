@@ -2,27 +2,22 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
-
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 public class DefaultFragment extends Fragment {
 
@@ -35,7 +30,6 @@ public class DefaultFragment extends Fragment {
     private static final String APPOINTMENTS="Today's Appointments";
     private static final String MEASUREMENTS="Your most recent measurements";
     private static final String CONSUMPTIONS="Your consumptions";
-    private static final String DATE_FORMAT="dd/MM/yyyy";
     private String content="";
 
 

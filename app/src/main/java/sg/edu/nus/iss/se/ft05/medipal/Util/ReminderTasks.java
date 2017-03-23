@@ -99,7 +99,7 @@ public class ReminderTasks {
 
 
     synchronized public static void appointmentReminder(Context context) {
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String date = new SimpleDateFormat(DATE_FORMAT).format(new Date());
         List<Appointment> appointments = Appointment.findByDate(context, date);
         for (Appointment appointment : appointments){
             Calendar calendar = Calendar.getInstance();

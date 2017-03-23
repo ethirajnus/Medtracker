@@ -22,6 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Created by ethi on 11/03/17.
@@ -88,8 +89,8 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AddOrUpdateMedicine.class);
                 Bundle b = new Bundle();
-                b.putString("action", "edit");
-                b.putInt("id", id);
+                b.putString(ACTION, EDIT);
+                b.putInt(ID, id);
                 intent.putExtras(b);
                 mContext.startActivity(intent);
 

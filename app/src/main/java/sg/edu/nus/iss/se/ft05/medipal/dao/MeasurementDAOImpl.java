@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import sg.edu.nus.iss.se.ft05.medipal.Measurement;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Created by ashu on 15-03-2017.
@@ -23,13 +24,13 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO{
     @Override
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_MEASUREMENT, MEASUREMENT_KEY_ID + " = ?",
+        return db.delete(TABLE_MEASUREMENT, MEASUREMENT_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(id) });
     }
 
     @Override
     public Cursor findAll() {
-        String selectQuery = "SELECT  * FROM " + TABLE_MEASUREMENT;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT;
 
         Log.e(LOG, selectQuery);
 
@@ -43,8 +44,8 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO{
     public Measurement findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_MEASUREMENT + " WHERE "
-                + MEASUREMENT_KEY_ID + " = " + id;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT + DATABASE_COMMAND_SELECT_WHERE
+                + MEASUREMENT_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
 
         Log.e(LOG, selectQuery);
 
@@ -107,7 +108,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO{
         values.put(MEASUREMENT_KEY_WEIGHT, measurement.getWeight());
         values.put(MEASUREMENT_KEY_MEASURED_ON, measurement.getMeasuredOn());
         // updating row
-        return db.update(TABLE_MEASUREMENT, values, MEASUREMENT_KEY_ID + " = ?",
+        return db.update(TABLE_MEASUREMENT, values, MEASUREMENT_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(measurement.getId()) });
     }
 
