@@ -12,13 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
-
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 /**
  * Created by ethi on 08/03/17.
  */
@@ -27,7 +25,7 @@ public class ConsumptionFragment extends Fragment {
 
     private ConsumptionListAdapter mAdapter;
     private Context context;
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,7 +67,7 @@ public class ConsumptionFragment extends Fragment {
 
         }).attachToRecyclerView(consumptionRecyclerView);
 
-        getActivity().setTitle("Consumption");
+        getActivity().setTitle(CONSUMPTION);
 
         return view;
     }

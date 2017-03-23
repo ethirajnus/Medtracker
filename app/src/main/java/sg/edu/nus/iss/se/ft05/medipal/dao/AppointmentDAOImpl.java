@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Created by Dhruv on 18/3/2017.
@@ -27,7 +28,7 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
     public int delete(long id) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        int result =  db.delete(TABLE_APPOINTMENT, APPOINTMENT_KEY_ID + " = ?",
+        int result =  db.delete(TABLE_APPOINTMENT, APPOINTMENT_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(id) });
         return result;
     }
@@ -51,8 +52,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = SELECT + TABLE_APPOINTMENT + " WHERE "
-                + APPOINTMENT_KEY_ID + " = " + id;
+        String selectQuery = SELECT + TABLE_APPOINTMENT + DATABASE_COMMAND_SELECT_WHERE
+                + APPOINTMENT_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
 
         Log.e(LOG, selectQuery);
 
@@ -98,7 +99,7 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         values.put(APPOINTMENT_KEY_APPOINTMENT_TEST, appointment.getTest());
         values.put(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST,appointment.getPreTest());
         // updating row
-        int result = db.update(TABLE_APPOINTMENT, values, APPOINTMENT_KEY_ID + " = ?",
+        int result = db.update(TABLE_APPOINTMENT, values, APPOINTMENT_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(appointment.getId()) });
         return result;
     }
