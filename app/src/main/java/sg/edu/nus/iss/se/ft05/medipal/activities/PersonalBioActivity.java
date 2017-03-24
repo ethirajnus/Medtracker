@@ -122,6 +122,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         switch (id) {
             case R.id.dob:
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                mDob.setError(null);
                 datePickerDialog.show();
                 break;
             case R.id.savePersonalBio:
@@ -141,6 +142,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
             case R.id.dob:
                 if(hasFocus) {
                     datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                    mDob.setError(null);
                     datePickerDialog.show();
                 }
                 break;

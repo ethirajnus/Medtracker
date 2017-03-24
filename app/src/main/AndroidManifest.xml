@@ -44,7 +44,8 @@
         <activity
             android:name=".activities.PersonalBioActivity"
             android:label="@string/title_activity_add_personalBio"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.AddOrUpdateCategory"
             android:parentActivityName=".activities.MainActivity" />

@@ -140,6 +140,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                 break;
             case R.id.startDate:
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                mStartDate.setError(null);
                 datePickerDialog.show();
                 break;
         }
@@ -151,6 +152,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             case R.id.startDate:
                 if(hasFocus) {
                     datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                    mStartDate.setError(null);
                     datePickerDialog.show();
                 }
                 break;
@@ -230,6 +232,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             MainActivity.currentFragment= HealthBioFragment.class.getName();
         }
         startActivity(intent);
+
         finish();
     }
 
