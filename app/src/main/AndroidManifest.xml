@@ -12,8 +12,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SplashActivity"
-            android:theme = "@style/AppTheme.Splash">
+        <activity
+            android:name=".activities.SplashActivity"
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +25,7 @@
             android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.AddOrUpdateMedicine"
             android:parentActivityName=".activities.MainActivity" />
@@ -44,8 +44,8 @@
         <activity
             android:name=".activities.PersonalBioActivity"
             android:label="@string/title_activity_add_personalBio"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.AddOrUpdateCategory"
             android:parentActivityName=".activities.MainActivity" />
@@ -61,24 +61,24 @@
         <activity
             android:name=".activities.DisplayMeasurement"
             android:label="@string/title_activity_display_measurement"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity" />
 
         <service
             android:name=".Util.MedicineReminderJobService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"></service>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Util.MedicineConsumptionReminderJobService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"></service>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Util.AppointmentReminderJobService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"></service>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Util.AppointmentReminderNotificationJobService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"></service>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
             android:name=".activities.AddOrUpdateHealthBioActivity"
@@ -88,7 +88,9 @@
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.ICEAdditionActivity"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.HelpActivity"
+            android:theme="@style/AppTheme.Help"></activity>
     </application>
 
 </manifest>
