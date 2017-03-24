@@ -20,4 +20,12 @@ public interface ConsumptionDAO {
     Consumption findById(int id);
     List<Consumption> findByDate(String date);
     int totalQuantityConsumed(int medicineId);
+
+    Cursor fetchByCategory(int medicineCategoryId);
+    Cursor fetchByMedicine(int medicineId);
+    Cursor fetchByMedicineAndDate(int medicineId,String date);
+    List<Consumption> findByMedicineID(int medicineId);
+
+    Cursor fetchByMedicineAndYear(Integer medicineId, String year);
+    Cursor fetchByMedicineAndMonth(Integer medicineId, String year,String month);
 }

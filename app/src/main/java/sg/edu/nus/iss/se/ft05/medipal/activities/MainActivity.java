@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     static String currentFragment;
 
     Context context;
+    TabLayout tabLayout;
 
     static final int FIRST_RUN_REQUEST = 0;
    // SharedPreferences settings;
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         navigationView.setNavigationItemSelectedListener(this);
 
         View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
@@ -188,7 +192,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+//    public void updateTitle(String title){
+//        collapsingToolbarLayout.setTitle(title);
+//    }
+
     public void setFragment(Fragment fragment) {
+        tabLayout.setVisibility(View.GONE);
+        tabLayout.removeAllTabs();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
@@ -239,4 +249,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

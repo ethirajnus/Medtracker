@@ -40,7 +40,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     public static final String ICE_ERROR_INSERT = "Error adding Contact,Please try again later";
 
     // Contact types
-    public static final String ICE_TYPE_NOK = "Next of Keen";
+    public static final String ICE_TYPE_NOK = "Next of Kin";
     public static final String ICE_TYPE_GP = "General Physician";
     public static final String ICE_TYPE_OTHER = "Other";
 
@@ -231,5 +231,6 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = IceFragment.class.getName();
         startActivity(intent);
+        finish();
     }
 }

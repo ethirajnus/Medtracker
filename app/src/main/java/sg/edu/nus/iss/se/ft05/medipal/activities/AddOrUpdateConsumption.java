@@ -95,9 +95,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         medicinesMap = new HashMap<>();
         for (mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
             int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID));
-            String categoryName = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_MEDICINE));
-            medicineList.add(categoryName); //add the item
-            medicinesMap.put(categoryName, id);
+            String medicineName = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_MEDICINE));
+            medicineList.add(medicineName); //add the item
+            medicinesMap.put(medicineName, id);
         }
 
         ArrayAdapter<String> medicineDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, medicineList);

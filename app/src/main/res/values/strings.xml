@@ -94,8 +94,9 @@
     <string name="consumptionQuantity">Quantity</string>
     <string name="consumptionMedicine">Medicine</string>
     <string name="consumedOn">Consumed on</string>
+    <string name="consumptionFilterBy">Filter By</string>
 
-    <!-- Help Screens -->
+
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
@@ -115,5 +116,14 @@
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
 
+
+    <string-array name="filterBy">
+        <item>Year</item>
+        <item>Month</item>
+        <item>Day</item>
+    </string-array>
+    <string name="ice_name_header">Name</string>
+    <string name="ice_description_header">Description</string>
+    <string name="ice_phone_header">Phone</string>
 
 </resources>
