@@ -100,5 +100,8 @@
         <item>Month</item>
         <item>Day</item>
     </string-array>
+    <string name="ice_name_header">Name</string>
+    <string name="ice_description_header">Description</string>
+    <string name="ice_phone_header">Phone</string>
 
 </resources>
