@@ -231,5 +231,6 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = IceFragment.class.getName();
         startActivity(intent);
+        finish();
     }
 }

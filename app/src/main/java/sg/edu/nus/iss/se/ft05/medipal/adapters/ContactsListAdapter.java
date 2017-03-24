@@ -157,6 +157,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     bundle.putInt(ICEAdditionActivity.ICE_BUNDLE_ACTION_ID, id);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
+
                 }
             });
 
