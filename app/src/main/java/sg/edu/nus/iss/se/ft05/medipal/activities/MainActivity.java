@@ -31,6 +31,7 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.DefaultFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,15 +41,20 @@ public class MainActivity extends AppCompatActivity
     Context context;
 
     static final int FIRST_RUN_REQUEST = 0;
-    SharedPreferences settings;
+   // SharedPreferences settings;
     TextView mUserName;
+
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        settings = getSharedPreferences("activityPreference", Context.MODE_PRIVATE);
-        if(!settings.getBoolean("activity_executed", false)){
+        context = getApplicationContext();
+
+        // Checking for first time app launch
+        prefManager = new PrefManager(context);
+        if (prefManager.isFirstTimeLaunch()) {
             Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
             Bundle b = new Bundle();
             b.putString(Constants.ACTION, Constants.NEW);
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity
 
         View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mUserName = (TextView) header.findViewById(R.id.tv_personName);
-        mUserName.setText(settings.getString("userName",""));
+        mUserName.setText(prefManager.getUsername());
 
         if (findViewById(R.id.fragment_container) != null) {
             if (currentFragment == null) {
@@ -94,12 +100,10 @@ public class MainActivity extends AppCompatActivity
         if(requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK){
             userId = data.getIntExtra("personId",0);
             userName = data.getStringExtra("personName");
-            Editor editor = settings.edit();
-            editor.putBoolean("activity_executed", true);
-            editor.putString("userName",userName);
-            editor.putInt("userId",userId);
-            editor.commit();
-            mUserName.setText(settings.getString("userName",""));
+            prefManager.setFirstTimeLaunch(false);
+            prefManager.setUserName(userName);
+            prefManager.setUserId(userId);
+            mUserName.setText(prefManager.getUsername());
             Intent i = new Intent(this,AddOrUpdateHealthBioActivity.class);
             i.putExtra("firstRun",true);
             startActivity(i);
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
         Bundle b = new Bundle();
         b.putString(Constants.ACTION, Constants.VIEW);
-        b.putInt("userId",settings.getInt("userId",0));
+        b.putInt("userId",prefManager.getUserId());
         intent.putExtras(b);
         startActivity(intent);
     }
@@ -143,6 +147,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        boolean isChecked = prefManager.isShowHelpScreens();
+        MenuItem enableHelpItem = menu.findItem(R.id.action_enable_help);
+        enableHelpItem.setChecked(isChecked);
         return true;
     }
 
@@ -154,7 +161,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_enable_help) {
+            item.setChecked(!item.isChecked());
+            prefManager.setShowHelpScreens(item.isChecked());
             return true;
         }
         else if(id == R.id.action_help) {
