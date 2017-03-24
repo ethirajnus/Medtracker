@@ -143,7 +143,6 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                     datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     datePickerDialog.show();
                 }
-                savePersonalbio();
                 break;
         }
     }
@@ -330,50 +329,41 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
             if (TextUtils.isEmpty(mName.getText().toString().trim())) {
                 mName.setError(Constants.EMPTY_PERSONAL_BIO_NAME);
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mDob.getText())) {
+            }else if (TextUtils.isEmpty(mDob.getText())) {
                 mDob.setError(Constants.EMPTY_DOB);
                 mDob.requestFocus();
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mIdNo.getText().toString().trim())) {
+            }else if (TextUtils.isEmpty(mIdNo.getText().toString().trim())) {
                 mIdNo.setError(Constants.EMPTY_IDNO);
                 mIdNo.requestFocus();
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mBuildingName.getText().toString().trim())) {
+            }else if (TextUtils.isEmpty(mHeight.getText().toString().trim())) {
+                mHeight.setError(Constants.EMPTY_HEIGHT);
+                mHeight.requestFocus();
+                isValid = false;
+            }else if (TextUtils.isEmpty(mBuildingName.getText().toString().trim())) {
                 mBuildingName.setError(Constants.EMPTY_BUILDING_NAME);
                 mBuildingName.requestFocus();
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mLocation.getText().toString().trim())) {
+            }else if (TextUtils.isEmpty(mLocation.getText().toString().trim())) {
                 mLocation.setError(Constants.EMPTY_LOCATION);
                 mLocation.requestFocus();
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mStreetName.getText().toString().trim())) {
+            }else if (TextUtils.isEmpty(mStreetName.getText().toString().trim())) {
                 mStreetName.setError(Constants.EMPTY_STREET_NAME);
                 mStreetName.requestFocus();
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mLevel.getText().toString().trim())) {
+            }else if (TextUtils.isEmpty(mLevel.getText().toString().trim())) {
                 mLevel.setError(Constants.EMPTY_LEVEL);
                 mLevel.requestFocus();
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mUnitNo.getText().toString().trim())) {
+            }else if (TextUtils.isEmpty(mUnitNo.getText().toString().trim())) {
                 mUnitNo.setError(Constants.EMPTY_UNIT_NO);
                 mUnitNo.requestFocus();
                 isValid = false;
-            }
-            if (TextUtils.isEmpty(mPostalCode.getText().toString().trim())) {
+            }else if (TextUtils.isEmpty(mPostalCode.getText().toString().trim())) {
                 mPostalCode.setError(Constants.EMPTY_POSTAL_CODE);
                 mPostalCode.requestFocus();
-                isValid = false;
-            }
-            if (TextUtils.isEmpty(mHeight.getText().toString().trim())) {
-                mHeight.setError(Constants.EMPTY_HEIGHT);
-                mHeight.requestFocus();
                 isValid = false;
             }
         }
