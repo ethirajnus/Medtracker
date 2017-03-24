@@ -53,7 +53,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_bio);
         setTitle(Constants.TITLE_PERSONAL_BIO);
-        Context context = getApplicationContext();
+        context = getApplicationContext();
         findViewsById();
         setListeners();
         Bundle b = getIntent().getExtras();
@@ -69,6 +69,8 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case Constants.NEW:
                     mSaveBtn.setText(Constants.SAVE);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setHomeButtonEnabled(false);
                     break;
             }
         }
