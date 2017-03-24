@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
@@ -156,6 +157,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.action_help) {
+            setFragment(new HelpFragment());
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -217,6 +222,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.measure) {
             setFragment(new MeasurementFragment());
+        } else if (id == R.id.help) {
+            setFragment(new HelpFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
