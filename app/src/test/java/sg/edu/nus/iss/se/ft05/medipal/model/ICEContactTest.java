@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.se.ft05.medipal.model;
 
+import android.test.AndroidTestCase;
+
 import org.junit.Assert;
 import org.junit.Test;
 
