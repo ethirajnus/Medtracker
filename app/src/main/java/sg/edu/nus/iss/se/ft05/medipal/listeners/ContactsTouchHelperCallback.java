@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.listeners;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import sg.edu.nus.iss.se.ft05.medipal.adapters.ContactsListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ItemTouchHelperAdapter;
 
 /**
@@ -63,7 +64,10 @@ public class ContactsTouchHelperCallback extends ItemTouchHelper.Callback {
      */
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
         super.clearView(recyclerView, viewHolder);
+
+        viewHolder.itemView.setAlpha(Float.parseFloat("0.8"));
 
         if (ICE_MINUS_ONE != dragfrom && ICE_MINUS_ONE != dragto && dragfrom != dragto) {
 
@@ -71,7 +75,31 @@ public class ContactsTouchHelperCallback extends ItemTouchHelper.Callback {
         }
 
         dragfrom = dragto = ICE_MINUS_ONE;
+
+        if (viewHolder instanceof ContactsListAdapter.ContactsViewHolder) {
+            // Let the view holder know that this item is being moved or dragged
+            ContactsListAdapter.ContactsViewHolder itemViewHolder = (ContactsListAdapter.ContactsViewHolder) viewHolder;
+            itemViewHolder.onItemClear();
+        }
+
     }
+
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+
+        // We only want the active item to change
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+
+            if (viewHolder instanceof ContactsListAdapter.ContactsViewHolder) {
+                // Let the view holder know that this item is being moved or dragged
+                ContactsListAdapter.ContactsViewHolder itemViewHolder = (ContactsListAdapter.ContactsViewHolder) viewHolder;
+                itemViewHolder.onItemSelected();
+            }
+        }
+
+        super.onSelectedChanged(viewHolder, actionState);
+    }
+
 
     /**
      * interpolate Out Of Bounds Scroll

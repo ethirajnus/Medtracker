@@ -253,7 +253,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     /**
      * Inner class for ContactsViewHolder
      */
-    class ContactsViewHolder extends RecyclerView.ViewHolder {
+    public class ContactsViewHolder extends RecyclerView.ViewHolder {
 
         TextView textName;
         TextView textType;
@@ -280,6 +280,17 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             smsIcon = (ImageView) itemView.findViewById(R.id.smsIcon_list_ice_sms);
         }
 
+
+        public void onItemSelected() {
+
+            itemView.setBackgroundColor(activity.getResources().getColor(R.color.colorControlNormal));
+        }
+
+
+        public void onItemClear() {
+
+            itemView.setBackgroundColor(activity.getResources().getColor(android.R.color.transparent));
+        }
     }
 
     /**
