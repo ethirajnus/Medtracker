@@ -17,6 +17,7 @@ import java.util.Date;
 import sg.edu.nus.iss.se.ft05.medipal.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
 public class AddMeasurement extends AppCompatActivity implements View.OnClickListener {
@@ -91,7 +92,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         int measurementTemperature = Integer.parseInt(temp);
         temp = weight.getText().toString();
         int measurementWeight = Integer.parseInt(temp);
-        String measurementMeasuredOn = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String measurementMeasuredOn = new SimpleDateFormat(DATE_FORMAT).format(new Date());
         Measurement measurement = new Measurement(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
 
         //  if(saveButton.getTag().toString().equalsIgnoreCase("New")){

@@ -23,14 +23,16 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
  */
 
 public class AppointmentFragment extends Fragment {
-    RecyclerView recyclerView;
-    LinearLayoutManager linearLayoutManager;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
     private AppointmentListAdapter mAdapter;
     private Context context;
+    private static final String TITLE="Appointments";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.appointment_fragment, container, false);
         ((MainActivity)getActivity()).setFloatingActionButtonAction(AddNewAppointment.class);
         context=getActivity().getApplicationContext();
@@ -52,7 +54,8 @@ public class AppointmentFragment extends Fragment {
             //  Override onSwiped
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                long id= (long) viewHolder.itemView.getTag();
+
+                int id= (int) viewHolder.itemView.getTag();
                 Appointment appointment = Appointment.findById(context, id);
                 appointment.delete(context);
                 ReminderUtils.syncAppointmentReminder(context);
@@ -62,6 +65,8 @@ public class AppointmentFragment extends Fragment {
 
             // attach the ItemTouchHelper to the waitlistRecyclerView
         }).attachToRecyclerView(recyclerView);
+
+        getActivity().setTitle(TITLE);
 
         return view;
     }

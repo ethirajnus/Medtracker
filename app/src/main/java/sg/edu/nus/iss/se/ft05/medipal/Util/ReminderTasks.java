@@ -5,6 +5,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.PersistableBundle;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
@@ -47,6 +49,18 @@ public class ReminderTasks {
             medicineId = entry.getKey();
             reminderId = entry.getValue();
             Medicine medicine = Medicine.findById(context, medicineId);
+            //add Consumption
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DATE, -1);
+            String yesterdayDate = new SimpleDateFormat(DATE_FORMAT).format(yesterday.getTime());
+            List<Consumption> consumptions = Consumption.filterByDate(medicine.consumptions(context),yesterdayDate);
+            int medicineFrequency = medicine.getReminder(context).getFrequency();
+            if (consumptions.size() < medicineFrequency){
+                for(int i =0;i < (medicineFrequency - consumptions.size());i++){
+                    Consumption consumption = new Consumption(medicineId,0,yesterdayDate,new SimpleDateFormat("HH:mm").format(yesterday.getTime()));
+                    consumption.save(context);
+                }
+            }
             if (medicine.getRemind()) {
                 Reminder reminder = Reminder.findById(context, reminderId);
                 Calendar calendar = Calendar.getInstance();
@@ -85,7 +99,7 @@ public class ReminderTasks {
 
 
     synchronized public static void appointmentReminder(Context context) {
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String date = new SimpleDateFormat(DATE_FORMAT).format(new Date());
         List<Appointment> appointments = Appointment.findByDate(context, date);
         for (Appointment appointment : appointments){
             Calendar calendar = Calendar.getInstance();

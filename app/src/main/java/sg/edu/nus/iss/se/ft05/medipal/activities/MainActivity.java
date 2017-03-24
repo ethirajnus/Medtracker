@@ -22,6 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.DefaultFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity
 
         if (findViewById(R.id.fragment_container) != null) {
             if (currentFragment == null) {
-                setFragment(new MedicineFragment());
+                setFragment(new DefaultFragment());
             } else {
                 updateFragment(currentFragment);
             }

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 
@@ -185,5 +187,19 @@ public class Medicine {
 
     public Category getCategory(Context context){
         return Category.findById(context,getCategoryId());
+    }
+
+    public static Cursor fetchAllMedicinesWithId(Context context) {
+        medicineAll = new  MedicineDAOImpl(context);
+        return medicineAll.fetchAllMedicinesWithId();
+    }
+
+    public Reminder getReminder(Context context) {
+        return Reminder.findById(context,getReminderId());
+    }
+
+    public List<Consumption> consumptions(Context context){
+       return Consumption.findByMedicineID(context, getId());
+
     }
 }

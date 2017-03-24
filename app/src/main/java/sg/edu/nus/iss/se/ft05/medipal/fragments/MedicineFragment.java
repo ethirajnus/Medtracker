@@ -17,6 +17,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MedicineListAdapter;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
 /**
@@ -70,7 +71,7 @@ public class MedicineFragment extends Fragment {
             }
 
         }).attachToRecyclerView(medicineRecyclerView);
-        getActivity().setTitle("Medicine");
+        getActivity().setTitle(MEDICINE);
 
         return view;
 

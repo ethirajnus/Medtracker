@@ -27,6 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     protected static final String TABLE_MEDICINE = "medicines";
     protected static final String TABLE_REMINDER = "reminders";
     protected static final String TABLE_MEASUREMENT = "measurement";
+    protected static final String TABLE_CONSUMPTION = "consumption";
 
 
 
@@ -37,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_COMMAND_LEFT_BRACKET = "(";
     private static final String DATABASE_COMMAND_INTEGER = " INTEGER";
     private static final String DATABASE_COMMAND_INTEGER_COMMA = " INTEGER,";
-    private static final String DATABASE_COMMAND_PRIMARY_KEY = " INTEGER,";
+    private static final String DATABASE_COMMAND_PRIMARY_KEY = " PRIMARY KEY,";
     private static final String DATABASE_COMMAND_TEXT = " TEXT,";
     private static final String DATABASE_COMMAND_RIGHT_BRACKET = ")";
 
@@ -68,6 +69,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String APPOINTMENT_KEY_APPOINTMENT_PRE_TEST="pre_test";
 
 
+    public static final String CONSUMPTION_KEY_ID = "id";
+    public static final String CONSUMPTION_KEY_MEDICINEID = "medicineId";
+    public static final String CONSUMPTION_KEY_QUANTITY = "quantity";
+    public static final String CONSUMPTION_KEY_DATE="date";
+    public static final String CONSUMPTION_KEY_TIME="time";
+
     public static final String MEDICINE_KEY_ID = "id";
     public static final String MEDICINE_KEY_MEDICINE = "medicine";
     public static final String MEDICINE_KEY_DESCRIPTION = "description";
@@ -97,11 +104,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     // Table Create Statements
-    // Todo table create statement
     private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE "
             + TABLE_CATEGORY + "(" + CATEGORY_KEY_ID + " INTEGER PRIMARY KEY," + CATEGORY_KEY_CATEGORY
             + " TEXT UNIQUE," + CATEGORY_KEY_CODE + " TEXT UNIQUE," + CATEGORY_KEY_DESCRIPTION
             + " TEXT," + CATEGORY_KEY_REMIND + " INTEGER DEFAULT 0" + ")";
+
+    private static final String CREATE_TABLE_CONSUMPTION = "CREATE TABLE "
+            + TABLE_CONSUMPTION + "(" + CONSUMPTION_KEY_ID + " INTEGER PRIMARY KEY," + CONSUMPTION_KEY_MEDICINEID
+            + " INTEGER," + CONSUMPTION_KEY_QUANTITY
+            + " INTEGER," + CONSUMPTION_KEY_DATE + " TEXT," + CONSUMPTION_KEY_TIME
+            + " TEXT"+ ")";
 
 
     // Create table ICE ICEContactsManager
@@ -124,6 +136,8 @@ public class DBHelper extends SQLiteOpenHelper {
             + " INTEGER DEFAULT 0," + MEDICINE_KEY_QUANTITY + " INTEGER," + MEDICINE_KEY_DOSAGE + " INTEGER,"
             + MEDICINE_KEY_CONSUME_QUALITY + " INTEGER," + MEDICINE_KEY_THRESHOLD + " INTEGER," + MEDICINE_KEY_DATE_ISSUED + " TEXT," +
             MEDICINE_KEY_EXPIRE_FACTOR + " INTEGER" + ")";
+
+
     private static final String CREATE_TABLE_REMINDER = "CREATE TABLE "
             + TABLE_REMINDER + "(" + REMINDER_KEY_ID + " INTEGER PRIMARY KEY," + REMINDER_KEY_FREQUENCY
             + " INTEGER," + REMINDER_KEY_STARTTIME + " TEXT," + REMINDER_KEY_INTERVAL
@@ -156,6 +170,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_REMINDER);
 
         db.execSQL(CREATE_TABLE_MEASUREMENT);
+        db.execSQL(CREATE_TABLE_CONSUMPTION);
 
         insertDefaultValues(db);
         db.execSQL(getCreateTableHealthBioQuery());
@@ -167,17 +182,18 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
+        db.execSQL(DATABASE_COMMAND_DROP + TABLE_CATEGORY);
 
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_APPOINTMENT);
+        db.execSQL(DATABASE_COMMAND_DROP+TABLE_APPOINTMENT);
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDER);
+        db.execSQL(DATABASE_COMMAND_DROP + TABLE_MEDICINE);
+        db.execSQL(DATABASE_COMMAND_DROP + TABLE_REMINDER);
+        db.execSQL(DATABASE_COMMAND_DROP + TABLE_CONSUMPTION);
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEASUREMENT);
+        db.execSQL(DATABASE_COMMAND_DROP + TABLE_MEASUREMENT);
 
         db.execSQL(DATABASE_COMMAND_DROP + TABLE_ICE_CONTACTS);
-        db.execSQL("DROP TABLE IF EXISTS " + DbConstants.TABLE_HEALTH_BIO);
+        db.execSQL(DATABASE_COMMAND_DROP + DbConstants.TABLE_HEALTH_BIO);
 
 
         onCreate(db);

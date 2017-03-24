@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -125,7 +127,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             categoriesMap.put(categoryName, id);
         }
 
-        ArrayAdapter<String> categoryDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryList);
+        ArrayAdapter<String> categoryDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
 
         // Drop down layout style - list view with radio button
         categoryDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,8 +135,8 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         // attaching data adapter to spinner
         category.setAdapter(categoryDataAdapter);
 
-        dosageList = new ArrayList<String>(DOSAGE_HASH_MAP.keySet());
-        ArrayAdapter<String> dosageDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dosageList);
+        dosageList = new ArrayList<>(DOSAGE_HASH_MAP.keySet());
+        ArrayAdapter<String> dosageDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dosageList);
         // Drop down layout style - list view with radio button
         dosageDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -209,12 +211,47 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
                 newCalendar.get(Calendar.DAY_OF_MONTH));
         saveButton.setOnClickListener(this);
         category.setOnItemSelectedListener(this);
+        dateIssued.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0)
+                    dateIssued.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        startTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0)
+                    startTime.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.medicineDateIssued:
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
                 break;
             case R.id.reminderStartTime:
@@ -289,42 +326,44 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
         boolean isValid = true;
         if (name.getText().toString().isEmpty()) {
-            name.setError("Please provide medicine name!");
+            name.setError(MEDICINE_NAME_ERROR_MESSAGE);
             name.requestFocus();
             isValid = false;
         } else if (description.getText().toString().isEmpty()) {
-            description.setError("Please enter description!");
+            description.setError(MEDICINE_DESCRIPTION_ERROR_MESSAGE);
             description.requestFocus();
             isValid = false;
         } else if (quantity.getText().toString().isEmpty()) {
-            quantity.setError("Please enter quantity");
+            quantity.setError(MEDICINE_QUANTITY_ERROR_MESSAGE);
             quantity.requestFocus();
             isValid = false;
         } else if (consumeQuantity.getText().toString().isEmpty()) {
-            consumeQuantity.setError("Please enter consume quantity");
+            consumeQuantity.setError(MEDICINE_CONSUME_QUANTITY_ERROR_MESSAGE);
             consumeQuantity.requestFocus();
             isValid = false;
         } else if (threshold.getText().toString().isEmpty()) {
-            threshold.setError("Please enter expire factor");
+            threshold.setError(MEDICINE_THRESHOLD_ERROR_MESSAGE);
             threshold.requestFocus();
             isValid = false;
+        } else if (dateIssued.getText().toString().isEmpty()) {
+            dateIssued.setError(MEDICINE_DATE_ISSUED_ERROR_MESSAGE);
+            dateIssued.requestFocus();
+            isValid = false;
         } else if (expirefactor.getText().toString().isEmpty()) {
-            expirefactor.setError("Please enter threshold");
+            expirefactor.setError(MEDICINE_EXPIRE_FACTOR_ERROR_MESSAGE);
             expirefactor.requestFocus();
             isValid = false;
         } else if (frequency.getText().toString().isEmpty()) {
-            frequency.setError("Please enter frequency");
+            frequency.setError(MEDICINE_FREQUENCY_ERROR_MESSAGE);
             frequency.requestFocus();
             isValid = false;
-        } else if (interval.getText().toString().isEmpty()) {
-            interval.setError("Please enter interval");
-            interval.requestFocus();
-            isValid = false;
-        } else if (dateIssued.getText().toString().isEmpty()) {
-            dateIssued.setError("Please enter date Issued");
-            isValid = false;
         } else if (startTime.getText().toString().isEmpty()) {
-            startTime.setError("Please enter start time");
+            startTime.setError(MEDICINE_START_TIME_ERROR_MESSAGE);
+            startTime.requestFocus();
+            isValid = false;
+        } else if (interval.getText().toString().isEmpty()) {
+            interval.setError(MEDICINE_INTERVAL_ERROR_MESSAGE);
+            interval.requestFocus();
             isValid = false;
         }
         return isValid;
@@ -333,26 +372,26 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     private boolean isValid() {
         boolean isValid = true;
         if (medicine.getConsumeQuantity() > medicine.getQuantity()) {
-            consumeQuantity.setError("Consume Quantity should be less than Quantity");
+            consumeQuantity.setError(MEDICINE_CONSUME_QUALITY_LESS_THAN_QUANTITY);
             consumeQuantity.requestFocus();
             isValid = false;
         } else if (medicine.getThreshold() > medicine.getQuantity()) {
-            threshold.setError("Threshold should be less than Quantity");
+            threshold.setError(MEDICINE_THRESHOLD_LESS_THAN_QUANTITY);
             threshold.requestFocus();
             isValid = false;
         }
         else if (medicine.getExpireFactor() > 24 ) {
-            expirefactor.setError("Expire Factor should be less than 25");
+            expirefactor.setError(MEDICINE_EXPIRE_FACTOR_LESS_THAN_24);
             expirefactor.requestFocus();
             isValid = false;
         }
         else if (medicine.getCategory(context).getRemind() == true && medicine.getRemind() == false ){
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
-            warningDialog.setMessage("Reminder cannot be true off for this category of medicine");
+            warningDialog.setMessage(MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY);
             warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface alert, int which) {
+                public void onClick(DialogInterface alert, int button) {
                     alert.dismiss();
                 }
             });
@@ -375,7 +414,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             int intervalReminder = Integer.parseInt(interval.getText().toString());
             long maxTimeForReminder = calendar.getTimeInMillis() + (MINUTE * frequencyReminder * intervalReminder);
             if(maxTimeForReminder>fullDayTime){
-                frequency.setError("Input proper combination of Frequency,Start Time and Interval");
+                frequency.setError(MEDICINE_PROPER_COMBINATION_OF_FREQUENCY_TIME_INTERVAL);
                 frequency.requestFocus();
                 isValid = false;
             }

@@ -12,13 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddMeasurement;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
-import sg.edu.nus.iss.se.ft05.medipal.adapters.CategoryListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
 
 

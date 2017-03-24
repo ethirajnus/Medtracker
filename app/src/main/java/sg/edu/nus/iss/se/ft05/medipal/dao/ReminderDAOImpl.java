@@ -4,8 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
+import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
 /**
@@ -20,7 +19,7 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
     @Override
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_REMINDER, REMINDER_KEY_ID + " = ?",
+        return db.delete(TABLE_REMINDER, REMINDER_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(id) });
     }
 
@@ -28,8 +27,8 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
     public Reminder findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_REMINDER + " WHERE "
-                + REMINDER_KEY_ID + " = " + id;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_REMINDER + DATABASE_COMMAND_SELECT_WHERE
+                + REMINDER_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
 
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -38,20 +37,17 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
 
             c.moveToFirst();
         }
-        Log.v("reminder ciunt", String.valueOf(c.getCount()));
         Reminder reminder = new Reminder();
         reminder.setId(c.getInt(c.getColumnIndex(REMINDER_KEY_ID)));
         reminder.setFrequency((c.getInt(c.getColumnIndex(REMINDER_KEY_FREQUENCY))));
         reminder.setStartTime(c.getString(c.getColumnIndex(REMINDER_KEY_STARTTIME)));
         reminder.setInterval(c.getInt(c.getColumnIndex(REMINDER_KEY_INTERVAL)));
-        Log.v("reminder",reminder.getStartTime());
         return reminder;
     }
 
     @Override
     public long insert(Reminder reminder) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.v("starttme", reminder.getStartTime());
         ContentValues values = new ContentValues();
         values.put(REMINDER_KEY_FREQUENCY, reminder.getFrequency());
         values.put(REMINDER_KEY_STARTTIME, reminder.getStartTime());
@@ -66,12 +62,11 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        Log.v("reminder",String.valueOf(reminder.getFrequency()));
         values.put(REMINDER_KEY_FREQUENCY, reminder.getFrequency());
         values.put(REMINDER_KEY_STARTTIME, reminder.getStartTime());
         values.put(REMINDER_KEY_INTERVAL, reminder.getInterval());
         // updating row
-        return db.update(TABLE_REMINDER, values, REMINDER_KEY_ID + " = ?",
+        return db.update(TABLE_REMINDER, values, REMINDER_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(reminder.getId()) });
     }
 }

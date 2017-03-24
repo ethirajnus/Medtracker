@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Created by ethi on 12/03/17.
@@ -20,13 +21,13 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
     @Override
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_MEDICINE, MEDICINE_KEY_ID + " = ?",
+        return db.delete(TABLE_MEDICINE, MEDICINE_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(id) });
     }
 
     @Override
     public Cursor findAll(){
-        String selectQuery = "SELECT  * FROM " + TABLE_MEDICINE;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEDICINE;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
@@ -34,8 +35,8 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
     @Override
     public Medicine findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT  * FROM " + TABLE_MEDICINE + " WHERE "
-                + MEDICINE_KEY_ID + " = " + id;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE
+                + MEDICINE_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c != null) {
@@ -97,8 +98,16 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         values.put(MEDICINE_KEY_DATE_ISSUED, medicine.getDateIssued());
         values.put(MEDICINE_KEY_EXPIRE_FACTOR, medicine.getExpireFactor());
         // updating row
-        return db.update(TABLE_MEDICINE, values, MEDICINE_KEY_ID + " = ?",
+        return db.update(TABLE_MEDICINE, values, MEDICINE_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(medicine.getId()) });
+
+    }
+
+    @Override
+    public Cursor fetchAllMedicinesWithId() {
+        String selectQuery = DATABASE_COMMAND_SELECT_ID_MEDICINE + TABLE_MEDICINE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
 
     }
 }

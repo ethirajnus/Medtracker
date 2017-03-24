@@ -137,15 +137,15 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
     private boolean isValid() {
         boolean isValid = true;
         if (category.getCategoryName().isEmpty()) {
-            name.setError("Please provide category name!");
+            name.setError(CATEGORY_NAME_ERROR_MESSAGE);
             name.requestFocus();
             isValid = false;
         } else if (category.getCode().isEmpty()) {
-            code.setError("Please specify code!");
+            code.setError(CATEGORY_CODE_ERROR_MESSAGE);
             code.requestFocus();
             isValid = false;
         } else if (category.getDescription().isEmpty()) {
-            description.setError("Please enter description");
+            description.setError(CATEGORY_DESCRIPTION_ERROR_MESSAGE);
             description.requestFocus();
             isValid = false;
         } else {
@@ -162,11 +162,11 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         String cateGoryCode = Category.findByCode(context,codeText).getCode();
 
         if (cateGoryName != null &&  cateGoryName.equals(nameText)){
-            name.setError("Please enter unique category name!");
+            name.setError(CATEGORY_CATEGORY_UNIQUE_ERROR_MESSAGE);
             name.requestFocus();
             isValid = false;
         } else if (cateGoryCode != null && cateGoryCode.equals(codeText)){
-            code.setError("Please enter unique code!");
+            code.setError(CATEGORY_CODE_UNIQUE_ERROR_MESSAGE);
             code.requestFocus();
             isValid = false;
         }
