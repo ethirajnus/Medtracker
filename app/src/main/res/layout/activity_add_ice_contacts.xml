@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView_ice_header"
+                android:id="@+id/textView_ice_name_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -36,15 +36,8 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="24dp"
-                android:text="@string/ice_header"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textColor="@color/colorAccent"
-                android:textStyle="bold"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="@string/ice_name_header"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editText_ice_name"
@@ -54,15 +47,24 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="4dp"
                 android:ems="10"
-                android:hint="@string/fullName"
                 android:inputType="textPersonName"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_ice_header"
+                app:layout_constraintTop_toBottomOf="@+id/textView_ice_name_header"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_ice_desc_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/ice_description_header"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/editText_ice_name" />
 
             <EditText
                 android:id="@+id/editText_ice_description"
@@ -72,14 +74,23 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="4dp"
                 android:ems="10"
-                android:hint="@string/description"
                 android:inputType="textLongMessage"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_ice_name" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_ice_desc_header" />
+
+            <TextView
+                android:id="@+id/textView_ice_phone_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/ice_phone_header"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/editText_ice_description" />
 
             <EditText
                 android:id="@+id/editText_ice_phone"
@@ -89,14 +100,10 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="4dp"
                 android:ems="10"
-                android:hint="@string/phoneNumber"
                 android:inputType="number"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_ice_description" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_ice_phone_header" />
 
             <TextView
                 android:id="@+id/textView_ice_spinner_header"
@@ -106,14 +113,10 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/ice_spinner_header"
-                android:textAlignment="center"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_ice_name" />
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/editText_ice_phone" />
 
             <Spinner
                 android:id="@+id/spinner_ice_type"
@@ -123,11 +126,8 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintHorizontal_bias="0.506"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_ice_phone" />
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView_ice_spinner_header" />
 
             <Button
                 android:id="@+id/button_ice_addition"
@@ -137,13 +137,10 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorPrimary"
                 android:text="@string/save"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_ice_description"
-                android:background="@color/colorPrimary"/>
+                app:layout_constraintTop_toBottomOf="@+id/editText_ice_description" />
 
         </LinearLayout>
     </ScrollView>
