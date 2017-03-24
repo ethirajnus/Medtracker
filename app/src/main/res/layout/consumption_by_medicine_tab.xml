@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+    <TextView
+        android:id="@+id/consumptionLabelMedicine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:text="@string/consumptionMedicine"
+        android:textStyle="bold" />
+
+
+    <Spinner
+        android:id="@+id/consumptionMedicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/consumptionLabelMedicine"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:backgroundTint="?attr/colorAccent"
+        android:dropDownWidth="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/filterByLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/consumptionMedicine"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:text="@string/consumptionFilterBy"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/filterBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@id/consumptionMedicine"
+        android:layout_toRightOf="@id/filterByLabel"
+        android:entries="@array/filterBy"
+        android:backgroundTint="?attr/colorAccent"
+        android:dropDownWidth="match_parent"
+        />
+
+    <Spinner
+        android:id="@+id/yearSpin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@id/consumptionMedicine"
+        android:layout_toRightOf="@id/filterBy"
+        android:entries="@array/filterBy"
+        android:visibility="invisible"
+        android:backgroundTint="?attr/colorAccent"
+        android:dropDownWidth="match_parent"
+        />
+
+    <Spinner
+        android:id="@+id/monthSpin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/consumptionMedicine"
+        android:layout_toRightOf="@id/yearSpin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:entries="@array/filterBy"
+        android:visibility="invisible"
+        android:backgroundTint="?attr/colorAccent"
+        android:dropDownWidth="match_parent"
+        />
+
+    <EditText
+        android:id="@+id/medicineDateIssued"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:hint="Date"
+        android:layout_below="@id/consumptionMedicine"
+        android:layout_toRightOf="@id/filterBy"
+        android:textIsSelectable="true"/>
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/consumptionQuantity"
+        android:background="@color/colorDivider" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/all_consumption_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filterBy"
+
+    />
+</LinearLayout>
