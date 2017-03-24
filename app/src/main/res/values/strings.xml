@@ -81,7 +81,13 @@
     <string name="consumptionQuantity">Quantity</string>
     <string name="consumptionMedicine">Medicine</string>
     <string name="consumedOn">Consumed on</string>
+    <string name="consumptionFilterBy">Filter By</string>
 
+    <string-array name="filterBy">
+        <item>Year</item>
+        <item>Month</item>
+        <item>Day</item>
+    </string-array>
 
 
 </resources>

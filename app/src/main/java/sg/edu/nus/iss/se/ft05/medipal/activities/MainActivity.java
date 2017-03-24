@@ -3,7 +3,9 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity
 
     static String currentFragment;
     Context context;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         navigationView.setNavigationItemSelectedListener(this);
 
         if (findViewById(R.id.fragment_container) != null) {
@@ -120,7 +124,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+//    public void updateTitle(String title){
+//        collapsingToolbarLayout.setTitle(title);
+//    }
+
     public void setFragment(Fragment fragment) {
+        tabLayout.setVisibility(View.GONE);
+        tabLayout.removeAllTabs();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
