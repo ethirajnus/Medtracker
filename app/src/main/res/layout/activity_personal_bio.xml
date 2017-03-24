@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:weightSum="1">
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_weight="0.01"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:fillViewport="true"
+        android:id="@+id/scrollViewPersonalBio">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/tv_name"
@@ -35,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:maxLength="30" />
+                android:maxLength="100" />
 
             <TextView
                 android:id="@+id/tv_dob"
@@ -43,8 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
                 android:text="@string/dob"
-                android:textStyle="bold"
-                android:focusableInTouchMode="false" />
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/dob"
@@ -68,25 +69,135 @@
                 android:layout_weight="0.01"
                 android:ems="10"
                 android:inputType="text"
-                android:maxLength="50" />
+                android:maxLength="20" />
 
             <TextView
-                android:id="@+id/tv_address"
+                android:id="@+id/tv_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
-                android:text="@string/address"
-                android:textStyle="bold"/>
+                android:text="@string/height"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/address"
+                android:id="@+id/height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
                 android:ems="10"
-                android:inputType="textMultiLine"
-                android:maxLength="100"
+                android:inputType="numberDecimal"
+                android:maxLength="3" />
+
+            <TextView
+                android:id="@+id/tv_bloodType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="@string/bloodType"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spn_bloodType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_bloodType"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="?attr/colorAccent"
+                android:dropDownWidth="match_parent"></Spinner>
+
+            <TextView
+                android:id="@+id/tv_bloodType_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_bloodType"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"></TextView>
+
+            <TextView
+                android:id="@+id/tv_buildingName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="@string/buildingName"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/buildingName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLength="30"
                 android:maxLines="4" />
+
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="@string/location"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLength="30" />
+
+            <TextView
+                android:id="@+id/tv_streetName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="@string/streetName"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/streetName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLength="30" />
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="@string/level"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:ems="10"
+                android:inputType="number"
+                android:maxLength="3" />
+            <TextView
+                android:id="@+id/tv_unitNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/unitNo"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/unitNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:inputType="number"
+                android:maxLength="3" />
 
             <TextView
                 android:id="@+id/tv_postalCode"
@@ -104,51 +215,14 @@
                 android:ems="10"
                 android:inputType="number"
                 android:maxLength="6" />
-
-            <TextView
-                android:id="@+id/tv_height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:text="@string/height"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-
-            <TextView
-                android:id="@+id/tv_bloodType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.01"
-                android:text="@string/bloodType"
-                android:textStyle="bold"/>
-
-            <Spinner
-                android:id="@+id/spn_bloodType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_bloodType"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="?attr/colorAccent"
-                android:dropDownWidth="match_parent"></Spinner>
-
             <Button
                 android:id="@+id/savePersonalBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:layout_marginTop="10dp"
+                android:layout_below="@+id/scrollViewPersonalBio"
                 android:background="@drawable/side_nav_bar"
                 android:text="@string/save" />
-
         </LinearLayout>
     </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>

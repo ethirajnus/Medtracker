@@ -7,7 +7,8 @@ package sg.edu.nus.iss.se.ft05.medipal.constants;
 public class DbConstants {
 
     //Tables..
-    public static final String TABLE_HEALTH_BIO="healthbio";
+    public static final String TABLE_HEALTH_BIO = "healthbio";
+    public static final String TABLE_PERSONAL_BIO = "personalbio";
 
     // HealthBio...
     public static final String HEALTH_BIO_KEY_ID = "id";
@@ -36,4 +37,15 @@ public class DbConstants {
     public static final String DATABASE_COMMAND_OPEN_BRACKET = "(";
     public static final String DATABASE_COMMAND_CLOSE_BRACKET = ")";
     public static final String DATABASE_COMMAND_AND = " AND ";
+
+    //PersonalBio...
+    public static final String PERSONAL_BIO_KEY_ID = "id";
+    public static final String PERSONAL_BIO_KEY_NAME = "name";
+    public static final String PERSONAL_BIO_KEY_DOB = "dob";
+    public static final String PERSONAL_BIO_KEY_IDNO = "idNo";
+    public static final String PERSONAL_BIO_KEY_ADDRESS = "address";
+    public static final String PERSONAL_BIO_KEY_POSTAL_CODE = "postalCode";
+    public static final String PERSONAL_BIO_KEY_HEIGHT = "height";
+    public static final String PERSONAL_BIO_KEY_BLOOD_TYPE = "bloodType";
+
 }

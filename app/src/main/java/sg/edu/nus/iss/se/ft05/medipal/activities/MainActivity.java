@@ -2,12 +2,15 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,9 +20,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
@@ -32,13 +38,27 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static String currentFragment;
+
     Context context;
     TabLayout tabLayout;
+
+    static final int FIRST_RUN_REQUEST = 0;
+    SharedPreferences settings;
+    TextView mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        settings = getSharedPreferences("activityPreference", Context.MODE_PRIVATE);
+        if(!settings.getBoolean("activity_executed", false)){
+            Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
+            Bundle b = new Bundle();
+            b.putString(Constants.ACTION, Constants.NEW);
+            intent.putExtras(b);
+            startActivityForResult(intent,FIRST_RUN_REQUEST);
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,6 +76,10 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        mUserName = (TextView) header.findViewById(R.id.tv_personName);
+        mUserName.setText(settings.getString("userName",""));
+
         if (findViewById(R.id.fragment_container) != null) {
             if (currentFragment == null) {
                 setFragment(new DefaultFragment());
@@ -63,6 +87,37 @@ public class MainActivity extends AppCompatActivity
                 updateFragment(currentFragment);
             }
         }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int userId = 0;
+        String userName = "";
+        if(requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK){
+            userId = data.getIntExtra("personId",0);
+            userName = data.getStringExtra("personName");
+            Editor editor = settings.edit();
+            editor.putBoolean("activity_executed", true);
+            editor.putString("userName",userName);
+            editor.putInt("userId",userId);
+            editor.commit();
+            mUserName.setText(settings.getString("userName",""));
+            Intent i = new Intent(this,AddOrUpdateHealthBioActivity.class);
+            i.putExtra("firstRun",true);
+            startActivity(i);
+        } else
+            finish();
+    }
+
+    public void viewPersonalBio(View v){
+        Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
+        Bundle b = new Bundle();
+        b.putString(Constants.ACTION, Constants.VIEW);
+        b.putInt("userId",settings.getInt("userId",0));
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
     @Override
@@ -104,6 +159,10 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if(id == R.id.action_help) {
+            setFragment(new HelpFragment());
             return true;
         }
 
@@ -173,6 +232,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.measure) {
             setFragment(new MeasurementFragment());
+        } else if (id == R.id.help) {
+            setFragment(new HelpFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
