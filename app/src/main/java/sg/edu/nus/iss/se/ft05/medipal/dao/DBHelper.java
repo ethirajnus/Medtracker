@@ -162,10 +162,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // creating required tables
         db.execSQL(CREATE_TABLE_CATEGORY);
-
-
         db.execSQL(CREATE_TABLE_APPOINTMENT);
-
         db.execSQL(CREATE_TABLE_MEDICINE);
         db.execSQL(CREATE_TABLE_REMINDER);
 
@@ -175,7 +172,7 @@ public class DBHelper extends SQLiteOpenHelper {
         insertDefaultValues(db);
         db.execSQL(getCreateTableHealthBioQuery());
         db.execSQL(CREATE_TABLE_ICE_CONTACTS);
-
+        db.execSQL(getCreateTablePersonalBioQuery());
 
     }
 
@@ -194,8 +191,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(DATABASE_COMMAND_DROP + TABLE_ICE_CONTACTS);
         db.execSQL(DATABASE_COMMAND_DROP + DbConstants.TABLE_HEALTH_BIO);
-
-
+        db.execSQL(DATABASE_COMMAND_DROP + DbConstants.TABLE_PERSONAL_BIO);
         onCreate(db);
     }
 
@@ -235,6 +231,32 @@ public class DBHelper extends SQLiteOpenHelper {
                 .append(")");
         return CREATE_TABLE_HEALTHBIO.toString();
 
+    }
+
+    //Creating PersonalBio table
+    private String getCreateTablePersonalBioQuery() {
+        final StringBuilder CREATE_TABLE_PERSONALBIO = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(DbConstants.TABLE_PERSONAL_BIO)
+                .append(" (")
+                .append(DbConstants.PERSONAL_BIO_KEY_ID)
+                .append(" INTEGER PRIMARY KEY, ")
+                .append(DbConstants.PERSONAL_BIO_KEY_NAME)
+                .append(" TEXT, ")
+                .append(DbConstants.PERSONAL_BIO_KEY_DOB)
+                .append(" TEXT, ")
+                .append(DbConstants.PERSONAL_BIO_KEY_IDNO)
+                .append(" TEXT, ")
+                .append(DbConstants.PERSONAL_BIO_KEY_ADDRESS)
+                .append(" TEXT, ")
+                .append(DbConstants.PERSONAL_BIO_KEY_POSTAL_CODE)
+                .append(" TEXT, ")
+                .append(DbConstants.PERSONAL_BIO_KEY_HEIGHT)
+                .append(" INTEGER, ")
+                .append(DbConstants.PERSONAL_BIO_KEY_BLOOD_TYPE)
+                .append(" TEXT")
+                .append(")");
+        return CREATE_TABLE_PERSONALBIO.toString();
     }
 
 }

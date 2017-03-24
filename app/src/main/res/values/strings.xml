@@ -10,12 +10,26 @@
     <string name="fullName">Name</string>
     <string name="dob">Date of Birth</string>
     <string name="idNo">Passport/ NRIC No.</string>
-    <string name="address">Address</string>
+    <string name="buildingName">Building Name</string>
+    <string name="location">Location</string>
+    <string name="streetName">Street Name</string>
+    <string name="level">Level</string>
+    <string name="unitNo">Unit</string>
     <string name="postalCode">Postal Code</string>
     <string name="height">Height (in cm)</string>
     <string name="bloodType">Blood Group</string>
     <string name="personalBio">Personal Bio</string>
     <string name="save">Save</string>
+    <string-array name="blood_type_list">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
 
     <string name="categoryName">Name</string>
     <string name="categoryCode">Code</string>
@@ -63,8 +77,6 @@
     <string name="warning">All fields are mandatory!</string>
     <string name="insert_error">Details were not inserted properly. Please try again later.</string>
     <string name="update_error">Details were not updated properly. Please try again later.</string>
-    <string name="empty_condition">Please provide a condition!</string>
-    <string name="empty_startDate">Please provide a condition!</string>
 
     <!-- Success Messages -->
     <string name="add_success">Details added successfully!</string>
@@ -81,7 +93,6 @@
     <string name="consumptionQuantity">Quantity</string>
     <string name="consumptionMedicine">Medicine</string>
     <string name="consumedOn">Consumed on</string>
-
 
 
 </resources>
