@@ -259,15 +259,15 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
     private boolean checkFormat() {
         boolean isValid = true;
         if (quantity.getText().toString().isEmpty()) {
-            quantity.setError("Please enter quantity");
+            quantity.setError(CONSUMPTION_QUANTITY_ERROR_MESSAGE);
             quantity.requestFocus();
             isValid = false;
         } else if (date.getText().toString().isEmpty()) {
-            date.setError("Please enter date ");
+            date.setError(CONSUMPTION_DATE_ERROR_MESSAGE);
             date.requestFocus();
             isValid = false;
         } else if (time.getText().toString().isEmpty()) {
-            time.setError("Please enter time");
+            time.setError(CONSUMPTION_TIME_ERROR_MESSAGE);
             time.requestFocus();
             isValid = false;
         }
@@ -287,7 +287,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         int consumeQuantity = consumptionMedicine.getConsumeQuantity();
         int frequency = consumptionMedicine.getReminder(context).getFrequency();
         if (consumption.getQuantity() > consumeQuantity) {
-            quantity.setError("Medicine should not be consumed more than" + consumeQuantity);
+            quantity.setError(CONSUMPTION_QUANTITY_MORE_THAN_ERROR_MESSAGE + consumeQuantity);
             quantity.requestFocus();
             isValid = false;
         }
@@ -297,7 +297,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             if(consumptions.size() >= frequency){
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
-                warningDialog.setMessage("Medicine should not be consumed more than" + frequency + "times");
+                warningDialog.setMessage(CONSUMPTION_FREQUENCY_NOT_MORE_THAN_ERROR_MESSAGE + frequency + CONSUMPTION_TIMES);
                 warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface alert, int button) {
@@ -312,7 +312,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                    if ( formatter.parse(consumption.getDate()).before(formatter.parse(consumptionMedicine.getDateIssued()))) {
                        AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                        warningDialog.setTitle(Constants.TITLE_WARNING);
-                       warningDialog.setMessage("Medicine should not consumed before the date issued");
+                       warningDialog.setMessage(CONSUMPTION_NOT_BEFORE_ERROR_MESSAGE);
                        warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                            @Override
                            public void onClick(DialogInterface alert, int button) {

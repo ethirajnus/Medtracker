@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import sg.edu.nus.iss.se.ft05.medipal.model.ICEContact;
-
+import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 /**
  * Implementation class for emergency contacts database operations
  * Created by Ashish Katre
@@ -17,18 +17,6 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
 
     // Logger name
     private static final String LOG = "ICEContactsDAOImpl";
-
-    // Constants
-    protected static final String DATABASE_COMMAND_SYMBOL = " = ?";
-    protected static final String DATABASE_COMMAND_SYMBOL_EQUAL = " = ";
-    protected static final String DATABASE_COMMAND_SELECT_ALL = "SELECT  * FROM ";
-    protected static final String DATABASE_COMMAND_SELECT_WHERE = " WHERE ";
-    protected static final String DATABASE_COMMAND_SELECT_MAXP = "MAXP";
-    protected static final String DATABASE_COMMAND_ORDER_BY = " ORDER BY ";
-    protected static final String DATABASE_COMMAND_SELECT_MAX_BEFORE = " SELECT  MAX(";
-    protected static final String DATABASE_COMMAND_SELECT_MAX_BETWEEN = ") AS ";
-    protected static final String DATABASE_COMMAND_SELECT_MAX_AFTER = " FROM ";
-    protected static final String DATABASE_COMMAND_ASC = " ASC";
 
     /**
      * Constructor for ICEContactsDAOImpl

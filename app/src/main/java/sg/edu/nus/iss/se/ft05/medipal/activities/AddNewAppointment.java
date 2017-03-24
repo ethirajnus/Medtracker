@@ -9,7 +9,6 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
-import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
 import android.content.Intent;
 import android.util.Log;
@@ -23,14 +22,12 @@ import android.widget.DatePicker;
 import android.app.DatePickerDialog;
 import android.widget.TimePicker;
 import android.app.TimePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 import java.text.SimpleDateFormat;
 
 import android.text.InputType;
 
 import java.util.Date;
-import java.util.Locale;
 
 public class AddNewAppointment extends AppCompatActivity implements View.OnClickListener {
     EditText date, time, clinic, test, pre_test;
@@ -40,7 +37,6 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private TimePickerDialog timePickerDialog;
     Context context;
     boolean flag=true;//To ensure that all input fields are valid
-    private static final String DATE_FORMAT="dd-MM-yyyy";
     private static final String BLANK_DATE_MESSAGE="Appointment date required";
     private static final String WRONG_TIME="Please choose a slot at least one hour from now";
     private static final String BLANK_TIME_MESSAGE="Appointment time required";

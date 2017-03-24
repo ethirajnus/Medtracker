@@ -4,8 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
+import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
 
 /**
@@ -20,7 +19,7 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
     @Override
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_REMINDER, REMINDER_KEY_ID + " = ?",
+        return db.delete(TABLE_REMINDER, REMINDER_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(id) });
     }
 
@@ -28,8 +27,8 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
     public Reminder findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_REMINDER + " WHERE "
-                + REMINDER_KEY_ID + " = " + id;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_REMINDER + DATABASE_COMMAND_SELECT_WHERE
+                + REMINDER_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
 
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -67,7 +66,7 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
         values.put(REMINDER_KEY_STARTTIME, reminder.getStartTime());
         values.put(REMINDER_KEY_INTERVAL, reminder.getInterval());
         // updating row
-        return db.update(TABLE_REMINDER, values, REMINDER_KEY_ID + " = ?",
+        return db.update(TABLE_REMINDER, values, REMINDER_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[] { String.valueOf(reminder.getId()) });
     }
 }

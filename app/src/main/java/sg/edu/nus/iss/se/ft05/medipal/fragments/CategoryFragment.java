@@ -15,7 +15,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.CategoryListAdapter;
-
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,7 +44,7 @@ public class CategoryFragment extends Fragment {
         // Link the adapter to the RecyclerView
         categoryRecyclerView.setAdapter(mAdapter);
 
-        getActivity().setTitle("Category");
+        getActivity().setTitle(CATEGORY);
 
         return view;
 
