@@ -60,9 +60,4 @@ public class DisplayMeasurement extends AppCompatActivity {
         measuredOn = (TextView) findViewById(R.id.measurementMeasuredOn);
     }
 
-    /*public void navigateToMainAcitivity(){
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        MainActivity.currentFragment= MeasurementFragment.class.getName();
-        startActivity(intent);
-    }*/
 }

@@ -33,6 +33,7 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.DefaultFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.ReportFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -234,6 +235,8 @@ public class MainActivity extends AppCompatActivity
             setFragment(new MeasurementFragment());
         } else if (id == R.id.help) {
             setFragment(new HelpFragment());
+        } else if (id == R.id.report) {
+            setFragment(new ReportFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

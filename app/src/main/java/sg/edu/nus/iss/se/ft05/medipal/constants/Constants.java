@@ -14,6 +14,7 @@ public class Constants {
     public static final String VIEW = "view";
     public static final String NEW = "New";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String TIME_FORMAT = "HH:mm";
     public static final String TITLE_WARNING = "Warning";
     public static final String OK_BUTTON = "OK";
     public static final String PATTERN_ZERO = "^[0.]+?";
@@ -79,6 +80,7 @@ public class Constants {
     public static final String MEDICINE_EXPIRE_FACTOR_LESS_THAN_24 = "Expire Factor should be less than 25";
     public static final String MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY = "Reminder cannot be turned off for this category of medicine";
     public static final String MEDICINE_PROPER_COMBINATION_OF_FREQUENCY_TIME_INTERVAL = "Input proper combination of Frequency,Start Time and Interval";
+    public static final String MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME = "Medicine already consumed at this time";
     
     //Miscellaneous
     public static final int MINUTE = 60000;
@@ -116,5 +118,8 @@ public class Constants {
 
     //Appointment
     public static final String CLINIC = "clinic";
+
+    //Report
+    public static final String REPORT = "reports";
 
 }
