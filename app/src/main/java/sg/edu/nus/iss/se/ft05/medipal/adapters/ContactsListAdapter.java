@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,6 +40,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     // logger name
     private static final String LOG = "ContactsListAdapter";
     private static final String PHONE = "Phone: ";
+    private static final int ICE_PERMISSIONS_REQUEST_CALL = 1;
+    private static final int ICE_PERMISSIONS_REQUEST_SMS = 2;
 
     private final OnStartDragListener mDragStartListener;
 
@@ -47,7 +50,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     // Holds on to the cursor to display the wait list
     private Cursor cursor;
     private Context context;
-
+    private Activity activity;
 
     /**
      * Constructor
@@ -55,12 +58,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
      * @param context
      * @param cursor
      */
-    public ContactsListAdapter(Context context, Cursor cursor, OnStartDragListener dragStartListener) {
+    public ContactsListAdapter(Context context, Cursor cursor, OnStartDragListener dragStartListener, Activity activity) {
 
         this.mDragStartListener = dragStartListener;
         this.context = context;
         this.cursor = cursor;
-
+        this.activity = activity;
     }
 
     /**
@@ -131,6 +134,9 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                             != PackageManager.PERMISSION_GRANTED) {
 
                         Toast.makeText(context, "App does not have Permission to send SMS", Toast.LENGTH_SHORT).show();
+
+                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, ICE_PERMISSIONS_REQUEST_SMS);
+
                     } else {
 
                         SmsManager smsManager = SmsManager.getDefault();
@@ -164,6 +170,9 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
                         Toast.makeText(context, "App does not have Permission to CALL", Toast.LENGTH_SHORT).show();
+
+
+                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE}, ICE_PERMISSIONS_REQUEST_CALL);
 
                     } else {
 
