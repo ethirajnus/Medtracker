@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -115,12 +116,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
 
             if (isValid()) {
 
-                if (categoryManager.save(context) == -1) {
-                    Toast.makeText(context, CATEGORY_NOT_SAVED, Toast.LENGTH_SHORT).show();
-                } else {
-                    navigateToMainAcitivity();
-
-                }
+                new SaveCategory().execute();
             }
 
         } else {
@@ -136,6 +132,24 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
                     navigateToMainAcitivity();
                 }
             }
+        }
+    }
+
+    private class SaveCategory extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return categoryManager.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, CATEGORY_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainAcitivity();
+            }
+
         }
     }
 
