@@ -11,6 +11,8 @@ import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
+
 public class ShowAppointment extends AppCompatActivity {
     private Context context;
 
@@ -24,7 +26,7 @@ public class ShowAppointment extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        int id = bundle.getInt("id");
+        int id = bundle.getInt(ID);
 
         TextView date, time, clinic, test, pre_test;
         date = (TextView) findViewById(R.id.appointment_date);

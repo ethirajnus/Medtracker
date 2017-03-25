@@ -255,7 +255,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         int totalQuantity = Consumption.totalQuantityConsumed(context,consumption.getMedicineId());
         Medicine medicine = consumption.getMedicine(context);
         if (totalQuantity >= (medicine.getQuantity() - medicine.getThreshold()) ){
-            NotificationUtils.replenishReminder(context,medicine.getName());
+            NotificationUtils.replenishReminder(context,medicine.getName(),medicine.getId());
         }
     }
 
