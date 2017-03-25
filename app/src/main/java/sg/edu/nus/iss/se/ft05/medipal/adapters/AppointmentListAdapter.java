@@ -48,11 +48,18 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         String date = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DATE));
         String time = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TIME));
         String clinic = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_CLINIC));
+        String test = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TEST));
+        String pre_test = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_PRE_TEST));
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID));
-        String info = date + "\n" + time + "\n" + clinic;
+        //String info = date + "\n" + time + "\n" + clinic;
 
-        holder.appointmentInfo.setText(info);
+
         holder.itemView.setTag(id);
+        holder.date.setText(date);
+        holder.time.setText(time);
+        holder.clinic.setText(clinic);
+        holder.test.setText(test);
+        holder.pre_test.setText(pre_test);
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -81,7 +88,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             }
         });
 
-        holder.appointmentInfo.setOnClickListener(new View.OnClickListener() {
+       /* holder.appointmentInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ShowAppointment.class);
@@ -92,7 +99,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
                 mContext.startActivity(intent);
 
             }
-        });
+        });*/
 
     }
 
@@ -113,13 +120,17 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
         ImageView delete, edit;
-        TextView appointmentInfo;
+        TextView clinic,test,pre_test,date,time;
 
         public AppointmentViewHolder(View itemView) {
             super(itemView);
             edit = (ImageView) itemView.findViewById(R.id.editIcon);
             delete = (ImageView) itemView.findViewById(R.id.deleteIcon);
-            appointmentInfo = (TextView) itemView.findViewById(R.id.appointmentInfo);
+            clinic = (TextView) itemView.findViewById(R.id.clinic);
+            test= (TextView) itemView.findViewById(R.id.test);
+            pre_test= (TextView) itemView.findViewById(R.id.pre_test);
+            date= (TextView) itemView.findViewById(R.id.date);
+            time= (TextView) itemView.findViewById(R.id.time);
 
         }
     }
