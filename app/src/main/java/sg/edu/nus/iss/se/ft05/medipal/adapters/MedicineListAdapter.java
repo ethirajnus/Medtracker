@@ -14,7 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
@@ -76,11 +76,12 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Medicine medicine = Medicine.findById(mContext, id);
-                medicine.delete(mContext);
+                MedicineManager medicineManager = new MedicineManager();
+                medicineManager.findById(mContext, id);
+                medicineManager.delete(mContext);
                 ReminderUtils.syncMedicineReminder(mContext);
                 //update the list
-                swapCursor(Medicine.findAll(mContext));
+                swapCursor(MedicineManager.findAll(mContext));
             }
         });
 
@@ -100,8 +101,9 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         holder.switchReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Medicine medicine = Medicine.findById(mContext, id);
-                medicine.updateReminder(mContext, isChecked);
+                MedicineManager medicineManager = new MedicineManager();
+                medicineManager.findById(mContext, id);
+                medicineManager.updateReminder(mContext, isChecked);
                 ReminderUtils.syncMedicineReminder(mContext);
             }
         });
