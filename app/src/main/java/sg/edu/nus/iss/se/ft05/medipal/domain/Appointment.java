@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.model;
+package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 /**
  * Created by Dhruv on 12/3/2017.

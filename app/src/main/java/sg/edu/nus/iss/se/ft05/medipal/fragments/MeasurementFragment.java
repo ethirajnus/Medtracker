@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.managers.Measurement;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddMeasurement;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
@@ -22,15 +22,17 @@ public class MeasurementFragment extends Fragment {
 
     private MeasurementListAdapter mAdapter;
     private Context context;
-        public MeasurementFragment() {
+
+    public MeasurementFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.measurement_fragment, container, false);
-        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddMeasurement.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddMeasurement.class);
         RecyclerView measurementRecyclerView;
         context = getActivity().getApplicationContext();
         measurementRecyclerView = (RecyclerView) view.findViewById(R.id.all_measurement_list_view);
@@ -38,10 +40,10 @@ public class MeasurementFragment extends Fragment {
         measurementRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        Cursor cursor = Measurement.findAll(context);
+        Cursor cursor = MeasurementManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new MeasurementListAdapter(context,cursor);
+        mAdapter = new MeasurementListAdapter(context, cursor);
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);
@@ -51,6 +53,7 @@ public class MeasurementFragment extends Fragment {
             // Override onMove and simply return false inside
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
                 //do nothing, we only care about swiping
                 return false;
             }
@@ -58,16 +61,18 @@ public class MeasurementFragment extends Fragment {
             // Override onSwiped
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
                 // Inside, get the viewHolder's itemView's tag and store in a long variable id
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 // call removeGuest and pass through that id
                 //remove from DB
-                Measurement measurement = Measurement.findById(context, id);
-                measurement.delete(context);
+                MeasurementManager measurementManager = new MeasurementManager();
+                measurementManager.findById(context, id);
+                measurementManager.delete(context);
                 // call swapCursor on mAdapter passing in getAllGuests() as the argument
                 //update the list
-                mAdapter.swapCursor(Measurement.findAll(context));
+                mAdapter.swapCursor(MeasurementManager.findAll(context));
             }
 
             //attach the ItemTouchHelper to the waitlistRecyclerView

@@ -1,7 +1,9 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Intent;
+
 import java.text.SimpleDateFormat;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,9 +17,10 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
-import sg.edu.nus.iss.se.ft05.medipal.managers.Measurement;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
+
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
@@ -26,7 +29,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
     Button saveButton;
     EditText systolic, diastolic, pulse, temperature, weight, measuredOn;
 
-    private Measurement measurement;
+    private MeasurementManager measurementManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +43,6 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
         setTitle("New Measurement");
     }
-
-    /*private void updateCategoryValues(int id) {
-        category = Category.findById(getApplicationContext(),id);
-        name.setText(category.getCategoryName());
-        code.setText(category.getCode());
-        description.setText(category.getDescription());
-        reminder.setChecked(category.getRemind());
-        name.setTag(id);
-    }
-
-    private void updateSaveButton() {
-        saveButton.setTag("update");
-        saveButton.setText("Update");
-    }*/
 
     private void setListeners() {
         saveButton.setOnClickListener(this);
@@ -83,7 +72,8 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void saveMeasurement() {
-        Date d= Calendar.getInstance().getTime();
+
+        Date d = Calendar.getInstance().getTime();
         String temp = systolic.getText().toString();
         int measurementSystolic = Integer.parseInt(temp);
         temp = diastolic.getText().toString();
@@ -95,32 +85,22 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         temp = weight.getText().toString();
         int measurementWeight = Integer.parseInt(temp);
         String measurementMeasuredOn = new SimpleDateFormat(DATE_FORMAT).format(d);
-        Measurement measurement = new Measurement(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
 
-        //  if(saveButton.getTag().toString().equalsIgnoreCase("New")){
+        MeasurementManager measurementManager = new MeasurementManager(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
 
-        if (measurement.save(getApplicationContext()) == -1) {
+        if (measurementManager.save(getApplicationContext()) == -1) {
+
             Toast.makeText(getApplicationContext(), "Measurement was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
+
         } else {
+
             navigateToMainActivity();
 
         }
-        //}
-        /*else {
-            category.setRemind(categoryReminder);
-            category.setCategoryName(categoryName);
-            category.setCode(categoryCode);
-            category.setDescription(categoryDescription);
-            if(category.update(getApplicationContext())== -1){
-                Toast.makeText(getApplicationContext(), "Category was not updated properly,Please try again later", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                navigateToMainAcitivity();
-            }
-        }*/
     }
 
     public void navigateToMainActivity() {
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         MainActivity.currentFragment = MeasurementFragment.class.getName();
         startActivity(intent);
