@@ -1,75 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.DisplayMeasurement">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:weightSum="1">
+
         <TextView
-            android:id="@+id/measurementId"
-            android:layout_width="wrap_content"
+            android:id="@+id/measurementMeasuredOn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
             android:layout_marginTop="8dp"
-            android:text=" Id :" />
+            android:ems="10"
+            android:text="Measured On :"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/measurementSystolic"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Sytolic :"
-            android:textSize="25dp"
             android:layout_marginTop="8dp"
-            android:ems="10"        />
+            android:ems="10"
+            android:text=" Sytolic :"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/measurementDiastolic"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
             android:layout_marginTop="8dp"
-            android:text=" Diastolic" />
+            android:text=" Diastolic"
+            android:textSize="20sp" />
 
 
         <TextView
             android:id="@+id/measurementPulse"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
             android:layout_marginTop="8dp"
-            android:text=" Pulse :" />
+            android:text=" Pulse :"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/measurementTemperature"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
             android:layout_marginTop="8dp"
-            android:text=" Temperature :" />
+            android:text=" Temperature :"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/measurementWeight"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
             android:layout_marginTop="8dp"
-            android:text=" Weight :" />
-
-        <TextView
-            android:id="@+id/measurementMeasuredOn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Measured On :"
-            android:textSize="25dp"
-            android:layout_marginTop="8dp"
-            android:ems="10" />
+            android:text=" Weight :"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

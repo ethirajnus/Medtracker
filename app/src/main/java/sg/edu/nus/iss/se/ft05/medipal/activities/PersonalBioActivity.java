@@ -332,7 +332,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                 && TextUtils.isEmpty(mHeight.getText().toString().trim())) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
-            warningDialog.setMessage(R.string.warning);
+            warningDialog.setMessage(R.string.warning_allMandatory);
             warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int which) {
