@@ -87,7 +87,7 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
                 Intent intent = new Intent(mContext, DisplayMeasurement.class);
                 Bundle b = new Bundle();
                 b.putInt(DisplayMeasurement.MEASUREMENT_ID, id);
-                intent.putExtras(b);
+                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
             }
