@@ -21,9 +21,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -39,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:maxLength="3"
-                android:textStyle="bold" />
+                android:maxLength="3"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -55,15 +54,14 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:maxLength="3"
-                android:textStyle="bold" />
+                android:maxLength="3"/>
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pulse"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/measurementPulse"
@@ -71,8 +69,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:maxLength="3"
-                android:textStyle="bold" />
+                android:maxLength="3"/>
 
             <TextView
                 android:id="@+id/textView5"
@@ -87,8 +84,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:maxLength="5"
-                android:textStyle="bold" />
+                android:maxLength="5" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -103,8 +99,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:maxLength="3"
-                android:textStyle="bold" />
+                android:maxLength="3"/>
 
             <Button
                 android:id="@+id/saveMeasurement"

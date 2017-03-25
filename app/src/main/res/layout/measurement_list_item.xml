@@ -25,8 +25,7 @@
         android:layout_weight="1"
         android:textAllCaps="true"
         android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/measurementHard"
@@ -36,11 +35,9 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/measurementImageIcon"
         android:layout_weight="1"
-        android:textAllCaps="true"
         android:textSize="20sp"
         android:textColor="@color/colorPrimaryDark"
-        android:text="@string/measured_on"
-        android:textStyle="bold" />
+        android:text="@string/measured_on"/>
 
     <ImageView
         android:id="@+id/measurementDeleteIcon"

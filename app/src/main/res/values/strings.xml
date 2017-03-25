@@ -57,7 +57,7 @@
     <string name="measurement_fragment">Measurement Fragment</string>
     <string name="title_activity_add_measurement">AddMeasurement</string>
     <string name="title_activity_display_measurement">DisplayMeasurement</string>
-    <string name="measured_on">Measured on</string>
+    <string name="measured_on">Measured on: </string>
     <string name="systolic"> Systolic (mm Hg)</string>
     <string name="diastolic"> Diastolic (mm Hg)</string>
     <string name="pulse"> Pulse (bpm)</string>
