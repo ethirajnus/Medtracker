@@ -24,18 +24,18 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
-import sg.edu.nus.iss.se.ft05.medipal.model.HealthBio;
+import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 /**
  * @author Moushumi Seal
  */
-public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener , View.OnFocusChangeListener{
+public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
     private EditText mCondition, mStartDate;
     private RadioGroup mRG_ConditionType;
@@ -50,7 +50,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     DatePickerDialog datePickerDialog;
 
     private Context context;
-    private HealthBio healthBio;
+    private HealthBioManager healthBioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,40 +62,44 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         findViewsById();
         setListeners();
         Bundle b = getIntent().getExtras();
-        if(b != null && b.getBoolean("firstRun")){
+        if (b != null && b.getBoolean("firstRun")) {
             mSaveBtn.setText(Constants.SKIP);
             setTitle(Constants.TITLE_NEW_HEALTHBIO);
             mCondition.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() > 0 || mStartDate.getText().length() > 0)
+                    if (s.length() > 0 || mStartDate.getText().length() > 0)
                         mSaveBtn.setText(Constants.SAVE);
                     else
                         mSaveBtn.setText(Constants.SKIP);
                 }
 
                 @Override
-                public void afterTextChanged(Editable s) {}
+                public void afterTextChanged(Editable s) {
+                }
             });
             mStartDate.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() > 0 || mCondition.getText().length() > 0)
+                    if (s.length() > 0 || mCondition.getText().length() > 0)
                         mSaveBtn.setText(Constants.SAVE);
                     else
                         mSaveBtn.setText(Constants.SKIP);
                 }
 
                 @Override
-                public void afterTextChanged(Editable s) {}
+                public void afterTextChanged(Editable s) {
+                }
             });
-        } else if(b != null && b.getString(Constants.ACTION).equalsIgnoreCase(Constants.EDIT)){
+        } else if (b != null && b.getString(Constants.ACTION).equalsIgnoreCase(Constants.EDIT)) {
             updateSaveButton();
             updateHealthbioValues(b.getInt("id"));
             setTitle(Constants.TITLE_EDIT_HEALTHBIO);
@@ -130,7 +134,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.saveHealthBio:
-                if(mSaveBtn.getText().equals(Constants.SKIP)) {
+                if (mSaveBtn.getText().equals(Constants.SKIP)) {
                     Intent i = new Intent(this, MainActivity.class);
                     startActivity(i);
                     finish();
@@ -150,7 +154,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case R.id.startDate:
-                if(hasFocus) {
+                if (hasFocus) {
                     datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     mStartDate.setError(null);
                     datePickerDialog.show();
@@ -160,10 +164,12 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     }
 
     private void updateHealthbioValues(int id) {
-        healthBio = HealthBio.findById(getApplicationContext(),id);
+
+        healthBioManager = new HealthBioManager();
+        HealthBio healthBio = healthBioManager.findById(getApplicationContext(), id);
         mCondition.setText(healthBio.getCondition());
         mStartDate.setText(healthBio.getStartDate());
-        if(healthBio.getConditionType().equalsIgnoreCase(Constants.CONDITION_TYPE_CONDITION))
+        if (healthBio.getConditionType().equalsIgnoreCase(Constants.CONDITION_TYPE_CONDITION))
             mRadio_Condition.setChecked(true);
         else
             mRadio_Allergy.setChecked(true);
@@ -188,7 +194,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     }
 
 
-    public void saveOrUpdateHealthbio(){
+    public void saveOrUpdateHealthbio() {
         String condition = mCondition.getText().toString().trim();
         String startDate = mStartDate.getText().toString();
         int selectedId = mRG_ConditionType.getCheckedRadioButtonId();
@@ -198,11 +204,11 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
 
         Context context = getApplicationContext();
 
-        if(isValid()) {
+        if (isValid()) {
             if (mSaveBtn.getTag().toString().equalsIgnoreCase(Constants.NEW)) {
-                healthBio = new HealthBio(condition, conditionType, startDate);
+                healthBioManager = new HealthBioManager(condition, conditionType, startDate);
 
-                if (healthBio.save(context) == -1)
+                if (healthBioManager.save(context) == -1)
                     Toast.makeText(context, R.string.insert_error, Toast.LENGTH_SHORT).show();
                 else {
                     Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show();
@@ -210,10 +216,15 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                 }
 
             } else {
+
+                HealthBio healthBio = new HealthBio();
                 healthBio.setCondition(condition);
                 healthBio.setConditionType(conditionType);
                 healthBio.setStartDate(startDate);
-                if (healthBio.update(context) == -1)
+                healthBio.setId(healthBioManager.getHealthBio().getId());
+                healthBioManager.setHealthBio(healthBio);
+
+                if (healthBioManager.update(context) == -1)
                     Toast.makeText(context, R.string.update_error, Toast.LENGTH_SHORT).show();
                 else {
                     Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
@@ -223,13 +234,13 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         }
     }
 
-    public void navigate(){
+    public void navigate() {
         Intent intent;
-        if(mAddAnother.isChecked()) {
-            intent = new Intent(this,AddOrUpdateHealthBioActivity.class);
+        if (mAddAnother.isChecked()) {
+            intent = new Intent(this, AddOrUpdateHealthBioActivity.class);
         } else {
-            intent = new Intent(context,MainActivity.class);
-            MainActivity.currentFragment= HealthBioFragment.class.getName();
+            intent = new Intent(context, MainActivity.class);
+            MainActivity.currentFragment = HealthBioFragment.class.getName();
         }
         startActivity(intent);
 
@@ -238,7 +249,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
 
     private boolean isValid() {
         boolean isValid = true;
-        if(TextUtils.isEmpty(mCondition.getText().toString().trim()) && TextUtils.isEmpty(mStartDate.getText())) {
+        if (TextUtils.isEmpty(mCondition.getText().toString().trim()) && TextUtils.isEmpty(mStartDate.getText())) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(R.string.warning);
@@ -250,10 +261,10 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             });
             warningDialog.show();
             isValid = false;
-        } else if(TextUtils.isEmpty(mCondition.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(mCondition.getText().toString().trim())) {
             mCondition.setError("Please provide a condition!");
             isValid = false;
-        } else if(TextUtils.isEmpty(mStartDate.getText())) {
+        } else if (TextUtils.isEmpty(mStartDate.getText())) {
             mStartDate.setError("Please specify the date!");
             mStartDate.requestFocus();
             isValid = false;
