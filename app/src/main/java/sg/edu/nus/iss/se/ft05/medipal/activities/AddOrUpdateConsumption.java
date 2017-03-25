@@ -73,7 +73,13 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             updateSaveButton();
             updateConsumptionValues(b.getInt(ID));
             setTitle(EDIT_CONSUMPTION);
-        } else {
+        } else if (b != null && b.getString(ACTION).equalsIgnoreCase(NOTIFICATION)) {
+
+            medicine.setSelection(medicineList.indexOf(Medicine.findById(context,b.getInt(ID) ).getName()));
+            quantity.setText(String.valueOf(b.getInt(QUANTITY)));
+            date.setText(formatter.format(Calendar.getInstance().getTime()));
+        }
+        else {
             setTitle(NEW_CONSUMPTION);
         }
 
