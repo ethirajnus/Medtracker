@@ -96,7 +96,6 @@
     <string name="consumedOn">Consumed on</string>
     <string name="consumptionFilterBy">Filter By</string>
 
-
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
@@ -115,7 +114,6 @@
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
-
 
     <string-array name="filterBy">
         <item>Year</item>

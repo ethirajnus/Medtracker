@@ -30,6 +30,10 @@ public class DefaultFragment extends Fragment {
     private static final String APPOINTMENTS="Today's Appointments";
     private static final String MEASUREMENTS="Your most recent measurements";
     private static final String CONSUMPTIONS="Your consumptions";
+
+    private static final String DATE_FORMAT="dd-MM-yyyy";
+    private static final String DATE_FORMAT_1="yyyy-MM-dd";
+
     private String content="";
 
 
@@ -45,6 +49,7 @@ public class DefaultFragment extends Fragment {
         Date d=calendar.getTime();
         date=new SimpleDateFormat(DATE_FORMAT).format(d);
        appointments=Appointment.findByDate(context,date);
+        date=new SimpleDateFormat(DATE_FORMAT_1).format(d);
         consumptions=Consumption.findByDate(context,date);
         content=content+APPOINTMENTS+"\n";
 
@@ -65,8 +70,9 @@ public class DefaultFragment extends Fragment {
         for(Consumption consumption:consumptions)
         {
 
-            content=content+consumption.getMedicine(context)+"\n";
-            content=content+consumption.getQuantity()+"\n";
+            content=content+"Medicine: "+consumption.getMedicine(context).getName()+"\n";
+            content=content+"Quantity:"+consumption.getQuantity()+"\n";
+            content=content+"Time:"+consumption.getTime()+"\n";
         }
 
         textView=(TextView) view.findViewById(R.id.default_view);

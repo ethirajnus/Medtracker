@@ -76,6 +76,12 @@ public class Consumption {
         return consumptionAll.findAll();
     }
 
+    public static  Cursor filterDate(Context context, String date)
+    {
+        consumptionAll=new ConsumptionDAOImpl(context);
+        return consumptionAll.filterDate(date);
+    }
+
     public static Consumption findById(Context context, int id) {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.findById(id);

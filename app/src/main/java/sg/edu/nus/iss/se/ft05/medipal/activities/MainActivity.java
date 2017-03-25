@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
+//import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity
 
         if (findViewById(R.id.fragment_container) != null) {
             if (currentFragment == null) {
-                setFragment(new DefaultFragment());
+                setFragment(new HomeFragment());
             } else {
                 updateFragment(currentFragment);
             }
@@ -242,10 +244,14 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.measure) {
             setFragment(new MeasurementFragment());
+
         } else if (id == R.id.help) {
             setFragment(new HelpFragment());
         } else if (id == R.id.report) {
             setFragment(new ReportFragment());
+        }
+        else if (id == R.id.home) {
+            setFragment(new HomeFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

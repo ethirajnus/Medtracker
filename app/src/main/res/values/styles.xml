@@ -32,4 +32,6 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-</resources>
+
+      <style name="TextAppearance.Widget.TabWidget" parent="@style/AppTheme" />
+  </resources>
