@@ -118,6 +118,7 @@ public class ReminderTasks {
             }
             PersistableBundle b = new PersistableBundle();
             b.putString(CLINIC, appointment.getClinic());
+            b.putInt(ID, appointment.getId());
             ComponentName mServiceComponent = new ComponentName(context, AppointmentReminderNotificationJobService.class);
             JobInfo.Builder builder = new JobInfo.Builder(appointmentReminderNotification++, mServiceComponent);
             builder.setMinimumLatency(interval - (MINUTE * HOUR));

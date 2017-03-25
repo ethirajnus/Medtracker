@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
@@ -62,9 +62,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
 
         holder.textName.setText(name);
-        holder.textCode.setText(CODE+COLON+" " + code.toUpperCase());
+        holder.textCode.setText(CODE + COLON + " " + code.toUpperCase());
         holder.textDescription.setText(description);
-        if (Arrays.asList(Category.safeCategoryCodes).contains(code)) {
+        if (Arrays.asList(CategoryManager.safeCategoryCodes).contains(code)) {
             holder.switchReminder.setEnabled(false);
         }
         holder.switchReminder.setChecked(remind);
@@ -72,9 +72,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         holder.switchReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Category category = Category.findById(mContext, id);
-                category.updateReminder(mContext, isChecked);
 
+                CategoryManager categoryManager = new CategoryManager();
+                categoryManager.findById(mContext, id);
+                categoryManager.updateReminder(mContext, isChecked);
             }
         });
 
@@ -85,7 +86,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
-                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
             }

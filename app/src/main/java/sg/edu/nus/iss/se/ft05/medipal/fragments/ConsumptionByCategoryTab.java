@@ -15,7 +15,7 @@ import android.os.Bundle;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
 import android.view.ViewGroup;
@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
-import android.widget.ArrayAdapter;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
@@ -249,7 +248,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
 
     private void populateDropDownList(){
-        Cursor mCursor = Category.fetchAllCategoriesWithId(context);
+        Cursor mCursor = CategoryManager.fetchAllCategoriesWithId(context);
         categoryList = new ArrayList<>();
         categoriesMap = new HashMap<>();
         while (mCursor.moveToNext()) {

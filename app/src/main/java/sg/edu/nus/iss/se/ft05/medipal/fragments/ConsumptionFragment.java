@@ -1,17 +1,12 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +15,6 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
