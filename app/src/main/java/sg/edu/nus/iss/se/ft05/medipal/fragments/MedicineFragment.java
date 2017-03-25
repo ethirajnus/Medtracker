@@ -12,11 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MedicineListAdapter;
+
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
@@ -27,13 +28,14 @@ public class MedicineFragment extends Fragment {
 
     private MedicineListAdapter mAdapter;
     private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.medicine_fragment, container, false);
+        View view = inflater.inflate(R.layout.medicine_fragment, container, false);
 
-        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddOrUpdateMedicine.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateMedicine.class);
         RecyclerView medicineRecyclerView;
         context = getActivity().getApplicationContext();
         medicineRecyclerView = (RecyclerView) view.findViewById(R.id.all_medicines_list_view);
@@ -41,7 +43,7 @@ public class MedicineFragment extends Fragment {
         medicineRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all medicine info from the database and save in a cursor
-        Cursor cursor = Medicine.findAll(context);
+        Cursor cursor = MedicineManager.findAll(context);
 
 
         // Create an adapter for that cursor to display the data
@@ -63,18 +65,18 @@ public class MedicineFragment extends Fragment {
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                Medicine medicine = Medicine.findById(context, id);
-                medicine.delete(context);
+                MedicineManager medicineManager = new MedicineManager();
+                medicineManager.findById(context, id);
+                medicineManager.delete(context);
                 ReminderUtils.syncMedicineReminder(context);
                 //update the list
-                mAdapter.swapCursor(Medicine.findAll(context));
+                mAdapter.swapCursor(MedicineManager.findAll(context));
             }
 
         }).attachToRecyclerView(medicineRecyclerView);
         getActivity().setTitle(MEDICINE);
 
         return view;
-
 
 
     }

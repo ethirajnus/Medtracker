@@ -18,7 +18,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -247,7 +247,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
 
     private void populateDropDownList() {
-        Cursor mCursor = Medicine.fetchAllMedicinesWithId(context);
+        Cursor mCursor = MedicineManager.fetchAllMedicinesWithId(context);
         medicineList = new ArrayList<>();
         medicinesMap = new HashMap<>();
         for (mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {

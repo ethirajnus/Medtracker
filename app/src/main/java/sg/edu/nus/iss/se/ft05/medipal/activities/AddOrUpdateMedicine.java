@@ -31,9 +31,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
@@ -51,7 +52,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     private Spinner dosage, category;
     DatePickerDialog datePickerDialog;
     Calendar dateCalendar;
-    private Medicine medicine;
+    private MedicineManager medicineManager;
     private Button saveButton;
     private Context context;
 
@@ -118,7 +119,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     }
 
     private void populateDropDownList() {
-        Cursor mCursor = Category.fetchAllCategoriesWithId(context);
+        Cursor mCursor = CategoryManager.fetchAllCategoriesWithId(context);
         categoryList = new ArrayList<>();
         categoriesMap = new HashMap<>();
         while (mCursor.moveToNext()) {
@@ -147,13 +148,15 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     }
 
     private void updateMedicineValues(int id) {
-        medicine = Medicine.findById(context, id);
+
+        medicineManager = new MedicineManager();
+        Medicine medicine = medicineManager.findById(context, id);
 
         reminderManagerMedicine = new ReminderManager();
         Reminder reminderDomain = reminderManagerMedicine.findById(context, medicine.getReminderId());
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
-        category.setSelection(categoryList.indexOf(Category.findById(context, medicine.getCategoryId()).getCategoryName()));
+        category.setSelection(categoryList.indexOf(new CategoryManager().findById(context, medicine.getCategoryId()).getCategoryName()));
         reminder.setChecked(medicine.getRemind());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setSelection(dosageList.indexOf(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage())));
@@ -288,9 +291,9 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         if (saveButton.getTag().toString().equalsIgnoreCase(NEW)) {
             reminderManagerMedicine = new ReminderManager(reminderFrequency, reminderStartTime, reminderInterval);
             int medicineReminderId = (int) reminderManagerMedicine.save(context);
-            medicine = new Medicine(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicineQuantity, medicineDosage, medicineConsumeQuantity, medicineThreshold, medicineDateIssued, medicinceExpireFactor);
+            medicineManager = new MedicineManager(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicineQuantity, medicineDosage, medicineConsumeQuantity, medicineThreshold, medicineDateIssued, medicinceExpireFactor);
             if (isValid()) {
-                if (medicine.save(context) == -1) {
+                if (medicineManager.save(context) == -1) {
                     Toast.makeText(context, MEDICINE_NOT_SAVED, Toast.LENGTH_SHORT).show();
                 } else {
                     ReminderUtils.syncMedicineReminder(context);
@@ -298,22 +301,22 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
                 }
             }
         } else {
-            medicine.setName(medicineName);
-            medicine.setDescription(medicineDescription);
-            medicine.setCategoryId(medicineCategory);
-            medicine.setRemind(medicineRemind);
-            medicine.setQuantity(medicineQuantity);
-            medicine.setDosage(medicineDosage);
-            medicine.setConsumeQuantity(medicineConsumeQuantity);
-            medicine.setThreshold(medicineThreshold);
-            medicine.setDateIssued(medicineDateIssued);
-            medicine.setExpireFactor(medicinceExpireFactor);
+            medicineManager.getMedicine().setName(medicineName);
+            medicineManager.getMedicine().setDescription(medicineDescription);
+            medicineManager.getMedicine().setCategoryId(medicineCategory);
+            medicineManager.getMedicine().setRemind(medicineRemind);
+            medicineManager.getMedicine().setQuantity(medicineQuantity);
+            medicineManager.getMedicine().setDosage(medicineDosage);
+            medicineManager.getMedicine().setConsumeQuantity(medicineConsumeQuantity);
+            medicineManager.getMedicine().setThreshold(medicineThreshold);
+            medicineManager.getMedicine().setDateIssued(medicineDateIssued);
+            medicineManager.getMedicine().setExpireFactor(medicinceExpireFactor);
             reminderManagerMedicine.getReminder().setFrequency(reminderFrequency);
             reminderManagerMedicine.getReminder().setStartTime(reminderStartTime);
             reminderManagerMedicine.getReminder().setInterval(reminderInterval);
             reminderManagerMedicine.update(context);
             if (isValid()) {
-                if (medicine.update(context) == -1) {
+                if (medicineManager.update(context) == -1) {
                     Toast.makeText(context, MEDICINE_NOT_UPDATED, Toast.LENGTH_SHORT).show();
                 } else {
                     ReminderUtils.syncMedicineReminder(context);
@@ -374,19 +377,19 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
     private boolean isValid() {
         boolean isValid = true;
-        if (medicine.getConsumeQuantity() > medicine.getQuantity()) {
+        if (medicineManager.getMedicine().getConsumeQuantity() > medicineManager.getMedicine().getQuantity()) {
             consumeQuantity.setError(MEDICINE_CONSUME_QUALITY_LESS_THAN_QUANTITY);
             consumeQuantity.requestFocus();
             isValid = false;
-        } else if (medicine.getThreshold() > medicine.getQuantity()) {
+        } else if (medicineManager.getMedicine().getThreshold() > medicineManager.getMedicine().getQuantity()) {
             threshold.setError(MEDICINE_THRESHOLD_LESS_THAN_QUANTITY);
             threshold.requestFocus();
             isValid = false;
-        } else if (medicine.getExpireFactor() > 24) {
+        } else if (medicineManager.getMedicine().getExpireFactor() > 24) {
             expirefactor.setError(MEDICINE_EXPIRE_FACTOR_LESS_THAN_24);
             expirefactor.requestFocus();
             isValid = false;
-        } else if (medicine.getCategory(context).getRemind() == true && medicine.getRemind() == false) {
+        } else if (medicineManager.getCategory(context).getRemind() == true && medicineManager.getMedicine().getRemind() == false) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY);

@@ -89,6 +89,8 @@ public class Constants {
     public static final String ID = "id";
     public static final String COLON = ":";
     public static final String CODE ="Code";
+    public static final String QUANTITY = "quantity";
+    public static final String NOTIFICATION = "notification";
 
     //Category
     public static final String CATEGORY = "Category";
