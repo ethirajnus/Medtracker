@@ -74,4 +74,19 @@ public class ICEContact {
 
         this.type = type;
     }
+
+    /**
+     * Default Constructor
+     */
+    public ICEContact() {
+
+    }
+
+    public ICEContact(String name, String description, String type, long phone) {
+
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.phone = phone;
+    }
 }

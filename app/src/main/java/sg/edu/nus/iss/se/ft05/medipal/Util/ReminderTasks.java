@@ -12,11 +12,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
@@ -34,6 +35,7 @@ public class ReminderTasks {
     static JobScheduler jobConsumptionScheduler;
     static JobScheduler jobAppointmentScheduler;
     private static long set_time, current_time, interval;
+    private static Medicine medicine;
 
     public static void executeTask(Context context, String action) {
         if (ACTION_MEDICINE_REMINDER.equals(action)) {
@@ -45,23 +47,24 @@ public class ReminderTasks {
 
     synchronized public static void medicineConsumptionReminder(Context context) {
         int medicineId, reminderId;
-        Map<Integer, Integer> medicineList = Medicine.listAllMedicine(context);
+        Map<Integer, Integer> medicineList = MedicineManager.listAllMedicine(context);
         for (Map.Entry<Integer, Integer> entry : medicineList.entrySet()) {
             medicineId = entry.getKey();
             reminderId = entry.getValue();
-            Medicine medicine = Medicine.findById(context, medicineId);
+            MedicineManager medicineManager = new MedicineManager();
+            medicine = medicineManager.findById(context, medicineId);
             //add Consumption
             Calendar yesterday = Calendar.getInstance();
             yesterday.add(Calendar.DATE, -1);
             String yesterdayDate = new SimpleDateFormat(DATE_FORMAT).format(yesterday.getTime());
-            List<String> medicineTimeList = Medicine.findConsumptionTime(context, medicineId);
+            List<String> medicineTimeList = medicineManager.findConsumptionTime(context, medicineId);
             for (String time : medicineTimeList) {
                 if (!Consumption.exists(context, medicineId, yesterdayDate, time)) {
                     Consumption consumption = new Consumption(medicineId, 0, yesterdayDate, time);
                     consumption.save(context);
                 }
             }
-            if (medicine.getRemind()) {
+            if (medicineManager.getMedicine().getRemind()) {
                 ReminderManager reminderManager = new ReminderManager();
 
                 Reminder reminder = reminderManager.findById(context, reminderId);
@@ -85,6 +88,8 @@ public class ReminderTasks {
 
                 PersistableBundle b = new PersistableBundle();
                 b.putString(MEDICINE_NAME, medicine.getName());
+                b.putInt(QUANTITY, medicine.getConsumeQuantity());
+                b.putInt(ID, medicine.getId());
                 for (int frequency = 0; frequency < reminder.getFrequency(); frequency++) {
                     long intervalBetweenConsumption = reminder.getInterval() * frequency * MINUTE;
                     ComponentName mServiceComponent = new ComponentName(context, MedicineConsumptionReminderJobService.class);
@@ -118,6 +123,7 @@ public class ReminderTasks {
             }
             PersistableBundle b = new PersistableBundle();
             b.putString(CLINIC, appointment.getClinic());
+            b.putInt(ID, appointment.getId());
             ComponentName mServiceComponent = new ComponentName(context, AppointmentReminderNotificationJobService.class);
             JobInfo.Builder builder = new JobInfo.Builder(appointmentReminderNotification++, mServiceComponent);
             builder.setMinimumLatency(interval - (MINUTE * HOUR));

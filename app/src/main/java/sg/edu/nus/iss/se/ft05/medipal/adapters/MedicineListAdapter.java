@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
@@ -22,6 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicine;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
@@ -55,11 +56,11 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         // Update the view holder with the information needed to display
         String name = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_MEDICINE));
-        String category = Category.findById(mContext,mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_CATID))).getCategoryName();
+        String category = new CategoryManager().findById(mContext, mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_CATID))).getCategoryName();
         String description = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_DESCRIPTION));
         Boolean remind = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_REMIND)) == 1;
-        String dateIssued=mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_DATE_ISSUED));
-        String expireFactor=mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_EXPIRE_FACTOR));
+        String dateIssued = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_DATE_ISSUED));
+        String expireFactor = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_EXPIRE_FACTOR));
 
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID));
 
@@ -73,14 +74,14 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
         holder.itemView.setTag(id);
 
 
-
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Medicine medicine = Medicine.findById(mContext, id);
-                medicine.delete(mContext);
+                MedicineManager medicineManager = new MedicineManager();
+                medicineManager.findById(mContext, id);
+                medicineManager.delete(mContext);
                 ReminderUtils.syncMedicineReminder(mContext);
                 //update the list
-                swapCursor(Medicine.findAll(mContext));
+                swapCursor(MedicineManager.findAll(mContext));
             }
         });
 
@@ -91,7 +92,8 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
-                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
             }
@@ -99,8 +101,9 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         holder.switchReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Medicine medicine = Medicine.findById(mContext, id);
-                medicine.updateReminder(mContext, isChecked);
+                MedicineManager medicineManager = new MedicineManager();
+                medicineManager.findById(mContext, id);
+                medicineManager.updateReminder(mContext, isChecked);
                 ReminderUtils.syncMedicineReminder(mContext);
             }
         });
@@ -110,13 +113,12 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ShowMedicine.class);
                 Bundle b = new Bundle();
-                b.putInt("id",id);
-                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                b.putInt("id", id);
+                intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
         });
-
-
 
 
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
@@ -150,9 +152,9 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
         }
     }
 
-    class MedicineViewHolder extends RecyclerView.ViewHolder  {
+    class MedicineViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textName, textDescription, textCategory, textQuantity, textPrescribed ,textConsumeQuality, textThreshold ,textDateIssued ,textExpireFactor;
+        TextView textName, textDescription, textCategory, textQuantity, textPrescribed, textConsumeQuality, textThreshold, textDateIssued, textExpireFactor;
         ImageView icon, editIcon, deleteIcon;
         Switch switchReminder;
 
