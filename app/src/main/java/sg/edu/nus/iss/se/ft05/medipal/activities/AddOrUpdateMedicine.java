@@ -31,10 +31,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
@@ -61,7 +62,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     private static final Map<String, Integer> DOSAGE_HASH_MAP = createDosageHashMap();
     static final Map<Integer, String> DOSAGE_REVERSE_HASH_MAP = createDosageReverseHashMap();
     private TimePickerDialog timePickerDialog;
-    private Reminder reminderMedicine;
+    private ReminderManager reminderManagerMedicine;
     private Map<String, Integer> categoriesMap;
 
     private static Map<Integer, String> createDosageReverseHashMap() {
@@ -147,7 +148,9 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
     private void updateMedicineValues(int id) {
         medicine = Medicine.findById(context, id);
-        reminderMedicine = Reminder.findById(context, medicine.getReminderId());
+
+        reminderManagerMedicine = new ReminderManager();
+        Reminder reminderDomain = reminderManagerMedicine.findById(context, medicine.getReminderId());
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
         category.setSelection(categoryList.indexOf(Category.findById(context, medicine.getCategoryId()).getCategoryName()));
@@ -158,9 +161,9 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         threshold.setText(String.valueOf(medicine.getThreshold()));
         dateIssued.setText(medicine.getDateIssued());
         expirefactor.setText(String.valueOf(medicine.getExpireFactor()));
-        frequency.setText(String.valueOf(reminderMedicine.getFrequency()));
-        startTime.setText(reminderMedicine.getStartTime());
-        interval.setText(String.valueOf(reminderMedicine.getInterval()));
+        frequency.setText(String.valueOf(reminderDomain.getFrequency()));
+        startTime.setText(reminderDomain.getStartTime());
+        interval.setText(String.valueOf(reminderDomain.getInterval()));
         name.setTag(id);
     }
 
@@ -219,7 +222,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()!=0)
+                if (s.length() != 0)
                     dateIssued.setError(null);
             }
 
@@ -236,7 +239,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()!=0)
+                if (s.length() != 0)
                     startTime.setError(null);
             }
 
@@ -283,8 +286,8 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         int reminderInterval = Integer.parseInt(interval.getText().toString());
 
         if (saveButton.getTag().toString().equalsIgnoreCase(NEW)) {
-            reminderMedicine = new Reminder(reminderFrequency, reminderStartTime, reminderInterval);
-            int medicineReminderId = (int) reminderMedicine.save(context);
+            reminderManagerMedicine = new ReminderManager(reminderFrequency, reminderStartTime, reminderInterval);
+            int medicineReminderId = (int) reminderManagerMedicine.save(context);
             medicine = new Medicine(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicineQuantity, medicineDosage, medicineConsumeQuantity, medicineThreshold, medicineDateIssued, medicinceExpireFactor);
             if (isValid()) {
                 if (medicine.save(context) == -1) {
@@ -305,10 +308,10 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             medicine.setThreshold(medicineThreshold);
             medicine.setDateIssued(medicineDateIssued);
             medicine.setExpireFactor(medicinceExpireFactor);
-            reminderMedicine.setFrequency(reminderFrequency);
-            reminderMedicine.setStartTime(reminderStartTime);
-            reminderMedicine.setInterval(reminderInterval);
-            reminderMedicine.update(context);
+            reminderManagerMedicine.getReminder().setFrequency(reminderFrequency);
+            reminderManagerMedicine.getReminder().setStartTime(reminderStartTime);
+            reminderManagerMedicine.getReminder().setInterval(reminderInterval);
+            reminderManagerMedicine.update(context);
             if (isValid()) {
                 if (medicine.update(context) == -1) {
                     Toast.makeText(context, MEDICINE_NOT_UPDATED, Toast.LENGTH_SHORT).show();
@@ -379,13 +382,11 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             threshold.setError(MEDICINE_THRESHOLD_LESS_THAN_QUANTITY);
             threshold.requestFocus();
             isValid = false;
-        }
-        else if (medicine.getExpireFactor() > 24 ) {
+        } else if (medicine.getExpireFactor() > 24) {
             expirefactor.setError(MEDICINE_EXPIRE_FACTOR_LESS_THAN_24);
             expirefactor.requestFocus();
             isValid = false;
-        }
-        else if (medicine.getCategory(context).getRemind() == true && medicine.getRemind() == false ){
+        } else if (medicine.getCategory(context).getRemind() == true && medicine.getRemind() == false) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY);
@@ -397,12 +398,11 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             });
             warningDialog.show();
             isValid = false;
-        }
-        else{
+        } else {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY,23);
-            calendar.set(Calendar.MINUTE,59);
-            calendar.set(Calendar.SECOND,59);
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 59);
             long fullDayTime = calendar.getTimeInMillis();
             String time[] = startTime.getText().toString().split(":");
             int hour = Integer.parseInt(time[0]);
@@ -413,7 +413,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             int frequencyReminder = Integer.parseInt(frequency.getText().toString());
             int intervalReminder = Integer.parseInt(interval.getText().toString());
             long maxTimeForReminder = calendar.getTimeInMillis() + (MINUTE * frequencyReminder * intervalReminder);
-            if(maxTimeForReminder>fullDayTime){
+            if (maxTimeForReminder > fullDayTime) {
                 frequency.setError(MEDICINE_PROPER_COMBINATION_OF_FREQUENCY_TIME_INTERVAL);
                 frequency.requestFocus();
                 isValid = false;

@@ -12,11 +12,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
-import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
-import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
@@ -61,7 +62,9 @@ public class ReminderTasks {
                 }
             }
             if (medicine.getRemind()) {
-                Reminder reminder = Reminder.findById(context, reminderId);
+                ReminderManager reminderManager = new ReminderManager();
+
+                Reminder reminder = reminderManager.findById(context, reminderId);
                 Calendar calendar = Calendar.getInstance();
                 current_time = calendar.getTimeInMillis();
                 String time[] = reminder.getStartTime().split(":");

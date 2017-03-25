@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.ICEContact;
+import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 /**
  * Implementation class for emergency contacts database operations

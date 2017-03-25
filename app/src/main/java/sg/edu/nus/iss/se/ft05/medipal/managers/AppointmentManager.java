@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.model;
+package sg.edu.nus.iss.se.ft05.medipal.managers;
 
 /**
  * Created by Dhruv on 18/3/2017.
@@ -11,6 +11,7 @@ import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
 public class AppointmentManager {
     private static AppointmentDAO appointmentAll;
