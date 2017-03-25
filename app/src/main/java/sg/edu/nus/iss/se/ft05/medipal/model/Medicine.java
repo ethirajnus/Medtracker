@@ -3,14 +3,20 @@ package sg.edu.nus.iss.se.ft05.medipal.model;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.TIME_FORMAT;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERID;
 
@@ -200,6 +206,27 @@ public class Medicine {
 
     public List<Consumption> consumptions(Context context){
        return Consumption.findByMedicineID(context, getId());
+
+    }
+
+    public static List<String> findConsumptionTime(Context context, int consumptionMedicine) {
+        List<String> timelist = new ArrayList<>();
+        Reminder reminder = Medicine.findById(context,consumptionMedicine).getReminder(context);
+        String startTime = reminder.getStartTime();
+        int frequency = reminder.getFrequency();
+        int interval= reminder.getInterval();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT, Locale.ENGLISH);
+        try {
+            cal.setTime(sdf.parse(startTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for(int i =0;i<frequency;i++){
+            cal.add(Calendar.MINUTE,interval * frequency);
+            timelist.add(sdf.format(cal.getTime()));
+        }
+        return timelist;
 
     }
 }

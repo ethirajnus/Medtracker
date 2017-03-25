@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.ICEContact;
+import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 /**
  * Implementation class for emergency contacts database operations
@@ -210,7 +210,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String selectQuery = DATABASE_COMMAND_SELECT_MAX_BEFORE + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_SELECT_MAX_BETWEEN + DATABASE_COMMAND_SELECT_MAXP + DATABASE_COMMAND_SELECT_MAX_AFTER + TABLE_ICE_CONTACTS;
+        String selectQuery = DATABASE_COMMAND_SELECT_MAX_BEFORE + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_SELECT_MAX_BETWEEN + DATABASE_COMMAND_SELECT_MAXP + DATABASE_COMMAND_SELECT_FROM + TABLE_ICE_CONTACTS;
 
         Log.e(LOG, selectQuery);
 

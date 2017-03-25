@@ -76,6 +76,12 @@ public class Consumption {
         return consumptionAll.findAll();
     }
 
+    public static  Cursor filterDate(Context context, String date)
+    {
+        consumptionAll=new ConsumptionDAOImpl(context);
+        return consumptionAll.filterDate(date);
+    }
+
     public static Consumption findById(Context context, int id) {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.findById(id);
@@ -123,5 +129,36 @@ public class Consumption {
             }
         }
         return  filteredConsumptions;
+    }
+
+    public static Cursor fetchByCategory(Context context, int medicineCategoryId) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByCategory(medicineCategoryId);
+    }
+
+    public static Cursor fetchByMedicine(Context context, int medicineId) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicine(medicineId);
+    }
+
+    public static Cursor fetchByMedicineAndDate(Context context,Integer medicineId, String date) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndDate(medicineId,date);
+    }
+
+    public static Cursor fetchByMedicineAndYear(Context context, Integer medicineId, String year) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndYear(medicineId,year);
+    }
+
+    public static Cursor fetchByMedicineAndMonth(Context context, Integer medicineId,String year, String month) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndMonth(medicineId,year, month);
+    }
+
+    public static boolean exists(Context context,int medicineId, String date, String time) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        Cursor cursor = consumptionAll.fetchByMedicineDateAndTime(medicineId,date, time);
+        return cursor.getCount() > 0;
     }
 }

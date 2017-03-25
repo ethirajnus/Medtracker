@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 /**
  * Created by Dhruv on 18/3/2017.
  */
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
@@ -25,6 +26,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     private Cursor mCursor;
     private Context mContext;
+
     public AppointmentListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
         this.mCursor = cursor;
@@ -47,18 +49,22 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         String time = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TIME));
         String clinic = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_CLINIC));
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID));
-        String info=date+"\n"+time+"\n"+clinic;
+        String info = date + "\n" + time + "\n" + clinic;
 
         holder.appointmentInfo.setText(info);
         holder.itemView.setTag(id);
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Appointment appointment = Appointment.findById(mContext, id);
-                appointment.delete(mContext);
+                AppointmentManager appointmentManager = new AppointmentManager();
+
+                appointmentManager.findById(mContext, id);
+
+                appointmentManager.delete(mContext);
+
                 ReminderUtils.syncAppointmentReminder(mContext);
                 //update the list
-                swapCursor(Appointment.findAll(mContext));
+                swapCursor(AppointmentManager.findAll(mContext));
             }
         });
 
@@ -66,8 +72,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EditAppointment.class);
-                Bundle bundle=new Bundle();
-                bundle.putInt("id",id);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", id);
                 intent.putExtras(bundle);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
@@ -79,8 +85,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ShowAppointment.class);
-                Bundle bundle=new Bundle();
-                bundle.putInt("id",id);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", id);
                 intent.putExtras(bundle);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
@@ -104,16 +110,16 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             this.notifyDataSetChanged();
         }
     }
-    class AppointmentViewHolder extends RecyclerView.ViewHolder
-    {
-        ImageView delete,edit;
+
+    class AppointmentViewHolder extends RecyclerView.ViewHolder {
+        ImageView delete, edit;
         TextView appointmentInfo;
 
         public AppointmentViewHolder(View itemView) {
             super(itemView);
-            edit=(ImageView) itemView.findViewById(R.id.editIcon);
-            delete=(ImageView) itemView.findViewById(R.id.deleteIcon);
-            appointmentInfo=(TextView) itemView.findViewById(R.id.appointmentInfo);
+            edit = (ImageView) itemView.findViewById(R.id.editIcon);
+            delete = (ImageView) itemView.findViewById(R.id.deleteIcon);
+            appointmentInfo = (TextView) itemView.findViewById(R.id.appointmentInfo);
 
         }
     }

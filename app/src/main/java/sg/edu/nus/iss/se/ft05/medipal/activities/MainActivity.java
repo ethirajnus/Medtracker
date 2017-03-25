@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -22,6 +24,8 @@ import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
+//import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
@@ -31,6 +35,8 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.DefaultFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.ReportFragment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,17 +44,23 @@ public class MainActivity extends AppCompatActivity
     static String currentFragment;
 
     Context context;
+    TabLayout tabLayout;
 
     static final int FIRST_RUN_REQUEST = 0;
-    SharedPreferences settings;
+   // SharedPreferences settings;
     TextView mUserName;
+
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        settings = getSharedPreferences("activityPreference", Context.MODE_PRIVATE);
-        if(!settings.getBoolean("activity_executed", false)){
+        context = getApplicationContext();
+
+        // Checking for first time app launch
+        prefManager = new PrefManager(context);
+        if (prefManager.isFirstTimeLaunch()) {
             Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
             Bundle b = new Bundle();
             b.putString(Constants.ACTION, Constants.NEW);
@@ -70,15 +82,16 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         navigationView.setNavigationItemSelectedListener(this);
 
         View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mUserName = (TextView) header.findViewById(R.id.tv_personName);
-        mUserName.setText(settings.getString("userName",""));
+        mUserName.setText(prefManager.getUsername());
 
         if (findViewById(R.id.fragment_container) != null) {
             if (currentFragment == null) {
-                setFragment(new DefaultFragment());
+                setFragment(new HomeFragment());
             } else {
                 updateFragment(currentFragment);
             }
@@ -94,12 +107,10 @@ public class MainActivity extends AppCompatActivity
         if(requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK){
             userId = data.getIntExtra("personId",0);
             userName = data.getStringExtra("personName");
-            Editor editor = settings.edit();
-            editor.putBoolean("activity_executed", true);
-            editor.putString("userName",userName);
-            editor.putInt("userId",userId);
-            editor.commit();
-            mUserName.setText(settings.getString("userName",""));
+            prefManager.setFirstTimeLaunch(false);
+            prefManager.setUserName(userName);
+            prefManager.setUserId(userId);
+            mUserName.setText(prefManager.getUsername());
             Intent i = new Intent(this,AddOrUpdateHealthBioActivity.class);
             i.putExtra("firstRun",true);
             startActivity(i);
@@ -111,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
         Bundle b = new Bundle();
         b.putString(Constants.ACTION, Constants.VIEW);
-        b.putInt("userId",settings.getInt("userId",0));
+        b.putInt("userId",prefManager.getUserId());
         intent.putExtras(b);
         startActivity(intent);
     }
@@ -143,6 +154,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        boolean isChecked = prefManager.isShowHelpScreens();
+        MenuItem enableHelpItem = menu.findItem(R.id.action_enable_help);
+        enableHelpItem.setChecked(isChecked);
         return true;
     }
 
@@ -154,7 +168,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_enable_help) {
+            item.setChecked(!item.isChecked());
+            prefManager.setShowHelpScreens(item.isChecked());
             return true;
         }
         else if(id == R.id.action_help) {
@@ -179,7 +195,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+//    public void updateTitle(String title){
+//        collapsingToolbarLayout.setTitle(title);
+//    }
+
     public void setFragment(Fragment fragment) {
+        tabLayout.setVisibility(View.GONE);
+        tabLayout.removeAllTabs();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
@@ -222,12 +244,19 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.measure) {
             setFragment(new MeasurementFragment());
+
         } else if (id == R.id.help) {
             setFragment(new HelpFragment());
+        } else if (id == R.id.report) {
+            setFragment(new ReportFragment());
+        }
+        else if (id == R.id.home) {
+            setFragment(new HomeFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

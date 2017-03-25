@@ -1,11 +1,9 @@
 package sg.edu.nus.iss.se.ft05.medipal.model;
 
-import android.test.AndroidTestCase;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.ICEContact;
+import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 
 /**
  * Created by Ashish Katre on 3/20/2017.

@@ -76,5 +76,6 @@ public class MedicineFragment extends Fragment {
         return view;
 
 
+
     }
 }

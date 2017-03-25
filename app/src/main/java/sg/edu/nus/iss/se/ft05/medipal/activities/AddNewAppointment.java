@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 
@@ -195,7 +195,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             flag = false;
         }
         if (time.getText().toString().length() == 0) {
-            clinic.setError(BLANK_TIME_MESSAGE);
+            time.setError(BLANK_TIME_MESSAGE);
             flag = false;
         }
         if (date.getText().toString().length() == 0) {
@@ -206,7 +206,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             test.setError(BLANK_TEST_MESSAGE);
             flag = false;
         }
-        d1=new SimpleDateFormat(DATE_FORMAT).parse(adate);
+        if(date.getText().toString().length()!=0) {
+            d1=new SimpleDateFormat(DATE_FORMAT).parse(adate);
+        }
         d2=new SimpleDateFormat(DATE_FORMAT).parse(secondDate);
         if(d1.before(d2))
         {
@@ -216,13 +218,14 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         if (flag == true) {
 
             //All input fields are valid
-            Appointment appointment = new Appointment(adate, atime, aclinic, atest, apre_test);
+            AppointmentManager appointmentManager = new AppointmentManager(adate, atime, aclinic, atest, apre_test);
             Log.v("date",adate);
-            appointment.save(context);
+            appointmentManager.save(context);
             ReminderUtils.syncAppointmentReminder(context);
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();
             startActivity(intent);
+            finish();
         }
     }
 

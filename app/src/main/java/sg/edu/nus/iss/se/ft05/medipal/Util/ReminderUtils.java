@@ -7,8 +7,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
-
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**

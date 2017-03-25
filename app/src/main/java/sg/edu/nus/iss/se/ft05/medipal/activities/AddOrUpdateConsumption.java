@@ -10,41 +10,28 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.NotificationUtils;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderTasks;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
@@ -55,8 +42,8 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 public class AddOrUpdateConsumption extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Button saveButton;
-    private  EditText quantity,date,time;
-    private Spinner medicine;
+    private  EditText quantity,date;
+    private Spinner medicine,time;
 
     private Context context;
     DatePickerDialog datePickerDialog;
@@ -67,6 +54,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
     private Map<String, Integer> medicinesMap;
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             DATE_FORMAT, Locale.ENGLISH);
+    private String consumptionTime;
+    private int consumptionMedicine;
+    private List<String> timeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +85,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         medicinesMap = new HashMap<>();
         for (mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
             int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID));
-            String categoryName = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_MEDICINE));
-            medicineList.add(categoryName); //add the item
-            medicinesMap.put(categoryName, id);
+            String medicineName = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_MEDICINE));
+            medicineList.add(medicineName); //add the item
+            medicinesMap.put(medicineName, id);
         }
 
         ArrayAdapter<String> medicineDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, medicineList);
@@ -110,12 +100,27 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+    private void populateTimeForMedicine() {
+        timeList = Medicine.findConsumptionTime(context,consumptionMedicine);
+        ArrayAdapter<String> timeListDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeList);
+
+        // Drop down layout style - list view with radio button
+        timeListDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        time.setAdapter(timeListDataAdapter);
+
+
+
+    }
+
     private void updateConsumptionValues(int id) {
         consumption = Consumption.findById(context, id);
-        medicine.setSelection(medicineList.indexOf(Medicine.findById(context, consumption.getMedicineId()).getName()));
+        consumptionMedicine = consumption.getMedicineId();
+        medicine.setSelection(medicineList.indexOf(Medicine.findById(context,consumptionMedicine ).getName()));
         quantity.setText(String.valueOf(consumption.getQuantity()));
         date.setText(consumption.getDate());
-        time.setText(consumption.getTime());
+
     }
 
     private void updateSaveButton() {
@@ -125,16 +130,20 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     private void setListeners() {
         date.setOnClickListener(this);
-        time.setOnClickListener(this);
-        Calendar newCalendar = Calendar.getInstance();
-        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                time.setText(hourOfDay + COLON + minute);
+        time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                consumptionTime = time.getSelectedItem().toString();
             }
-        },
-                newCalendar.get(Calendar.HOUR_OF_DAY),
-                newCalendar.get(Calendar.MINUTE), true);
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+        Calendar newCalendar = Calendar.getInstance();
+
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 dateCalendar = Calendar.getInstance();
@@ -146,7 +155,22 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                 newCalendar.get(Calendar.MONTH),
                 newCalendar.get(Calendar.DAY_OF_MONTH));
         saveButton.setOnClickListener(this);
-        medicine.setOnItemSelectedListener(this);
+        medicine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                consumptionMedicine = medicinesMap.get(medicine.getSelectedItem());
+                populateTimeForMedicine();
+                if(consumption != null && consumption.getTime() != null)
+                    time.setSelection(timeList.indexOf(consumption.getTime()));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
         date.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -164,30 +188,14 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
             }
         });
-        time.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()!=0)
-                    time.setError(null);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
     private void findViewsById() {
         medicine = (Spinner) findViewById(R.id.consumptionMedicine);
         quantity = (EditText) findViewById(R.id.consumptionQuantity);
         date = (EditText) findViewById(R.id.consumptionDate);
-        time = (EditText) findViewById(R.id.consumptionTime);
+        time = (Spinner) findViewById(R.id.consumptionTime);
         saveButton = (Button) findViewById(R.id.saveConsumption);
         saveButton.setTag(NEW);
     }
@@ -198,9 +206,6 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             case R.id.consumptionDate:
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
-                break;
-            case R.id.consumptionTime:
-                timePickerDialog.show();
                 break;
             case R.id.saveConsumption:
                 saveOrUpdateConsumption();
@@ -214,10 +219,8 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         if (!isValidFormat) {
             return;
         }
-        int consumptionMedicine = medicinesMap.get(medicine.getSelectedItem());
         int consumptionQuantity = Integer.parseInt(quantity.getText().toString());
         String consumptionDate = date.getText().toString();
-        String consumptionTime = time.getText().toString();
         if (saveButton.getTag().toString().equalsIgnoreCase(NEW)) {
             consumption = new Consumption(consumptionMedicine,consumptionQuantity,consumptionDate,consumptionTime);
             if (isValid()) {
@@ -266,10 +269,6 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             date.setError(CONSUMPTION_DATE_ERROR_MESSAGE);
             date.requestFocus();
             isValid = false;
-        } else if (time.getText().toString().isEmpty()) {
-            time.setError(CONSUMPTION_TIME_ERROR_MESSAGE);
-            time.requestFocus();
-            isValid = false;
         }
         return isValid;
     }
@@ -278,6 +277,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = ConsumptionFragment.class.getName();
         startActivity(intent);
+        finish();
     }
 
 
@@ -290,9 +290,20 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             quantity.setError(CONSUMPTION_QUANTITY_MORE_THAN_ERROR_MESSAGE + consumeQuantity);
             quantity.requestFocus();
             isValid = false;
+        } else if(Consumption.exists(context,consumption.getMedicineId(),consumption.getDate(),consumption.getTime())){
+            AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+            warningDialog.setTitle(Constants.TITLE_WARNING);
+            warningDialog.setMessage(MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME);
+            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface alert, int button) {
+                    alert.dismiss();
+                }
+            });
+            warningDialog.show();
+            isValid = false;
         }
         else {
-
             List<Consumption> consumptions = Consumption.findByDate(context, consumption.getDate());
             if(consumptions.size() >= frequency){
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
