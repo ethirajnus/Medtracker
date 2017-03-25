@@ -16,8 +16,8 @@ import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 public class DefaultFragment extends Fragment {
 
@@ -25,57 +25,55 @@ public class DefaultFragment extends Fragment {
     private TextView textView;
     private Cursor cursor;
     private String date;
-    private List<Appointment> appointments;
+    private List<Appointment> appointmentList;
     private List<Consumption> consumptions;
-    private static final String APPOINTMENTS="Today's Appointments";
-    private static final String MEASUREMENTS="Your most recent measurements";
-    private static final String CONSUMPTIONS="Your consumptions";
+    private static final String APPOINTMENTS = "Today's Appointments";
+    private static final String MEASUREMENTS = "Your most recent measurements";
+    private static final String CONSUMPTIONS = "Your consumptions";
 
-    private static final String DATE_FORMAT="dd-MM-yyyy";
-    private static final String DATE_FORMAT_1="yyyy-MM-dd";
+    private static final String DATE_FORMAT = "dd-MM-yyyy";
+    private static final String DATE_FORMAT_1 = "yyyy-MM-dd";
 
-    private String content="";
-
+    private String content = "";
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_default,container,false);
-        context=getActivity().getApplicationContext();
+        View view = inflater.inflate(R.layout.fragment_default, container, false);
+        context = getActivity().getApplicationContext();
 
-        Calendar calendar=Calendar.getInstance();
-        Date d=calendar.getTime();
-        date=new SimpleDateFormat(DATE_FORMAT).format(d);
-       appointments=Appointment.findByDate(context,date);
-        date=new SimpleDateFormat(DATE_FORMAT_1).format(d);
-        consumptions=Consumption.findByDate(context,date);
-        content=content+APPOINTMENTS+"\n";
+        Calendar calendar = Calendar.getInstance();
+        Date d = calendar.getTime();
+        date = new SimpleDateFormat(DATE_FORMAT).format(d);
+
+        appointmentList = AppointmentManager.findByDate(context, date);
+
+        date = new SimpleDateFormat(DATE_FORMAT_1).format(d);
+        consumptions = Consumption.findByDate(context, date);
+        content = content + APPOINTMENTS + "\n";
 
 
-        for(Appointment appointment:appointments)
-        {
+        for (Appointment appointment : appointmentList) {
 
-            content=content+"Time:"+appointment.getTime()+"\n";
-            content=content+"Clinic:"+appointment.getClinic()+"\n";
-            content=content+"Test:"+appointment.getTest()+"\n";
+            content = content + "Time:" + appointment.getTime() + "\n";
+            content = content + "Clinic:" + appointment.getClinic() + "\n";
+            content = content + "Test:" + appointment.getTest() + "\n";
 
         }
 
-        content=content+CONSUMPTIONS+"\n";
+        content = content + CONSUMPTIONS + "\n";
 
 
+        for (Consumption consumption : consumptions) {
 
-        for(Consumption consumption:consumptions)
-        {
-
-            content=content+"Medicine: "+consumption.getMedicine(context).getName()+"\n";
-            content=content+"Quantity:"+consumption.getQuantity()+"\n";
-            content=content+"Time:"+consumption.getTime()+"\n";
+            content = content + "Medicine: " + consumption.getMedicine(context).getName() + "\n";
+            content = content + "Quantity:" + consumption.getQuantity() + "\n";
+            content = content + "Time:" + consumption.getTime() + "\n";
         }
 
-        textView=(TextView) view.findViewById(R.id.default_view);
+        textView = (TextView) view.findViewById(R.id.default_view);
         textView.setText(content);
 
         return view;

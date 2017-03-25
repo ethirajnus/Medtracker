@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 
@@ -37,9 +37,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private TimePickerDialog timePickerDialog;
     Context context;
     boolean flag=true;//To ensure that all input fields are valid
-    private static final String BLANK_DATE_MESSAGE="Appointment date required";
+    private static final String BLANK_DATE_MESSAGE="AppointmentManager date required";
     private static final String WRONG_TIME="Please choose a slot at least one hour from now";
-    private static final String BLANK_TIME_MESSAGE="Appointment time required";
+    private static final String BLANK_TIME_MESSAGE="AppointmentManager time required";
     private static final String BLANK_CLINIC_MESSAGE="Clinic Required";
     private static final String BLANK_TEST_MESSAGE="Test Required";
     private static final String WRONG_DATE="Date cannot be before today";
@@ -218,9 +218,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         if (flag == true) {
 
             //All input fields are valid
-            Appointment appointment = new Appointment(adate, atime, aclinic, atest, apre_test);
+            AppointmentManager appointmentManager = new AppointmentManager(adate, atime, aclinic, atest, apre_test);
             Log.v("date",adate);
-            appointment.save(context);
+            appointmentManager.save(context);
             ReminderUtils.syncAppointmentReminder(context);
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();

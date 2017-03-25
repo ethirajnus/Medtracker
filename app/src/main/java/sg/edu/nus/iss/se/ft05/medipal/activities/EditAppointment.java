@@ -19,8 +19,10 @@ import java.util.Date;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
+
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
@@ -30,20 +32,20 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 public class EditAppointment extends AppCompatActivity implements View.OnClickListener {
 
 
-    private int mHour, mMinute;
+    private int mHour, mMinute, id;
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
     private EditText date, time, clinic, test, pre_test;
-    private Appointment appointment;
+    AppointmentManager appointmentManager;
     private Context context;
     private boolean flag = true; //flag is to ensure that all fields have been filled properly
-    private static final String BLANK_DATE_MESSAGE="Appointment date required";
-    private static final String WRONG_TIME="Please choose a slot at least one hour from now";
-    private static final String BLANK_TIME_MESSAGE="Appointment time required";
-    private static final String BLANK_CLINIC_MESSAGE="Clinic Required";
-    private static final String BLANK_TEST_MESSAGE="Test Required";
-    private static final String WRONG_DATE="Date cannot be before today";
+    private static final String BLANK_DATE_MESSAGE = "AppointmentManager date required";
+    private static final String WRONG_TIME = "Please choose a slot at least one hour from now";
+    private static final String BLANK_TIME_MESSAGE = "AppointmentManager time required";
+    private static final String BLANK_CLINIC_MESSAGE = "Clinic Required";
+    private static final String BLANK_TEST_MESSAGE = "Test Required";
+    private static final String WRONG_DATE = "Date cannot be before today";
 
     /**
      * @param savedInstanceState
@@ -62,8 +64,10 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         dateFormatter = new SimpleDateFormat(DATE_FORMAT);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        int id = bundle.getInt("id");
-        appointment = Appointment.findById(getApplicationContext(), id);
+        id = bundle.getInt("id");
+
+        appointmentManager = new AppointmentManager();
+        Appointment appointment = appointmentManager.findById(getApplicationContext(), id);
 
         date = (EditText) findViewById(R.id.appointment_date);
         time = (EditText) findViewById(R.id.appointment_time);
@@ -153,15 +157,15 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
 
-                        String hour , minutes;
+                        String hour, minutes;
                         if (hourOfDay < 10)
                             hour = "0" + hourOfDay;
                         else
-                            hour =""+ hourOfDay;
+                            hour = "" + hourOfDay;
                         if (minute < 10)
                             minutes = "0" + minute;
                         else
-                            minutes =""+ minute;
+                            minutes = "" + minute;
 
                         if ((newCalendar.get(Calendar.HOUR_OF_DAY) + 1) < hourOfDay) {
                             time.setError(null);
@@ -216,7 +220,9 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             flag = false;
         }
 
-        if (flag == true) {
+        if (flag) {
+
+            Appointment appointment = new Appointment();
 
             //All input fields are valid
             appointment.setDate(date.getText().toString());
@@ -224,13 +230,16 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             appointment.setClinic(clinic.getText().toString());
             appointment.setTest(test.getText().toString());
             appointment.setPreTest(pre_test.getText().toString());
-            appointment.update(context);
+            appointment.setId(id);
+
+            appointmentManager.setAppointment(appointment);
+
+            appointmentManager.update(context);
             ReminderUtils.syncAppointmentReminder(context);
             Intent intent = new Intent(context, MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();
             startActivity(intent);
             finish();
         }
-
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
 public class ShowAppointment extends AppCompatActivity {
@@ -15,23 +16,29 @@ public class ShowAppointment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_appointment);
-        ActionBar actionBar=getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        Intent intent=getIntent();
-        Bundle bundle=intent.getExtras();
-        int id=bundle.getInt("id");
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        int id = bundle.getInt("id");
 
-        TextView date,time,clinic,test,pre_test;
-        date=(TextView) findViewById(R.id.appointment_date);
-        time=(TextView) findViewById(R.id.appointment_time);
-        clinic=(TextView) findViewById(R.id.appointment_clinic);
-        test=(TextView) findViewById(R.id.appointment_test);
-        pre_test=(TextView) findViewById(R.id.appointment_pre_test);
-        context=getApplicationContext();
-        Appointment appointment=Appointment.findById(context,id);
+        TextView date, time, clinic, test, pre_test;
+        date = (TextView) findViewById(R.id.appointment_date);
+        time = (TextView) findViewById(R.id.appointment_time);
+        clinic = (TextView) findViewById(R.id.appointment_clinic);
+        test = (TextView) findViewById(R.id.appointment_test);
+        pre_test = (TextView) findViewById(R.id.appointment_pre_test);
+
+        context = getApplicationContext();
+
+        AppointmentManager appointmentManager = new AppointmentManager();
+
+        Appointment appointment = appointmentManager.findById(context, id);
+
         date.setText(appointment.getDate());
         time.setText(appointment.getTime());
         clinic.setText(appointment.getClinic());
