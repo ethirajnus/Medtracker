@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.listeners.OnStartDragListener;
-import sg.edu.nus.iss.se.ft05.medipal.model.ICEContactsManager;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;

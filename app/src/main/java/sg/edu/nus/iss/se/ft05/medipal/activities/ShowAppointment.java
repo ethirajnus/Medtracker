@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
-import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;

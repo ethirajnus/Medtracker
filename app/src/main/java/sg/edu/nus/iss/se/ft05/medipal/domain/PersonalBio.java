@@ -1,16 +1,11 @@
-package sg.edu.nus.iss.se.ft05.medipal.model;
-
-import android.content.Context;
-import android.database.Cursor;
-
-import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAO;
-import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
+package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 /**
- * @author Moushumi Seal
+ * Created by e0146812 on 3/25/2017.
  */
 
 public class PersonalBio {
+
     private int id;
     private String name;
     private String dob;
@@ -20,12 +15,10 @@ public class PersonalBio {
     private String height;
     private String bloodType;
 
-    private PersonalBioDAO personalBioDAO;
-    private static PersonalBioDAO personalBioDAOAll;
-
     public PersonalBio(String name, String dob,
                        String idNo, String address, String postalCode,
                        String height, String bloodType) {
+
         this.name = name;
         this.dob = dob;
         this.idNo = idNo;
@@ -37,7 +30,6 @@ public class PersonalBio {
 
     public PersonalBio() {
     }
-
 
     public int getId() {
         return id;
@@ -102,30 +94,4 @@ public class PersonalBio {
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
-
-    public static Cursor findAll(Context context){
-        personalBioDAOAll = new PersonalBioDAOImpl(context);
-        return personalBioDAOAll.findAll();
-    }
-
-    public static PersonalBio findById(Context context, int id){
-        personalBioDAOAll = new PersonalBioDAOImpl(context);
-        return  personalBioDAOAll.findById(id);
-    }
-
-    public long save(Context context){
-        personalBioDAO = new PersonalBioDAOImpl(context);
-        return personalBioDAO.insert(this);
-    }
-
-    public int update(Context context){
-        personalBioDAO = new PersonalBioDAOImpl(context);
-        return personalBioDAO.update(this);
-    }
-
-    public int delete(Context context){
-        personalBioDAO = new PersonalBioDAOImpl(context);
-        return personalBioDAO.delete(this.getId());
-    }
-
 }

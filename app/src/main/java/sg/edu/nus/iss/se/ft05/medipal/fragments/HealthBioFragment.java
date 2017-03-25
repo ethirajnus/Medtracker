@@ -17,17 +17,17 @@ import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateHealthBioActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.HealthBioListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.model.HealthBio;
+import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 /**
  * @author Moushumi Seal
- *
  */
 
 public class HealthBioFragment extends Fragment {
 
     private HealthBioListAdapter mAdapter;
     private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class HealthBioFragment extends Fragment {
         View view = inflater.inflate(R.layout.healthbio_fragment, container, false);
 
         // Set floating action button
-        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddOrUpdateHealthBioActivity.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateHealthBioActivity.class);
 
         // retrieving context
         context = getActivity().getApplicationContext();
@@ -45,7 +45,7 @@ public class HealthBioFragment extends Fragment {
         healthBioRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get health bio from the database and save in a cursor
-        Cursor cursor = HealthBio.findAll(context);
+        Cursor cursor = HealthBioManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new HealthBioListAdapter(context, cursor);
@@ -59,16 +59,19 @@ public class HealthBioFragment extends Fragment {
                 //do nothing, we only care about swiping
                 return false;
             }
+
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                HealthBio healthBio = HealthBio.findById(context, id);
-                healthBio.delete(context);
+                HealthBioManager healthBioManager = new HealthBioManager();
+                healthBioManager.findById(context, id);
+                healthBioManager.delete(context);
                 Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                 //update the list
-                mAdapter.swapCursor(HealthBio.findAll(context));
+                mAdapter.swapCursor(HealthBioManager.findAll(context));
             }
 
             //attach the ItemTouchHelper to the healthBioRecyclerView

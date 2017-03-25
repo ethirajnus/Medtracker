@@ -53,11 +53,16 @@
     <string name="reminderStartTime">StartTime</string>
     <string name="reminderInterval">Interval</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Measurement -->
     <string name="measurement_fragment">Measurement Fragment</string>
     <string name="title_activity_add_measurement">AddMeasurement</string>
     <string name="title_activity_display_measurement">DisplayMeasurement</string>
-
+    <string name="measured_on">Measured on</string>
+    <string name="systolic"> Systolic (mm Hg)</string>
+    <string name="diastolic"> Diastolic (mm Hg)</string>
+    <string name="pulse"> Pulse (bpm)</string>
+    <string name="temperature"> Temperature (Degree Celcius)</string>
+    <string name="weight"> Weight (Kg)</string>
 
     <!-- ICE ICEContactsManager  -->
     <string name="ice_header">In case of emergency</string>
@@ -96,21 +101,42 @@
     <string name="consumedOn">Consumed on</string>
     <string name="consumptionFilterBy">Filter By</string>
 
+    <!-- Help -->
+    <string name="faq">FAQ</string>
+    <string name="question1">Q:Who is this application for?</string>
+    <string name="answer1">A:This application is for anyone in need of tracking their medical stuff.</string>
+    <string name="question2">Q:What is the purpose of measurement screen?</string>
+    <string name="answer2">A:The measurement screen helps keep track of your BloodPressure,Pulse,Temperature and weight based on date measurement.</string>
+    <string name="question3">Q:What is the purpose of category screen?</string>
+    <string name="answer3">A:The category screen gives the details of each category of medicines.</string>
+    <string name="question4">Q:What is the purpose of medicine screen?</string>
+    <string name="answer4">A:The medicine screen helps keep track of medicine detils like reminder, quantiy, expiry, etc..</string>
+    <string name="question5">Q:What is the purpose of appointment screen?</string>
+    <string name="answer5">A:The appointment screen helps keep track of medical appiontments for which a reminder is set.</string>
+    <string name="question6">Q:What is the purpose of ICE screen?</string>
+    <string name="answer6">A:The ICE screen has a list of people to be contacted in case of any medical emergency.</string>
+    <string name="question7">Q:What is the purpose of consumption screen?</string>
+    <string name="answer7">A:The consumption screen helps keep track of medicine consumed by the user.</string>
+    <string name="question8">Q:What is the purpose of HealthBio screen?</string>
+    <string name="answer8">A:The HealthBio screen keeps the details of any medical condition the user is having.</string>
+    <string name="question9">Q:What is the purpose of PersonalBio screen?</string>
+    <string name="answer9">A:The PersonalBio screen keeps the personal details of the user.</string>
+
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
-    <string name="slide_1_title">Hello Food!</string>
-    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+    <string name="slide_1_title">Category Screen</string>
+    <string name="slide_1_desc">Here you can view and edit the categry of medicine</string>
 
-    <string name="slide_2_title">Movie Tickets</string>
-    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+    <string name="slide_2_title">Medicine Screen</string>
+    <string name="slide_2_desc">Keep track of your medicine stock and reminders</string>
 
-    <string name="slide_3_title">Great Discounts</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+    <string name="slide_3_title">ICE Screen</string>
+    <string name="slide_3_desc">Keep track of people to be contacted in case of an emergency</string>
 
-    <string name="slide_4_title">World Travel</string>
-    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+    <string name="slide_4_title">Disable this?</string>
+    <string name="slide_4_desc">Uncheck the Enable Help Screens option from the right menu</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>

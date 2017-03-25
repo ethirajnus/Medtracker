@@ -8,7 +8,7 @@ import android.database.Cursor;
 
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
 public interface AppointmentDAO {
 

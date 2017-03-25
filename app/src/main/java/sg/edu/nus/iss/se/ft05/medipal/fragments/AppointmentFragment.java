@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
