@@ -85,7 +85,9 @@ public class ReminderTasks {
                 }
 
                 PersistableBundle b = new PersistableBundle();
-                b.putString(MEDICINE_NAME, medicineManager.getMedicine().getName());
+                b.putString(MEDICINE_NAME, medicine.getName());
+                b.putInt(QUANTITY, medicine.getConsumeQuantity());
+                b.putInt(ID, medicine.getId());
                 for (int frequency = 0; frequency < reminder.getFrequency(); frequency++) {
                     long intervalBetweenConsumption = reminder.getInterval() * frequency * MINUTE;
                     ComponentName mServiceComponent = new ComponentName(context, MedicineConsumptionReminderJobService.class);

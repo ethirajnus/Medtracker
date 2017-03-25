@@ -51,4 +51,6 @@ public interface ConsumptionDAO {
     Cursor fetchByMedicineAndYearUnconsumed(Integer medicineId, String year);
 
     Cursor fetchByMedicineAndMonthUnconsumed(Integer medicineId, String year, String month);
+
+    int deleteAllForMedicine(int medicineId);
 }

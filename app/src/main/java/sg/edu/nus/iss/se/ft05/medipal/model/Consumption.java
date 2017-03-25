@@ -193,4 +193,10 @@ public class Consumption {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.fetchByMedicineAndMonthUnconsumed(medicineId, year, month);
     }
+
+    public static int deleteAllForMedicine(Context context,int medicineId) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.deleteAllForMedicine(medicineId);
+
+    }
 }
