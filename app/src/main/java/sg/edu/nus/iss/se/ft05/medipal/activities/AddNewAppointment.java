@@ -225,6 +225,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();
             startActivity(intent);
+            finish();
         }
     }
 

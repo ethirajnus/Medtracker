@@ -427,6 +427,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = MedicineFragment.class.getName();
         startActivity(intent);
+        finish();
 
     }
 

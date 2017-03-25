@@ -13,10 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activities.SplashActivity"
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,23 +22,30 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".activities.AddOrUpdateMedicine"
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.AddNewAppointment"
             android:label="New Appointment"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.EditAppointment"
+        <activity
+            android:name=".activities.EditAppointment"
             android:label="Edit Appointment Details"
-            android:parentActivityName=".activities.MainActivity"/>
-        <activity android:name=".activities.ShowAppointment"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.ShowAppointment"
             android:label="Appointment Information"
-            android:parentActivityName=".activities.MainActivity"></activity>
-
+            android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.PersonalBioActivity"
             android:label="@string/title_activity_add_personalBio"
-            android:theme="@style/AppTheme"></activity>
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.AddOrUpdateCategory"
             android:parentActivityName=".activities.MainActivity" />
@@ -52,43 +57,40 @@
         <activity
             android:name=".activities.AddMeasurement"
             android:label="@string/title_activity_add_measurement"
-            android:parentActivityName=".activities.MainActivity"/>
+            android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.DisplayMeasurement"
             android:label="@string/title_activity_display_measurement"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.MainActivity" />
+
         <service
             android:name=".Util.MedicineReminderJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false">
-        </service>
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Util.MedicineConsumptionReminderJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false">
-        </service>
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Util.AppointmentReminderJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false">
-        </service>
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Util.AppointmentReminderNotificationJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false">
-        </service>
-        <activity
-            android:name=".activities.AddOrUpdateHealthBioActivity"
-            android:parentActivityName=".activities.MainActivity" ></activity>
-        <activity
-            android:name=".activities.AddOrUpdateConsumption"
-            android:parentActivityName=".activities.MainActivity" ></activity>
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
+            android:name=".activities.AddOrUpdateHealthBioActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.AddOrUpdateConsumption"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
             android:name=".activities.ICEAdditionActivity"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.HelpActivity"
+            android:theme="@style/AppTheme.Help"></activity>
     </application>
 
 </manifest>

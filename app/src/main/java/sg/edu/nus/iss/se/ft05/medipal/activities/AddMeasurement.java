@@ -124,5 +124,6 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         MainActivity.currentFragment = MeasurementFragment.class.getName();
         startActivity(intent);
+        finish();
     }
 }

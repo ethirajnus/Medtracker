@@ -11,10 +11,38 @@ public class Constants {
     public static final String SKIP = "Skip";
     public static final String ACTION = "action";
     public static final String EDIT = "edit";
+    public static final String VIEW = "view";
     public static final String NEW = "New";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String TIME_FORMAT = "HH:mm";
     public static final String TITLE_WARNING = "Warning";
     public static final String OK_BUTTON = "OK";
+    public static final String PATTERN_ZERO = "^[0.]+?";
+    public static final String PATTERN_COMMA = "^.*[,].*$";
+    public static final String PATTERN_LETTERS_ONLY = "^[a-zA-Z\\s]+$";
+    public static final String PATTERN_ALPHANUMERIC = "^[a-zA-Z0-9]+$";
+
+    //PersonalBio
+    public static final String TITLE_PERSONAL_BIO = "Personal Details";
+    public static final String EMPTY_PERSONAL_BIO_NAME = "Please enter your name!";
+    public static final String EMPTY_DOB = "Please enter your date of birth!";
+    public static final String EMPTY_IDNO = "Please enter your identity number!";
+    public static final String EMPTY_BUILDING_NAME = "Please enter your building's name!";
+    public static final String EMPTY_LOCATION = "Please enter location!";
+    public static final String EMPTY_STREET_NAME = "Please enter your street's name!";
+    public static final String EMPTY_LEVEL = "Please enter level!";
+    public static final String EMPTY_UNIT_NO = "Please enter your unit no.!";
+    public static final String EMPTY_POSTAL_CODE = "Please enter your postal code!";
+    public static final String EMPTY_HEIGHT = "Please enter your height!";
+    public static final String INVALID_NAME = "Please enter a valid name!";
+    public static final String INVALID_ID_NO = "Please enter a valid identity number!";
+    public static final String INVALID_HEIGHT = "Please enter a valid value for height!";
+    public static final String INVALID_POSTAL_CODE = "Please enter a valid value for postal code!";
+    public static final String INVALID_BUILDING_NAME = "Building name cannot contain ','!";
+    public static final String INVALID_LOCATION = "Location name cannot contain ','!";
+    public static final String INVALID_STREET_NAME = "Street name cannot contain ','!";
+    public static final String INVALID_LEVEL = "Please enter a valid value for level!";
+    public static final String INVALID_UNIT_NO = "Please enter a valid value for unit no.!";
 
 
     //HealthBio
@@ -23,6 +51,11 @@ public class Constants {
     public static final String TITLE_VIEW_HEALTHBIO = "Health Details";
     public static final String CONDITION_TYPE_CONDITION = "C";
     public static final String CONDITION_TYPE_ALLERGY = "A";
+    public static final String ALLERGY = "ALLERGY";
+    public static final String CONDITION = "CONDITION";
+    public static final String EMPTY_CONDITION = "Please provide a condition!";
+    public static final String EMPTY_START_DATE = "Please specify the date!";
+
 
     //Medicine
     public static final String MEDICINE_NAME = "medicineName";
@@ -47,6 +80,7 @@ public class Constants {
     public static final String MEDICINE_EXPIRE_FACTOR_LESS_THAN_24 = "Expire Factor should be less than 25";
     public static final String MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY = "Reminder cannot be turned off for this category of medicine";
     public static final String MEDICINE_PROPER_COMBINATION_OF_FREQUENCY_TIME_INTERVAL = "Input proper combination of Frequency,Start Time and Interval";
+    public static final String MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME = "Medicine already consumed at this time";
     
     //Miscellaneous
     public static final int MINUTE = 60000;
@@ -84,5 +118,8 @@ public class Constants {
 
     //Appointment
     public static final String CLINIC = "clinic";
+
+    //Report
+    public static final String REPORT = "reports";
 
 }

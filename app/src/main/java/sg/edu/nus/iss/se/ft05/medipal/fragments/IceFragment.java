@@ -70,7 +70,7 @@ public class IceFragment extends Fragment implements OnStartDragListener {
                 .getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 
-        adapter = new ContactsListAdapter(context, cursor, this);
+        adapter = new ContactsListAdapter(context, cursor, this, getActivity());
 
         iceRecyclerView.setAdapter(adapter);
 

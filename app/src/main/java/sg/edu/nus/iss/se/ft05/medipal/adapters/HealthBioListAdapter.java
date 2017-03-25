@@ -55,11 +55,18 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
         // Update the view holder with the information needed to display
         String condition = mCursor.getString(mCursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_CONDITION));
+        String conditionType = mCursor.getString(mCursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_CONDITION_TYPE));
+        String startDate = mCursor.getString(mCursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_START_DATE));
         final int id = mCursor.getInt(mCursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID));
-        Log.v("Healthbio id", String.valueOf(id));
 
 
         holder.textCondition.setText(condition);
+        if(conditionType.equalsIgnoreCase(Constants.CONDITION_TYPE_CONDITION))
+            conditionType = Constants.CONDITION;
+        else
+            conditionType = Constants.ALLERGY;
+        holder.textConditionType.setText("Type: " + conditionType);
+        holder.textStartDate.setText("Diagnosed on: " + startDate);
         holder.itemView.setTag(id);
 
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
@@ -109,13 +116,15 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
     class HealthBioViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textCondition;
+        TextView textCondition, textConditionType, textStartDate;
         ImageView icon, editIcon;
 
 
         public HealthBioViewHolder(View itemView) {
             super(itemView);
             textCondition = (TextView) itemView.findViewById(R.id.condition);
+            textConditionType = (TextView) itemView.findViewById(R.id.conditionType);
+            textStartDate = (TextView) itemView.findViewById(R.id.startDate);
             icon = (ImageView) itemView.findViewById(R.id.healthbioImageIcon);
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon);
         }

@@ -131,6 +131,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = CategoryFragment.class.getName();
         startActivity(intent);
+        finish();
     }
 
 

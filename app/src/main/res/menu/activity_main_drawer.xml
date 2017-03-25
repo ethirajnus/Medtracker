@@ -16,6 +16,10 @@
             android:title="HealthBio" />
         <item android:id="@+id/measure" android:icon="@drawable/ic_assignment_black_24dp"
             android:title="Measurement" />
+        <item android:id="@+id/help" android:icon="@drawable/ic_help_black_24dp"
+            android:title="Help" />
+        <item android:id="@+id/report" android:icon="@drawable/ic_help_black_24dp"
+            android:title="Report" />
         <item android:id="@+id/home" android:icon="@drawable/ic_assignment_black_24dp"
             android:title="Home" />
     </group>
