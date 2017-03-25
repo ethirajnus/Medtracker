@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
@@ -34,6 +35,7 @@ public class ReminderTasks {
     static JobScheduler jobConsumptionScheduler;
     static JobScheduler jobAppointmentScheduler;
     private static long set_time, current_time, interval;
+    private static Medicine medicine;
 
     public static void executeTask(Context context, String action) {
         if (ACTION_MEDICINE_REMINDER.equals(action)) {
@@ -50,7 +52,7 @@ public class ReminderTasks {
             medicineId = entry.getKey();
             reminderId = entry.getValue();
             MedicineManager medicineManager = new MedicineManager();
-            medicineManager.findById(context, medicineId);
+            medicine = medicineManager.findById(context, medicineId);
             //add Consumption
             Calendar yesterday = Calendar.getInstance();
             yesterday.add(Calendar.DATE, -1);
