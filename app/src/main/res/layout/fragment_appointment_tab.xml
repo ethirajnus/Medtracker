@@ -9,24 +9,11 @@
         android:text="Today's Appointments:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/appointmentText1"
-        />
-    <TextView
-        android:text="Today's Appointments:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/appointmentText2"
-        />
-
-
-    <TextView
-        android:text="Today's Appointments:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/appointmentText"
         />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/all_appointments_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"/>
 </FrameLayout>
