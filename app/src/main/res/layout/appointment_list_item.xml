@@ -3,17 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/appointmentInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_weight="1"
-        android:textAllCaps="true"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"/>
+
 
     <ImageView
         android:id="@+id/deleteIcon"
@@ -36,5 +26,47 @@
         android:layout_alignTop="@+id/deleteIcon"
         android:layout_toStartOf="@+id/deleteIcon"
         android:layout_marginEnd="19dp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/date"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/clinic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/editIcon"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/pre_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/test"
+        android:layout_alignEnd="@+id/time"
+        android:text="TextView" />
+
 
 </RelativeLayout>
