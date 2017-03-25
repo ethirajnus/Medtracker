@@ -25,4 +25,6 @@ public interface MeasurementDAO {
     public Cursor fetchAllMeasurementsWithId();
 
     public int fetchMaxId();
+
+    public Measurement findLatest();
 }
