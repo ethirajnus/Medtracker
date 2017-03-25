@@ -17,7 +17,7 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
@@ -51,7 +51,7 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
             return; // bail if returned null
 
         // Update the view holder with the information needed to display
-        String medicineName = Medicine.findById(mContext,mCursor.getInt(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID))).getName();
+        String medicineName = new MedicineManager().findById(mContext, mCursor.getInt(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID))).getName();
         String date = mCursor.getString(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE));
         String time = mCursor.getString(mCursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME));
         String dateTime = date + " " + time;
@@ -64,7 +64,6 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         holder.itemView.setTag(id);
 
 
-
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +71,8 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
-                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
             }
@@ -121,7 +121,7 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
     class ConsumptionViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textMedicineName,textDateTime,textQuantity;
+        TextView textMedicineName, textDateTime, textQuantity;
         ImageView icon, editIcon, deleteIcon;
 
 

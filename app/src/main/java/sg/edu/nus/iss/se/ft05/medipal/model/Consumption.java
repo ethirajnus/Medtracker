@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 /**
  * Created by ethi on 10/03/17.
@@ -76,9 +78,8 @@ public class Consumption {
         return consumptionAll.findAll();
     }
 
-    public static  Cursor filterDate(Context context, String date)
-    {
-        consumptionAll=new ConsumptionDAOImpl(context);
+    public static Cursor filterDate(Context context, String date) {
+        consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.filterDate(date);
     }
 
@@ -103,7 +104,8 @@ public class Consumption {
     }
 
     public Medicine getMedicine(Context context) {
-        return Medicine.findById(context, getMedicineId());
+        MedicineManager medicineManager = new MedicineManager();
+        return medicineManager.findById(context, getMedicineId());
     }
 
     public static List<Consumption> findByDate(Context context, String date) {
@@ -116,19 +118,19 @@ public class Consumption {
         return consumptionAll.totalQuantityConsumed(medicineId);
     }
 
-    public static List<Consumption> findByMedicineID(Context context,int medicineId){
+    public static List<Consumption> findByMedicineID(Context context, int medicineId) {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.findByMedicineID(medicineId);
     }
 
-    public static List<Consumption> filterByDate(List<Consumption> consumptions,String date){
+    public static List<Consumption> filterByDate(List<Consumption> consumptions, String date) {
         List<Consumption> filteredConsumptions = new ArrayList<>();
-        for(Consumption consumption: consumptions){
-            if(consumption.getDate().contentEquals(date)){
+        for (Consumption consumption : consumptions) {
+            if (consumption.getDate().contentEquals(date)) {
                 filteredConsumptions.add(consumption);
             }
         }
-        return  filteredConsumptions;
+        return filteredConsumptions;
     }
 
     public static Cursor fetchByCategory(Context context, int medicineCategoryId) {
@@ -141,54 +143,54 @@ public class Consumption {
         return consumptionAll.fetchByMedicine(medicineId);
     }
 
-    public static Cursor fetchByMedicineAndDate(Context context,Integer medicineId, String date) {
+    public static Cursor fetchByMedicineAndDate(Context context, Integer medicineId, String date) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByMedicineAndDate(medicineId,date);
+        return consumptionAll.fetchByMedicineAndDate(medicineId, date);
     }
 
     public static Cursor fetchByMedicineAndYear(Context context, Integer medicineId, String year) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByMedicineAndYear(medicineId,year);
+        return consumptionAll.fetchByMedicineAndYear(medicineId, year);
     }
 
-    public static Cursor fetchByMedicineAndMonth(Context context, Integer medicineId,String year, String month) {
+    public static Cursor fetchByMedicineAndMonth(Context context, Integer medicineId, String year, String month) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByMedicineAndMonth(medicineId,year, month);
+        return consumptionAll.fetchByMedicineAndMonth(medicineId, year, month);
     }
 
-    public static Cursor fetchByCategoryAndDate(Context context,Integer medicineCategoryId, String date) {
+    public static Cursor fetchByCategoryAndDate(Context context, Integer medicineCategoryId, String date) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByCategoryAndDate(medicineCategoryId,date);
+        return consumptionAll.fetchByCategoryAndDate(medicineCategoryId, date);
     }
 
     public static Cursor fetchByCategoryAndYear(Context context, Integer medicineCategoryId, String year) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByCategoryAndYear(medicineCategoryId,year);
+        return consumptionAll.fetchByCategoryAndYear(medicineCategoryId, year);
     }
 
-    public static Cursor fetchByCategoryAndMonth(Context context, Integer medicineCategoryId,String year, String month) {
+    public static Cursor fetchByCategoryAndMonth(Context context, Integer medicineCategoryId, String year, String month) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByCategoryAndMonth(medicineCategoryId,year, month);
+        return consumptionAll.fetchByCategoryAndMonth(medicineCategoryId, year, month);
     }
 
-    public static boolean exists(Context context,int medicineId, String date, String time) {
+    public static boolean exists(Context context, int medicineId, String date, String time) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        Cursor cursor = consumptionAll.fetchByMedicineDateAndTime(medicineId,date, time);
+        Cursor cursor = consumptionAll.fetchByMedicineDateAndTime(medicineId, date, time);
         return cursor.getCount() > 0;
     }
 
-    public static Cursor fetchByMedicineAndDateUnconsumed(Context context,Integer medicineId, String date) {
+    public static Cursor fetchByMedicineAndDateUnconsumed(Context context, Integer medicineId, String date) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByMedicineAndDateUnconsumed(medicineId,date);
+        return consumptionAll.fetchByMedicineAndDateUnconsumed(medicineId, date);
     }
 
     public static Cursor fetchByMedicineAndYearUnconsumed(Context context, Integer medicineId, String year) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByMedicineAndYearUnconsumed(medicineId,year);
+        return consumptionAll.fetchByMedicineAndYearUnconsumed(medicineId, year);
     }
 
-    public static Cursor fetchByMedicineAndMonthUnconsumed(Context context, Integer medicineId,String year, String month) {
+    public static Cursor fetchByMedicineAndMonthUnconsumed(Context context, Integer medicineId, String year, String month) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.fetchByMedicineAndMonthUnconsumed(medicineId,year, month);
+        return consumptionAll.fetchByMedicineAndMonthUnconsumed(medicineId, year, month);
     }
 }

@@ -5,13 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
+
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Created by ethi on 12/03/17.
  */
-
 public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
 
     public MedicineDAOImpl(Context context) {
@@ -22,11 +22,11 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_MEDICINE, MEDICINE_KEY_ID + DATABASE_COMMAND_SYMBOL,
-                new String[] { String.valueOf(id) });
+                new String[]{String.valueOf(id)});
     }
 
     @Override
-    public Cursor findAll(){
+    public Cursor findAll() {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEDICINE;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
@@ -34,6 +34,7 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
 
     @Override
     public Medicine findById(int id) {
+
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE
                 + MEDICINE_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
@@ -45,6 +46,7 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         }
 
         Medicine medicine = new Medicine();
+
         medicine.setId(c.getInt(c.getColumnIndex(MEDICINE_KEY_ID)));
         medicine.setName((c.getString(c.getColumnIndex(MEDICINE_KEY_MEDICINE))));
         medicine.setDescription(c.getString(c.getColumnIndex(MEDICINE_KEY_DESCRIPTION)));
@@ -57,11 +59,13 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         medicine.setThreshold(c.getInt(c.getColumnIndex(MEDICINE_KEY_THRESHOLD)));
         medicine.setDateIssued(c.getString(c.getColumnIndex(MEDICINE_KEY_DATE_ISSUED)));
         medicine.setExpireFactor(c.getInt(c.getColumnIndex(MEDICINE_KEY_EXPIRE_FACTOR)));
+
         return medicine;
     }
 
     @Override
     public long insert(Medicine medicine) {
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -99,7 +103,7 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         values.put(MEDICINE_KEY_EXPIRE_FACTOR, medicine.getExpireFactor());
         // updating row
         return db.update(TABLE_MEDICINE, values, MEDICINE_KEY_ID + DATABASE_COMMAND_SYMBOL,
-                new String[] { String.valueOf(medicine.getId()) });
+                new String[]{String.valueOf(medicine.getId())});
 
     }
 
