@@ -4,25 +4,23 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/home" android:icon="@drawable/ic_assignment_black_24dp"
             android:title="Home" />
-        <item android:id="@+id/category" android:icon="@drawable/ic_pie_chart_black_24dp"
-            android:title="Category" />
-        <item android:id="@+id/medicine" android:icon="@drawable/ic_add_box_black_24dp"
-            android:title="Medicines" />
-        <item android:id="@+id/appointment" android:icon="@drawable/ic_date_range_black_24dp"
-            android:title="Appointments" />
-        <item android:id="@+id/ice" android:icon="@drawable/ic_contacts_black_24dp"
-            android:title="ICE" />
-        <item android:id="@+id/consumption" android:icon="@drawable/ic_opacity_black_24dp"
-            android:title="Consumption" />
         <item android:id="@+id/heathbio" android:icon="@drawable/ic_accessibility_black_24dp"
             android:title="HealthBio" />
         <item android:id="@+id/measure" android:icon="@drawable/ic_assignment_black_24dp"
             android:title="Measurement" />
+        <item android:id="@+id/appointment" android:icon="@drawable/ic_date_range_black_24dp"
+            android:title="Appointments" />
+        <item android:id="@+id/consumption" android:icon="@drawable/ic_opacity_black_24dp"
+            android:title="Consumption" />
+        <item android:id="@+id/medicine" android:icon="@drawable/ic_add_box_black_24dp"
+            android:title="Medicines" />
+        <item android:id="@+id/category" android:icon="@drawable/ic_pie_chart_black_24dp"
+            android:title="Category" />
+        <item android:id="@+id/ice" android:icon="@drawable/ic_contacts_black_24dp"
+            android:title="ICE" />
+        <item android:id="@+id/report" android:icon="@drawable/ic_help_black_24dp"
+            android:title="Report" />
         <item android:id="@+id/help" android:icon="@drawable/ic_help_black_24dp"
             android:title="Help" />
-        <item android:id="@+id/report" android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="Report" />
-        <item android:id="@+id/home" android:icon="@drawable/ic_home_black_24dp"
-            android:title="Home" />
     </group>
 </menu>

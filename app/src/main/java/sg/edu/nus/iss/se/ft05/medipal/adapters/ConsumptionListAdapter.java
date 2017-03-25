@@ -8,15 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.Arrays;
-
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;

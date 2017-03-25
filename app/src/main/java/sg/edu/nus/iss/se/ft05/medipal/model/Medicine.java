@@ -14,7 +14,9 @@ import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.TIME_FORMAT;
@@ -193,7 +195,8 @@ public class Medicine {
     }
 
     public Category getCategory(Context context) {
-        return Category.findById(context, getCategoryId());
+
+        return new CategoryManager().findById(context, getCategoryId());
     }
 
     public static Cursor fetchAllMedicinesWithId(Context context) {
@@ -203,9 +206,7 @@ public class Medicine {
 
     public Reminder getReminder(Context context) {
 
-        ReminderManager reminderManager = new ReminderManager();
-
-        return reminderManager.findById(context, getReminderId());
+        return new ReminderManager().findById(context, getReminderId());
     }
 
     public List<Consumption> consumptions(Context context) {
@@ -227,8 +228,8 @@ public class Medicine {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(int i =0;i<frequency;i++){
-            cal.add(Calendar.MINUTE,interval * i);
+        for (int i = 0; i < frequency; i++) {
+            cal.add(Calendar.MINUTE, interval * i);
             timelist.add(sdf.format(cal.getTime()));
         }
         return timelist;

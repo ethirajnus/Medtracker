@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
@@ -37,7 +37,7 @@ public class ShowMedicine extends AppCompatActivity {
     private void updateValues(Medicine medicine, Reminder reminderMedicine) {
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
-        category.setText(Category.findById(getApplicationContext(), medicine.getCategoryId()).getCategoryName());
+        category.setText(new CategoryManager().findById(getApplicationContext(), medicine.getCategoryId()).getCategoryName());
         this.reminder.setText(medicine.getRemind().toString());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setText(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage()));

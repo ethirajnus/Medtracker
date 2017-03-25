@@ -9,7 +9,8 @@ import java.sql.Connection;
 
 import java.util.ArrayList;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
@@ -23,12 +24,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     protected static final String TABLE_CATEGORY = "categories";
 
-    protected static final String TABLE_APPOINTMENT="appointments";
+    protected static final String TABLE_APPOINTMENT = "appointments";
     protected static final String TABLE_MEDICINE = "medicines";
     protected static final String TABLE_REMINDER = "reminders";
     protected static final String TABLE_MEASUREMENT = "measurement";
     protected static final String TABLE_CONSUMPTION = "consumption";
-
 
 
     private static final String DATABASE_NAME = "medipal";
@@ -60,20 +60,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CATEGORY_KEY_REMIND = "remind";
 
 
-
-    public static final String APPOINTMENT_KEY_ID="id";
-    public static final String APPOINTMENT_KEY_APPOINTMENT_DATE="date";
-    public static final String APPOINTMENT_KEY_APPOINTMENT_TIME="time";
-    public static final String APPOINTMENT_KEY_APPOINTMENT_CLINIC="clinic";
-    public static final String APPOINTMENT_KEY_APPOINTMENT_TEST="test";
-    public static final String APPOINTMENT_KEY_APPOINTMENT_PRE_TEST="pre_test";
+    public static final String APPOINTMENT_KEY_ID = "id";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_DATE = "date";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_TIME = "time";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_CLINIC = "clinic";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_TEST = "test";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_PRE_TEST = "pre_test";
 
 
     public static final String CONSUMPTION_KEY_ID = "id";
     public static final String CONSUMPTION_KEY_MEDICINEID = "medicineId";
     public static final String CONSUMPTION_KEY_QUANTITY = "quantity";
-    public static final String CONSUMPTION_KEY_DATE="date";
-    public static final String CONSUMPTION_KEY_TIME="time";
+    public static final String CONSUMPTION_KEY_DATE = "date";
+    public static final String CONSUMPTION_KEY_TIME = "time";
 
     public static final String MEDICINE_KEY_ID = "id";
     public static final String MEDICINE_KEY_MEDICINE = "medicine";
@@ -113,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + TABLE_CONSUMPTION + "(" + CONSUMPTION_KEY_ID + " INTEGER PRIMARY KEY," + CONSUMPTION_KEY_MEDICINEID
             + " INTEGER," + CONSUMPTION_KEY_QUANTITY
             + " INTEGER," + CONSUMPTION_KEY_DATE + " TEXT," + CONSUMPTION_KEY_TIME
-            + " TEXT"+ ")";
+            + " TEXT" + ")";
 
 
     // Create table ICE ICEContactsManager
@@ -123,11 +122,10 @@ public class DBHelper extends SQLiteOpenHelper {
             + DATABASE_COMMAND_INTEGER_COMMA + ICE_CONTACTS_KEY_TYPE + DATABASE_COMMAND_TEXT + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_INTEGER + DATABASE_COMMAND_RIGHT_BRACKET;
 
 
-
     private static final String CREATE_TABLE_APPOINTMENT = "CREATE TABLE "
             + TABLE_APPOINTMENT + "(" + APPOINTMENT_KEY_ID + " INTEGER PRIMARY KEY," + APPOINTMENT_KEY_APPOINTMENT_DATE
             + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_TIME + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_CLINIC
-            + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_TEST + " TEXT,"+ APPOINTMENT_KEY_APPOINTMENT_PRE_TEST+ " TEXT"+")";
+            + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_TEST + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_PRE_TEST + " TEXT" + ")";
 
     private static final String CREATE_TABLE_MEDICINE = "CREATE TABLE "
             + TABLE_MEDICINE + "(" + MEDICINE_KEY_ID + " INTEGER PRIMARY KEY," + MEDICINE_KEY_MEDICINE
@@ -148,7 +146,6 @@ public class DBHelper extends SQLiteOpenHelper {
             + " INTEGER," + MEASUREMENT_KEY_DIASTOLIC + " INTEGER," + MEASUREMENT_KEY_PULSE + " INTEGER,"
             + MEASUREMENT_KEY_TEMPERATURE + " INTEGER," + MEASUREMENT_KEY_WEIGHT + " INTEGER,"
             + MEASUREMENT_KEY_MEASURED_ON + " TEXT" + ")";
-
 
 
     Connection connection = null;
@@ -181,7 +178,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(DATABASE_COMMAND_DROP + TABLE_CATEGORY);
 
-        db.execSQL(DATABASE_COMMAND_DROP+TABLE_APPOINTMENT);
+        db.execSQL(DATABASE_COMMAND_DROP + TABLE_APPOINTMENT);
 
         db.execSQL(DATABASE_COMMAND_DROP + TABLE_MEDICINE);
         db.execSQL(DATABASE_COMMAND_DROP + TABLE_REMINDER);
@@ -197,13 +194,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public static void insertDefaultValues(SQLiteDatabase db) {
-        ArrayList<Category> categoryList = new ArrayList<Category>();
-        categoryList.add(new Category("Supplement", "SUP", "Supplement type of medicines", true));
-        categoryList.add(new Category("Chronic", "CHR", "Chronice type of medicines", true));
-        categoryList.add(new Category("Incidental", "INC", "Incidental type of medicines", true));
-        categoryList.add(new Category("Complete Course", "COM", "Complete type of medicines", true));
-        categoryList.add(new Category("Self Apply", "SEL", "Self Apply type of medicines", true));
-        for (Category category : categoryList) {
+
+        ArrayList<Category> categorList = new ArrayList();
+
+        categorList.add(new Category("Supplement", "SUP", "Supplement type of medicines", true));
+        categorList.add(new Category("Chronic", "CHR", "Chronice type of medicines", true));
+        categorList.add(new Category("Incidental", "INC", "Incidental type of medicines", true));
+        categorList.add(new Category("Complete Course", "COM", "Complete type of medicines", true));
+        categorList.add(new Category("Self Apply", "SEL", "Self Apply type of medicines", true));
+
+        for (Category category : categorList) {
+
             ContentValues values = new ContentValues();
             values.put(CATEGORY_KEY_CATEGORY, category.getCategoryName());
             values.put(CATEGORY_KEY_CODE, category.getCode());
@@ -216,6 +217,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Creating HealthBio table
     private String getCreateTableHealthBioQuery() {
+
         final StringBuilder CREATE_TABLE_HEALTHBIO = new StringBuilder()
                 .append("CREATE TABLE ")
                 .append(DbConstants.TABLE_HEALTH_BIO)
@@ -229,12 +231,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 .append(DbConstants.HEALTH_BIO_KEY_START_DATE)
                 .append(" TEXT")
                 .append(")");
-        return CREATE_TABLE_HEALTHBIO.toString();
 
+        return CREATE_TABLE_HEALTHBIO.toString();
     }
 
     //Creating PersonalBio table
     private String getCreateTablePersonalBioQuery() {
+
         final StringBuilder CREATE_TABLE_PERSONALBIO = new StringBuilder()
                 .append("CREATE TABLE ")
                 .append(DbConstants.TABLE_PERSONAL_BIO)
@@ -256,6 +259,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 .append(DbConstants.PERSONAL_BIO_KEY_BLOOD_TYPE)
                 .append(" TEXT")
                 .append(")");
+
         return CREATE_TABLE_PERSONALBIO.toString();
     }
 
