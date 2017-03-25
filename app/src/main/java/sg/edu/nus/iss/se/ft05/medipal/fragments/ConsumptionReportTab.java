@@ -2,46 +2,36 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.TO_DATE_CANNOT_BE_GREATER_THAN_FROM_DATE;
 
 /**
  * Created by ethi on 25/03/17.
@@ -54,19 +44,9 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private RecyclerView consumptionRecyclerView;
     private Context context;
     private ConsumptionListAdapter mAdapter;
-    private Spinner category, filterBy, spinYear, spinMonth;
     private View view;
-    private List<String> categoryList;
-    private Map<String, Integer> categoriesMap;
-    private EditText date;
-    DatePickerDialog datePickerDialog;
-    Calendar dateCalendar;
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             DATE_FORMAT, Locale.ENGLISH);
-    private String year;
-    private Cursor cursor;
-    private Integer medicineCategoryId;
-    private String month;
     private EditText dateFrom,dateTo;
     private DatePickerDialog datePickerDialogFrom,datePickerDialogTo;
     private String dateFromText,dateToText;
@@ -76,7 +56,14 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.consumption_report_share, menu);
     }
 
     @Override
@@ -226,6 +213,23 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private void triggerFilterForDate() {
         Cursor cursor = Consumption.betweenDate(context,dateFromText,dateToText);
         mAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.share_consumption:
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Subjct");
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

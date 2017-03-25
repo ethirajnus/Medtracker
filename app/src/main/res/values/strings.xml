@@ -152,5 +152,6 @@
     <string name="ice_phone_header">Phone</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="edit">Edit</string>
 
 </resources>

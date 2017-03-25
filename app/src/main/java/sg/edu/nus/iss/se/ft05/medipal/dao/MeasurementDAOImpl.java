@@ -179,4 +179,14 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         }
         return measurement;
     }
+
+    @Override
+    public Cursor betweenDate(String dateFrom, String dateTo) {
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT + DATABASE_COMMAND_SELECT_WHERE + MEASUREMENT_KEY_MEASURED_ON + DATABASE_COMMAND_BETWEEN +  DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND  + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        return cursor;
+    }
 }
