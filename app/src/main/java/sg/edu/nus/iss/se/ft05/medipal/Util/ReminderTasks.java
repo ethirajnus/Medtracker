@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
-import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;

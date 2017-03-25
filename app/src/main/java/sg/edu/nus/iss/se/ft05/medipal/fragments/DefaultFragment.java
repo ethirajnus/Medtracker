@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
-import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
 public class DefaultFragment extends Fragment {

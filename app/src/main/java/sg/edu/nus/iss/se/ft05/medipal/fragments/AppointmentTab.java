@@ -18,7 +18,7 @@ import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 
 
 public class AppointmentTab extends Fragment {

@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
+import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;

@@ -14,8 +14,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
-import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ICEContactsManager;
 
 import org.mockito.Mock;
 

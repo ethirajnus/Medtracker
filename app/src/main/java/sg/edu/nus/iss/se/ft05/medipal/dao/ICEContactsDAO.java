@@ -1,9 +1,8 @@
 package sg.edu.nus.iss.se.ft05.medipal.dao;
 
-import android.content.Context;
 import android.database.Cursor;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.ICEContact;
+import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 
 /**
  * Interface for emergency contacts database operations
