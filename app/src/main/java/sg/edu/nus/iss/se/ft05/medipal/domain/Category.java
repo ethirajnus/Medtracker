@@ -7,7 +7,7 @@ public class Category {
 
     private int id;
     private String categoryName, code, description;
-    private Boolean remind;
+    private boolean remind;
 
     public void setId(int id) {
         this.id = id;
@@ -25,7 +25,7 @@ public class Category {
         this.description = description;
     }
 
-    public void setRemind(Boolean remind) {
+    public void setRemind(boolean remind) {
         this.remind = remind;
     }
 
@@ -41,7 +41,7 @@ public class Category {
         return description;
     }
 
-    public Boolean getRemind() {
+    public boolean getRemind() {
         return remind;
     }
 
@@ -49,7 +49,7 @@ public class Category {
         return id;
     }
 
-    public Category(String categoryName, String code, String description, Boolean remind) {
+    public Category(String categoryName, String code, String description, boolean remind) {
 
         this.categoryName = categoryName;
         this.code = code;
