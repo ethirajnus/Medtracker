@@ -160,7 +160,11 @@ public class Medicine {
 
     public int delete(Context context) {
         medicineDAO = new MedicineDAOImpl(context);
-        return medicineDAO.delete(this.getId());
+        ReminderManager reminderManager = new ReminderManager();
+        reminderManager.setReminder(getReminder(context));
+        reminderManager.delete(context);
+        Consumption.deleteAllForMedicine(context,getId());
+        return medicineDAO.delete(getId());
     }
 
     public long save(Context context) {
