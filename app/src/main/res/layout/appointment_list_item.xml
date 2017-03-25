@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-
     <ImageView
         android:id="@+id/deleteIcon"
         android:layout_height="20dp"
@@ -67,6 +65,5 @@
         android:layout_alignBottom="@+id/test"
         android:layout_alignEnd="@+id/time"
         android:text="TextView" />
-
 
 </RelativeLayout>
