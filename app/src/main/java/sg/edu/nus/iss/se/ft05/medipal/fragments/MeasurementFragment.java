@@ -2,7 +2,6 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.Measurement;
+import sg.edu.nus.iss.se.ft05.medipal.managers.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddMeasurement;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;

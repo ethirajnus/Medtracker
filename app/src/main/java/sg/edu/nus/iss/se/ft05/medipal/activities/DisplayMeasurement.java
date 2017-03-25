@@ -1,21 +1,12 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.Measurement;
+import sg.edu.nus.iss.se.ft05.medipal.managers.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.dao.MeasurementDAO;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 
 public class DisplayMeasurement extends AppCompatActivity {
 

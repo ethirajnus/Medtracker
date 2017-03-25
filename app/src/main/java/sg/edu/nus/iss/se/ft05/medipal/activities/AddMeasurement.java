@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
-import sg.edu.nus.iss.se.ft05.medipal.Measurement;
+import sg.edu.nus.iss.se.ft05.medipal.managers.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;

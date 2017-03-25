@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal;
+package sg.edu.nus.iss.se.ft05.medipal.managers;
 
 import android.content.Context;
 import android.database.Cursor;
