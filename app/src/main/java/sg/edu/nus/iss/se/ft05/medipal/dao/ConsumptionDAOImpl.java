@@ -194,4 +194,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    @Override
+    public Cursor fetchByMedicineDateAndTime(int medicineId, String date, String time) {
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_TIME + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + time + DATABASE_COMMAND_SINGLE_QUOTE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+
 }

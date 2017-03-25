@@ -40,7 +40,6 @@ public class ConsumptionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.consumption_fragment, container, false);
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateConsumption.class);
-        RecyclerView consumptionRecyclerView;
         context = getActivity().getApplicationContext();
         getActivity().setTitle(CONSUMPTION);
 
@@ -51,6 +50,7 @@ public class ConsumptionFragment extends Fragment {
         // Set Tabs inside Toolbar
         tabs = (TabLayout) getActivity().findViewById(R.id.tabs);
         tabs.setVisibility(View.VISIBLE);
+        tabs.addTab(tabs.newTab());
         tabs.addTab(tabs.newTab());
         tabs.addTab(tabs.newTab());
         Adapter adapter = new Adapter(getChildFragmentManager(), tabs.getTabCount());
@@ -91,7 +91,7 @@ public class ConsumptionFragment extends Fragment {
 
     static class Adapter extends FragmentStatePagerAdapter {
         int mNumOfTabs;
-        String[] tabTitles = {"Consumption by Category", "Consumption by Medicine", "Measurements"};
+        String[] tabTitles = {"Consumption by Category", "Consumption by Medicine", "Unconsumed Medicines"};
 
         public Adapter(FragmentManager fm, int NumOfTabs) {
             super(fm);
@@ -113,6 +113,9 @@ public class ConsumptionFragment extends Fragment {
                 case 1:
                     ConsumptionByMedicineTab medicines = new ConsumptionByMedicineTab();
                     return medicines;
+                case 2:
+                    UnConsumedMedicineTab unconsumedMedicines = new UnConsumedMedicineTab();
+                    return unconsumedMedicines;
 
                 default:
                     return null;

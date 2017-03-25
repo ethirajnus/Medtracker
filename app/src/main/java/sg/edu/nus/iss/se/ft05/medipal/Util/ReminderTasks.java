@@ -53,11 +53,10 @@ public class ReminderTasks {
             Calendar yesterday = Calendar.getInstance();
             yesterday.add(Calendar.DATE, -1);
             String yesterdayDate = new SimpleDateFormat(DATE_FORMAT).format(yesterday.getTime());
-            List<Consumption> consumptions = Consumption.filterByDate(medicine.consumptions(context),yesterdayDate);
-            int medicineFrequency = medicine.getReminder(context).getFrequency();
-            if (consumptions.size() < medicineFrequency){
-                for(int i =0;i < (medicineFrequency - consumptions.size());i++){
-                    Consumption consumption = new Consumption(medicineId,0,yesterdayDate,new SimpleDateFormat("HH:mm").format(yesterday.getTime()));
+            List<String> medicineTimeList = Medicine.findConsumptionTime(context,medicineId);
+            for(String time: medicineTimeList){
+                if(!Consumption.exists(context,medicineId,yesterdayDate,time)){
+                    Consumption consumption = new Consumption(medicineId,0,yesterdayDate,time);
                     consumption.save(context);
                 }
             }

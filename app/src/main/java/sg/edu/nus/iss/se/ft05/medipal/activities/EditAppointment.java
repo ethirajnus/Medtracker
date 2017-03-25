@@ -229,6 +229,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(context, MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();
             startActivity(intent);
+            finish();
         }
 
     }
