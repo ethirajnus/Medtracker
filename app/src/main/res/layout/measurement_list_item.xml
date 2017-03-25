@@ -39,7 +39,7 @@
         android:textAllCaps="true"
         android:textSize="20sp"
         android:textColor="@color/colorPrimaryDark"
-        android:text="Measured on"
+        android:text="@string/measured_on"
         android:textStyle="bold" />
 
     <ImageView
