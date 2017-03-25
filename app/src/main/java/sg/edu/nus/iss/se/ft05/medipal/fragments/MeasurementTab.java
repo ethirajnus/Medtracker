@@ -1,8 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,29 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import sg.edu.nus.iss.se.ft05.medipal.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MeasurementTab.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MeasurementTab#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+
+
 public class MeasurementTab extends Fragment {
-    private Context context;
-    private TextView textView;
-    private Cursor cursor;
-    private String date;
-    private List<Measurement> measurements;
-    private static final String MEASUREMENTS="Your Measurements";
-    private static final String DATE_FORMAT="dd-MM-yyyy";
-    private String content="";
+    //private Context context;
+    private TextView weight,pulse,systolic,diastolic,temperature;
 
     public MeasurementTab() {
         // Required empty public constructor
@@ -49,10 +33,18 @@ public class MeasurementTab extends Fragment {
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_measurement_tab,container,false);
-        content+=MEASUREMENTS;
-        textView=(TextView) view.findViewById(R.id.measurementText);
-        textView.setText(content);
-        return inflater.inflate(R.layout.fragment_measurement_tab, container, false);
+        weight=(TextView) view.findViewById(R.id.weight);
+        weight.setText(""+Measurement.getRecent_weight());
+        pulse=(TextView) view.findViewById(R.id.pulse);
+        pulse.setText(""+Measurement.getRecent_pulse());
+        systolic=(TextView) view.findViewById(R.id.systolic);
+        systolic.setText(""+Measurement.getRecentSystolic());
+        diastolic=(TextView) view.findViewById(R.id.diastolic);
+        diastolic.setText(""+Measurement.getRecent_diastolic());
+        temperature=(TextView) view.findViewById(R.id.temperature);
+        temperature.setText(""+Measurement.getRecent_temperature());
+
+        return view;
     }
 
 

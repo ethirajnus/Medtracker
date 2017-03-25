@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
+import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
@@ -29,6 +33,8 @@ public class ConsumptionTab extends Fragment {
     private static final String CONSUMPTIONS="Today's Consumptions";
     private static final String DATE_FORMAT="yyyy-MM-dd";
     private String content="";
+    private RecyclerView recyclerView;
+    private ConsumptionListAdapter mAdapter;
     public ConsumptionTab() {
         // Required empty public constructor
     }
@@ -50,17 +56,13 @@ public class ConsumptionTab extends Fragment {
         Calendar calendar=Calendar.getInstance();
         Date d=calendar.getTime();
         date=new SimpleDateFormat(DATE_FORMAT).format(d);
-        content+=CONSUMPTIONS+"\n";
-        consumptions=Consumption.findByDate(context,date);
-        for(Consumption consumption:consumptions)
-        {
-
-            content=content+"Medicine: "+consumption.getMedicine(context).getName()+"\n";
-            content=content+"Quantity:"+consumption.getQuantity()+"\n";
-            content=content+"Time:"+consumption.getTime()+"\n";
-        }
-        textView=(TextView) view.findViewById(R.id.consumptionText);
-        textView.setText(content);
+        context=getActivity().getApplicationContext();
+        recyclerView=(RecyclerView) view.findViewById(R.id.all_appointments_list_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        Cursor cursor = Consumption.filterDate(context,date);
+        mAdapter = new ConsumptionListAdapter(context,cursor);
+        recyclerView.setAdapter(mAdapter);
         return view;
     }
 

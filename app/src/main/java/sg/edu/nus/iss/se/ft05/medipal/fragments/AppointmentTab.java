@@ -28,11 +28,12 @@ import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 public class AppointmentTab extends Fragment {
     private Context context;
     private TextView textView;
-    private Cursor cursor;
+    private RecyclerView recyclerView;
+    private AppointmentListAdapter mAdapter;
     private String date;
     private List<Appointment> appointments;
     private static final String APPOINTMENTS="Today's Appointments";
-    private static final String DATE_FORMAT="dd-MM-yyyy";
+    private static final String DATE_FORMAT="yyyy-MM-dd";
     private String content="";
 
 
@@ -55,19 +56,13 @@ public class AppointmentTab extends Fragment {
         Calendar calendar=Calendar.getInstance();
         Date d=calendar.getTime();
         date=new SimpleDateFormat(DATE_FORMAT).format(d);
-        appointments=Appointment.findByDate(context,date);
-
-        for(Appointment appointment:appointments)
-        {
-
-            content=content+"Time:"+appointment.getTime()+"\n";
-            content=content+"Clinic:"+appointment.getClinic()+"\n";
-            content=content+"Test:"+appointment.getTest()+"\n";
-
-        }
-
-        textView=(TextView) view.findViewById(R.id.appointmentText);
-        textView.setText(content);
+        context=getActivity().getApplicationContext();
+        recyclerView=(RecyclerView) view.findViewById(R.id.all_appointments_list_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        Cursor cursor = Appointment.filterDate(context,date);
+        mAdapter = new AppointmentListAdapter(context,cursor);
+        recyclerView.setAdapter(mAdapter);
 
 
 

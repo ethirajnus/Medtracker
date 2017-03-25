@@ -117,6 +117,33 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     }
 
+
+    public Cursor filterDate(String date) {
+        //List<Consumption> consumptions = new ArrayList();
+
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
+
+        //Log.e(LOG, selectQuery);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+       /* if (cursor != null)
+        {
+            cursor.moveToFirst();
+        }
+        while (!cursor.isAfterLast()) {
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
+            consumptions.add(consumption);
+            cursor.moveToNext();
+        }
+        return  consumptions;*/
+        return cursor;
+    }
+
     @Override
     public int totalQuantityConsumed(int medicineId) {
         String selectQuery = DATABASE_COMMAND_SELECT_SUM + DATABASE_COMMAND_OPEN_BRACKET + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_SELECT_MAX_AFTER + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId ;

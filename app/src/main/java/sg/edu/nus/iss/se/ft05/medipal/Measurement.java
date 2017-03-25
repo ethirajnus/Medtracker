@@ -15,6 +15,8 @@ public class Measurement {
     private int id, systolic, diastolic, pulse, weight;
     private float temperature;
     private String measuredOn;
+    public static int recent_systolic,recent_diastolic,recent_pulse,recent_weight;
+    public static float recent_temperature;
 
     private static MeasurementDAO measurementAll;
     private MeasurementDAO measurementDAO;
@@ -26,6 +28,11 @@ public class Measurement {
         this.temperature = temperature;
         this.weight = weight;
         this.measuredOn = measuredOn;
+        recent_systolic=systolic;
+        recent_diastolic=diastolic;
+        recent_pulse=pulse;
+        recent_weight=weight;
+        recent_temperature=temperature;
     }
 
     public Measurement() {
@@ -68,6 +75,7 @@ public class Measurement {
     public int getSystolic() {
         return systolic;
     }
+
 
     public void setSystolic(int systolic) {
         this.systolic = systolic;
@@ -112,4 +120,14 @@ public class Measurement {
     public void setMeasuredOn(String measuredOn) {
         this.measuredOn = measuredOn;
     }
+
+    static public int getRecentSystolic() {return recent_systolic;}
+
+    static public int getRecent_diastolic() {return recent_diastolic;}
+
+    static public int getRecent_pulse() {return recent_pulse;}
+
+    static public int getRecent_weight() {return recent_weight;}
+
+    static public float getRecent_temperature() {return recent_temperature;}
 }

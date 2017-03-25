@@ -2,34 +2,23 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 //import android.app.FragmentManager;
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
 
 
 
 public class HomeFragment extends Fragment {
-
+    private String title="MediPal";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +65,7 @@ public class HomeFragment extends Fragment {
                 tabs.setupWithViewPager(viewPager);
             }
         });
-
+        getActivity().setTitle(title);
 
 
 
