@@ -12,6 +12,8 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine.DOSAGE_REVERSE_HASH_MAP;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE;
 
 public class ShowMedicine extends AppCompatActivity {
 
@@ -24,7 +26,7 @@ public class ShowMedicine extends AppCompatActivity {
         setContentView(R.layout.activity_show_medicine);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        setTitle("Medicine");
+        setTitle(MEDICINE);
         context = getApplicationContext();
         Bundle b = getIntent().getExtras();
         Medicine medicine = Medicine.findById(context, b.getInt("id"));

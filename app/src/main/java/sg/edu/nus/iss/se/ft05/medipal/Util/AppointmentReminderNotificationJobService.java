@@ -5,6 +5,7 @@ import android.app.job.JobService;
 import android.os.PersistableBundle;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CLINIC;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
 
 /**
  * Created by ethi on 19/03/17.
@@ -16,7 +17,8 @@ public class AppointmentReminderNotificationJobService extends JobService {
     public boolean onStartJob(final JobParameters jobParameters) {
         PersistableBundle b = jobParameters.getExtras();
         String clinicName = b.getString(CLINIC);
-        NotificationUtils.remindUserForAppointment(AppointmentReminderNotificationJobService.this,clinicName);
+        int appointmentId = b.getInt(ID);
+        NotificationUtils.remindUserForAppointment(AppointmentReminderNotificationJobService.this,clinicName,appointmentId);
         jobFinished(jobParameters, false);
         return true;
     }
