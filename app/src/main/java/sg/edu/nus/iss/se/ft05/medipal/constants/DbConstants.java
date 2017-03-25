@@ -37,6 +37,7 @@ public class DbConstants {
     public static final String DATABASE_COMMAND_OPEN_BRACKET = "(";
     public static final String DATABASE_COMMAND_CLOSE_BRACKET = ")";
     public static final String DATABASE_COMMAND_AND = " AND ";
+    public static final String DATABASE_COMMAND_ZERO = " 0 ";
 
     //PersonalBio...
     public static final String PERSONAL_BIO_KEY_ID = "id";

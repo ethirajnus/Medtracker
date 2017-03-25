@@ -19,6 +19,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 
 public class HomeFragment extends Fragment {
     private String title="MediPal";
+    private TabLayout tabs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,8 @@ public class HomeFragment extends Fragment {
 
 
         // Set Tabs inside Toolbar
-        final TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
+        tabs = (TabLayout) getActivity().findViewById(R.id.tabs);
+        tabs.setVisibility(View.VISIBLE);
         tabs.addTab(tabs.newTab());
         tabs.addTab(tabs.newTab());
         tabs.addTab(tabs.newTab());
