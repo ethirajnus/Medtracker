@@ -59,7 +59,7 @@ public class HelpActivity extends AppCompatActivity {
                 R.layout.help_slide1,
                 R.layout.help_slide2,
                 R.layout.help_slide3,
-                R.layout.help_slide3};
+                R.layout.help_slide4};
 
         // adding bottom dots
         addBottomDots(0);
