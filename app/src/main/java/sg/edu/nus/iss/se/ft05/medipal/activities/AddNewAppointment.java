@@ -195,7 +195,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             flag = false;
         }
         if (time.getText().toString().length() == 0) {
-            clinic.setError(BLANK_TIME_MESSAGE);
+            time.setError(BLANK_TIME_MESSAGE);
             flag = false;
         }
         if (date.getText().toString().length() == 0) {
@@ -206,7 +206,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             test.setError(BLANK_TEST_MESSAGE);
             flag = false;
         }
-        d1=new SimpleDateFormat(DATE_FORMAT).parse(adate);
+        if(date.getText().toString().length()!=0) {
+            d1=new SimpleDateFormat(DATE_FORMAT).parse(adate);
+        }
         d2=new SimpleDateFormat(DATE_FORMAT).parse(secondDate);
         if(d1.before(d2))
         {
@@ -223,6 +225,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();
             startActivity(intent);
+            finish();
         }
     }
 

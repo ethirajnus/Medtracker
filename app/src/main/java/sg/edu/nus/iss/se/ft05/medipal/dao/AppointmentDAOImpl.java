@@ -131,6 +131,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
             appointments.add(appointment);
             cursor.moveToNext();
         }
+        cursor.close();
+        db.close();
         return  appointments;
 
     }

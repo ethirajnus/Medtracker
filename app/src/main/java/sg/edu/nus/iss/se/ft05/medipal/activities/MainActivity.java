@@ -2,10 +2,15 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +20,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
+//import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
@@ -25,17 +35,39 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.DefaultFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.ReportFragment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static String currentFragment;
+
     Context context;
+    TabLayout tabLayout;
+
+    static final int FIRST_RUN_REQUEST = 0;
+   // SharedPreferences settings;
+    TextView mUserName;
+
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
+
+        // Checking for first time app launch
+        prefManager = new PrefManager(context);
+        if (prefManager.isFirstTimeLaunch()) {
+            Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
+            Bundle b = new Bundle();
+            b.putString(Constants.ACTION, Constants.NEW);
+            intent.putExtras(b);
+            startActivityForResult(intent,FIRST_RUN_REQUEST);
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,15 +82,49 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        mUserName = (TextView) header.findViewById(R.id.tv_personName);
+        mUserName.setText(prefManager.getUsername());
 
         if (findViewById(R.id.fragment_container) != null) {
             if (currentFragment == null) {
-                setFragment(new DefaultFragment());
+                setFragment(new HomeFragment());
             } else {
                 updateFragment(currentFragment);
             }
         }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int userId = 0;
+        String userName = "";
+        if(requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK){
+            userId = data.getIntExtra("personId",0);
+            userName = data.getStringExtra("personName");
+            prefManager.setFirstTimeLaunch(false);
+            prefManager.setUserName(userName);
+            prefManager.setUserId(userId);
+            mUserName.setText(prefManager.getUsername());
+            Intent i = new Intent(this,AddOrUpdateHealthBioActivity.class);
+            i.putExtra("firstRun",true);
+            startActivity(i);
+        } else
+            finish();
+    }
+
+    public void viewPersonalBio(View v){
+        Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
+        Bundle b = new Bundle();
+        b.putString(Constants.ACTION, Constants.VIEW);
+        b.putInt("userId",prefManager.getUserId());
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
     @Override
@@ -88,6 +154,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        boolean isChecked = prefManager.isShowHelpScreens();
+        MenuItem enableHelpItem = menu.findItem(R.id.action_enable_help);
+        enableHelpItem.setChecked(isChecked);
         return true;
     }
 
@@ -99,7 +168,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_enable_help) {
+            item.setChecked(!item.isChecked());
+            prefManager.setShowHelpScreens(item.isChecked());
+            return true;
+        }
+        else if(id == R.id.action_help) {
+            setFragment(new HelpFragment());
             return true;
         }
 
@@ -120,7 +195,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+//    public void updateTitle(String title){
+//        collapsingToolbarLayout.setTitle(title);
+//    }
+
     public void setFragment(Fragment fragment) {
+        tabLayout.setVisibility(View.GONE);
+        tabLayout.removeAllTabs();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
@@ -163,6 +244,14 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.measure) {
             setFragment(new MeasurementFragment());
+
+        } else if (id == R.id.help) {
+            setFragment(new HelpFragment());
+        } else if (id == R.id.report) {
+            setFragment(new ReportFragment());
+        }
+        else if (id == R.id.home) {
+            setFragment(new HomeFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -1,7 +1,7 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import java.util.Calendar;
 import java.util.Date;
 
 import sg.edu.nus.iss.se.ft05.medipal.Measurement;
@@ -82,6 +83,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void saveMeasurement() {
+        Date d= Calendar.getInstance().getTime();
         String temp = systolic.getText().toString();
         int measurementSystolic = Integer.parseInt(temp);
         temp = diastolic.getText().toString();
@@ -92,7 +94,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         int measurementTemperature = Integer.parseInt(temp);
         temp = weight.getText().toString();
         int measurementWeight = Integer.parseInt(temp);
-        String measurementMeasuredOn = new SimpleDateFormat(DATE_FORMAT).format(new Date());
+        String measurementMeasuredOn = new SimpleDateFormat(DATE_FORMAT).format(d);
         Measurement measurement = new Measurement(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
 
         //  if(saveButton.getTag().toString().equalsIgnoreCase("New")){
@@ -122,5 +124,6 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         MainActivity.currentFragment = MeasurementFragment.class.getName();
         startActivity(intent);
+        finish();
     }
 }

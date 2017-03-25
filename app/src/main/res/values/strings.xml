@@ -4,18 +4,33 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="action_enable_help">Enable Help Screens</string>
 
     <!-- Personal Bio -->
     <string name="title_activity_add_personalBio">Personal Details</string>
     <string name="fullName">Name</string>
     <string name="dob">Date of Birth</string>
     <string name="idNo">Passport/ NRIC No.</string>
-    <string name="address">Address</string>
+    <string name="buildingName">Building Name</string>
+    <string name="location">Location</string>
+    <string name="streetName">Street Name</string>
+    <string name="level">Level</string>
+    <string name="unitNo">Unit</string>
     <string name="postalCode">Postal Code</string>
     <string name="height">Height (in cm)</string>
     <string name="bloodType">Blood Group</string>
     <string name="personalBio">Personal Bio</string>
     <string name="save">Save</string>
+    <string-array name="blood_type_list">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
 
     <string name="categoryName">Name</string>
     <string name="categoryCode">Code</string>
@@ -39,7 +54,7 @@
     <string name="reminderInterval">Interval</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Measurement Fragment</string>
+    <string name="measurement_fragment">Measurement Fragment</string>
     <string name="title_activity_add_measurement">AddMeasurement</string>
     <string name="title_activity_display_measurement">DisplayMeasurement</string>
 
@@ -63,8 +78,6 @@
     <string name="warning">All fields are mandatory!</string>
     <string name="insert_error">Details were not inserted properly. Please try again later.</string>
     <string name="update_error">Details were not updated properly. Please try again later.</string>
-    <string name="empty_condition">Please provide a condition!</string>
-    <string name="empty_startDate">Please provide a condition!</string>
 
     <!-- Success Messages -->
     <string name="add_success">Details added successfully!</string>
@@ -81,9 +94,34 @@
     <string name="consumptionQuantity">Quantity</string>
     <string name="consumptionMedicine">Medicine</string>
     <string name="consumedOn">Consumed on</string>
+    <string name="consumptionFilterBy">Filter By</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Hello Food!</string>
+    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+
+    <string name="slide_2_title">Movie Tickets</string>
+    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+
+    <string name="slide_3_title">Great Discounts</string>
+    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+
+    <string name="slide_4_title">World Travel</string>
+    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+    <string-array name="filterBy">
+        <item>Year</item>
+        <item>Month</item>
+        <item>Day</item>
+    </string-array>
     <string name="ice_name_header">Name</string>
     <string name="ice_description_header">Description</string>
     <string name="ice_phone_header">Phone</string>
-
 
 </resources>
