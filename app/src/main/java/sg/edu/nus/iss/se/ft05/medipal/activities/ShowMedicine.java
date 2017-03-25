@@ -5,16 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.model.Category;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.model.Reminder;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine.DOSAGE_REVERSE_HASH_MAP;
 
 public class ShowMedicine extends AppCompatActivity {
 
-    private TextView name,description,category,reminder,quantity,dosage,consumeQuantity,threshold,dateIssued,expireFactor,frequency,startTime,interval;
+    private TextView name, description, category, reminder, quantity, dosage, consumeQuantity, threshold, dateIssued, expireFactor, frequency, startTime, interval;
     private Context context;
 
     @Override
@@ -26,16 +27,17 @@ public class ShowMedicine extends AppCompatActivity {
         setTitle("Medicine");
         context = getApplicationContext();
         Bundle b = getIntent().getExtras();
-        Medicine medicine = Medicine.findById(context,b.getInt("id"));
-        Reminder reminder = Reminder.findById(context,medicine.getReminderId());
+        Medicine medicine = Medicine.findById(context, b.getInt("id"));
+        ReminderManager reminderManager = new ReminderManager();
+        Reminder reminder = reminderManager.findById(context, medicine.getReminderId());
         findViewsById();
-        updateValues(medicine,reminder);
+        updateValues(medicine, reminder);
     }
 
     private void updateValues(Medicine medicine, Reminder reminderMedicine) {
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
-        category.setText(Category.findById(getApplicationContext(),medicine.getCategoryId()).getCategoryName());
+        category.setText(Category.findById(getApplicationContext(), medicine.getCategoryId()).getCategoryName());
         this.reminder.setText(medicine.getRemind().toString());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setText(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage()));

@@ -138,6 +138,9 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 medicineId = medicinesMap.get(medicine.getSelectedItem());
+                spinMonth.setVisibility(View.INVISIBLE);
+                    date.setVisibility(View.INVISIBLE);
+                    triggerFilterForYear();
             }
 
             @Override

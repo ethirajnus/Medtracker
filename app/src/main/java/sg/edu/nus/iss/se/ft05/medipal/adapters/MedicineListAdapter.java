@@ -91,7 +91,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
-                intent.putExtras(b);
+                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
             }
@@ -111,7 +111,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
                 Intent intent = new Intent(mContext, ShowMedicine.class);
                 Bundle b = new Bundle();
                 b.putInt("id",id);
-                intent.putExtras(b);
+                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
         });

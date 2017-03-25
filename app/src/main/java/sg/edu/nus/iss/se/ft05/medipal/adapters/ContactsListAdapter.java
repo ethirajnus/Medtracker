@@ -156,6 +156,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     bundle.putString(ICEAdditionActivity.ICE_BUNDLE_ACTION, ICEAdditionActivity.ICE_BUNDLE_ACTION_EDIT);
                     bundle.putInt(ICEAdditionActivity.ICE_BUNDLE_ACTION_ID, id);
                     intent.putExtras(bundle);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
 
                 }
@@ -183,7 +184,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                         callIntent.setData(Uri.parse("tel:" + phone));
 
                         try {
-
+                            callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(callIntent);
 
                         } catch (Exception e) {

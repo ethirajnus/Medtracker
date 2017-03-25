@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
-import sg.edu.nus.iss.se.ft05.medipal.model.PersonalBio;
+import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 
 /**
  * @author Moushumi Seal
  */
 
-public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO{
+public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
 
     private static final String LOG = "PersonalBioDAOImpl";
 
@@ -23,13 +23,15 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO{
 
     @Override
     public int delete(int id) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(DbConstants.TABLE_PERSONAL_BIO, DbConstants.PERSONAL_BIO_KEY_ID + " = ?",
-                new String[] { String.valueOf(id) });
+                new String[]{String.valueOf(id)});
     }
 
     @Override
     public Cursor findAll() {
+
         String selectQuery = "SELECT  * FROM " + DbConstants.TABLE_PERSONAL_BIO;
         Log.e(LOG, selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
@@ -38,6 +40,7 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO{
 
     @Override
     public PersonalBio findById(int id) {
+
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder selectQuery = new StringBuilder()
                 .append("SELECT  * FROM ")
@@ -86,7 +89,7 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO{
 
     @Override
     public int update(PersonalBio personalBio) {
-          SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(DbConstants.PERSONAL_BIO_KEY_NAME, personalBio.getName());
@@ -98,19 +101,20 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO{
         values.put(DbConstants.PERSONAL_BIO_KEY_BLOOD_TYPE, personalBio.getBloodType());
         // updating row
         return db.update(DbConstants.TABLE_PERSONAL_BIO, values, DbConstants.PERSONAL_BIO_KEY_ID + " = ?",
-                new String[] { String.valueOf(personalBio.getId()) });
+                new String[]{String.valueOf(personalBio.getId())});
     }
 
     @Override
     public int findPersonalBioId(String name, String dob, String idNo) {
+
         SQLiteDatabase db = this.getReadableDatabase();
         String columns[] = {DbConstants.PERSONAL_BIO_KEY_ID};
         String whereClause = DbConstants.PERSONAL_BIO_KEY_NAME + "=? AND "
                 + DbConstants.PERSONAL_BIO_KEY_DOB + "=? AND "
-                +DbConstants.PERSONAL_BIO_KEY_IDNO + "=? ";
-        String whereArgs[] = {name, dob, idNo} ;
+                + DbConstants.PERSONAL_BIO_KEY_IDNO + "=? ";
+        String whereArgs[] = {name, dob, idNo};
 
-        Cursor c = db.query(DbConstants.TABLE_PERSONAL_BIO,columns,whereClause,whereArgs, null, null,null);
+        Cursor c = db.query(DbConstants.TABLE_PERSONAL_BIO, columns, whereClause, whereArgs, null, null, null);
 
         if (c != null) {
             c.moveToFirst();
