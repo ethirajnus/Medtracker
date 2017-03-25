@@ -104,13 +104,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:textStyle="bold"
-        android:text="Q:What is the purpose of appointment screen?" />
+        android:text="Q:What is the purpose of Appointment screen?" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="15dp"
-        android:text="A:The appointment screen helps keep track of medical appiontments for which a reminder is set." />
+        android:text="A:The Appointment screen helps keep track of medical appiontments for which a reminder is set." />
 
     <View
         android:layout_width="match_parent"

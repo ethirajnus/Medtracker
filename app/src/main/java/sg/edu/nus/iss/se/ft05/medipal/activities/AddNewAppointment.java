@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 
@@ -218,9 +218,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         if (flag == true) {
 
             //All input fields are valid
-            Appointment appointment = new Appointment(adate, atime, aclinic, atest, apre_test);
+            AppointmentManager appointmentManager = new AppointmentManager(adate, atime, aclinic, atest, apre_test);
             Log.v("date",adate);
-            appointment.save(context);
+            appointmentManager.save(context);
             ReminderUtils.syncAppointmentReminder(context);
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();

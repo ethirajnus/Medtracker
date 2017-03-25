@@ -116,7 +116,7 @@ public class Constants {
     public static final String CONSUMPTION_TIMES = "times";
     public static final String CONSUMPTION_NOT_BEFORE_ERROR_MESSAGE = "Medicine should not consumed before the date issued";
 
-    //Appointment
+    //AppointmentManager
     public static final String CLINIC = "clinic";
 
     //Report

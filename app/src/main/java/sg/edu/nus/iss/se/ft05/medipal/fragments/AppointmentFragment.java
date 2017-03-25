@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.model.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.model.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
@@ -27,20 +27,20 @@ public class AppointmentFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private AppointmentListAdapter mAdapter;
     private Context context;
-    private static final String TITLE="Appointments";
+    private static final String TITLE = "Appointments";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.appointment_fragment, container, false);
-        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddNewAppointment.class);
-        context=getActivity().getApplicationContext();
-        recyclerView=(RecyclerView) view.findViewById(R.id.all_appointments_list_view);
-        linearLayoutManager=new LinearLayoutManager(context);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddNewAppointment.class);
+        context = getActivity().getApplicationContext();
+        recyclerView = (RecyclerView) view.findViewById(R.id.all_appointments_list_view);
+        linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
-        Cursor cursor = Appointment.findAll(context);
-        mAdapter = new AppointmentListAdapter(context,cursor);
+        Cursor cursor = AppointmentManager.findAll(context);
+        mAdapter = new AppointmentListAdapter(context, cursor);
         recyclerView.setAdapter(mAdapter);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -55,12 +55,14 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
-                int id= (int) viewHolder.itemView.getTag();
-                Appointment appointment = Appointment.findById(context, id);
-                appointment.delete(context);
+                int id = (int) viewHolder.itemView.getTag();
+
+                AppointmentManager appointmentManager = new AppointmentManager();
+                appointmentManager.findById(context, id);
+                appointmentManager.delete(context);
                 ReminderUtils.syncAppointmentReminder(context);
                 //update the list
-                mAdapter.swapCursor(Appointment.findAll(context));
+                mAdapter.swapCursor(AppointmentManager.findAll(context));
             }
 
             // attach the ItemTouchHelper to the waitlistRecyclerView

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:id="@+id/consumptionText"/>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/all_appointments_list_view"
+        android:id="@+id/all_consumptions_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
