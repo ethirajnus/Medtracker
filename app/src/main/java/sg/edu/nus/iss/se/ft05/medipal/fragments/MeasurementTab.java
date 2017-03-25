@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
+import android.database.Cursor;
+import android.icu.util.Measure;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 public class MeasurementTab extends Fragment {
     //private Context context;
     private TextView weight, pulse, systolic, diastolic, temperature;
+    int recent_weight,recent_systolic,recent_diastolic,recent_pulse,recent_temperature;
 
     public MeasurementTab() {
         // Required empty public constructor
@@ -31,9 +34,7 @@ public class MeasurementTab extends Fragment {
                              Bundle savedInstanceState) {
 
         MeasurementManager measurementManager = new MeasurementManager();
-
-        int id = measurementManager.getMaxId(getContext());
-        Measurement measurement = measurementManager.findById(getContext(), id);
+        Measurement measurement=measurementManager.findLatest(getContext());
 
         View view = inflater.inflate(R.layout.fragment_measurement_tab, container, false);
         weight = (TextView) view.findViewById(R.id.weight);
@@ -46,6 +47,8 @@ public class MeasurementTab extends Fragment {
         diastolic.setText("" + measurement.getDiastolic());
         temperature = (TextView) view.findViewById(R.id.temperature);
         temperature.setText("" + measurement.getTemperature());
+
+
 
         return view;
     }
