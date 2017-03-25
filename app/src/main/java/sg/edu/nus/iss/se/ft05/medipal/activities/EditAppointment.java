@@ -40,9 +40,9 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
     AppointmentManager appointmentManager;
     private Context context;
     private boolean flag = true; //flag is to ensure that all fields have been filled properly
-    private static final String BLANK_DATE_MESSAGE = "AppointmentManager date required";
+    private static final String BLANK_DATE_MESSAGE = "Appointment date required";
     private static final String WRONG_TIME = "Please choose a slot at least one hour from now";
-    private static final String BLANK_TIME_MESSAGE = "AppointmentManager time required";
+    private static final String BLANK_TIME_MESSAGE = "Appointment time required";
     private static final String BLANK_CLINIC_MESSAGE = "Clinic Required";
     private static final String BLANK_TEST_MESSAGE = "Test Required";
     private static final String WRONG_DATE = "Date cannot be before today";

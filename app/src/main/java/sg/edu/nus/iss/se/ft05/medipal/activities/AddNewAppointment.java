@@ -37,9 +37,9 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private TimePickerDialog timePickerDialog;
     Context context;
     boolean flag=true;//To ensure that all input fields are valid
-    private static final String BLANK_DATE_MESSAGE="AppointmentManager date required";
+    private static final String BLANK_DATE_MESSAGE="Appointment date required";
     private static final String WRONG_TIME="Please choose a slot at least one hour from now";
-    private static final String BLANK_TIME_MESSAGE="AppointmentManager time required";
+    private static final String BLANK_TIME_MESSAGE="Appointment time required";
     private static final String BLANK_CLINIC_MESSAGE="Clinic Required";
     private static final String BLANK_TEST_MESSAGE="Test Required";
     private static final String WRONG_DATE="Date cannot be before today";
