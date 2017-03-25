@@ -85,7 +85,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
-                intent.putExtras(b);
+                intent.putExtras(b);intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
             }
