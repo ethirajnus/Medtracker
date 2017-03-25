@@ -118,10 +118,6 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         }*/
     }
 
-    @Override
-    public void onBackPressed() {
-        navigateToMainActivity();
-    }
     public void navigateToMainActivity() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         MainActivity.currentFragment = MeasurementFragment.class.getName();
