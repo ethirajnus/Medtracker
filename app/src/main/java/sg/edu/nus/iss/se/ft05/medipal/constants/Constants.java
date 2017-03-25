@@ -91,6 +91,7 @@ public class Constants {
     public static final String CODE ="Code";
     public static final String QUANTITY = "quantity";
     public static final String NOTIFICATION = "notification";
+    public static final String TO_DATE_CANNOT_BE_GREATER_THAN_FROM_DATE = "To Date cannot be greater than From Date";
 
     //Category
     public static final String CATEGORY = "Category";
@@ -122,6 +123,6 @@ public class Constants {
     public static final String CLINIC = "clinic";
 
     //Report
-    public static final String REPORT = "reports";
+    public static final String REPORT = "Reports";
 
 }

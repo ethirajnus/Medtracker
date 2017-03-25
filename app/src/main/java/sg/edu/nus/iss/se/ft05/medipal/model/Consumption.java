@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,5 +199,10 @@ public class Consumption {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.deleteAllForMedicine(medicineId);
 
+    }
+
+    public static Cursor betweenDate(Context context,String dateFrom, String dateTo) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.betweenDate(dateFrom,dateTo);
     }
 }
