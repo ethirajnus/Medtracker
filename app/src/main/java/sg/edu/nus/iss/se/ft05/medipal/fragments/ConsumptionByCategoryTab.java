@@ -1,10 +1,13 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.os.Bundle;
@@ -18,29 +21,45 @@ import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import android.widget.ArrayAdapter;
+
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
 
 /**
  * Created by ethi on 23/03/17.
  */
 
-public class ConsumptionByCategoryTab extends Fragment {
+public class ConsumptionByCategoryTab extends Fragment implements View.OnClickListener{
 
     private RecyclerView consumptionRecyclerView;
     private Context context;
     private ConsumptionListAdapter mAdapter;
-    private Spinner category;
+    private Spinner category, filterBy, spinYear, spinMonth;
     private View view;
     private List<String> categoryList;
     private Map<String, Integer> categoriesMap;
+    private EditText date;
+    DatePickerDialog datePickerDialog;
+    Calendar dateCalendar;
+    private static final SimpleDateFormat formatter = new SimpleDateFormat(
+            DATE_FORMAT, Locale.ENGLISH);
+    private String year;
+    private Cursor cursor;
+    private Integer medicineCategoryId;
+    private String month;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,16 +113,64 @@ public class ConsumptionByCategoryTab extends Fragment {
     }
 
     private void findViewsById() {
+
         category = (Spinner)view.findViewById(R.id.medicineCategory);
+        filterBy = (Spinner) view.findViewById(R.id.categoryFilterBy);
+        spinYear = (Spinner) view.findViewById(R.id.categoryYearSpin);
+        spinMonth = (Spinner) view.findViewById(R.id.categoryMonthSpin);
+        date = (EditText) view.findViewById(R.id.categoryMedicineDateIssued);
     }
 
     private void setListeners(){
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                int medicineCategoryId = categoriesMap.get(category.getSelectedItem());
-                Cursor cursor = Consumption.fetchByCategory(context,medicineCategoryId);
-                mAdapter.swapCursor(cursor);
+                medicineCategoryId = categoriesMap.get(category.getSelectedItem());
+                spinMonth.setVisibility(View.INVISIBLE);
+                    date.setVisibility(View.INVISIBLE);
+                    triggerFilterForYear();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+        date.setOnClickListener(this);
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                dateCalendar = Calendar.getInstance();
+                dateCalendar.set(year, monthOfYear, dayOfMonth);
+                date.setText(formatter.format(dateCalendar.getTime()));
+            }
+        },
+                newCalendar.get(Calendar.YEAR),
+                newCalendar.get(Calendar.MONTH),
+                newCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+        filterBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String filterByText = filterBy.getSelectedItem().toString();
+                if (filterByText.contentEquals("Year")) {
+                    spinYear.setVisibility(View.VISIBLE);
+                    spinMonth.setVisibility(View.INVISIBLE);
+                    date.setVisibility(View.INVISIBLE);
+                    triggerFilterForYear();
+                } else if ((filterByText.contentEquals("Month"))) {
+                    spinYear.setVisibility(View.VISIBLE);
+                    spinMonth.setVisibility(View.VISIBLE);
+                    date.setVisibility(View.INVISIBLE);
+                    triggerFilterForMonth();
+                } else if ((filterByText.contentEquals("Day"))) {
+                    spinYear.setVisibility(View.INVISIBLE);
+                    spinMonth.setVisibility(View.INVISIBLE);
+                    date.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override
@@ -113,7 +180,73 @@ public class ConsumptionByCategoryTab extends Fragment {
 
         });
 
+        date.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    triggerFilterForDate();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        spinYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                triggerFilterForYear();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
+        spinMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                triggerFilterForMonth();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
     }
+
+    private void triggerFilterForYear() {
+        year = spinYear.getSelectedItem().toString();
+        cursor = Consumption.fetchByCategoryAndYear(context, medicineCategoryId, year);
+        mAdapter.swapCursor(cursor);
+    }
+
+    private void triggerFilterForMonth() {
+        month = spinMonth.getSelectedItem().toString();
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+        cursor = Consumption.fetchByCategoryAndMonth(context, medicineCategoryId, year, month);
+        mAdapter.swapCursor(cursor);
+    }
+
+    private void triggerFilterForDate() {
+        cursor = Consumption.fetchByCategoryAndDate(context, medicineCategoryId, date.getText().toString());
+        mAdapter.swapCursor(cursor);
+    }
+
 
     private void populateDropDownList(){
         Cursor mCursor = Category.fetchAllCategoriesWithId(context);
@@ -134,6 +267,34 @@ public class ConsumptionByCategoryTab extends Fragment {
         // attaching data adapter to spinner
         category.setAdapter(categoryDataAdapter);
 
+        ArrayList<String> years = new ArrayList<>();
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = 2000; i <= thisYear; i++) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, years);
+
+
+        spinYear.setAdapter(yearAdapter);
+
+        ArrayList<String> months = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            months.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, months);
+
+        spinMonth.setAdapter(monthAdapter);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.categoryMedicineDateIssued:
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialog.show();
+                break;
+        }
     }
 
 

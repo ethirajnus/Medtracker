@@ -30,4 +30,16 @@ public interface ConsumptionDAO {
     Cursor fetchByMedicineAndMonth(Integer medicineId, String year,String month);
 
     Cursor fetchByMedicineDateAndTime(int medicineId, String date, String time);
+
+    Cursor fetchByCategoryAndDate(Integer medicineCategoryId, String date);
+
+    Cursor fetchByCategoryAndYear(Integer medicineCategoryId, String year);
+
+    Cursor fetchByCategoryAndMonth(Integer medicineCategoryId, String year, String month);
+
+    Cursor fetchByMedicineAndDateUnconsumed(Integer medicineId, String date);
+
+    Cursor fetchByMedicineAndYearUnconsumed(Integer medicineId, String year);
+
+    Cursor fetchByMedicineAndMonthUnconsumed(Integer medicineId, String year, String month);
 }

@@ -227,8 +227,8 @@ public class Medicine {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < frequency; i++) {
-            cal.add(Calendar.MINUTE, interval * frequency);
+        for(int i =0;i<frequency;i++){
+            cal.add(Calendar.MINUTE,interval * i);
             timelist.add(sdf.format(cal.getTime()));
         }
         return timelist;

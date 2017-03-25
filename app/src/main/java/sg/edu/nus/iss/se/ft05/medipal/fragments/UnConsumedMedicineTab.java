@@ -137,6 +137,9 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 medicineId = medicinesMap.get(medicine.getSelectedItem());
+                spinMonth.setVisibility(View.INVISIBLE);
+                date.setVisibility(View.INVISIBLE);
+                triggerFilterForYear();
             }
 
             @Override
@@ -224,7 +227,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
     private void triggerFilterForYear() {
         year = spinYear.getSelectedItem().toString();
-        cursor = Consumption.fetchByMedicineAndYear(context, medicineId, year);
+        cursor = Consumption.fetchByMedicineAndYearUnconsumed(context, medicineId, year);
         mAdapter.swapCursor(cursor);
     }
 
@@ -233,12 +236,12 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         if (month.length() == 1) {
             month = "0" + month;
         }
-        cursor = Consumption.fetchByMedicineAndMonth(context, medicineId, year, month);
+        cursor = Consumption.fetchByMedicineAndMonthUnconsumed(context, medicineId, year, month);
         mAdapter.swapCursor(cursor);
     }
 
     private void triggerFilterForDate() {
-        cursor = Consumption.fetchByMedicineAndDate(context, medicineId, date.getText().toString());
+        cursor = Consumption.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);
     }
 

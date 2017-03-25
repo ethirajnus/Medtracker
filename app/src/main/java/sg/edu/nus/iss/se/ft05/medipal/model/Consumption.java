@@ -156,9 +156,39 @@ public class Consumption {
         return consumptionAll.fetchByMedicineAndMonth(medicineId,year, month);
     }
 
+    public static Cursor fetchByCategoryAndDate(Context context,Integer medicineCategoryId, String date) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByCategoryAndDate(medicineCategoryId,date);
+    }
+
+    public static Cursor fetchByCategoryAndYear(Context context, Integer medicineCategoryId, String year) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByCategoryAndYear(medicineCategoryId,year);
+    }
+
+    public static Cursor fetchByCategoryAndMonth(Context context, Integer medicineCategoryId,String year, String month) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByCategoryAndMonth(medicineCategoryId,year, month);
+    }
+
     public static boolean exists(Context context,int medicineId, String date, String time) {
         consumptionAll = new ConsumptionDAOImpl(context);
         Cursor cursor = consumptionAll.fetchByMedicineDateAndTime(medicineId,date, time);
         return cursor.getCount() > 0;
+    }
+
+    public static Cursor fetchByMedicineAndDateUnconsumed(Context context,Integer medicineId, String date) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndDateUnconsumed(medicineId,date);
+    }
+
+    public static Cursor fetchByMedicineAndYearUnconsumed(Context context, Integer medicineId, String year) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndYearUnconsumed(medicineId,year);
+    }
+
+    public static Cursor fetchByMedicineAndMonthUnconsumed(Context context, Integer medicineId,String year, String month) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndMonthUnconsumed(medicineId,year, month);
     }
 }
