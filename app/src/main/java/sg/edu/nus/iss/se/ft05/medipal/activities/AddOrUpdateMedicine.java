@@ -32,7 +32,7 @@ import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
@@ -118,7 +118,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     }
 
     private void populateDropDownList() {
-        Cursor mCursor = Category.fetchAllCategoriesWithId(context);
+        Cursor mCursor = CategoryManager.fetchAllCategoriesWithId(context);
         categoryList = new ArrayList<>();
         categoriesMap = new HashMap<>();
         while (mCursor.moveToNext()) {
@@ -153,7 +153,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         Reminder reminderDomain = reminderManagerMedicine.findById(context, medicine.getReminderId());
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
-        category.setSelection(categoryList.indexOf(Category.findById(context, medicine.getCategoryId()).getCategoryName()));
+        category.setSelection(categoryList.indexOf(new CategoryManager().findById(context, medicine.getCategoryId()).getCategoryName()));
         reminder.setChecked(medicine.getRemind());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setSelection(dosageList.indexOf(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage())));

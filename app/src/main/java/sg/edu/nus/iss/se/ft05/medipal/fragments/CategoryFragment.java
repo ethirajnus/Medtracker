@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Category;
+import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
@@ -36,7 +36,7 @@ public class CategoryFragment extends Fragment {
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        Cursor cursor = Category.findAll(context);
+        Cursor cursor = CategoryManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new CategoryListAdapter(context, cursor);
