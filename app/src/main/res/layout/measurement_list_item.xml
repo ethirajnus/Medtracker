@@ -11,9 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="7dp"
-        android:layout_marginBottom="7dp" />
-
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
 
     <TextView
         android:id="@+id/measurementDate"
@@ -21,41 +19,69 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_toRightOf="@+id/measurementHard"
-        android:layout_weight="1"
-        android:textAllCaps="true"
-        android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/measurementHard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/measurementImageIcon"
         android:layout_weight="1"
-        android:textAllCaps="true"
         android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="@string/measured_on"
-        android:textStyle="bold" />
+        android:textColor="@color/colorPrimaryDark"/>
 
     <ImageView
         android:id="@+id/measurementDeleteIcon"
-        android:layout_height="20dp"
         android:layout_width="20dp"
-        android:layout_weight="1"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="22dp"
-        android:src="@android:drawable/ic_menu_delete"
-        />
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_menu_delete" />
+
+    <TextView
+        android:id="@+id/measurementBloodPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/measurementDate"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/measurementImageIcon"
+        android:layout_weight="1"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/measurementPulse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/measurementBloodPressure"
+        android:layout_weight="1"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_toRightOf="@id/measurementImageIcon"/>
+
+    <TextView
+        android:id="@+id/measurementTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/measurementPulse"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_toRightOf="@id/measurementImageIcon"/>
+
+    <TextView
+        android:id="@+id/measurementWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/measurementTemperature"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@id/measurementImageIcon"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorPrimaryDark"/>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/measurementImageIcon"
+        android:layout_below="@id/medicineDescription"
         android:background="@color/colorDivider" />
 </RelativeLayout>

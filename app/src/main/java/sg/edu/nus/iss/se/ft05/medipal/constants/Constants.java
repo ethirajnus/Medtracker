@@ -125,4 +125,22 @@ public class Constants {
     //Report
     public static final String REPORT = "Reports";
 
+    //Measurement
+    public static final String BLOOD_PRESSURE = "Blood Pressure : ";
+    public static final String PULSE = "Pulse : ";
+    public static final String TEMPERATURE = "Temperature : ";
+    public static final String WEIGHT = "Weight :";
+    public static final String BLOOD_PRESSURE_UNIT = " mm Hg";
+    public static final String PULSE_UNIT = " bpm";
+    public static final String TEMPERATURE_UNIT = " C";
+    public static final String WEIGHT_UNIT = " Kg";
+    public static final String MEASURE_ON = "Measured On : ";
+    public static final String EMPTY_SYSTOLIC = "Systolic Pressure cannot be empty!";
+    public static final String EMPTY_DIASTOLIC = "Diastolic Pressure cannot be empty!";
+    public static final String INVALID_SYSTOLIC = "Please enter a valid value for Systolic Pressure";
+    public static final String INVALID_DIASTOLIC = "Please enter a valid value for Diastolic Pressure";
+    public static final String INVALID_PULSE = "Please enter a valid value for Pulse";
+    public static final String INVALID_TEMPERATURE = "Please enter a valid value for temperature";
+    public static final String INVALID_WEIGHT = "Please enter a valid value for weight";
+
 }

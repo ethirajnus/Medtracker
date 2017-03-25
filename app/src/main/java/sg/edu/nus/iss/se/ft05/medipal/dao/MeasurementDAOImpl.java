@@ -35,7 +35,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
     @Override
     public Cursor findAll() {
 
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT ;
 
         Log.e(LOG, selectQuery);
 
@@ -138,5 +138,45 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         }
 
         return id;
+    }
+
+    @Override
+    public Measurement findLatest()
+    {
+        Measurement measurement=new Measurement();
+        Cursor cursor;
+        SQLiteDatabase db=this.getReadableDatabase();
+
+        String selectQuery=DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT+ " order by measuredON";
+        cursor=db.rawQuery(selectQuery,null);
+
+        if(cursor!=null)
+        {
+            cursor.moveToFirst();
+        }
+        while(cursor.moveToNext())
+        {
+            if(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_SYSTOLIC))!=0)
+            {
+                measurement.setSystolic(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_SYSTOLIC)));
+            }
+            if(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_DIASTOLIC))!=0)
+            {
+                measurement.setDiastolic(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_DIASTOLIC)));
+            }
+            if(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE))!=0)
+            {
+                measurement.setTemperature(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
+            }
+            if(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_PULSE))!=0)
+            {
+                measurement.setPulse(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_PULSE)));
+            }
+            if(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT))!=0)
+            {
+                measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
+            }
+        }
+        return measurement;
     }
 }
