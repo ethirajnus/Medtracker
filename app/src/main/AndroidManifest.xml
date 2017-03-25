@@ -26,10 +26,11 @@
             android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.AddOrUpdateMedicine"
             android:parentActivityName=".activities.MainActivity" />
+
         <activity
             android:name=".activities.AddNewAppointment"
             android:label="New Appointment"
@@ -91,7 +92,7 @@
             android:name=".activities.ICEAdditionActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.HelpActivity"
-            android:theme="@style/AppTheme.Help"></activity>
+            android:theme="@style/AppTheme.Help"/>
     </application>
 
 </manifest>

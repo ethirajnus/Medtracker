@@ -2,17 +2,22 @@ package sg.edu.nus.iss.se.ft05.medipal.dao;
 
 import android.database.Cursor;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 
 /**
  * Created by ethi on 12/03/17.
  */
-
 public interface MedicineDAO {
-    int delete(int id);
-    Cursor findAll();
-    Medicine findById(int id);
-    long insert(Medicine medicine);
-    int update(Medicine medicine);
-    Cursor fetchAllMedicinesWithId();
+
+    public int delete(int id);
+
+    public Cursor findAll();
+
+    public Medicine findById(int id);
+
+    public long insert(Medicine medicine);
+
+    public int update(Medicine medicine);
+
+    public Cursor fetchAllMedicinesWithId();
 }

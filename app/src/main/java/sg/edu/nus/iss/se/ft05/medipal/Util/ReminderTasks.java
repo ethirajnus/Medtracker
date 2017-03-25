@@ -16,7 +16,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
-import sg.edu.nus.iss.se.ft05.medipal.model.Medicine;
+import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
@@ -45,23 +45,24 @@ public class ReminderTasks {
 
     synchronized public static void medicineConsumptionReminder(Context context) {
         int medicineId, reminderId;
-        Map<Integer, Integer> medicineList = Medicine.listAllMedicine(context);
+        Map<Integer, Integer> medicineList = MedicineManager.listAllMedicine(context);
         for (Map.Entry<Integer, Integer> entry : medicineList.entrySet()) {
             medicineId = entry.getKey();
             reminderId = entry.getValue();
-            Medicine medicine = Medicine.findById(context, medicineId);
+            MedicineManager medicineManager = new MedicineManager();
+            medicineManager.findById(context, medicineId);
             //add Consumption
             Calendar yesterday = Calendar.getInstance();
             yesterday.add(Calendar.DATE, -1);
             String yesterdayDate = new SimpleDateFormat(DATE_FORMAT).format(yesterday.getTime());
-            List<String> medicineTimeList = Medicine.findConsumptionTime(context, medicineId);
+            List<String> medicineTimeList = medicineManager.findConsumptionTime(context, medicineId);
             for (String time : medicineTimeList) {
                 if (!Consumption.exists(context, medicineId, yesterdayDate, time)) {
                     Consumption consumption = new Consumption(medicineId, 0, yesterdayDate, time);
                     consumption.save(context);
                 }
             }
-            if (medicine.getRemind()) {
+            if (medicineManager.getMedicine().getRemind()) {
                 ReminderManager reminderManager = new ReminderManager();
 
                 Reminder reminder = reminderManager.findById(context, reminderId);
