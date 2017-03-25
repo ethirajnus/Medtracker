@@ -4,12 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
@@ -100,8 +100,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         //Log.e(LOG, selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null)
-        {
+        if (cursor != null) {
             cursor.moveToFirst();
         }
         while (!cursor.isAfterLast()) {
@@ -114,7 +113,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
             consumptions.add(consumption);
             cursor.moveToNext();
         }
-        return  consumptions;
+        return consumptions;
 
     }
 
@@ -147,14 +146,13 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     @Override
     public int totalQuantityConsumed(int medicineId) {
-        String selectQuery = DATABASE_COMMAND_SELECT_SUM + DATABASE_COMMAND_OPEN_BRACKET + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_SELECT_FROM + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId ;
+        String selectQuery = DATABASE_COMMAND_SELECT_SUM + DATABASE_COMMAND_OPEN_BRACKET + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_SELECT_FROM + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null)
-        {
+        if (cursor != null) {
             cursor.moveToFirst();
         }
-        return  cursor.getInt(0);
+        return cursor.getInt(0);
 
     }
 
@@ -167,14 +165,14 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     @Override
     public Cursor fetchByMedicine(int medicineId) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineAndDate(int medicineId, String date) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL +  DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
@@ -190,8 +188,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null)
-        {
+        if (cursor != null) {
             cursor.moveToFirst();
         }
         while (!cursor.isAfterLast()) {
@@ -204,70 +201,75 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
             consumptions.add(consumption);
             cursor.moveToNext();
         }
-        return  consumptions;
+        return consumptions;
 
     }
 
     @Override
     public Cursor fetchByMedicineAndYear(Integer medicineId, String year) {
 
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year +"-__-__" + DATABASE_COMMAND_SINGLE_QUOTE;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-__-__" + DATABASE_COMMAND_SINGLE_QUOTE;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineAndMonth(Integer medicineId, String year, String month) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-"+ month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-" + month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineDateAndTime(int medicineId, String date, String time) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_TIME + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + time + DATABASE_COMMAND_SINGLE_QUOTE;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_TIME + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + time + DATABASE_COMMAND_SINGLE_QUOTE;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByCategoryAndDate(Integer medicineCategoryId, String date) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL +  DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
+        ;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByCategoryAndYear(Integer medicineCategoryId, String year) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year +"-__-__" + DATABASE_COMMAND_SINGLE_QUOTE;;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-__-__" + DATABASE_COMMAND_SINGLE_QUOTE;
+        ;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByCategoryAndMonth(Integer medicineCategoryId, String year, String month) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-"+ month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE;;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-" + month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE;
+        ;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineAndDateUnconsumed(Integer medicineId, String date) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL +  DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineAndYearUnconsumed(Integer medicineId, String year) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year +"-__-__" + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-__-__" + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
+        ;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineAndMonthUnconsumed(Integer medicineId, String year, String month) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID +  DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-"+ month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-" + month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
+        ;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
