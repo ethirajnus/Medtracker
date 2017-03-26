@@ -16,11 +16,13 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm";
     public static final String TITLE_WARNING = "Warning";
-    public static final String OK_BUTTON = "OK";
+    public static final String BUTTON_OK = "OK";
     public static final String PATTERN_ZERO = "^[0.]+?";
     public static final String PATTERN_COMMA = "^.*[,].*$";
     public static final String PATTERN_LETTERS_ONLY = "^[a-zA-Z\\s]+$";
     public static final String PATTERN_ALPHANUMERIC = "^[a-zA-Z0-9]+$";
+    public static final String BUTTON_YES = "YES";
+    public static final String BUTTON_NO = "NO";
 
     //PersonalBio
     public static final String TITLE_PERSONAL_BIO = "Personal Details";
@@ -55,6 +57,8 @@ public class Constants {
     public static final String CONDITION = "CONDITION";
     public static final String EMPTY_CONDITION = "Please provide a condition!";
     public static final String EMPTY_START_DATE = "Please specify the date!";
+    public static final String TYPE = "Type: ";
+    public static final String DIAGNOSED_ON = "Diagnosed on: ";
 
 
     //Medicine
@@ -121,6 +125,8 @@ public class Constants {
 
     //AppointmentManager
     public static final String CLINIC = "clinic";
+    public static final String APPOINTMENT_NOT_SAVED = "Appointment not inserted properly, Please try again later";
+    public static final String APPOINTMENT_NOT_UPDATED = "Appointment not updated properly, Please try again later";
 
     //Report
     public static final String REPORT = "Reports";
@@ -142,5 +148,6 @@ public class Constants {
     public static final String INVALID_PULSE = "Please enter a valid value for Pulse";
     public static final String INVALID_TEMPERATURE = "Please enter a valid value for temperature";
     public static final String INVALID_WEIGHT = "Please enter a valid value for weight";
+    public static final String MEASUREMENT_NOT_SAVED = "Measurement was not inserted properly,Please try again later";
 
 }

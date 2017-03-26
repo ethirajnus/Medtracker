@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -41,6 +43,7 @@ import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
@@ -48,7 +51,6 @@ import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 import static sg.edu.nus.iss.se.ft05.medipal.R.id.consumption;
 import static sg.edu.nus.iss.se.ft05.medipal.R.id.date;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_ID;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_DIASTOLIC;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_PULSE;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_SYSTOLIC;
@@ -125,13 +127,32 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                mAdapter.swapCursor(MeasurementManager.findAll(context));
+                // Inside, get the viewHolder's itemView's tag and store in a long variable id
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
-                //remove from DB
-                Measurement measurement = measurementManager.findById(context, id);
-                measurementManager.delete(context);
-                //update the list
-                mAdapter.swapCursor(measurementManager.findAll(context));
+                measurementManager = new MeasurementManager();
+                measurementManager.findById(context, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        measurementManager.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        mAdapter.swapCursor(MeasurementManager.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
         }).attachToRecyclerView(measurementRecyclerView);
@@ -255,6 +276,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     }
 
 
+<<<<<<< HEAD
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void SendEmail(){
         String filename="measurement.csv";
@@ -266,11 +288,20 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         intent.putExtra(Intent.EXTRA_SUBJECT, "measurement");
         intent.putExtra(Intent.EXTRA_TEXT, "Please find the report attached for  Measurement");
         intent .putExtra(Intent.EXTRA_STREAM, path);
+=======
+    private void SendEmail(){
+        createFile(context,"measurement.csv,",fetchContent());
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "measurement");
+>>>>>>> master
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
     }
 
+<<<<<<< HEAD
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void createFile(Context context, String sFileName, String sBody) {
@@ -301,6 +332,23 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
             }
 
+=======
+    public void createFile(Context context, String sFileName, String sBody) {
+        try {
+            File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
+            if (!root.exists()) {
+                root.mkdirs();
+            }
+            File gpxfile = new File(root, sFileName);
+            FileWriter writer = new FileWriter(gpxfile);
+            writer.append(sBody);
+            writer.flush();
+            writer.close();
+            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+>>>>>>> master
     }
 
     private String fetchContent() {
@@ -311,6 +359,10 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
     private String fetchMeasurementAsString() {
         cursor.moveToFirst();
+<<<<<<< HEAD
+=======
+        Log.v("check",String.valueOf(cursor.getCount()));
+>>>>>>> master
         String measurements = "";
         while (!cursor.isAfterLast()) {
             Measurement measurement = new Measurement();
@@ -319,6 +371,14 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
             measurement.setPulse(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_PULSE)));
             measurement.setTemperature(cursor.getFloat(cursor.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
             measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
+<<<<<<< HEAD
+=======
+//            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
+//            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
+//            consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
+//            consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
+            Log.v("msg",measurement.toString());
+>>>>>>> master
             measurements+= measurement.toString();
             cursor.moveToNext();
         }

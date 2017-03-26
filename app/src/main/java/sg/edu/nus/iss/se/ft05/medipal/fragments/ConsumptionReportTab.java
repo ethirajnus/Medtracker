@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -39,7 +41,8 @@ import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_DATE;
@@ -51,8 +54,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_TIME;
  * Created by ethi on 25/03/17.
  */
 
-public class ConsumptionReportTab extends Fragment implements View.OnClickListener{
-
+public class ConsumptionReportTab extends Fragment implements View.OnClickListener {
 
     private static final int PERMISSION_EXTERNAL_STORAGE_WRITE = 1;
     private RecyclerView consumptionRecyclerView;
@@ -61,12 +63,12 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private View view;
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             DATE_FORMAT, Locale.ENGLISH);
-    private EditText dateFrom,dateTo;
-    private DatePickerDialog datePickerDialogFrom,datePickerDialogTo;
-    private String dateFromText,dateToText;
-    private Date dateObjFrom,dateObjTo;
-    private Calendar dateCalendarFrom,dateCalendarTo;
-    private Cursor cursor;
+    private EditText dateFrom, dateTo;
+    private DatePickerDialog datePickerDialogFrom, datePickerDialogTo;
+    private String dateFromText, dateToText;
+    private Date dateObjFrom, dateObjTo;
+    private Calendar dateCalendarFrom, dateCalendarTo;
+    private ConsumptionManager consumptionManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,11 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
+<<<<<<< HEAD
         cursor = Consumption.findAll(context);
+=======
+        Cursor cursor = ConsumptionManager.findAll(context);
+>>>>>>> master
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -114,13 +120,35 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
+                //update the list
+                mAdapter.swapCursor(ConsumptionManager.findAll(context));
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                Consumption consumption = Consumption.findById(context, id);
-                consumption.delete(context);
-                //update the list
-                mAdapter.swapCursor(Consumption.findAll(context));
+                consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(context, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        consumptionManager.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        //update the list
+                        mAdapter.swapCursor(ConsumptionManager.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
         }).attachToRecyclerView(consumptionRecyclerView);
@@ -137,7 +165,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         dateTo = (EditText) view.findViewById(R.id.toDate);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         dateFrom.setOnClickListener(this);
         dateTo.setOnClickListener(this);
         Calendar newCalendar = Calendar.getInstance();
@@ -175,7 +203,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                     dateFromText = dateFrom.getText().toString();
 
                     dateToText = dateTo.getText().toString();
-                    if(dateToText.length() != 0)
+                    if (dateToText.length() != 0)
                         checkDateAndSwapCursor();
                 }
             }
@@ -197,10 +225,10 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                 if (s.length() != 0) {
                     dateFromText = dateFrom.getText().toString();
                     dateToText = dateTo.getText().toString();
-                    if(dateFromText.length() != 0)
+                    if (dateFromText.length() != 0)
                         checkDateAndSwapCursor();
                 }
-                
+
 
             }
 
@@ -212,21 +240,25 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
 
     }
-    
-    private void checkDateAndSwapCursor(){
+
+    private void checkDateAndSwapCursor() {
         try {
             dateObjFrom = formatter.parse(dateFromText);
             dateObjTo = formatter.parse(dateToText);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(dateObjTo.after(dateObjFrom)){
+        if (dateObjTo.after(dateObjFrom)) {
             triggerFilterForDate();
         }
     }
 
     private void triggerFilterForDate() {
+<<<<<<< HEAD
         cursor = Consumption.betweenDate(context,dateFromText,dateToText);
+=======
+        Cursor cursor = ConsumptionManager.betweenDate(context, dateFromText, dateToText);
+>>>>>>> master
         mAdapter.swapCursor(cursor);
     }
 
@@ -236,12 +268,24 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         // handle item selection
         switch (item.getItemId()) {
             case R.id.share_consumption:
+<<<<<<< HEAD
                 SendEmail();
+=======
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "consumption");
+                intent.putExtra(Intent.EXTRA_TEXT, fetchContent());
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+>>>>>>> master
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+<<<<<<< HEAD
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void SendEmail(){
         String filename="consumption.csv";
@@ -309,6 +353,11 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
             cursor.moveToNext();
         }
         return consumptions;
+=======
+    private String fetchContent() {
+        return "good";
+
+>>>>>>> master
     }
 
 

@@ -1,6 +1,8 @@
 package sg.edu.nus.iss.se.ft05.medipal.dao;
 
 
+import android.database.Cursor;
+
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
 /**
@@ -9,11 +11,13 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
 public interface ReminderDAO {
 
-    int delete(int id);
+    public Cursor findAll();
 
-    Reminder findById(int id);
+    public int delete(int id);
 
-    long insert(Reminder reminder);
+    public Reminder findById(int id);
 
-    int update(Reminder reminder);
+    public long insert(Reminder reminder);
+
+    public int update(Reminder reminder);
 }

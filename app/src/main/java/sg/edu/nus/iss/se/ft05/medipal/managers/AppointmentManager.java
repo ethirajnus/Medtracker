@@ -11,6 +11,7 @@ import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
 public class AppointmentManager {
@@ -90,5 +91,11 @@ public class AppointmentManager {
 
         appointmentAll = new AppointmentDAOImpl(context);
         return appointmentAll.filterDate(date);
+    }
+
+    public static boolean exists(Context context, String date, String time) {
+        appointmentAll = new AppointmentDAOImpl(context);
+        Cursor cursor = appointmentAll.fetchByAppointmentDateAndTime(date, time);
+        return cursor.getCount() > 0;
     }
 }

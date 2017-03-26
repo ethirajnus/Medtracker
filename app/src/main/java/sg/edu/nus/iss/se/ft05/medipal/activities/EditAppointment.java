@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,9 +28,6 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
-/**
- *
- */
 public class EditAppointment extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -234,12 +233,32 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
             appointmentManager.setAppointment(appointment);
 
-            appointmentManager.update(context);
-            ReminderUtils.syncAppointmentReminder(context);
-            Intent intent = new Intent(context, MainActivity.class);
-            MainActivity.currentFragment = AppointmentFragment.class.getName();
-            startActivity(intent);
-            finish();
+            new UpdateAppointment().execute();
         }
+    }
+
+    private class UpdateAppointment extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return appointmentManager.update(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, APPOINTMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                ReminderUtils.syncAppointmentReminder(context);
+                navigateToMainAcitivity();
+            }
+        }
+    }
+
+    public void navigateToMainAcitivity() {
+        Intent intent = new Intent(context, MainActivity.class);
+        MainActivity.currentFragment = AppointmentFragment.class.getName();
+        startActivity(intent);
+        finish();
     }
 }

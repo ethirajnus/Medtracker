@@ -2,9 +2,11 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -16,8 +18,9 @@ import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import android.widget.AdapterView;
@@ -25,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,6 +67,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
     private String month;
     private EditText week;
     private String dateFrom,dateTo;
+    private ConsumptionManager consumptionManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +89,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        cursor = Consumption.findAll(context);
+        cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -105,10 +110,32 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                Consumption consumption = Consumption.findById(context, id);
-                consumption.delete(context);
+                consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(context, id);
                 //update the list
-                mAdapter.swapCursor(Consumption.findAll(context));
+                mAdapter.swapCursor(ConsumptionManager.findAll(context));
+
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        consumptionManager.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        //update the list
+                        mAdapter.swapCursor(ConsumptionManager.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
         }).attachToRecyclerView(consumptionRecyclerView);
@@ -271,7 +298,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
     private void triggerFilterForYear() {
         year = spinYear.getSelectedItem().toString();
-        cursor = Consumption.fetchByMedicineAndYearUnconsumed(context, medicineId, year);
+        cursor = ConsumptionManager.fetchByMedicineAndYearUnconsumed(context, medicineId, year);
         mAdapter.swapCursor(cursor);
     }
 
@@ -280,7 +307,27 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         if (month.length() == 1) {
             month = "0" + month;
         }
-        cursor = Consumption.fetchByMedicineAndMonthUnconsumed(context, medicineId, year, month);
+        cursor = ConsumptionManager.fetchByMedicineAndMonthUnconsumed(context, medicineId, year, month);
+        mAdapter.swapCursor(cursor);
+    }
+
+    private void triggerFilterForWeek() {
+        Date selectedDateObj = new Date();
+        String selectedDate = week.getText().toString();
+        try {
+            selectedDateObj = formatter.parse(selectedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDateObj);
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+        Date StartDate = calendar.getTime();
+        calendar.add(Calendar.DATE,6);
+        Date EndDate = calendar.getTime();
+        dateFrom = formatter.format(StartDate);
+        dateTo = formatter.format(EndDate);
+        cursor = ConsumptionManager.fetchByMedicineAndBetweenDatesUnconsumed(context, medicineId,dateFrom,dateTo );
         mAdapter.swapCursor(cursor);
     }
 
@@ -305,7 +352,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
     }
 
     private void triggerFilterForDate() {
-        cursor = Consumption.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());
+        cursor = ConsumptionManager.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);
     }
 
