@@ -65,40 +65,32 @@ public class HealthBioFragment extends Fragment {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-
-                switch (swipeDir){
-                    case ItemTouchHelper.LEFT:
-                        //get the id of the item being swiped
-                        int id = (int) viewHolder.itemView.getTag();
-                        healthBioManager = new HealthBioManager();
-                        healthBioManager.findById(context, id);
-                        mAdapter.swapCursor(HealthBioManager.findAll(context));
-
-                        AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
-                        warningDialog.setTitle(Constants.TITLE_WARNING);
-                        warningDialog.setMessage(R.string.warning_delete);
-                        warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface alert, int which) {
-                                //remove from DB
-                                healthBioManager.delete(context);
-                                Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
-                                alert.dismiss();
-                            }
-                        });
-                        warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface alert, int which) {
-                                alert.dismiss();
-                            }
-                        });
-                        warningDialog.show();
-                        break;
-                    case ItemTouchHelper.RIGHT:
-                        // do nothing
-                        break;
-                }
+                //get the id of the item being swiped
+                int id = (int) viewHolder.itemView.getTag();
+                healthBioManager = new HealthBioManager();
+                healthBioManager.findById(context, id);
                 mAdapter.swapCursor(HealthBioManager.findAll(context));
+
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        healthBioManager.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        mAdapter.swapCursor(HealthBioManager.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
             //attach the ItemTouchHelper to the healthBioRecyclerView
