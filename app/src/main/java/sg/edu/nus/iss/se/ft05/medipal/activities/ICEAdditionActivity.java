@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -59,7 +60,8 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     // Domain class
     private ICEContactsManager contactManager;
     private ICEContact contact;
-
+    private ICEContactsManager newContactManager;
+    public Context context;
     /**
      * Method to run while creating UI for addition/Edit
      *
@@ -72,7 +74,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         setContentView(R.layout.activity_add_ice_contacts);
 
-        Context context = getApplicationContext();
+        context = getApplicationContext();
 
         spinner = (Spinner) findViewById(R.id.spinner_ice_type);
 
@@ -149,28 +151,50 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         if (ICE_BUTTON_NEW.equalsIgnoreCase(button.getTag().toString())) {
 
-            ICEContactsManager newContactManager = new ICEContactsManager(contact, this);
+            newContactManager = new ICEContactsManager(contact, this);
 
-            if (-1 == newContactManager.save(this)) {
+            new SaveICE().execute();
 
-                Toast.makeText(this, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
-
-            } else {
-
-                navigateToMainAcitivity(this);
-            }
         } else {
 
             contactManager = new ICEContactsManager();
             contactManager.setICEContact(contact);
 
-            if (-1 == contactManager.update(this)) {
+            new UpdateICE().execute();
+        }
+    }
 
-                Toast.makeText(this, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
+    private class UpdateICE extends AsyncTask<Void, Void, Boolean> {
 
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            //context = getApplicationContext();
+            return contactManager.update(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
             } else {
+                navigateToMainAcitivity(context);
+            }
+        }
+    }
 
-                navigateToMainAcitivity(this);
+    private class SaveICE extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return newContactManager.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainAcitivity(context);
             }
         }
     }

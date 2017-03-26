@@ -222,12 +222,25 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                 healthBio.setId(healthBioManager.getHealthBio().getId());
                 healthBioManager.setHealthBio(healthBio);
 
-                if (healthBioManager.update(context) == -1)
-                    Toast.makeText(context, R.string.update_error, Toast.LENGTH_SHORT).show();
-                else {
-                    Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
-                    navigate();
-                }
+                new UpdateHealthBio().execute();
+            }
+        }
+    }
+
+    private class UpdateHealthBio extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return healthBioManager.update(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, R.string.update_error, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
+                navigate();
             }
         }
     }
@@ -269,7 +282,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(R.string.warning_allMandatory);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int which) {
                     alert.dismiss();

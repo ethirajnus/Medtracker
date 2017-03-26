@@ -55,4 +55,9 @@ public interface ConsumptionDAO {
     int deleteAllForMedicine(int medicineId);
 
     Cursor betweenDate(String dateFrom, String dateTo);
+
+    Cursor fetchByCategoryAndBetweenDates(int categoryId, String dateFrom, String dateTo);
+
+    Cursor fetchByMedicineAndBetweenDates(int medicineId, String dateFrom, String dateTo);
+    Cursor fetchByMedicineAndBetweenDatesUnconsumed(int medicineId, String dateFrom, String dateTo);
 }

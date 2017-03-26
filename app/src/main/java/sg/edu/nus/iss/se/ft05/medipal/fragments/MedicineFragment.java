@@ -1,17 +1,21 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
@@ -28,6 +32,7 @@ public class MedicineFragment extends Fragment {
 
     private MedicineListAdapter mAdapter;
     private Context context;
+    private MedicineManager medicineManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,12 +70,32 @@ public class MedicineFragment extends Fragment {
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                MedicineManager medicineManager = new MedicineManager();
+                medicineManager = new MedicineManager();
                 medicineManager.findById(context, id);
-                medicineManager.delete(context);
-                ReminderUtils.syncMedicineReminder(context);
                 //update the list
                 mAdapter.swapCursor(MedicineManager.findAll(context));
+
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        medicineManager.delete(context);
+                        ReminderUtils.syncMedicineReminder(context);
+                        mAdapter.swapCursor(MedicineManager.findAll(context));
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
         }).attachToRecyclerView(medicineRecyclerView);
