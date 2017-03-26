@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -293,12 +294,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             int medicineReminderId = (int) reminderManagerMedicine.save(context);
             medicineManager = new MedicineManager(medicineName, medicineDescription, medicineCategory, medicineReminderId, medicineRemind, medicineQuantity, medicineDosage, medicineConsumeQuantity, medicineThreshold, medicineDateIssued, medicinceExpireFactor);
             if (isValid()) {
-                if (medicineManager.save(context) == -1) {
-                    Toast.makeText(context, MEDICINE_NOT_SAVED, Toast.LENGTH_SHORT).show();
-                } else {
-                    ReminderUtils.syncMedicineReminder(context);
-                    navigateToMainAcitivity();
-                }
+                new SaveMedicine().execute();
             }
         } else {
             medicineManager.getMedicine().setName(medicineName);
@@ -325,6 +321,24 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             }
 
 
+        }
+    }
+
+    private class SaveMedicine extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return medicineManager.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, MEDICINE_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                ReminderUtils.syncMedicineReminder(context);
+                navigateToMainAcitivity();
+            }
         }
     }
 
