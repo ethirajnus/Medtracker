@@ -23,6 +23,10 @@ import static org.junit.Assert.assertNotNull;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+
+/**
+ * Class for ICE contacts database operations instrumented test
+ */
 @RunWith(AndroidJUnit4.class)
 public class ICEContactsDAOInstrumentedTest {
 

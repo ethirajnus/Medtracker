@@ -3,12 +3,18 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 /**
  * Created by e0146812 on 3/25/2017.
  */
+
+/**
+ * Domain class for category
+ */
 public class Category {
 
+    //variables
     private int id;
     private String categoryName, code, description;
     private boolean remind;
 
+    //Getters and Setters
     public void setId(int id) {
         this.id = id;
     }

@@ -38,11 +38,9 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
 /**
- * Created by ethi on 25/03/17.
+ * Class for consumption reprort
  */
-
 public class ConsumptionReportTab extends Fragment implements View.OnClickListener {
-
 
     private RecyclerView consumptionRecyclerView;
     private Context context;
@@ -57,6 +55,10 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private Calendar dateCalendarFrom, dateCalendarTo;
     private ConsumptionManager consumptionManager;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +66,24 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
     }
 
+    /**
+     *
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.consumption_report_share, menu);
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -264,7 +278,10 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
     }
 
-
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

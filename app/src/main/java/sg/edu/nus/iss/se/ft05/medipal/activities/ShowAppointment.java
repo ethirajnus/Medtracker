@@ -13,9 +13,16 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
 
+/**
+ * Class to show appointment details
+ */
 public class ShowAppointment extends AppCompatActivity {
     private Context context;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

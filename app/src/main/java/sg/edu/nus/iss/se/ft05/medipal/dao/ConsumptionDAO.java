@@ -10,16 +10,46 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
  * Created by ethi on 10/03/17.
  */
 
+/**
+ * Interface for consumption database operations
+ */
 public interface ConsumptionDAO {
 
+    /**
+     * Delete operation
+     *
+     * @param id
+     * @return
+     */
     public int delete(int id);
 
+    /**
+     * Select all function
+     *
+     * @return
+     */
     public Cursor findAll();
 
-    public long insert(Consumption consumptionManager);
+    /**
+     * Insert opertion
+     *
+     * @param consumption
+     * @return
+     */
+    public long insert(Consumption consumption);
 
-    public int update(Consumption consumptionManager);
+    /**
+     * Update operation
+     *
+     * @param consumption
+     * @return
+     */
+    public int update(Consumption consumption);
 
+    /**
+     * @param id
+     * @return
+     */
     public Consumption findById(int id);
 
     public List<Consumption> findByDate(String date);

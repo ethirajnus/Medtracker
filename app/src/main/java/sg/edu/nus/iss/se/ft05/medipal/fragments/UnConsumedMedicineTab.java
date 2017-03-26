@@ -46,6 +46,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
  * Created by ethi on 24/03/17.
  */
 
+/**
+ * Class for unconsumed medicine tab
+ */
 public class UnConsumedMedicineTab extends Fragment implements View.OnClickListener {
 
     View view;
@@ -70,12 +73,23 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
     private ConsumptionManager consumptionManager;
 
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,6 +120,11 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
                 return false;
             }
 
+            /**
+             *
+             * @param viewHolder
+             * @param swipeDir
+             */
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 //get the id of the item being swiped
@@ -378,6 +397,10 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
     }
 
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

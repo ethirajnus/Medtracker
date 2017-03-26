@@ -25,6 +25,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.QUANTITY;
  * Created by ethi on 14/03/17.
  */
 
+/**
+ * class for notification
+ */
 public class NotificationUtils {
 
     private static final int MEDICINE_REMINDER_PENDING_INTENT_ID = 3417;

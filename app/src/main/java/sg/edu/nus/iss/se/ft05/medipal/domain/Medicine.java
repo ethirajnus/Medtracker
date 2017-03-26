@@ -3,13 +3,19 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 /**
  * Created by e0146812 on 3/25/2017.
  */
+
+/**
+ * Domain class for Medicine
+ */
 public class Medicine {
 
+    //Variables
     private int id, categoryId, reminderId, quantity, dosage, consumeQuantity, threshold, expireFactor;
     private boolean remind;
     private String dateIssued;
     private String name, description;
 
+    //Getters and Setters
     public void setId(int id) {
         this.id = id;
     }

@@ -3,8 +3,13 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 /**
  * Created by aakash on 15-03-2017.
  */
+
+/**
+ * Domain class for Measurement
+ */
 public class Measurement {
 
+    //variables
     private int id, systolic, diastolic, pulse, weight;
     private float temperature;
     private String measuredOn;

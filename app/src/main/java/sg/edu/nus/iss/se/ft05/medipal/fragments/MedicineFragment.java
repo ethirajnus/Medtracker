@@ -34,6 +34,13 @@ public class MedicineFragment extends Fragment {
     private Context context;
     private MedicineManager medicineManager;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

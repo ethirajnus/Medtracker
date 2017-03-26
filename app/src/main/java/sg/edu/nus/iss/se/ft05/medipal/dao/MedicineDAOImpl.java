@@ -12,12 +12,21 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 /**
  * Created by ethi on 12/03/17.
  */
+
+/**
+ * Implementation class for medicine database operations
+ */
 public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
 
     public MedicineDAOImpl(Context context) {
         super(context);
     }
 
+    /**
+     * Delete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -25,6 +34,10 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * Select all operation
+     * @return
+     */
     @Override
     public Cursor findAll() {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEDICINE;
@@ -32,6 +45,11 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     * select operation with where clause using ID
+     * @param id
+     * @return
+     */
     @Override
     public Medicine findById(int id) {
 
@@ -63,6 +81,11 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         return medicine;
     }
 
+    /**
+     * Insert operation
+     * @param medicine
+     * @return
+     */
     @Override
     public long insert(Medicine medicine) {
 
@@ -85,6 +108,11 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         return db.insert(TABLE_MEDICINE, null, values);
     }
 
+    /**
+     * Update operation
+     * @param medicine
+     * @return
+     */
     @Override
     public int update(Medicine medicine) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -107,6 +135,10 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Cursor fetchAllMedicinesWithId() {
         String selectQuery = DATABASE_COMMAND_SELECT_ID_MEDICINE + TABLE_MEDICINE;
