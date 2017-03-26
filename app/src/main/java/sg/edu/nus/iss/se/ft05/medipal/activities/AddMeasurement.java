@@ -1,10 +1,12 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
 import java.text.SimpleDateFormat;
 
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -32,6 +34,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     Button saveButton;
     EditText systolic, diastolic, pulse, temperature, weight, measuredOn;
+    Context context = getApplicationContext();
 
     private MeasurementManager measurementManager;
 
@@ -94,6 +97,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
             MeasurementManager measurementManager = new MeasurementManager(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
 
+            //new SaveMeasurement().execute();
             if (measurementManager.save(getApplicationContext()) == -1) {
 
                 Toast.makeText(getApplicationContext(), "Measurement was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
@@ -109,6 +113,24 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         navigateToMainActivity();
+    }
+
+    private class SaveMeasurement extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return measurementManager.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, MEASUREMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainActivity();
+            }
+
+        }
     }
 
     public void navigateToMainActivity() {

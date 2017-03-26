@@ -141,5 +141,6 @@ public class Constants {
     public static final String INVALID_PULSE = "Please enter a valid value for Pulse";
     public static final String INVALID_TEMPERATURE = "Please enter a valid value for temperature";
     public static final String INVALID_WEIGHT = "Please enter a valid value for weight";
+    public static final String MEASUREMENT_NOT_SAVED = "Measurement was not inserted properly,Please try again later";
 
 }
