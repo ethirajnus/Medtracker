@@ -27,7 +27,9 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
-
+/**
+ * Class for adding Measurement
+ */
 public class AddMeasurement extends AppCompatActivity implements View.OnClickListener {
 
     Button saveButton;
@@ -35,6 +37,10 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     private MeasurementManager measurementManager;
 
+    /**
+     * Method to run while creating UI for add/display
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,9 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         setTitle("New Measurement");
     }
 
+    /**
+     * view
+     */
     private void setListeners() {
         saveButton.setOnClickListener(this);
     }
@@ -106,6 +115,10 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Navigation to Main Activity
+     *
+     */
     @Override
     public void onBackPressed() {
         navigateToMainActivity();
@@ -119,6 +132,10 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         finish();
     }
 
+    /**
+     *
+     * @return
+     */
     private boolean isValid(){
         boolean isValid  = true;
         if(TextUtils.isEmpty(systolic.getText().toString().trim())
@@ -171,6 +188,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         }
         return isValid;
     }
+
 
     private void setEmptyFieldsToZero(){
         if(TextUtils.isEmpty(systolic.getText().toString().trim()))

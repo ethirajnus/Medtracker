@@ -21,6 +21,9 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
+/**
+ * Class for add and update category
+ */
 public class AddOrUpdateCategory extends AppCompatActivity implements View.OnClickListener {
 
     Button saveButton;
@@ -53,6 +56,10 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
 
     }
 
+    /**
+     *
+     * @param id
+     */
     private void updateCategoryValues(int id) {
 
         categoryManager = new CategoryManager();
@@ -93,6 +100,10 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         saveButton.setTag(NEW);
     }
 
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -103,6 +114,9 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * Save or update category
+     */
     public void saveOrUpdateCategory() {
 
         String categoryName = name.getText().toString();
@@ -135,6 +149,7 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         }
     }
 
+
     private class SaveCategory extends AsyncTask<Void, Void, Boolean> {
 
         @Override
@@ -160,7 +175,10 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         finish();
     }
 
-
+    /**
+     * validate fields
+     * @return
+     */
     private boolean isValid() {
 
         boolean isValid = true;
@@ -182,6 +200,10 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
         return isValid;
     }
 
+    /**
+     * Validate Fields
+     * @return
+     */
     private boolean validCategoryDBFields() {
         String nameText = categoryManager.getCategory().getCategoryName();
         String codeText = categoryManager.getCategory().getCode();

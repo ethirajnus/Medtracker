@@ -27,7 +27,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
 /**
- *
+ *class for editing appointment
  */
 public class EditAppointment extends AppCompatActivity implements View.OnClickListener {
 
@@ -89,6 +89,10 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    /**
+     * view
+     * @param view
+     */
     @Override
     public void onClick(View view) {
 
@@ -99,6 +103,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             timePickerDialog.show();
 
     }
+
 
     private void findViewsById() {
 
@@ -185,6 +190,11 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    /**
+     *
+     * @param view
+     * @throws java.text.ParseException
+     */
     public void editAppointment(View view) throws java.text.ParseException {
 
         boolean flag = true;

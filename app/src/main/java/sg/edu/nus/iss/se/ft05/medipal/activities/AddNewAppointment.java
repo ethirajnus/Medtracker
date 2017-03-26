@@ -29,6 +29,9 @@ import android.text.InputType;
 
 import java.util.Date;
 
+/**
+ *  Class for adding new Appointment
+ */
 public class AddNewAppointment extends AppCompatActivity implements View.OnClickListener {
     EditText date, time, clinic, test, pre_test;
     private int mHour, mMinute;
@@ -44,7 +47,10 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private static final String BLANK_TEST_MESSAGE="Test Required";
     private static final String WRONG_DATE="Date cannot be before today";
 
-
+    /**
+     * Methos to run while creating UI for add
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,10 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         if (view == date)
@@ -74,6 +84,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
+
     private void findViewsById() {
         date = (EditText) findViewById(R.id.new_appointment_date);
         date.setInputType(InputType.TYPE_NULL);
@@ -83,6 +94,10 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     *
+     * @throws java.text.ParseException
+     */
     private void setDateTimeField() throws java.text.ParseException {
         date.setOnClickListener(this);
         final Calendar now = Calendar.getInstance();
@@ -171,6 +186,11 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     * Validate Fields
+     * @param view
+     * @throws java.text.ParseException
+     */
     public void createAppointment(View view) throws java.text.ParseException
     {
 

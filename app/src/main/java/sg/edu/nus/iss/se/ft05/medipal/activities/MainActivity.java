@@ -38,6 +38,9 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ReportFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
+/**
+ * Class for Main Activity
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,6 +55,10 @@ public class MainActivity extends AppCompatActivity
 
     private PrefManager prefManager;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -99,6 +106,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -118,6 +131,10 @@ public class MainActivity extends AppCompatActivity
             finish();
     }
 
+    /**
+     * View personal bio
+     * @param v
+     */
     public void viewPersonalBio(View v){
         Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
         Bundle b = new Bundle();
@@ -126,6 +143,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtras(b);
         startActivity(intent);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -150,6 +168,11 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    /**
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -160,6 +183,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -181,6 +209,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     *
+     * @param fragmentType
+     */
     public void updateFragment(String fragmentType) {
         Class<?> clazz = null;
         try {
@@ -218,6 +250,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

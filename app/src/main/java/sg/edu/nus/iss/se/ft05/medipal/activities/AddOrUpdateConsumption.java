@@ -40,6 +40,9 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
+/**
+ * Class for add and update consumption
+ */
 public class AddOrUpdateConsumption extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Button saveButton;
@@ -59,6 +62,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
     private int consumptionMedicine;
     private List<String> timeList;
 
+    /**
+     *  Method to run while creating UI for addition
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +93,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     private void populateDropDownList() {
         Cursor mCursor = MedicineManager.fetchAllMedicinesWithId(context);
         medicineList = new ArrayList<>();
@@ -107,6 +115,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     private void populateTimeForMedicine() {
 
         MedicineManager medicineManager = new MedicineManager();
@@ -122,6 +131,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+    /**
+     * Update consumption values
+     * @param id
+     */
     private void updateConsumptionValues(int id) {
         consumption = Consumption.findById(context, id);
         consumptionMedicine = consumption.getMedicineId();
@@ -200,6 +213,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     private void findViewsById() {
         medicine = (Spinner) findViewById(R.id.consumptionMedicine);
         quantity = (EditText) findViewById(R.id.consumptionQuantity);
@@ -209,6 +223,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         saveButton.setTag(NEW);
     }
 
+    /**
+     * View
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -223,6 +241,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Save consumption
+     */
     public void saveOrUpdateConsumption() {
         boolean isValidFormat = checkFormat();
         if (!isValidFormat) {
@@ -260,6 +281,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     public void checkAndTriggerReplenishReminder() {
         int totalQuantity = Consumption.totalQuantityConsumed(context, consumption.getMedicineId());
         Medicine medicine = consumption.getMedicine(context);
@@ -268,6 +290,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Validate fields
+     * @return
+     */
     private boolean checkFormat() {
         boolean isValid = true;
         if (quantity.getText().toString().isEmpty()) {
@@ -282,6 +308,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         return isValid;
     }
 
+    /**
+     * Navigation to Main Activity
+     */
     public void navigateToMainAcitivity() {
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = ConsumptionFragment.class.getName();
@@ -289,7 +318,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         finish();
     }
 
-
+    /**
+     * VAlidate fields and return
+     * @return
+     */
     private boolean isValid() {
         boolean isValid = true;
         MedicineManager medicineManager = new MedicineManager();

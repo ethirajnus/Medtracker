@@ -12,6 +12,10 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 /**
  * @author Moushumi Seal
  */
+
+/**
+ * class to show splash activity
+ */
 public class SplashActivity extends AppCompatActivity {
 
     /**

@@ -14,6 +14,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
+/**
+ * Class to Display Measurement
+ */
 public class DisplayMeasurement extends AppCompatActivity {
 
     public static final String MEASUREMENT_ID = "id";
@@ -21,6 +24,10 @@ public class DisplayMeasurement extends AppCompatActivity {
 
     private Context context;
 
+    /**
+     * Method to run while creating UI for addition
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -78,6 +85,9 @@ public class DisplayMeasurement extends AppCompatActivity {
         measuredOn.setText(formatText("Measured On : ", measurement.getMeasuredOn()));
     }
 
+    /**
+     * view
+     */
     private void findViewsById() {
         systolic = (TextView) findViewById(R.id.measurementSystolic);
         diastolic = (TextView) findViewById(R.id.measurementDiastolic);
