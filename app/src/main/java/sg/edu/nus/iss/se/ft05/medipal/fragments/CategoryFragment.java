@@ -31,6 +31,11 @@ public class CategoryFragment extends Fragment {
         ((MainActivity)getActivity()).setFloatingActionButtonAction(AddOrUpdateCategory.class);
         RecyclerView categoryRecyclerView;
         context = getActivity().getApplicationContext();
+
+        //hide the share button
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+
         categoryRecyclerView = (RecyclerView) view.findViewById(R.id.all_categories_list_view);
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(context));

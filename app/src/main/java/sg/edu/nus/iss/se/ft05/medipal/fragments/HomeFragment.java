@@ -41,6 +41,9 @@ public class HomeFragment extends Fragment {
         // Setting ViewPager for each Tabs
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
+        //hide the share button
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
 
         // Set Tabs inside Toolbar
         tabs = (TabLayout) getActivity().findViewById(R.id.tabs);

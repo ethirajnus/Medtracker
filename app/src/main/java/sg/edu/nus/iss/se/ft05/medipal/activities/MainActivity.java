@@ -174,6 +174,14 @@ public class MainActivity extends AppCompatActivity
         boolean isChecked = prefManager.isShowHelpScreens();
         MenuItem enableHelpItem = menu.findItem(R.id.action_enable_help);
         enableHelpItem.setChecked(isChecked);
+        MenuItem share1 = menu.findItem(R.id.share_consumption);
+        if (share1 != null) {
+            share1.setVisible(false);
+        }
+        MenuItem share2 = menu.findItem(R.id.share_measurement);
+        if (share2 != null) {
+            share2.setVisible(false);
+        }
         return true;
     }
 
