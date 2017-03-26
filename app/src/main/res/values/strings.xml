@@ -146,6 +146,7 @@
     <string-array name="filterBy">
         <item>Year</item>
         <item>Month</item>
+        <item>Week</item>
         <item>Day</item>
     </string-array>
     <string name="ice_name_header">Name</string>

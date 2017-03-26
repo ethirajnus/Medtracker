@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -249,7 +250,8 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:")); // only email apps should handle this
                 intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Subjct");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "consumption");
+                intent.putExtra(Intent.EXTRA_TEXT,fetchContent());
                 if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivity(intent);
                 }
@@ -258,6 +260,10 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         }
     }
 
+    private String fetchContent() {
+         return "good";
+
+    }
 
 
     @Override
