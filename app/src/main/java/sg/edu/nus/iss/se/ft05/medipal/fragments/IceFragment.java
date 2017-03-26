@@ -61,6 +61,9 @@ public class IceFragment extends Fragment implements OnStartDragListener {
 
         iceRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+        //hide the share button
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
 
         // Get all guest info from the database and save in a cursor
         Cursor cursor = ICEContactsManager.findAll(context);

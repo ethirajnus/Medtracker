@@ -57,6 +57,11 @@ public class AppointmentFragment extends Fragment {
         Cursor cursor = AppointmentManager.findAll(context);
         mAdapter = new AppointmentListAdapter(context, cursor);
         recyclerView.setAdapter(mAdapter);
+
+        //hide the share button
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             //  Override onMove and simply return false inside

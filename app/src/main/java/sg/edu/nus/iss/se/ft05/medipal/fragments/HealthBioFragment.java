@@ -66,6 +66,10 @@ public class HealthBioFragment extends Fragment {
         // Link the adapter to the RecyclerView
         healthBioRecyclerView.setAdapter(mAdapter);
 
+        //hide the share button
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {

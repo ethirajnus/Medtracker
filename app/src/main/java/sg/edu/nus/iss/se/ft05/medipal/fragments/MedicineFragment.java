@@ -64,6 +64,10 @@ public class MedicineFragment extends Fragment {
         // Link the adapter to the RecyclerView
         medicineRecyclerView.setAdapter(mAdapter);
 
+        //hide the share button
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
