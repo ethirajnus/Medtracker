@@ -235,7 +235,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
             appointmentManager.setAppointment(appointment);
 
-            if(appointmentManager.save(context) == -1)
+            if(appointmentManager.update(context) == -1)
             {
                 Toast.makeText(context, APPOINTMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
