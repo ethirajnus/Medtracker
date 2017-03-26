@@ -26,9 +26,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -47,7 +49,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
     RecyclerView consumptionRecyclerView;
     Context context;
     Cursor cursor;
-    DatePickerDialog datePickerDialog;
+    DatePickerDialog datePickerDialogDay,datePickerDialogWeek;
     Calendar dateCalendar;
     private ConsumptionListAdapter mAdapter;
     private Spinner medicine, filterBy, spinYear, spinMonth;
@@ -60,6 +62,8 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
     private Integer medicineId;
     private String year;
     private String month;
+    private EditText week;
+    private String dateFrom,dateTo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,17 +122,29 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         spinYear = (Spinner) view.findViewById(R.id.yearSpin);
         spinMonth = (Spinner) view.findViewById(R.id.monthSpin);
         date = (EditText) view.findViewById(R.id.medicineDateIssued);
+        week = (EditText) view.findViewById(R.id.medicineWeek);
 
     }
 
     private void setListeners() {
         date.setOnClickListener(this);
+        week.setOnClickListener(this);
         Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+        datePickerDialogDay = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 dateCalendar = Calendar.getInstance();
                 dateCalendar.set(year, monthOfYear, dayOfMonth);
                 date.setText(formatter.format(dateCalendar.getTime()));
+            }
+        },
+                newCalendar.get(Calendar.YEAR),
+                newCalendar.get(Calendar.MONTH),
+                newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialogWeek = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                dateCalendar = Calendar.getInstance();
+                dateCalendar.set(year, monthOfYear, dayOfMonth);
+                week.setText(formatter.format(dateCalendar.getTime()));
             }
         },
                 newCalendar.get(Calendar.YEAR),
@@ -157,16 +173,25 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
                 if (filterByText.contentEquals("Year")) {
                     spinYear.setVisibility(View.VISIBLE);
                     spinMonth.setVisibility(View.INVISIBLE);
+                    week.setVisibility(View.INVISIBLE);
                     date.setVisibility(View.INVISIBLE);
                     triggerFilterForYear();
                 } else if ((filterByText.contentEquals("Month"))) {
                     spinYear.setVisibility(View.VISIBLE);
                     spinMonth.setVisibility(View.VISIBLE);
+                    week.setVisibility(View.INVISIBLE);
                     date.setVisibility(View.INVISIBLE);
                     triggerFilterForMonth();
-                } else if ((filterByText.contentEquals("Day"))) {
+                } else if ((filterByText.contentEquals("Week"))) {
                     spinYear.setVisibility(View.INVISIBLE);
                     spinMonth.setVisibility(View.INVISIBLE);
+                    week.setVisibility(View.VISIBLE);
+                    date.setVisibility(View.INVISIBLE);
+                }
+                else if ((filterByText.contentEquals("Day"))) {
+                    spinYear.setVisibility(View.INVISIBLE);
+                    spinMonth.setVisibility(View.INVISIBLE);
+                    week.setVisibility(View.INVISIBLE);
                     date.setVisibility(View.VISIBLE);
                 }
 
@@ -189,6 +214,25 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() != 0) {
                     triggerFilterForDate();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        week.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    triggerFilterForWeek();
                 }
             }
 
@@ -241,6 +285,26 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         mAdapter.swapCursor(cursor);
     }
 
+    private void triggerFilterForWeek() {
+        Date selectedDateObj = new Date();
+        String selectedDate = week.getText().toString();
+        try {
+            selectedDateObj = formatter.parse(selectedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDateObj);
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+        Date StartDate = calendar.getTime();
+        calendar.add(Calendar.DATE,6);
+        Date EndDate = calendar.getTime();
+        dateFrom = formatter.format(StartDate);
+        dateTo = formatter.format(EndDate);
+        cursor = Consumption.fetchByMedicineAndBetweenDates(context, medicineId,dateFrom,dateTo );
+        mAdapter.swapCursor(cursor);
+    }
+
     private void triggerFilterForDate() {
         cursor = Consumption.fetchByMedicineAndDate(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);
@@ -275,6 +339,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
 
 
         spinYear.setAdapter(yearAdapter);
+        spinYear.setSelection(years.size() -1);
 
         ArrayList<String> months = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
@@ -290,8 +355,12 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.medicineDateIssued:
-                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-                datePickerDialog.show();
+                datePickerDialogDay.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialogDay.show();
+                break;
+            case R.id.medicineWeek:
+                datePickerDialogWeek.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialogWeek.show();
                 break;
         }
     }

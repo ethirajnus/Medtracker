@@ -205,4 +205,26 @@ public class Consumption {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.betweenDate(dateFrom,dateTo);
     }
+
+    public static Cursor fetchByCategoryAndBetweenDates(Context context,int categoryId,String dateFrom, String dateTo) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByCategoryAndBetweenDates(categoryId, dateFrom,dateTo);
+    }
+
+    public static Cursor fetchByMedicineAndBetweenDates(Context context,int medicineId,String dateFrom, String dateTo) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndBetweenDates(medicineId, dateFrom,dateTo);
+    }
+
+    public static Cursor fetchByMedicineAndBetweenDatesUnconsumed(Context context,int medicineId,String dateFrom, String dateTo) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndBetweenDatesUnconsumed(medicineId, dateFrom,dateTo);
+    }
+
+    @Override
+    public String toString(){
+        return getQuantity()+ ","+getDate()+","+getTime()+"\n";
+    }
+
+
 }
