@@ -64,6 +64,8 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
         healthBio.setConditionType(c.getString(c.getColumnIndex(HEALTH_BIO_KEY_CONDITION_TYPE)));
         healthBio.setStartDate(c.getString(c.getColumnIndex(HEALTH_BIO_KEY_START_DATE)));
 
+        db.close();
+
         return healthBio;
     }
 

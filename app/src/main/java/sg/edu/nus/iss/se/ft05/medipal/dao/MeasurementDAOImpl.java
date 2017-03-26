@@ -71,7 +71,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         measurement.setTemperature(c.getInt(c.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
         measurement.setWeight(c.getInt(c.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
         measurement.setMeasuredOn(c.getString(c.getColumnIndex(MEASUREMENT_KEY_MEASURED_ON)));
-
+        db.close();
         return measurement;
     }
 
@@ -136,7 +136,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
             c.moveToFirst();
             id = c.getInt(c.getColumnIndex("MAXID"));
         }
-
+        db.close();
         return id;
     }
 
@@ -177,6 +177,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
                 measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
             }
         }
+        db.close();
         return measurement;
     }
 }

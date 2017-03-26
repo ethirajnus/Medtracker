@@ -120,6 +120,8 @@ public class Constants {
 
     //AppointmentManager
     public static final String CLINIC = "clinic";
+    public static final String APPOINTMENT_NOT_SAVED = "Appointment not inserted properly, Please try again later";
+    public static final String APPOINTMENT_NOT_UPDATED = "Appointment not updated properly, Please try again later";
 
     //Report
     public static final String REPORT = "reports";

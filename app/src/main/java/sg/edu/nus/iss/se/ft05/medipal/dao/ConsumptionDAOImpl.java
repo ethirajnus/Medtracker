@@ -58,6 +58,8 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         consumption.setQuantity(c.getInt(c.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
         consumption.setDate(c.getString(c.getColumnIndex(CONSUMPTION_KEY_DATE)));
         consumption.setTime(c.getString(c.getColumnIndex(CONSUMPTION_KEY_TIME)));
+
+        db.close();
         return consumption;
     }
 
@@ -112,6 +114,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
             consumptions.add(consumption);
             cursor.moveToNext();
         }
+        db.close();
         return consumptions;
 
     }
@@ -184,6 +187,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
             consumptions.add(consumption);
             cursor.moveToNext();
         }
+        db.close();
         return consumptions;
 
     }
