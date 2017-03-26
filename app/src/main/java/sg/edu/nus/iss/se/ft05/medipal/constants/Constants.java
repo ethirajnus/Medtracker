@@ -95,7 +95,7 @@ public class Constants {
     public static final String CODE ="Code";
     public static final String QUANTITY = "quantity";
     public static final String NOTIFICATION = "notification";
-    public static final String TO_DATE_CANNOT_BE_GREATER_THAN_FROM_DATE = "To Date cannot be greater than From Date";
+    public static final String FROM_DATE_AFTER_TO_DATE = "From Date cannot be less than To Date";
 
     //Category
     public static final String CATEGORY = "Category";
