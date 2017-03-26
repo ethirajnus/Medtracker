@@ -1,7 +1,11 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
+
 import android.content.DialogInterface;
+
+import android.os.AsyncTask;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,7 +51,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private static final String BLANK_CLINIC_MESSAGE="Clinic Required";
     private static final String BLANK_TEST_MESSAGE="Test Required";
     private static final String WRONG_DATE="Date cannot be before today";
-
+    AppointmentManager appointmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,23 +239,30 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         if (flag == true) {
 
             //All input fields are valid
-            AppointmentManager appointmentManager = new AppointmentManager(adate, atime, aclinic, atest, apre_test);
+            appointmentManager = new AppointmentManager(adate, atime, aclinic, atest, apre_test);
             Log.v("date",adate);
-            if(appointmentManager.save(context) == -1)
-            {
+            new SaveAppointment().execute();
+        }
+    }
+
+    private class SaveAppointment extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return appointmentManager.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
                 Toast.makeText(context, APPOINTMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
                 ReminderUtils.syncAppointmentReminder(context);
                 navigateToMainAcitivity();
-
             }
-
-            /*Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            MainActivity.currentFragment = AppointmentFragment.class.getName();
-            startActivity(intent);
-            finish();*/
         }
     }
+
     public void navigateToMainAcitivity() {
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = AppointmentFragment.class.getName();

@@ -29,6 +29,14 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
     }
 
     @Override
+    public Cursor findAll() {
+
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_REMINDER;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+
+    @Override
     public Reminder findById(int id) {
 
         SQLiteDatabase db = this.getReadableDatabase();

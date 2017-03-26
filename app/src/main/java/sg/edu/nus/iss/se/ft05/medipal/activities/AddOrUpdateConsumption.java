@@ -77,11 +77,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             setTitle(EDIT_CONSUMPTION);
         } else if (b != null && b.getString(ACTION).equalsIgnoreCase(NOTIFICATION)) {
             MedicineManager medicineManager = new MedicineManager();
-            medicine.setSelection(medicineList.indexOf(medicineManager.findById(context,b.getInt(ID) ).getName()));
+            medicine.setSelection(medicineList.indexOf(medicineManager.findById(context, b.getInt(ID)).getName()));
             quantity.setText(String.valueOf(b.getInt(QUANTITY)));
             date.setText(formatter.format(Calendar.getInstance().getTime()));
-        }
-        else {
+        } else {
             setTitle(NEW_CONSUMPTION);
         }
 
@@ -243,28 +242,40 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             consumption.setDate(consumptionDate);
             consumption.setTime(consumptionTime);
             if (isValid()) {
-                if (consumption.update(context) == -1) {
-                    Toast.makeText(context, CONSUMPTION_NOT_UPDATED, Toast.LENGTH_SHORT).show();
-                } else {
-                    checkAndTriggerReplenishReminder();
-                    navigateToMainAcitivity();
-                }
+                new UpdateConsumption().execute();
             }
 
         }
 
     }
 
-    private class SaveConsumption extends AsyncTask<Void, Void, Boolean> {
+    private class UpdateConsumption extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return consumption.save(context)==-1;
+            return consumption.update(context) == -1;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if(result){
+            if (result) {
+                Toast.makeText(context, CONSUMPTION_NOT_UPDATED, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainAcitivity();
+            }
+        }
+    }
+
+    private class SaveConsumption extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return consumption.save(context) == -1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result) {
                 Toast.makeText(context, CONSUMPTION_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
                 navigateToMainAcitivity();
@@ -317,7 +328,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int button) {
                     alert.dismiss();
@@ -331,7 +342,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(CONSUMPTION_FREQUENCY_NOT_MORE_THAN_ERROR_MESSAGE + frequency + CONSUMPTION_TIMES);
-                warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface alert, int button) {
                         alert.dismiss();
@@ -345,7 +356,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                         AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                         warningDialog.setTitle(Constants.TITLE_WARNING);
                         warningDialog.setMessage(CONSUMPTION_NOT_BEFORE_ERROR_MESSAGE);
-                        warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                        warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface alert, int button) {
                                 alert.dismiss();
