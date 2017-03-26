@@ -46,6 +46,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.FROM_DATE_AFTER_TO_DATE;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_DATE;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_MEDICINEID;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_QUANTITY;
@@ -112,8 +113,8 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        // Get all guest info from the database and save in a cursor
-        cursor = ConsumptionManager.findAll(context);
+        String currentDate = formatter.format(Calendar.getInstance().getTime());
+        cursor = ConsumptionManager.betweenDate(context,currentDate,currentDate);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -261,7 +262,10 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (dateObjTo.after(dateObjFrom)) {
+        if(dateObjTo.before(dateObjFrom)){
+            Toast.makeText(context, FROM_DATE_AFTER_TO_DATE, Toast.LENGTH_SHORT).show();
+        }
+        else{
             triggerFilterForDate();
         }
     }
