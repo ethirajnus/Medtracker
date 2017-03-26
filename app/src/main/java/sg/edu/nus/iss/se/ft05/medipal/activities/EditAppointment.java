@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -234,12 +235,20 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
             appointmentManager.setAppointment(appointment);
 
-            appointmentManager.update(context);
-            ReminderUtils.syncAppointmentReminder(context);
-            Intent intent = new Intent(context, MainActivity.class);
-            MainActivity.currentFragment = AppointmentFragment.class.getName();
-            startActivity(intent);
-            finish();
+            if(appointmentManager.save(context) == -1)
+            {
+                Toast.makeText(context, APPOINTMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                ReminderUtils.syncAppointmentReminder(context);
+                navigateToMainAcitivity();
+
+            }
         }
+    }
+    public void navigateToMainAcitivity() {
+        Intent intent = new Intent(context, MainActivity.class);
+        MainActivity.currentFragment = AppointmentFragment.class.getName();
+        startActivity(intent);
+        finish();
     }
 }
