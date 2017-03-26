@@ -72,7 +72,6 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
     private String dateFrom,dateTo;
     private ConsumptionManager consumptionManager;
 
-
     /**
      *
      * @param savedInstanceState
@@ -350,6 +349,8 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         cursor = ConsumptionManager.fetchByMedicineAndBetweenDatesUnconsumed(context, medicineId,dateFrom,dateTo );
         mAdapter.swapCursor(cursor);
     }
+
+
 
     private void triggerFilterForDate() {
         cursor = ConsumptionManager.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());

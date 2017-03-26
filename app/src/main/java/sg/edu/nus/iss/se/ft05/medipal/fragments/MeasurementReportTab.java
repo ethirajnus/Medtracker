@@ -1,19 +1,25 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +64,8 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_WEIGHT
 public class MeasurementReportTab extends Fragment implements View.OnClickListener{
 
 
-
+    private static final int PERMISSION_EXTERNAL_STORAGE_READ = 0;
+    private static final int PERMISSION_EXTERNAL_STORAGE_WRITE =  1;
     private RecyclerView measurementRecyclerView;
     private Context context;
     private MeasurementListAdapter mAdapter;
@@ -271,11 +278,13 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         mAdapter.swapCursor(cursor);
     }
 
+
     /**
      *
      * @param item
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
@@ -288,34 +297,52 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     }
 
 
-
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void SendEmail(){
-        createFile(context,"measurement.csv,",fetchContent());
+        String filename="measurement.csv";
+        createFile(context,filename,fetchContent());
+        File myFile = new File("/sdcard/"+"/MediPal/"+filename);
+        Uri path = Uri.fromFile(myFile);
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-        intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
         intent.putExtra(Intent.EXTRA_SUBJECT, "measurement");
+        intent.putExtra(Intent.EXTRA_TEXT, "Please find the report attached for  Measurement");
+        intent .putExtra(Intent.EXTRA_STREAM, path);
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void createFile(Context context, String sFileName, String sBody) {
-        try {
-            File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
-            if (!root.exists()) {
-                root.mkdirs();
+
+
+        if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                Toast.makeText(context, "App does not have Permission to Store File", Toast.LENGTH_SHORT).show();
+
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_EXTERNAL_STORAGE_WRITE);
+
+            } else {
+                try {
+                    File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
+                    if (!root.exists()) {
+                        root.mkdirs();
+                    }
+                    File gpxfile = new File(root, sFileName);
+                    FileWriter writer = new FileWriter(gpxfile);
+                    writer.append(sBody);
+                    writer.flush();
+                    writer.close();
+                    Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
-            File gpxfile = new File(root, sFileName);
-            FileWriter writer = new FileWriter(gpxfile);
-            writer.append(sBody);
-            writer.flush();
-            writer.close();
-            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     private String fetchContent() {
@@ -326,7 +353,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
     private String fetchMeasurementAsString() {
         cursor.moveToFirst();
-        Log.v("check",String.valueOf(cursor.getCount()));
         String measurements = "";
         while (!cursor.isAfterLast()) {
             Measurement measurement = new Measurement();
@@ -335,11 +361,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
             measurement.setPulse(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_PULSE)));
             measurement.setTemperature(cursor.getFloat(cursor.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
             measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
-//            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
-//            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
-//            consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
-//            consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
-            Log.v("msg",measurement.toString());
             measurements+= measurement.toString();
             cursor.moveToNext();
         }

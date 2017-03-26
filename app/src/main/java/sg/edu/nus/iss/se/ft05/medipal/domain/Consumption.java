@@ -61,4 +61,10 @@ public class Consumption {
     public Consumption() {
 
     }
+
+
+    @Override
+    public String toString(){
+        return getQuantity()+ ","+getDate()+","+getTime()+"\n";
+    }
 }
