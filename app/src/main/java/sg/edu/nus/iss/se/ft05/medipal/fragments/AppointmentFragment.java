@@ -1,17 +1,21 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointment;
@@ -28,6 +32,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 public class AppointmentFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    AppointmentManager appointmentManager;
     private AppointmentListAdapter mAdapter;
     private Context context;
     private static final String TITLE = "Appointments";
@@ -65,16 +70,32 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
-                int id = (int) viewHolder.itemView.getTag();
-
-                AppointmentManager appointmentManager = new AppointmentManager();
-                appointmentManager.findById(context, id);
-                appointmentManager.delete(context);
-                ReminderUtils.syncAppointmentReminder(context);
-                //update the list
-                mAdapter.swapCursor(AppointmentManager.findAll(context));
+                        int id = (int) viewHolder.itemView.getTag();
+                        appointmentManager = new AppointmentManager();
+                        appointmentManager.findById(context, id);
+                        mAdapter.swapCursor(AppointmentManager.findAll(context));
+                        AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                        warningDialog.setTitle(Constants.TITLE_WARNING);
+                        warningDialog.setMessage(R.string.warning_delete);
+                        warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface alert, int which) {
+                                //remove from DB
+                                appointmentManager.delete(context);
+                                ReminderUtils.syncAppointmentReminder(context);
+                                mAdapter.swapCursor(AppointmentManager.findAll(context));
+                                Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                                alert.dismiss();
+                            }
+                        });
+                        warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface alert, int which) {
+                                alert.dismiss();
+                            }
+                        });
+                        warningDialog.show();
             }
-
             // attach the ItemTouchHelper to the waitlistRecyclerView
         }).attachToRecyclerView(recyclerView);
 

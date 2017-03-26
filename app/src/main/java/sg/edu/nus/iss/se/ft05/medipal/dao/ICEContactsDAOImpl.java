@@ -101,6 +101,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         contact.setPhone(cursor.getLong(cursor.getColumnIndex(ICE_CONTACTS_KEY_PHONE)));
         contact.setType(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_TYPE)));
         contact.setPriority(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_PRIORITY)));
+        sqLiteDatabase.close();
 
         return contact;
     }
@@ -142,6 +143,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         long result = sqLiteDatabase.insert(TABLE_ICE_CONTACTS, null, values);
 
         Log.d(LOG, " Result of Insertion : " + result);
+        sqLiteDatabase.close();
 
         return result;
     }
@@ -170,6 +172,8 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
 
         Log.d(LOG, " Result of Update : " + result);
 
+        db.close();
+
         return result;
     }
 
@@ -196,6 +200,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
                 new String[]{String.valueOf(currentPriority)});
 
         Log.d(LOG, " Result of Update priority : " + result);
+        db.close();
 
         return result;
     }
@@ -222,6 +227,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         }
 
         int priority = cursor.getInt(cursor.getColumnIndex(DATABASE_COMMAND_SELECT_MAXP));
+        //sqLiteDatabase.close();
 
         return priority;
     }

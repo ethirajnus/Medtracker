@@ -1,7 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
-import android.database.Cursor;
-import android.icu.util.Measure;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

@@ -17,6 +17,8 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateHealthBioActivity;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
+import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
+import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 /**
  * @author Moushumi Seal
@@ -76,9 +78,19 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
             conditionType = Constants.CONDITION;
         else
             conditionType = Constants.ALLERGY;
-        holder.textConditionType.setText("Type: " + conditionType);
-        holder.textStartDate.setText("Diagnosed on: " + startDate);
+        holder.textConditionType.setText(Constants.TYPE + conditionType);
+        holder.textStartDate.setText(Constants.DIAGNOSED_ON + startDate);
         holder.itemView.setTag(id);
+
+        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                HealthBioManager healthBioManager = new HealthBioManager();
+                healthBioManager.findById(mContext, id);
+                healthBioManager.delete(mContext);
+                //update the list
+                swapCursor(HealthBioManager.findAll(mContext));
+            }
+        });
 
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +144,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
     class HealthBioViewHolder extends RecyclerView.ViewHolder {
 
         TextView textCondition, textConditionType, textStartDate;
-        ImageView icon, editIcon;
+        ImageView icon, editIcon, deleteIcon;
 
 
         public HealthBioViewHolder(View itemView) {
@@ -142,6 +154,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
             textStartDate = (TextView) itemView.findViewById(R.id.startDate);
             icon = (ImageView) itemView.findViewById(R.id.healthbioImageIcon);
             editIcon = (ImageView) itemView.findViewById(R.id.editIcon);
+            deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon);
         }
     }
 }

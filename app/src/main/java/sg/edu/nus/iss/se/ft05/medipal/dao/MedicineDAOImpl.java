@@ -77,7 +77,7 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         medicine.setThreshold(c.getInt(c.getColumnIndex(MEDICINE_KEY_THRESHOLD)));
         medicine.setDateIssued(c.getString(c.getColumnIndex(MEDICINE_KEY_DATE_ISSUED)));
         medicine.setExpireFactor(c.getInt(c.getColumnIndex(MEDICINE_KEY_EXPIRE_FACTOR)));
-
+        db.close();
         return medicine;
     }
 

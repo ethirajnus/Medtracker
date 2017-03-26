@@ -2,7 +2,6 @@ package sg.edu.nus.iss.se.ft05.medipal.managers;
 
 import android.content.Context;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ReminderDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 

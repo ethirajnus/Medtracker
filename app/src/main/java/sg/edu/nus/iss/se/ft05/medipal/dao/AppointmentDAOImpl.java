@@ -43,6 +43,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         int result = db.delete(TABLE_APPOINTMENT, APPOINTMENT_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(id)});
 
+        db.close();
+
         return result;
     }
 
@@ -59,6 +61,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+
+       // db.close();
 
         return cursor;
     }
@@ -94,6 +98,9 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         appointment.setTest(c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TEST)));
         appointment.setPreTest(c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST)));
 
+
+        db.close();
+
         return appointment;
     }
 
@@ -117,6 +124,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         // insert row
         long result = db.insert(TABLE_APPOINTMENT, null, values);
+
+        db.close();
 
         return result;
     }
@@ -142,6 +151,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         // updating row
         int result = db.update(TABLE_APPOINTMENT, values, APPOINTMENT_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(appointment.getId())});
+
+        db.close();
 
         return result;
     }
@@ -180,13 +191,15 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
             appointment.setTest(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TEST)));
             appointment.setPreTest(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST)));
             appointment.setClinic(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_CLINIC)));
+            appointment.setPreTest(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST)));
 
             appointmentList.add(appointment);
 
             cursor.moveToNext();
         }
 
-        cursor.close();
+
+        db.close();
 
         return appointmentList;
     }
@@ -209,6 +222,25 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         Log.v("count", String.valueOf(cursor.getCount()));
 
         if (cursor != null) {
+
+            cursor.moveToFirst();
+        }
+
+
+       // db.close();
+
+        return cursor;
+    }
+
+    @Override
+    public Cursor fetchByAppointmentDateAndTime(String date, String time){
+
+        String selectQuery = SELECT + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date
+                + "' "+ " AND "+APPOINTMENT_KEY_APPOINTMENT_TIME + " = '" +time + "'";
+        SQLiteDatabase db= this.getReadableDatabase();
+        Cursor cursor=db.rawQuery(selectQuery,null);
+
+        if(cursor != null){
 
             cursor.moveToFirst();
         }

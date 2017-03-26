@@ -1,16 +1,20 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddMeasurement;
@@ -24,6 +28,7 @@ public class MeasurementFragment extends Fragment {
 
     private MeasurementListAdapter mAdapter;
     private Context context;
+    private MeasurementManager measurementManager;
 
     public MeasurementFragment() {
         // Required empty public constructor
@@ -70,18 +75,32 @@ public class MeasurementFragment extends Fragment {
             // Override onSwiped
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-
+                mAdapter.swapCursor(MeasurementManager.findAll(context));
                 // Inside, get the viewHolder's itemView's tag and store in a long variable id
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
-                // call removeGuest and pass through that id
-                //remove from DB
-                MeasurementManager measurementManager = new MeasurementManager();
+                measurementManager = new MeasurementManager();
                 measurementManager.findById(context, id);
-                measurementManager.delete(context);
-                // call swapCursor on mAdapter passing in getAllGuests() as the argument
-                //update the list
-                mAdapter.swapCursor(MeasurementManager.findAll(context));
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        measurementManager.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        mAdapter.swapCursor(MeasurementManager.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
             //attach the ItemTouchHelper to the waitlistRecyclerView

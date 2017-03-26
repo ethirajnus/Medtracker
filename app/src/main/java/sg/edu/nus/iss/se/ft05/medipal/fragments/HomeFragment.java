@@ -1,7 +1,6 @@
 
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
-//import android.app.FragmentManager;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;

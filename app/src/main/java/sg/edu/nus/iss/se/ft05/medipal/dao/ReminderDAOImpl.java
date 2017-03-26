@@ -42,6 +42,14 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
      * @return
      */
     @Override
+    public Cursor findAll() {
+
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_REMINDER;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
+
+    @Override
     public Reminder findById(int id) {
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -62,7 +70,7 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
         reminder.setFrequency((c.getInt(c.getColumnIndex(REMINDER_KEY_FREQUENCY))));
         reminder.setStartTime(c.getString(c.getColumnIndex(REMINDER_KEY_STARTTIME)));
         reminder.setInterval(c.getInt(c.getColumnIndex(REMINDER_KEY_INTERVAL)));
-
+        db.close();
         return reminder;
     }
 

@@ -2,16 +2,20 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,10 +37,16 @@ import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_DIASTOLIC;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_PULSE;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_SYSTOLIC;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_TEMPERATURE;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_WEIGHT;
 
 /**
  * Created by ethi on 25/03/17.
@@ -57,6 +71,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     private Date dateObjFrom,dateObjTo;
     private Calendar dateCalendarFrom,dateCalendarTo;
     private MeasurementManager measurementManager;
+    private Cursor cursor;
 
     /**
      *
@@ -101,7 +116,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
         // Get all guest info from the database and save in a cursor
         measurementManager = new MeasurementManager();
-        Cursor cursor = measurementManager.findAll(context);
+        cursor = measurementManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new MeasurementListAdapter(context, cursor);
@@ -121,13 +136,32 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                mAdapter.swapCursor(MeasurementManager.findAll(context));
+                // Inside, get the viewHolder's itemView's tag and store in a long variable id
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
-                //remove from DB
-                Measurement measurement = measurementManager.findById(context, id);
-                measurementManager.delete(context);
-                //update the list
-                mAdapter.swapCursor(measurementManager.findAll(context));
+                measurementManager = new MeasurementManager();
+                measurementManager.findById(context, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        measurementManager.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        mAdapter.swapCursor(MeasurementManager.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
         }).attachToRecyclerView(measurementRecyclerView);
@@ -233,7 +267,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     }
 
     private void triggerFilterForDate() {
-        Cursor cursor = measurementManager.betweenDate(context,dateFromText,dateToText);
+        cursor = measurementManager.betweenDate(context,dateFromText,dateToText);
         mAdapter.swapCursor(cursor);
     }
 
@@ -247,18 +281,70 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         // handle item selection
         switch (item.getItemId()) {
             case R.id.share_measurement:
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Subjct");
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+                SendEmail();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
+
+
+    private void SendEmail(){
+        createFile(context,"measurement.csv,",fetchContent());
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "measurement");
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    public void createFile(Context context, String sFileName, String sBody) {
+        try {
+            File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
+            if (!root.exists()) {
+                root.mkdirs();
+            }
+            File gpxfile = new File(root, sFileName);
+            FileWriter writer = new FileWriter(gpxfile);
+            writer.append(sBody);
+            writer.flush();
+            writer.close();
+            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String fetchContent() {
+        return new StringBuilder().append("Measurement\n\n")
+                .append("Systolic,Diastolic,Pulse,Temperature,Weight\n")
+                .append(fetchMeasurementAsString()).toString();
+    }
+
+    private String fetchMeasurementAsString() {
+        cursor.moveToFirst();
+        Log.v("check",String.valueOf(cursor.getCount()));
+        String measurements = "";
+        while (!cursor.isAfterLast()) {
+            Measurement measurement = new Measurement();
+            measurement.setSystolic(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_SYSTOLIC)));
+            measurement.setDiastolic(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_DIASTOLIC)));
+            measurement.setPulse(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_PULSE)));
+            measurement.setTemperature(cursor.getFloat(cursor.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
+            measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
+//            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
+//            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
+//            consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
+//            consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
+            Log.v("msg",measurement.toString());
+            measurements+= measurement.toString();
+            cursor.moveToNext();
+        }
+        return measurements;
+    }
 
     /**
      * view

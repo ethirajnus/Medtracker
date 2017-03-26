@@ -82,7 +82,7 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
         personalBio.setPostalCode(c.getString(c.getColumnIndex(DbConstants.PERSONAL_BIO_KEY_POSTAL_CODE)));
         personalBio.setHeight(c.getString(c.getColumnIndex(DbConstants.PERSONAL_BIO_KEY_HEIGHT)));
         personalBio.setBloodType(c.getString(c.getColumnIndex(DbConstants.PERSONAL_BIO_KEY_BLOOD_TYPE)));
-
+        db.close();
         return personalBio;
     }
 

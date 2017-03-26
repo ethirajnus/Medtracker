@@ -1,6 +1,8 @@
 package sg.edu.nus.iss.se.ft05.medipal.dao;
 
 
+import android.database.Cursor;
+
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
 /**
@@ -11,31 +13,37 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
  * Interface for reminder database opertaion
  */
 public interface ReminderDAO {
+
     /**
      * Delete operation
+     *
      * @param id
      * @return
      */
-    int delete(int id);
+    public int delete(int id);
 
     /**
      * select operation with where clause using ID
+     *
      * @param id
      * @return
      */
-    Reminder findById(int id);
+    public Reminder findById(int id);
 
     /**
      * Insert operation
-     * @param reminder
-     * @return
-     */
-    long insert(Reminder reminder);
-
-    /**
      *
      * @param reminder
      * @return
      */
-    int update(Reminder reminder);
+    public long insert(Reminder reminder);
+
+    /**
+     * @param reminder
+     * @return
+     */
+    public int update(Reminder reminder);
+
+    public Cursor findAll();
+
 }

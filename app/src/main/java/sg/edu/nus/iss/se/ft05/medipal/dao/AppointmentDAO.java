@@ -56,4 +56,6 @@ public interface AppointmentDAO {
     public List<Appointment> findByDate(String date);
 
     public Cursor filterDate(String date);
+
+    public Cursor fetchByAppointmentDateAndTime(String date, String time);
 }

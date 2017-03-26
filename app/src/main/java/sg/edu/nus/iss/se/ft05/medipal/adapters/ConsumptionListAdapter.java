@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
@@ -94,10 +94,12 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Consumption consumption = Consumption.findById(mContext, id);
-                consumption.delete(mContext);
+
+                ConsumptionManager consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(mContext, id);
+                consumptionManager.delete(mContext);
                 //update the list
-                swapCursor(Consumption.findAll(mContext));
+                swapCursor(ConsumptionManager.findAll(mContext));
             }
         });
 

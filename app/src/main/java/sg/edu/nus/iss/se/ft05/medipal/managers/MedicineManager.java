@@ -15,9 +15,9 @@ import java.util.Map;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.TIME_FORMAT;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
@@ -90,7 +90,7 @@ public class MedicineManager {
         ReminderManager reminderManager = new ReminderManager();
         reminderManager.setReminder(getReminder(context));
         reminderManager.delete(context);
-        Consumption.deleteAllForMedicine(context,medicine.getId());
+        ConsumptionManager.deleteAllForMedicine(context, medicine.getId());
         return medicineDAO.delete(medicine.getId());
     }
 
@@ -153,7 +153,7 @@ public class MedicineManager {
 
     public List<Consumption> consumptions(Context context) {
 
-        return Consumption.findByMedicineID(context, medicine.getId());
+        return ConsumptionManager.findByMedicineID(context, medicine.getId());
 
     }
 

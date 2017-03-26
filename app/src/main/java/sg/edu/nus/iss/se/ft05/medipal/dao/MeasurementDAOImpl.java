@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
-import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
@@ -88,7 +87,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         measurement.setTemperature(c.getFloat(c.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
         measurement.setWeight(c.getInt(c.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
         measurement.setMeasuredOn(c.getString(c.getColumnIndex(MEASUREMENT_KEY_MEASURED_ON)));
-
+        db.close();
         return measurement;
     }
 
@@ -166,7 +165,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
             c.moveToFirst();
             id = c.getInt(c.getColumnIndex("MAXID"));
         }
-
+        db.close();
         return id;
     }
 
@@ -181,7 +180,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         Cursor cursor;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT + " order by measuredON DESC";
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT + " order by measuredON";
         cursor = db.rawQuery(selectQuery, null);
 
         boolean systolic = true;
@@ -192,10 +191,10 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 
         if (cursor != null) {
 
-            cursor.moveToFirst();
+            cursor.moveToLast();
         }
 
-        while (cursor.moveToNext()) {
+        while (!cursor.isBeforeFirst()) {
 
             if (cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_SYSTOLIC)) != 0 && systolic) {
 
@@ -226,7 +225,11 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
                 measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
                 weight = false;
             }
+
+            cursor.moveToPrevious();
         }
+
+       // db.close();
 
         return measurement;
     }

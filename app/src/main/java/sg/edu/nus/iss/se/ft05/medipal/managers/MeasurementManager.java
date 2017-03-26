@@ -3,7 +3,6 @@ package sg.edu.nus.iss.se.ft05.medipal.managers;
 import android.content.Context;
 import android.database.Cursor;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MeasurementDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MeasurementDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;

@@ -1,11 +1,10 @@
 package sg.edu.nus.iss.se.ft05.medipal.listeners;
 
 import android.content.Context;
-import android.content.Intent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.Toast;
+
 
 /**
  * Created by ashish katre on 3/18/2017.

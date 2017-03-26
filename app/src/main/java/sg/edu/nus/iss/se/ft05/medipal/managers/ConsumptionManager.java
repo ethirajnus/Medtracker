@@ -1,84 +1,49 @@
-package sg.edu.nus.iss.se.ft05.medipal.model;
+package sg.edu.nus.iss.se.ft05.medipal.managers;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.EditText;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
-import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 /**
  * Created by ethi on 10/03/17.
  */
 
-/**
- * Class for consumption
- */
-public class Consumption {
+
+public class ConsumptionManager {
 
     private static ConsumptionDAOImpl consumptionAll;
-    private int id, medicineId, quantity;
-    private String date, time;
 
     private ConsumptionDAOImpl consumptionDAO;
 
-    public Consumption(int medicineId, int quantity, String date, String time) {
-        this.medicineId = medicineId;
-        this.date = date;
-        this.time = time;
-        this.quantity = quantity;
+    private Consumption consumption;
+
+    public Consumption getConsumption() {
+        return consumption;
     }
 
-    public int getId() {
-        return id;
+    public void setConsumption(Consumption consumption) {
+        this.consumption = consumption;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public ConsumptionManager(int medicineId, int quantity, String date, String time) {
+
+        this.consumption = new Consumption(medicineId, quantity, date, time);
     }
 
-    public int getMedicineId() {
-        return medicineId;
-    }
-
-    public void setMedicineId(int medicineId) {
-        this.medicineId = medicineId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public Consumption() {
+    public ConsumptionManager() {
 
     }
 
     /**
      * Method for finding all consumption
+     *
      * @param context
      * @return
      */
@@ -89,6 +54,7 @@ public class Consumption {
 
     /**
      * Method to filter consumption by date
+     *
      * @param context
      * @param date
      * @return
@@ -98,59 +64,67 @@ public class Consumption {
         return consumptionAll.filterDate(date);
     }
 
+
     /**
      * Method to find consumption by id
+     *
      * @param context
      * @param id
      * @return
      */
-    public static Consumption findById(Context context, int id) {
-        consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.findById(id);
+    public Consumption findById(Context context, int id) {
+        consumptionDAO = new ConsumptionDAOImpl(context);
+        consumption = consumptionDAO.findById(id);
+        return consumption;
     }
 
     /**
      * SAve consumption
+     *
      * @param context
      * @return
      */
     public long save(Context context) {
         consumptionDAO = new ConsumptionDAOImpl(context);
-        return consumptionDAO.insert(this);
+        return consumptionDAO.insert(consumption);
     }
 
     /**
      * Update consumption
+     *
      * @param context
      * @return
      */
     public int update(Context context) {
         consumptionDAO = new ConsumptionDAOImpl(context);
-        return consumptionDAO.update(this);
+        return consumptionDAO.update(consumption);
     }
 
     /**
      * Delete consumption
+     *
      * @param context
      * @return
      */
     public int delete(Context context) {
         consumptionDAO = new ConsumptionDAOImpl(context);
-        return consumptionDAO.delete(this.getId());
+        return consumptionDAO.delete(this.consumption.getId());
     }
 
     /**
      * Method to get medicine
+     *
      * @param context
      * @return
      */
     public Medicine getMedicine(Context context) {
         MedicineManager medicineManager = new MedicineManager();
-        return medicineManager.findById(context, getMedicineId());
+        return medicineManager.findById(context, consumption.getMedicineId());
     }
 
     /**
      * Lsit all consumption
+     *
      * @param context
      * @param date
      * @return
@@ -170,18 +144,23 @@ public class Consumption {
         return consumptionAll.findByMedicineID(medicineId);
     }
 
-    public static List<Consumption> filterByDate(List<Consumption> consumptions, String date) {
-        List<Consumption> filteredConsumptions = new ArrayList<>();
-        for (Consumption consumption : consumptions) {
+    public static List<Consumption> filterByDate(List<Consumption> consumptionList, String date) {
+
+        List<Consumption> filteredConsumptionList = new ArrayList<>();
+
+        for (Consumption consumption : consumptionList) {
+
             if (consumption.getDate().contentEquals(date)) {
-                filteredConsumptions.add(consumption);
+
+                filteredConsumptionList.add(consumption);
             }
         }
-        return filteredConsumptions;
+        return filteredConsumptionList;
     }
 
     /**
      * Fetch consumption based on category
+     *
      * @param context
      * @param medicineCategoryId
      * @return
@@ -193,6 +172,7 @@ public class Consumption {
 
     /**
      * Fetch consumption based on medicine
+     *
      * @param context
      * @param medicineId
      * @return
@@ -204,6 +184,7 @@ public class Consumption {
 
     /**
      * Fetch consumption based on medicine and date
+     *
      * @param context
      * @param medicineId
      * @param date
@@ -216,6 +197,7 @@ public class Consumption {
 
     /**
      * Fetch consumption based on medicine and year
+     *
      * @param context
      * @param medicineId
      * @param year
@@ -228,6 +210,7 @@ public class Consumption {
 
     /**
      * Fetch consumption based on medicine and month
+     *
      * @param context
      * @param medicineId
      * @param year
@@ -241,6 +224,7 @@ public class Consumption {
 
     /**
      * Fetch consumption based on category and date
+     *
      * @param context
      * @param medicineCategoryId
      * @param date
@@ -253,6 +237,7 @@ public class Consumption {
 
     /**
      * Fetch consumption based on category and year
+     *
      * @param context
      * @param medicineCategoryId
      * @param year
@@ -265,6 +250,7 @@ public class Consumption {
 
     /**
      * Fetch consumption based on category and month
+     *
      * @param context
      * @param medicineCategoryId
      * @param year
@@ -284,6 +270,7 @@ public class Consumption {
 
     /**
      * Fetch unconsumed based on medicine and date
+     *
      * @param context
      * @param medicineId
      * @param date
@@ -296,6 +283,7 @@ public class Consumption {
 
     /**
      * Fetch unconsumed based on medicine and year
+     *
      * @param context
      * @param medicineId
      * @param year
@@ -308,6 +296,7 @@ public class Consumption {
 
     /**
      * Fetch unconsumed based on medicine and month
+     *
      * @param context
      * @param medicineId
      * @param year
@@ -319,27 +308,52 @@ public class Consumption {
         return consumptionAll.fetchByMedicineAndMonthUnconsumed(medicineId, year, month);
     }
 
+
     /**
      * Delete all
+     *
      * @param context
      * @param medicineId
      * @return
      */
-    public static int deleteAllForMedicine(Context context,int medicineId) {
+    public static int deleteAllForMedicine(Context context, int medicineId) {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.deleteAllForMedicine(medicineId);
 
     }
 
+
     /**
+     * find data between dates
      *
      * @param context
      * @param dateFrom
      * @param dateTo
-     * @return
+     * @return Cursor
      */
-    public static Cursor betweenDate(Context context,String dateFrom, String dateTo) {
+    public static Cursor betweenDate(Context context, String dateFrom, String dateTo) {
         consumptionAll = new ConsumptionDAOImpl(context);
-        return consumptionAll.betweenDate(dateFrom,dateTo);
+        return consumptionAll.betweenDate(dateFrom, dateTo);
     }
+
+
+    public static Cursor fetchByCategoryAndBetweenDates(Context context, int categoryId, String dateFrom, String dateTo) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByCategoryAndBetweenDates(categoryId, dateFrom, dateTo);
+    }
+
+
+    public static Cursor fetchByMedicineAndBetweenDates(Context context, int medicineId, String dateFrom, String dateTo) {
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndBetweenDates(medicineId, dateFrom, dateTo);
+    }
+
+
+    public static Cursor fetchByMedicineAndBetweenDatesUnconsumed(Context context, int medicineId, String dateFrom, String dateTo) {
+
+        consumptionAll = new ConsumptionDAOImpl(context);
+        return consumptionAll.fetchByMedicineAndBetweenDatesUnconsumed(medicineId, dateFrom, dateTo);
+    }
+
+
 }

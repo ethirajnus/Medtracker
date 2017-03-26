@@ -86,4 +86,9 @@ public class Measurement {
         this.measuredOn = measuredOn;
     }
 
+    @Override
+    public String toString(){
+        return getSystolic() + ","+ getDiastolic()+ ","+getPulse()+","+getTemperature()+","+getWeight()+"\n";
+    }
+
 }

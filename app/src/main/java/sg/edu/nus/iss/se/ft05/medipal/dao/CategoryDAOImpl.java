@@ -82,6 +82,8 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
             category.setRemind(c.getInt(c.getColumnIndex(CATEGORY_KEY_REMIND)) == 1);
         }
 
+        db.close();
+
         return category;
     }
 

@@ -140,12 +140,26 @@ public class AddOrUpdateCategory extends AppCompatActivity implements View.OnCli
             categoryManager.getCategory().setCode(categoryCode);
             categoryManager.getCategory().setDescription(categoryDescription);
             if (isValid()) {
-                if (categoryManager.update(context) == -1) {
-                    Toast.makeText(context, CATEGORY_NOT_UPDATED, Toast.LENGTH_SHORT).show();
-                } else {
-                    navigateToMainAcitivity();
-                }
+                new UpdateCategory().execute();
             }
+        }
+    }
+
+    private class UpdateCategory extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return categoryManager.update(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, CATEGORY_NOT_UPDATED, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainAcitivity();
+            }
+
         }
     }
 
