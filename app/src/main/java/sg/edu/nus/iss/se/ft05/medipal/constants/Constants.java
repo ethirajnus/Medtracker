@@ -57,6 +57,8 @@ public class Constants {
     public static final String CONDITION = "CONDITION";
     public static final String EMPTY_CONDITION = "Please provide a condition!";
     public static final String EMPTY_START_DATE = "Please specify the date!";
+    public static final String TYPE = "Type: ";
+    public static final String DIAGNOSED_ON = "Diagnosed on: ";
 
 
     //Medicine
