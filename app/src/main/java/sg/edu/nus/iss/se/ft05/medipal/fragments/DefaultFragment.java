@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,15 @@ public class DefaultFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_default, container, false);
         context = getActivity().getApplicationContext();
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+
+        FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        fabSOS.setVisibility(View.GONE);
+
+        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
+        fabEmail.setVisibility(View.GONE);
 
         Calendar calendar = Calendar.getInstance();
         Date d = calendar.getTime();

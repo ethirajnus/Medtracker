@@ -246,7 +246,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                     if(dateFromText.length() != 0)
                         checkDateAndSwapCursor();
                 }
-                
+
 
             }
 
@@ -258,7 +258,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
 
     }
-    
+
     private void checkDateAndSwapCursor(){
         try {
             dateObjFrom = formatter.parse(dateFromText);

@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
+
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
+
 /**
  * Implementation class for emergency contacts database operations
  * Created by Ashish Katre
@@ -95,13 +97,17 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         }
 
         ICEContact contact = new ICEContact();
-        contact.setId(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_ID)));
-        contact.setName((cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_NAME))));
-        contact.setDescription(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_DESC)));
-        contact.setPhone(cursor.getLong(cursor.getColumnIndex(ICE_CONTACTS_KEY_PHONE)));
-        contact.setType(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_TYPE)));
-        contact.setPriority(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_PRIORITY)));
-        sqLiteDatabase.close();
+
+        if (!cursor.isBeforeFirst()) {
+
+            contact.setId(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_ID)));
+            contact.setName((cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_NAME))));
+            contact.setDescription(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_DESC)));
+            contact.setPhone(cursor.getLong(cursor.getColumnIndex(ICE_CONTACTS_KEY_PHONE)));
+            contact.setType(cursor.getString(cursor.getColumnIndex(ICE_CONTACTS_KEY_TYPE)));
+            contact.setPriority(cursor.getInt(cursor.getColumnIndex(ICE_CONTACTS_KEY_PRIORITY)));
+            sqLiteDatabase.close();
+        }
 
         return contact;
     }

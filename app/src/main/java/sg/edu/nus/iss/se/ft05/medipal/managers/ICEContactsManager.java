@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.managers;
 import android.content.Context;
 import android.database.Cursor;
 
+import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
@@ -83,6 +84,28 @@ public class ICEContactsManager {
         ICEContactsDAO iceContactsDAO = new ICEContactsDAOImpl(context);
 
         return iceContactsDAO.findAll();
+    }
+
+    /**
+     * Static method for finding all contacts
+     *
+     * @param context
+     * @return Cursor
+     */
+    public static long findPhone(Context context) {
+
+        long phone = 0;
+
+        ICEContactsDAO iceContactsDAO = new ICEContactsDAOImpl(context);
+
+        Cursor cursor = iceContactsDAO.findAll();
+
+        if (null != cursor && !cursor.isBeforeFirst()) {
+
+            phone = cursor.getLong(cursor.getColumnIndex(DBHelper.ICE_CONTACTS_KEY_PHONE));
+        }
+
+        return phone;
     }
 
     /**

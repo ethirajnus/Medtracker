@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.REPORT;
 
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.REPORT;
 
 
 /**
@@ -24,21 +25,32 @@ public class ReportFragment extends Fragment {
 
     private Context context;
     private TabLayout tabs;
+
     public ReportFragment() {
         // Required empty public constructor
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
      * @return
      */
-	@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-    	View view = inflater.inflate(R.layout.report_fragment, container, false);
+
+        View view = inflater.inflate(R.layout.report_fragment, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+
+        FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        fabSOS.setVisibility(View.GONE);
+
+        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
+        fabEmail.setVisibility(View.VISIBLE);
+
         getActivity().setTitle(REPORT);
         context = getActivity().getApplicationContext();
 
@@ -87,7 +99,7 @@ public class ReportFragment extends Fragment {
 
     static class Adapter extends FragmentStatePagerAdapter {
         int mNumOfTabs;
-        String[] tabTitles = {"Measurement", "Consumption" };
+        String[] tabTitles = {"Measurement", "Consumption"};
 
         public Adapter(FragmentManager fm, int NumOfTabs) {
             super(fm);
@@ -95,7 +107,6 @@ public class ReportFragment extends Fragment {
         }
 
         /**
-         *
          * @param position
          * @return
          */
@@ -105,7 +116,6 @@ public class ReportFragment extends Fragment {
         }
 
         /**
-         *
          * @param position
          * @return
          */
@@ -115,7 +125,7 @@ public class ReportFragment extends Fragment {
             switch (position) {
                 case 0:
                     MeasurementReportTab measurements = new MeasurementReportTab();
-                    return  measurements;
+                    return measurements;
                 case 1:
                     ConsumptionReportTab consumptions = new ConsumptionReportTab();
                     return consumptions;
@@ -125,7 +135,6 @@ public class ReportFragment extends Fragment {
         }
 
         /**
-         *
          * @return
          */
         @Override

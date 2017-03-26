@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +41,16 @@ public class ConsumptionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.consumption_fragment, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+
+        FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        fabSOS.setVisibility(View.GONE);
+
+        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
+        fabEmail.setVisibility(View.GONE);
+
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateConsumption.class);
         context = getActivity().getApplicationContext();
         getActivity().setTitle(CONSUMPTION);

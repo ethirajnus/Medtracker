@@ -18,14 +18,12 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 public class MeasurementTab extends Fragment {
     //private Context context;
     private TextView weight, pulse, systolic, diastolic, temperature;
-    int recent_weight,recent_systolic,recent_diastolic,recent_pulse,recent_temperature;
 
     public MeasurementTab() {
         // Required empty public constructor
     }
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -35,7 +33,6 @@ public class MeasurementTab extends Fragment {
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -46,7 +43,7 @@ public class MeasurementTab extends Fragment {
                              Bundle savedInstanceState) {
 
         MeasurementManager measurementManager = new MeasurementManager();
-        Measurement measurement=measurementManager.findLatest(getContext());
+        Measurement measurement = measurementManager.findLatest(getContext());
 
         View view = inflater.inflate(R.layout.fragment_measurement_tab, container, false);
         weight = (TextView) view.findViewById(R.id.weight);
@@ -59,7 +56,6 @@ public class MeasurementTab extends Fragment {
         diastolic.setText("" + measurement.getDiastolic());
         temperature = (TextView) view.findViewById(R.id.temperature);
         temperature.setText("" + measurement.getTemperature());
-
 
 
         return view;

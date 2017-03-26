@@ -140,7 +140,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     } else {
 
                         SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergancy please call immidiately", null, null);
+                        smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergancy please call immediately", null, null);
                         Toast.makeText(context, "SMS Sent", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -167,7 +167,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                 public void onClick(View v) {
 
-                    // TODO Temp
                     if (ActivityCompat.checkSelfPermission(context,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 

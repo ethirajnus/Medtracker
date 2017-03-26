@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
  * Created by ethi on 08/03/17.
  */
 public class AppointmentFragment extends Fragment {
+
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     AppointmentManager appointmentManager;
@@ -47,6 +49,16 @@ public class AppointmentFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.appointment_fragment, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+
+        FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        fabSOS.setVisibility(View.GONE);
+
+        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
+        fabEmail.setVisibility(View.GONE);
+
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddNewAppointment.class);
         context = getActivity().getApplicationContext();
         recyclerView = (RecyclerView) view.findViewById(R.id.all_appointments_list_view);
