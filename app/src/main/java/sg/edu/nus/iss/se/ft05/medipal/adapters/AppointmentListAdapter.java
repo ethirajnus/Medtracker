@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     private Cursor mCursor;
     private Context mContext;
+    AppointmentManager appointmentManager;
 
     public AppointmentListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
@@ -79,15 +81,11 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AppointmentManager appointmentManager = new AppointmentManager();
+                appointmentManager = new AppointmentManager();
 
                 appointmentManager.findById(mContext, id);
 
-                appointmentManager.delete(mContext);
-
-                ReminderUtils.syncAppointmentReminder(mContext);
-                //update the list
-                swapCursor(AppointmentManager.findAll(mContext));
+                new DeleteAppointment().execute();
             }
         });
 
@@ -111,6 +109,21 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         InitialDrawable drawable = InitialDrawable.builder().buildRound(clinic.toUpperCase().substring(0, 1), color);
 
         holder.icon.setImageDrawable(drawable);
+    }
+
+    private class DeleteAppointment extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return appointmentManager.delete(mContext)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            ReminderUtils.syncAppointmentReminder(mContext);
+            //update the list
+            swapCursor(AppointmentManager.findAll(mContext));
+        }
     }
 
     /**

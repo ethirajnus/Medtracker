@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -91,9 +92,7 @@ public class HealthBioFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        healthBioManager.delete(context);
-                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
-                        mAdapter.swapCursor(HealthBioManager.findAll(context));
+                        new DeleteHealthBio().execute();
                         alert.dismiss();
                     }
                 });
@@ -112,5 +111,18 @@ public class HealthBioFragment extends Fragment {
 
         return view;
 
+    }
+    private class DeleteHealthBio extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return healthBioManager.delete(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+            mAdapter.swapCursor(HealthBioManager.findAll(context));
+        }
     }
 }
