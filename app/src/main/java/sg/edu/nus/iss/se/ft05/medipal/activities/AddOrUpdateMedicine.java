@@ -393,7 +393,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int button) {
                     alert.dismiss();

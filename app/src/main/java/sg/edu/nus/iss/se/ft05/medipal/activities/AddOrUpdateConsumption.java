@@ -305,7 +305,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int button) {
                     alert.dismiss();
@@ -319,7 +319,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(CONSUMPTION_FREQUENCY_NOT_MORE_THAN_ERROR_MESSAGE + frequency + CONSUMPTION_TIMES);
-                warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface alert, int button) {
                         alert.dismiss();
@@ -333,7 +333,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                         AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                         warningDialog.setTitle(Constants.TITLE_WARNING);
                         warningDialog.setMessage(CONSUMPTION_NOT_BEFORE_ERROR_MESSAGE);
-                        warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                        warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface alert, int button) {
                                 alert.dismiss();

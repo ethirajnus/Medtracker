@@ -16,11 +16,13 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm";
     public static final String TITLE_WARNING = "Warning";
-    public static final String OK_BUTTON = "OK";
+    public static final String BUTTON_OK = "OK";
     public static final String PATTERN_ZERO = "^[0.]+?";
     public static final String PATTERN_COMMA = "^.*[,].*$";
     public static final String PATTERN_LETTERS_ONLY = "^[a-zA-Z\\s]+$";
     public static final String PATTERN_ALPHANUMERIC = "^[a-zA-Z0-9]+$";
+    public static final String BUTTON_YES = "YES";
+    public static final String BUTTON_NO = "NO";
 
     //PersonalBio
     public static final String TITLE_PERSONAL_BIO = "Personal Details";

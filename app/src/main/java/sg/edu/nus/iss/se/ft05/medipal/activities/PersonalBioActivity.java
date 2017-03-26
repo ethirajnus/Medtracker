@@ -28,7 +28,6 @@ import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.PersonalBioManager;
 
 /**
@@ -333,7 +332,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(R.string.warning_allMandatory);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int which) {
                     alert.dismiss();
