@@ -78,6 +78,19 @@ public class ICEContactsDAOInstrumentedTest {
     @After
     public void finish() {
 
+        Cursor cursor = iceContactsDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            iceContactsDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(ICEContactsDAOImpl.ICE_CONTACTS_KEY_ID)));
+            cursor.moveToNext();
+        }
+
         iceContactsDAOImpl.close();
     }
 

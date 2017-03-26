@@ -168,7 +168,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                 public void onClick(View v) {
 
-                    // TODO Temp
                     if (ActivityCompat.checkSelfPermission(context,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 

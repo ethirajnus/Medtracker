@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 public class PersonalDAOInstrumentedTest {
 
 
-    private PersonalBioDAOImpl healthBioImpl;
+    private PersonalBioDAOImpl personalBioDAOImpl;
     private PersonalBio personalBio1;
     private PersonalBio personalBio2;
     private PersonalBio personalBio7;
@@ -34,9 +33,9 @@ public class PersonalDAOInstrumentedTest {
     @Before
     public void setUp() {
 
-        healthBioImpl = new PersonalBioDAOImpl(InstrumentationRegistry.getTargetContext());
+        personalBioDAOImpl = new PersonalBioDAOImpl(InstrumentationRegistry.getTargetContext());
 
-        Cursor cursor = healthBioImpl.findAll();
+        Cursor cursor = personalBioDAOImpl.findAll();
 
         if (null != cursor) {
 
@@ -45,21 +44,21 @@ public class PersonalDAOInstrumentedTest {
 
         while (!cursor.isAfterLast()) {
 
-            healthBioImpl.delete(cursor.getInt(cursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID)));
+            personalBioDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DbConstants.PERSONAL_BIO_KEY_ID)));
             cursor.moveToNext();
         }
 
         personalBio1 = new PersonalBio("Name1", "2017-01-01", "IDNO1", "Address1", "111111", "111", "A+");
 
-        healthBioImpl.insert(personalBio1);
+        personalBioDAOImpl.insert(personalBio1);
 
         personalBio2 = new PersonalBio("Name2", "2017-01-02", "IDNO2", "Address2", "222222", "222", "A-");
 
-        healthBioImpl.insert(personalBio2);
+        personalBioDAOImpl.insert(personalBio2);
 
-        healthBioImpl.insert(new PersonalBio("Name3", "2017-01-03", "IDNO3", "Address3", "333333", "333", "B+"));
+        personalBioDAOImpl.insert(new PersonalBio("Name3", "2017-01-03", "IDNO3", "Address3", "333333", "333", "B+"));
 
-        healthBioImpl.insert(new PersonalBio("Name1", "2017-01-04", "IDNO4", "Address4", "444444", "444", "B-"));
+        personalBioDAOImpl.insert(new PersonalBio("Name1", "2017-01-04", "IDNO4", "Address4", "444444", "444", "B-"));
 
         personalBio7 = new PersonalBio("Name7", "2017-01-07", "IDNO7", "Address7", "777777", "777", "O+");
         personalBio7.setId(3);
@@ -68,20 +67,35 @@ public class PersonalDAOInstrumentedTest {
     @After
     public void finish() {
 
-        healthBioImpl.close();
+        personalBioDAOImpl = new PersonalBioDAOImpl(InstrumentationRegistry.getTargetContext());
+
+        Cursor cursor = personalBioDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            personalBioDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DbConstants.PERSONAL_BIO_KEY_ID)));
+            cursor.moveToNext();
+        }
+
+        personalBioDAOImpl.close();
     }
 
     @Test
     public void testPreConditions() {
 
-        assertNotNull(healthBioImpl);
+        assertNotNull(personalBioDAOImpl);
     }
 
 
     @Test
     public void testFindAll() throws Exception {
 
-        Cursor cursor = healthBioImpl.findAll();
+        Cursor cursor = personalBioDAOImpl.findAll();
 
         assertNotNull(cursor);
 
@@ -149,7 +163,7 @@ public class PersonalDAOInstrumentedTest {
 
     private void findByIdTesting(int id, PersonalBio personalBioTest) {
 
-        PersonalBio personalBio = healthBioImpl.findById(id);
+        PersonalBio personalBio = personalBioDAOImpl.findById(id);
 
         assertNotNull(personalBio);
 
@@ -172,7 +186,7 @@ public class PersonalDAOInstrumentedTest {
     @Test
     public void testDelete() throws Exception {
 
-        int num = healthBioImpl.delete(4);
+        int num = personalBioDAOImpl.delete(4);
 
         assertNotNull(num);
         assertEquals(1, num);
@@ -181,7 +195,7 @@ public class PersonalDAOInstrumentedTest {
     @Test
     public void testUpdate() throws Exception {
 
-        int num = healthBioImpl.update(personalBio7);
+        int num = personalBioDAOImpl.update(personalBio7);
 
         assertNotNull(num);
         assertEquals(1, num);
@@ -191,7 +205,7 @@ public class PersonalDAOInstrumentedTest {
     @Test
     public void testFindPersonalBioId() throws Exception {
 
-        int id = healthBioImpl.findPersonalBioId("Name2", "2017-01-02", "IDNO2");
+        int id = personalBioDAOImpl.findPersonalBioId("Name2", "2017-01-02", "IDNO2");
 
         assertNotNull(id);
         assertEquals(2, id);

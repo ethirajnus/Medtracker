@@ -45,7 +45,7 @@ public class MedicineDAOInstrumentedTest {
 
         while (!cursor.isAfterLast()) {
 
-            medicineDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.MEASUREMENT_KEY_ID)));
+            medicineDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID)));
             cursor.moveToNext();
         }
 
@@ -67,6 +67,21 @@ public class MedicineDAOInstrumentedTest {
 
     @After
     public void finish() {
+
+        medicineDAOImpl = new MedicineDAOImpl(InstrumentationRegistry.getTargetContext());
+
+        Cursor cursor = medicineDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            medicineDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID)));
+            cursor.moveToNext();
+        }
 
         medicineDAOImpl.close();
     }

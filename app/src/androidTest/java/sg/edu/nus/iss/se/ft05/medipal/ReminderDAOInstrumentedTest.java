@@ -46,7 +46,7 @@ public class ReminderDAOInstrumentedTest {
 
         while (!cursor.isAfterLast()) {
 
-            reminderDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID)));
+            reminderDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.REMINDER_KEY_ID)));
             cursor.moveToNext();
         }
 
@@ -69,6 +69,19 @@ public class ReminderDAOInstrumentedTest {
 
     @After
     public void finish() {
+
+        Cursor cursor = reminderDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            reminderDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.REMINDER_KEY_ID)));
+            cursor.moveToNext();
+        }
 
         reminderDAOImpl.close();
     }

@@ -30,7 +30,6 @@ public class MeasurementTab extends Fragment {
     }
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -40,7 +39,6 @@ public class MeasurementTab extends Fragment {
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -51,7 +49,7 @@ public class MeasurementTab extends Fragment {
                              Bundle savedInstanceState) {
 
         MeasurementManager measurementManager = new MeasurementManager();
-        Measurement measurement=measurementManager.findLatest(getContext());
+        Measurement measurement = measurementManager.findLatest(getContext());
 
         View view = inflater.inflate(R.layout.fragment_measurement_tab, container, false);
 

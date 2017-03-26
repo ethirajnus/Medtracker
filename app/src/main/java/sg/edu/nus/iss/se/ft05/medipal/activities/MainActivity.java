@@ -1,12 +1,17 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -30,6 +36,7 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ReportFragment;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 /**
@@ -43,14 +50,15 @@ public class MainActivity extends AppCompatActivity
     Context context;
     TabLayout tabLayout;
 
+    private static final int ICE_PERMISSIONS_REQUEST_CALL = 1;
+
     static final int FIRST_RUN_REQUEST = 0;
-   // SharedPreferences settings;
+    // SharedPreferences settings;
     TextView mUserName;
 
     private PrefManager prefManager;
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -66,7 +74,7 @@ public class MainActivity extends AppCompatActivity
             Bundle b = new Bundle();
             b.putString(Constants.ACTION, Constants.NEW);
             intent.putExtras(b);
-            startActivityForResult(intent,FIRST_RUN_REQUEST);
+            startActivityForResult(intent, FIRST_RUN_REQUEST);
         }
 
         setContentView(R.layout.activity_main);
@@ -75,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         context = getApplicationContext();
 
         setFloatingActionButtonAction(AddOrUpdateMedicine.class);
+        setFloatingActionButtonSOSAction();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -101,7 +110,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -111,15 +119,15 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         int userId = 0;
         String userName = "";
-        if(requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK){
-            userId = data.getIntExtra("personId",0);
+        if (requestCode == FIRST_RUN_REQUEST && resultCode == RESULT_OK) {
+            userId = data.getIntExtra("personId", 0);
             userName = data.getStringExtra("personName");
             prefManager.setFirstTimeLaunch(false);
             prefManager.setUserName(userName);
             prefManager.setUserId(userId);
             mUserName.setText(prefManager.getUsername());
-            Intent i = new Intent(this,AddOrUpdateHealthBioActivity.class);
-            i.putExtra("firstRun",true);
+            Intent i = new Intent(this, AddOrUpdateHealthBioActivity.class);
+            i.putExtra("firstRun", true);
             startActivity(i);
         } else
             finish();
@@ -127,13 +135,14 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * View personal bio
+     *
      * @param v
      */
-    public void viewPersonalBio(View v){
+    public void viewPersonalBio(View v) {
         Intent intent = new Intent(MainActivity.this, PersonalBioActivity.class);
         Bundle b = new Bundle();
         b.putString(Constants.ACTION, Constants.VIEW);
-        b.putInt("userId",prefManager.getUserId());
+        b.putInt("userId", prefManager.getUserId());
         intent.putExtras(b);
         startActivity(intent);
     }
@@ -150,6 +159,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setFloatingActionButtonAction(final Class activityClass) {
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,8 +172,51 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    public void setFloatingActionButtonSOSAction() {
+
+        FloatingActionButton fabSOS = (FloatingActionButton) findViewById(R.id.fabSOS);
+        fabSOS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                long phone = ICEContactsManager.findPhone(context);
+
+
+                if (0 != phone) {
+
+                    if (ActivityCompat.checkSelfPermission(context,
+                            Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+                        Toast.makeText(context, "App does not have Permission to CALL", Toast.LENGTH_SHORT).show();
+
+
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, ICE_PERMISSIONS_REQUEST_CALL);
+
+                    } else {
+
+                        Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
+
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:" + phone));
+
+                        try {
+                            callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(callIntent);
+
+                        } catch (Exception e) {
+
+                            Log.e("Call Failed", e.getMessage());
+                        }
+                    }
+                } else {
+
+                    Toast.makeText(context, "Please add Emergency Contact", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     /**
-     *
      * @param menu
      * @return
      */
@@ -186,7 +239,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     *
      * @param item
      * @return
      */
@@ -197,13 +249,13 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_enable_help) {
             item.setChecked(!item.isChecked());
             prefManager.setShowHelpScreens(item.isChecked());
             return true;
-        }
-        else if(id == R.id.action_help) {
+        } else if (id == R.id.action_help) {
             setFragment(new HelpFragment());
             return true;
         }
@@ -212,7 +264,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     *
      * @param fragmentType
      */
     public void updateFragment(String fragmentType) {
@@ -253,7 +304,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     *
      * @param item
      * @return
      */
@@ -262,6 +312,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+
+        FloatingActionButton fabSOS = (FloatingActionButton) findViewById(R.id.fabSOS);
+        fabSOS.setVisibility(View.GONE);
 
         if (id == R.id.category) {
             setFragment(new CategoryFragment());
@@ -288,8 +345,8 @@ public class MainActivity extends AppCompatActivity
             setFragment(new HelpFragment());
         } else if (id == R.id.report) {
             setFragment(new ReportFragment());
-        }
-        else if (id == R.id.home) {
+        } else if (id == R.id.home) {
+
             setFragment(new HomeFragment());
         }
 

@@ -83,6 +83,18 @@ public class ConsumptionDAOInstrumentedTest {
     @After
     public void finish() {
 
+        Cursor cursor = consumptionDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            consumptionDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID)));
+            cursor.moveToNext();
+        }
         consumptionDAOImpl.close();
     }
 

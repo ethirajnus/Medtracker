@@ -3,6 +3,8 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,14 +13,17 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
+import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 
 
 /**
  * Class for Home Fragment operations
  */
 public class HomeFragment extends Fragment {
-    private String title="MediPal";
+    private String title = "MediPal";
     private TabLayout tabs;
 
     @Override
@@ -28,16 +33,15 @@ public class HomeFragment extends Fragment {
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
      * @return
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home,container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Setting ViewPager for each Tabs
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
@@ -45,13 +49,22 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
         getActivity().invalidateOptionsMenu();
 
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(ICEAdditionActivity.class);
+
         // Set Tabs inside Toolbar
         tabs = (TabLayout) getActivity().findViewById(R.id.tabs);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+
+        FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        fabSOS.setVisibility(View.VISIBLE);
+
         tabs.setVisibility(View.VISIBLE);
         tabs.addTab(tabs.newTab());
         tabs.addTab(tabs.newTab());
         tabs.addTab(tabs.newTab());
-        Adapter adapter=new Adapter(getChildFragmentManager(),tabs.getTabCount());
+        Adapter adapter = new Adapter(getChildFragmentManager(), tabs.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -80,11 +93,9 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle(title);
 
 
-
         return view;
 
     }
-
 
 
     // Add Fragments to Tabs
@@ -92,7 +103,7 @@ public class HomeFragment extends Fragment {
 
     static class Adapter extends FragmentStatePagerAdapter {
         int mNumOfTabs;
-        String[] tabTitles={"Appointments","Consumptions","Measurements"};
+        String[] tabTitles = {"Appointments", "Consumptions", "Measurements"};
 
         public Adapter(FragmentManager fm, int NumOfTabs) {
             super(fm);
@@ -123,7 +134,6 @@ public class HomeFragment extends Fragment {
         }
 
         /**
-         *
          * @return
          */
         @Override
@@ -132,8 +142,6 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
-
 
 
 }

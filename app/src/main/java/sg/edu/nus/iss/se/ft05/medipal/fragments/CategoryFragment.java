@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +28,15 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.category_fragment, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+
+        FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        fabSOS.setVisibility(View.GONE);
+
         ((MainActivity)getActivity()).setFloatingActionButtonAction(AddOrUpdateCategory.class);
         RecyclerView categoryRecyclerView;
         context = getActivity().getApplicationContext();

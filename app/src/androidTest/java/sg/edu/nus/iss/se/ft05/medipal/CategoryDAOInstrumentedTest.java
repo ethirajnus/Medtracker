@@ -45,7 +45,7 @@ public class CategoryDAOInstrumentedTest {
 
         while (!cursor.isAfterLast()) {
 
-            categoryDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID)));
+            categoryDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.CATEGORY_KEY_ID)));
             cursor.moveToNext();
         }
 
@@ -68,6 +68,18 @@ public class CategoryDAOInstrumentedTest {
     @After
     public void finish() {
 
+        Cursor cursor = categoryDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            categoryDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.CATEGORY_KEY_ID)));
+            cursor.moveToNext();
+        }
         categoryDAOImpl.close();
     }
 
