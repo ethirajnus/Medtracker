@@ -45,9 +45,11 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.FROM_DATE_AFTER_TO_DATE;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_DIASTOLIC;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_PULSE;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_SYSTOLIC;
@@ -121,7 +123,8 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
         // Get all guest info from the database and save in a cursor
         measurementManager = new MeasurementManager();
-        cursor = measurementManager.findAll(context);
+        String currentDate = formatter.format(Calendar.getInstance().getTime());
+        cursor = measurementManager.betweenDate(context,currentDate,currentDate);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new MeasurementListAdapter(context, cursor);
@@ -266,7 +269,10 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(dateObjTo.after(dateObjFrom)){
+        if(dateObjTo.before(dateObjFrom)){
+            Toast.makeText(context, FROM_DATE_AFTER_TO_DATE, Toast.LENGTH_SHORT).show();
+        }
+        else{
             triggerFilterForDate();
         }
     }

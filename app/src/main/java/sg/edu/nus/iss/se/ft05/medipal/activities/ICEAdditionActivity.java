@@ -21,6 +21,9 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 
+
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+
 /**
  * Class for adding and updating new Emergency Contact
  *
@@ -119,7 +122,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
             if (5 <= contactManager.getMaxPriority(context)) {
 
-                Toast.makeText(context, "Maximum 5 ICEContactsManager Allowed Please delete atleast 1 existing contactManager to add new contactManager", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, LIMIT_REACHED, Toast.LENGTH_SHORT).show();
                 navigateToMainAcitivity(context);
             }
 

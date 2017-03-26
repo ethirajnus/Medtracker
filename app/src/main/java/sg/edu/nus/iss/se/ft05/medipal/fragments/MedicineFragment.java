@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -100,10 +101,7 @@ public class MedicineFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        medicineManager.delete(context);
-                        ReminderUtils.syncMedicineReminder(context);
-                        mAdapter.swapCursor(MedicineManager.findAll(context));
-                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        new DeleteMedicine().execute();
                         alert.dismiss();
                     }
                 });
@@ -122,5 +120,19 @@ public class MedicineFragment extends Fragment {
         return view;
 
 
+    }
+    private class DeleteMedicine extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return medicineManager.delete(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            ReminderUtils.syncMedicineReminder(context);
+            mAdapter.swapCursor(MedicineManager.findAll(context));
+            Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+        }
     }
 }

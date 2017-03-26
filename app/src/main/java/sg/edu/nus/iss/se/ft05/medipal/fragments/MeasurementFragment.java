@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -100,9 +101,7 @@ public class MeasurementFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        measurementManager.delete(context);
-                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
-                        mAdapter.swapCursor(MeasurementManager.findAll(context));
+                        new DeleteMeasurement().execute();
                         alert.dismiss();
                     }
                 });
@@ -123,5 +122,18 @@ public class MeasurementFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
 
+    }
+    private class DeleteMeasurement extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return measurementManager.delete(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+            mAdapter.swapCursor(MeasurementManager.findAll(context));
+        }
     }
 }
