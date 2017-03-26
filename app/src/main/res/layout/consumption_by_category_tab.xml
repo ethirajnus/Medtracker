@@ -56,7 +56,6 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_below="@id/medicineLabelCategory"
         android:layout_toRightOf="@id/categoryFilterBy"
-        android:entries="@array/filterBy"
         android:visibility="invisible"
         android:backgroundTint="?attr/colorAccent"
         android:dropDownWidth="match_parent"
@@ -69,7 +68,6 @@
         android:layout_below="@id/medicineLabelCategory"
         android:layout_toRightOf="@id/categoryYearSpin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:entries="@array/filterBy"
         android:visibility="invisible"
         android:backgroundTint="?attr/colorAccent"
         android:dropDownWidth="match_parent"
@@ -81,6 +79,7 @@
         android:layout_height="wrap_content"
         android:inputType="none"
         android:hint="Date"
+        android:visibility="invisible"
         android:layout_below="@id/medicineLabelCategory"
         android:layout_toRightOf="@id/categoryFilterBy"
         android:textIsSelectable="true"/>
@@ -90,6 +89,7 @@
         android:layout_height="wrap_content"
         android:inputType="none"
         android:hint="Date"
+        android:visibility="invisible"
         android:layout_below="@id/medicineLabelCategory"
         android:layout_toRightOf="@id/categoryFilterBy"
         android:textIsSelectable="true"/>

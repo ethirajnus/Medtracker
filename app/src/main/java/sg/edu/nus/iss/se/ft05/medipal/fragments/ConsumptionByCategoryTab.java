@@ -67,6 +67,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
     private EditText week;
     private String dateFrom, dateTo;
     private ConsumptionManager consumptionManager;
+    private ArrayList<String> years;
 
     /**
      *
@@ -92,20 +93,21 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         view = inflater.inflate(R.layout.consumption_by_category_tab, container, false);
         consumptionRecyclerView = (RecyclerView) view.findViewById(R.id.all_consumption_list_view);
         context = getActivity().getApplicationContext();
-        findViewsById();
-        setListeners();
-        populateDropDownList();
+
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        Cursor cursor = ConsumptionManager.findAll(context);
+        cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);
+        findViewsById();
+        populateDropDownList();
+        setListeners();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             /**
@@ -182,6 +184,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 medicineCategoryId = categoriesMap.get(category.getSelectedItem());
                 spinMonth.setVisibility(View.INVISIBLE);
+                week.setVisibility(View.INVISIBLE);
                 date.setVisibility(View.INVISIBLE);
                 triggerFilterForYear();
             }
@@ -227,7 +230,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
                     spinMonth.setVisibility(View.INVISIBLE);
                     week.setVisibility(View.INVISIBLE);
                     date.setVisibility(View.INVISIBLE);
-                    triggerFilterForYear();
+                   triggerFilterForYear();
                 } else if ((filterByText.contentEquals("Month"))) {
                     spinYear.setVisibility(View.VISIBLE);
                     spinMonth.setVisibility(View.VISIBLE);
@@ -253,6 +256,38 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
                 // your code here
             }
 
+        });
+
+
+
+
+
+
+
+        spinMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                triggerFilterForMonth();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
+        spinYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                triggerFilterForYear();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
         });
 
         date.addTextChangedListener(new TextWatcher() {
@@ -290,32 +325,6 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable s) {
 
-            }
-        });
-
-        spinYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                triggerFilterForYear();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-        });
-
-        spinMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                triggerFilterForMonth();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
             }
         });
 
@@ -384,14 +393,13 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
         ArrayList<String> years = new ArrayList<>();
         int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 2000; i <= thisYear; i++) {
+        for (int i = thisYear; i >= 2000; i--) {
             years.add(Integer.toString(i));
         }
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, years);
 
 
         spinYear.setAdapter(yearAdapter);
-        spinYear.setSelection(years.size() - 1);
 
         ArrayList<String> months = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {

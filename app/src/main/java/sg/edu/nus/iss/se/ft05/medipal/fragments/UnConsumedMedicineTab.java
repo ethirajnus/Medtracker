@@ -200,6 +200,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
                 medicineId = medicinesMap.get(medicine.getSelectedItem());
                 spinMonth.setVisibility(View.INVISIBLE);
                 date.setVisibility(View.INVISIBLE);
+                week.setVisibility(View.INVISIBLE);
                 triggerFilterForYear();
             }
 
@@ -378,14 +379,13 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
         ArrayList<String> years = new ArrayList<>();
         int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 2000; i <= thisYear; i++) {
+        for (int i = thisYear; i >= 2000; i--) {
             years.add(Integer.toString(i));
         }
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, years);
 
 
         spinYear.setAdapter(yearAdapter);
-        spinYear.setSelection(years.size() -1);
 
         ArrayList<String> months = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {

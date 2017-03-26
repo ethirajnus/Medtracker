@@ -144,6 +144,7 @@
     <string name="play_again">Play Again</string>
 
     <string-array name="filterBy">
+        <item>Choose</item>
         <item>Year</item>
         <item>Month</item>
         <item>Week</item>
