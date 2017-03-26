@@ -269,7 +269,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(R.string.warning_allMandatory);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int which) {
                     alert.dismiss();

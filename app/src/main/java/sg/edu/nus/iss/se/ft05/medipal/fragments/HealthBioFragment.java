@@ -1,9 +1,11 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -27,9 +29,10 @@ public class HealthBioFragment extends Fragment {
 
     private HealthBioListAdapter mAdapter;
     private Context context;
+    private HealthBioManager healthBioManager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Set view for Health Bio fragment
         View view = inflater.inflate(R.layout.healthbio_fragment, container, false);
@@ -63,14 +66,38 @@ public class HealthBioFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
-                //get the id of the item being swiped
-                int id = (int) viewHolder.itemView.getTag();
-                //remove from DB
-                HealthBioManager healthBioManager = new HealthBioManager();
-                healthBioManager.findById(context, id);
-                healthBioManager.delete(context);
-                Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
-                //update the list
+                switch (swipeDir){
+                    case ItemTouchHelper.LEFT:
+                        //get the id of the item being swiped
+                        int id = (int) viewHolder.itemView.getTag();
+                        healthBioManager = new HealthBioManager();
+                        healthBioManager.findById(context, id);
+                        mAdapter.swapCursor(HealthBioManager.findAll(context));
+
+                        AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                        warningDialog.setTitle(Constants.TITLE_WARNING);
+                        warningDialog.setMessage(R.string.warning_delete);
+                        warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface alert, int which) {
+                                //remove from DB
+                                healthBioManager.delete(context);
+                                Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                                alert.dismiss();
+                            }
+                        });
+                        warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface alert, int which) {
+                                alert.dismiss();
+                            }
+                        });
+                        warningDialog.show();
+                        break;
+                    case ItemTouchHelper.RIGHT:
+                        // do nothing
+                        break;
+                }
                 mAdapter.swapCursor(HealthBioManager.findAll(context));
             }
 
