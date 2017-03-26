@@ -211,7 +211,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         if (TextUtils.isEmpty(pulse.getText().toString().trim()))
             pulse.setText(String.valueOf(0));
         if (TextUtils.isEmpty(temperature.getText().toString().trim()))
-            temperature.setText(String.valueOf(0));
+            temperature.setText(String.valueOf(0.0));
         if (TextUtils.isEmpty(weight.getText().toString().trim()))
             weight.setText(String.valueOf(0));
     }

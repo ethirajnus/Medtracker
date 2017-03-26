@@ -23,6 +23,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 /**
  * Class for Health bio list processing
+ * @author Moushumi Seal
  */
 public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdapter.HealthBioViewHolder> {
 

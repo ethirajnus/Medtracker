@@ -14,6 +14,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 
 /**
  * Implementation class for health bio database operation
+ * @author Moushumi Seal
  */
 public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
 

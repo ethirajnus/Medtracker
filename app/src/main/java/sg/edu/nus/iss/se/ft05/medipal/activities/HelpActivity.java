@@ -25,6 +25,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 /**
  * Class for Help activity
+ * @author Moushumi Seal
  */
 public class HelpActivity extends AppCompatActivity {
 

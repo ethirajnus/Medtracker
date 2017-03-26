@@ -4,7 +4,7 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 /**
  * Domain class for Personal Bio
- * Created by e0146812 on 3/25/2017.
+ * @author Moushumi Seal
  */
 public class PersonalBio {
 

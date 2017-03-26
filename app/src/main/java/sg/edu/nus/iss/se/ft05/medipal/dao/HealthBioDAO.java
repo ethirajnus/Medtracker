@@ -9,6 +9,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 
 /**
  * Interface for Health bio database operations
+ * @author Moushumi Seal
  */
 public interface HealthBioDAO {
     /**
