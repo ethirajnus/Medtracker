@@ -52,13 +52,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     Context context;
 
     private Button button;
-    boolean flag=true;//To ensure that all input fields are valid
-    private static final String BLANK_DATE_MESSAGE="Appointment date required";
-    private static final String WRONG_TIME="Please choose a slot at least one hour from now";
-    private static final String BLANK_TIME_MESSAGE="Appointment time required";
-    private static final String BLANK_CLINIC_MESSAGE="Clinic Required";
-    private static final String BLANK_DESCRIPTION_MESSAGE="Description Required";
-    private static final String WRONG_DATE="Date cannot be before today";
+
 
 
             boolean flag = true;//To ensure that all input fields are valid
@@ -66,7 +60,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private static final String WRONG_TIME = "Please choose a slot at least one hour from now";
     private static final String BLANK_TIME_MESSAGE = "Appointment time required";
     private static final String BLANK_CLINIC_MESSAGE = "Clinic Required";
-    private static final String BLANK_TEST_MESSAGE = "Test Required";
+    private static final String BLANK_DESCRIPTION_MESSAGE = "Description Required";
     private static final String WRONG_DATE = "Date cannot be before today";
 
     AppointmentManager appointmentManager;
@@ -105,8 +99,8 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             fromDatePickerDialog.show();
         else if (view == time)
             timePickerDialog.show();
-        else if(view == button)
-            createAppointment(view);
+        /*else if(view == button)
+            createAppointment(view);*/
 
 
     }
@@ -216,51 +210,23 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     }
 
 
-    public void createAppointment(View view)
-    {
-
-        date=(EditText) findViewById(R.id.new_appointment_date);
-        time=(EditText) findViewById(R.id.new_appointment_time);
-        clinic=(EditText) findViewById(R.id.new_appointment_clinic);
-        description=(EditText) findViewById(R.id.new_appointment_description);
-        String adate="",atime="",aclinic="",adesc="";
-        //Calendar calendar=Calendar.getInstance();
-        //Date d1=calendar.getTime(),d2=calendar.getTime();
-       // String secondDate=new SimpleDateFormat(DATE_FORMAT).format(d2);
-        adate=date.getText().toString();
-        atime=time.getText().toString();
-        aclinic=clinic.getText().toString();
-        adesc=description.getText().toString();
-
-        flag=true;
-        Log.v("date",adate);
-
-
-    /**
-     * Validate Fields
-     * @param view
-     * @throws java.text.ParseException
-     */
-    public void createAppointment(View view) throws java.text.ParseException {
+    public void createAppointment(View view) {
 
         date = (EditText) findViewById(R.id.new_appointment_date);
         time = (EditText) findViewById(R.id.new_appointment_time);
         clinic = (EditText) findViewById(R.id.new_appointment_clinic);
-        test = (EditText) findViewById(R.id.new_appointment_test);
-        pre_test = (EditText) findViewById(R.id.new_appointment_pre_test);
-        String adate = "", atime = "", aclinic = "", atest = "", apre_test = "";
-        Calendar calendar = Calendar.getInstance();
-        Date d1 = calendar.getTime(), d2 = calendar.getTime();
-        String secondDate = new SimpleDateFormat(DATE_FORMAT).format(d2);
+        description = (EditText) findViewById(R.id.new_appointment_description);
+        String adate = "", atime = "", aclinic = "", adesc = "";
+        //Calendar calendar=Calendar.getInstance();
+        //Date d1=calendar.getTime(),d2=calendar.getTime();
+        // String secondDate=new SimpleDateFormat(DATE_FORMAT).format(d2);
         adate = date.getText().toString();
         atime = time.getText().toString();
         aclinic = clinic.getText().toString();
-        atest = test.getText().toString();
-        apre_test = pre_test.getText().toString();
+        adesc = description.getText().toString();
+
         flag = true;
-
-
-
+        Log.v("date", adate);
         if (clinic.getText().toString().length() == 0) {
             clinic.setError(BLANK_CLINIC_MESSAGE);
             flag = false;
@@ -276,16 +242,6 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         if (description.getText().toString().length() == 0) {
             description.setError(BLANK_DESCRIPTION_MESSAGE);
             flag = false;
-        }
-
-
-        }*/
-        else if (AppointmentManager.exists(context, adate,atime)) {
-            AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
-            warningDialog.setTitle(Constants.TITLE_WARNING);
-            warningDialog.setMessage(APPOINTMENT_CLASH);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
-
         } else if (AppointmentManager.exists(context, adate, atime)) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
@@ -305,18 +261,18 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             //All input fields are valid
 
 
-            AppointmentManager appointmentManager = new AppointmentManager(adate, atime, aclinic, adesc);
+            appointmentManager = new AppointmentManager(adate, atime, aclinic, adesc);
 
-            
 
-            Log.v("date",adate);
 
-            appointmentManager = new AppointmentManager(adate, atime, aclinic, atest, apre_test);
-            Log.v("date", adate);
 
             new SaveAppointment().execute();
         }
     }
+
+
+
+
 
     private class SaveAppointment extends AsyncTask<Void, Void, Boolean> {
 

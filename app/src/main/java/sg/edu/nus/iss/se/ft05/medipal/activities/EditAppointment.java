@@ -204,14 +204,13 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void editAppointment(View view)  {
+    public void editAppointment(View view) {
 
-    /**
-     *
-     * @param view
-     * @throws java.text.ParseException
-     */
-    public void editAppointment(View view) throws java.text.ParseException {
+        /**
+         *
+         * @param view
+         * @throws java.text.ParseException
+         */
 
 
         boolean flag = true;
@@ -246,11 +245,11 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             date.setError(WRONG_DATE);
             flag = false;
         }*/
-        else if (AppointmentManager.exists(context, date.getText().toString(),time.getText().toString())) {
+        else if (AppointmentManager.exists(context, date.getText().toString(), time.getText().toString())) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(APPOINTMENT_CLASH);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int button) {
                     alert.dismiss();
@@ -272,15 +271,15 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             appointment.setId(id);
 
             appointmentManager.setAppointment(appointment);
+            new UpdateAppointment().execute();
 
-            if(appointmentManager.update(context) == -1)
-            {
+           /* if (appointmentManager.update(context) == -1) {
                 Toast.makeText(context, APPOINTMENT_NOT_UPDATED, Toast.LENGTH_SHORT).show();
 
-            new UpdateAppointment().execute();
+
+            }*/
         }
     }
-
     private class UpdateAppointment extends AsyncTask<Void, Void, Boolean> {
 
         @Override
