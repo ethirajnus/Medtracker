@@ -7,7 +7,7 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 public class Appointment {
 
     private int id;
-    private String date, time, clinic, test, pre_test;
+    private String date, time, clinic, description;
 
     public void setId(int id) {
 
@@ -29,15 +29,11 @@ public class Appointment {
         this.clinic = clinic;
     }
 
-    public void setTest(String test) {
+    public void setDescription(String description) {
 
-        this.test = test;
+        this.description = description;
     }
 
-    public void setPreTest(String pre_test) {
-
-        this.pre_test = pre_test;
-    }
 
     public String getDate() {
 
@@ -54,28 +50,24 @@ public class Appointment {
         return clinic;
     }
 
-    public String getTest() {
+    public String getDescription() {
 
-        return test;
+        return description;
     }
 
-    public String getPreTest() {
-
-        return pre_test;
-    }
 
     public int getId() {
 
         return id;
     }
 
-    public Appointment(String date, String time, String clinic, String test, String pre_test) {
+    public Appointment(String date, String time, String clinic, String description) {
 
         this.date = date;
         this.time = time;
         this.clinic = clinic;
-        this.test = test;
-        this.pre_test = pre_test;
+        this.description = description;
+
     }
 
     public Appointment() {

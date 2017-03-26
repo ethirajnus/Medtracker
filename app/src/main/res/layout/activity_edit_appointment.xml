@@ -42,7 +42,7 @@
                 android:text="Date" />
 
             <EditText
-                android:id="@+id/appointment_date"
+                android:id="@+id/new_appointment_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -57,11 +57,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/appointment_date"
+                android:layout_below="@+id/new_appointment_date"
                 android:text="Time" />
 
             <EditText
-                android:id="@+id/appointment_time"
+                android:id="@+id/new_appointment_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -76,11 +76,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/appointment_time"
+                android:layout_below="@+id/new_appointment_time"
                 android:text="Clinic" />
 
             <EditText
-                android:id="@+id/appointment_clinic"
+                android:id="@+id/new_appointment_clinic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -95,47 +95,31 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/appointment_clinic"
-                android:text="Test" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/appointment_test"
-                android:text="Pre Test" />
+                android:layout_below="@+id/new_appointment_clinic"
+                android:text="Description (Any pre requirements like fasting etc)" />
 
             <EditText
-                android:id="@+id/appointment_pre_test"
+                android:id="@+id/new_appointment_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView5"
+                android:layout_below="@+id/textView4"
                 android:ems="10"
                 android:inputType="textPersonName" />
+
+
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/appointment_pre_test"
-                android:layout_marginTop="27dp"
+                android:layout_below="@+id/new_appointment_description"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="49dp"
                 android:background="@drawable/side_nav_bar"
                 android:onClick="editAppointment"
-                android:text="MODIFY" />
-
-            <EditText
-                android:id="@+id/appointment_test"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView4"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:text="SUBMIT" />
 
         </RelativeLayout>
     </ScrollView>

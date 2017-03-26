@@ -7,14 +7,21 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
+import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -47,17 +54,16 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         String date = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DATE));
         String time = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TIME));
         String clinic = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_CLINIC));
-        String test = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TEST));
-        String pre_test = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_PRE_TEST));
+        String description = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION));
+
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID));
 
 
         holder.itemView.setTag(id);
-        holder.date.setText(date);
-        holder.time.setText(time);
-        holder.clinic.setText(clinic);
-        holder.test.setText(test);
-        holder.pre_test.setText(pre_test);
+        holder.dateTime.setText(date + " " + time);
+        holder.clinic.setText(formatText(clinic,""));
+        holder.description.setText(formatText("Description: ",description));
+
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -86,7 +92,13 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             }
         });
 
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        // generate random color
+        int color = generator.getRandomColor();
 
+        InitialDrawable drawable = InitialDrawable.builder().buildRound(clinic.toUpperCase().substring(0, 1), color);
+
+        holder.icon.setImageDrawable(drawable);
     }
 
     @Override
@@ -105,19 +117,23 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     }
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
-        ImageView delete, edit;
-        TextView clinic,test,pre_test,date,time;
+        ImageView delete, edit, icon;
+        TextView clinic,description,pre_test,dateTime;
 
         public AppointmentViewHolder(View itemView) {
             super(itemView);
+            icon = (ImageView) itemView.findViewById(R.id.appointmentImageIcon) ;
             edit = (ImageView) itemView.findViewById(R.id.editIcon);
             delete = (ImageView) itemView.findViewById(R.id.deleteIcon);
             clinic = (TextView) itemView.findViewById(R.id.clinic);
-            test= (TextView) itemView.findViewById(R.id.test);
-            pre_test= (TextView) itemView.findViewById(R.id.pre_test);
-            date= (TextView) itemView.findViewById(R.id.date);
-            time= (TextView) itemView.findViewById(R.id.time);
-
+            description= (TextView) itemView.findViewById(R.id.description);
+            dateTime= (TextView) itemView.findViewById(R.id.dateTime);
         }
+    }
+
+    private SpannableString formatText(String boldText, String normalText){
+        SpannableString str = new SpannableString(boldText + normalText);
+        str.setSpan(new StyleSpan(Typeface.BOLD), 0, boldText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return  str;
     }
 }

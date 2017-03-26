@@ -59,7 +59,7 @@ public class DefaultFragment extends Fragment {
 
             content = content + "Time:" + appointment.getTime() + "\n";
             content = content + "Clinic:" + appointment.getClinic() + "\n";
-            content = content + "Test:" + appointment.getTest() + "\n";
+            content = content + "Description:" + appointment.getDescription() + "\n";
 
         }
 
