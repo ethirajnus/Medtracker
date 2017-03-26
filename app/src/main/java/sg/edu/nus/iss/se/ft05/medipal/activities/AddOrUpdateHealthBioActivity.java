@@ -252,7 +252,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         if (TextUtils.isEmpty(mCondition.getText().toString().trim()) && TextUtils.isEmpty(mStartDate.getText())) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
-            warningDialog.setMessage(R.string.warning);
+            warningDialog.setMessage(R.string.warning_allMandatory);
             warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int which) {

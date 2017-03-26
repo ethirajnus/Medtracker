@@ -27,4 +27,6 @@ public interface MeasurementDAO {
     public int fetchMaxId();
 
     public Measurement findLatest();
+
+    Cursor betweenDate(String dateFrom, String dateTo);
 }
