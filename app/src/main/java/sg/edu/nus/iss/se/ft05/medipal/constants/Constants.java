@@ -100,6 +100,7 @@ public class Constants {
     public static final String NOTIFICATION = "notification";
     public static final String TO_DATE_CANNOT_BE_GREATER_THAN_FROM_DATE = "To Date cannot be greater than From Date";
 
+
     //Category
     public static final String CATEGORY = "Category";
     public static final String EDIT_CATEGORY = "Edit Category";
@@ -154,5 +155,14 @@ public class Constants {
     public static final String INVALID_TEMPERATURE = "Please enter a valid value for temperature";
     public static final String INVALID_WEIGHT = "Please enter a valid value for weight";
     public static final String MEASUREMENT_NOT_SAVED = "Measurement was not inserted properly,Please try again later";
+
+    //ICE
+    public static final String LIMIT_REACHED = "Maximum 5 ICEContactsManager Allowed Please delete atleast 1 existing contactManager to add new contactManager";
+    public static final String NO_SMS_PERMISSION = "App does not have Permission to send SMS";
+    public static final String SMS_SENT = "SMS Sent";
+    public static final String NO_CALL_PERMISSION = "App does not have Permission to Call";
+    public static final String CALLING = "Calling";
+    public static final String FROM_POSITION = "Positions: from : ";
+    public static final String TO_POSITION = "to : ";
 
 }

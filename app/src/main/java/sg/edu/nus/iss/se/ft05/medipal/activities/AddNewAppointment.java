@@ -131,6 +131,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 date.setText(dateFormatter.format(newDate.getTime()));
+                time.requestFocus();
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)) {
@@ -245,7 +246,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         } else if (AppointmentManager.exists(context, adate, atime)) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
-            warningDialog.setMessage("You already have an appointment at this slot");
+            warningDialog.setMessage(APPOINTMENT_CLASH);
             warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
 
                 @Override

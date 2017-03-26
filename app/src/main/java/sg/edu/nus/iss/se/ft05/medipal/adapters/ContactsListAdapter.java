@@ -30,6 +30,8 @@ import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
 
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+
 /**
  * Class for Contact List processing
  * Created by Ashish Katre on 11/03/17.
@@ -133,7 +135,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     if (context.checkSelfPermission(Manifest.permission.SEND_SMS)
                             != PackageManager.PERMISSION_GRANTED) {
 
-                        Toast.makeText(context, "App does not have Permission to send SMS", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, NO_SMS_PERMISSION, Toast.LENGTH_SHORT).show();
 
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, ICE_PERMISSIONS_REQUEST_SMS);
 
@@ -141,7 +143,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                         SmsManager smsManager = SmsManager.getDefault();
                         smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergancy please call immidiately", null, null);
-                        Toast.makeText(context, "SMS Sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, SMS_SENT, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -171,14 +173,14 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     if (ActivityCompat.checkSelfPermission(context,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
-                        Toast.makeText(context, "App does not have Permission to CALL", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, NO_CALL_PERMISSION, Toast.LENGTH_SHORT).show();
 
 
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE}, ICE_PERMISSIONS_REQUEST_CALL);
 
                     } else {
 
-                        Toast.makeText(context, "Calling", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, CALLING, Toast.LENGTH_SHORT).show();
 
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
                         callIntent.setData(Uri.parse("tel:" + phone));
@@ -312,7 +314,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
      */
     public boolean onItemMove(int fromPosition, int toPosition) {
 
-        Toast.makeText(context, "Positions: from : " + fromPosition + "to : " + toPosition, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, FROM_POSITION + fromPosition + TO_POSITION + toPosition, Toast.LENGTH_SHORT).show();
 
 
         ICEContactsDAOImpl iceContactsDAOImpl = new ICEContactsDAOImpl(context);
