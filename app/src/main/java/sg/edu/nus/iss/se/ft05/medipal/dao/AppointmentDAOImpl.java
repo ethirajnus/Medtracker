@@ -190,7 +190,23 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         }
 
 
-        db.close();
+       // db.close();
+
+        return cursor;
+    }
+
+    @Override
+    public Cursor fetchByAppointmentDateAndTime(String date, String time){
+
+        String selectQuery = SELECT + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date
+                + "' "+ " AND "+APPOINTMENT_KEY_APPOINTMENT_TIME + " = '" +time + "'";
+        SQLiteDatabase db= this.getReadableDatabase();
+        Cursor cursor=db.rawQuery(selectQuery,null);
+
+        if(cursor != null){
+
+            cursor.moveToFirst();
+        }
 
         return cursor;
     }

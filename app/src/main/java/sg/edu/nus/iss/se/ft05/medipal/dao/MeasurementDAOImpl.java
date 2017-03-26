@@ -146,7 +146,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         Cursor cursor;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT + " order by measuredON DESC";
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT + " order by measuredON";
         cursor = db.rawQuery(selectQuery, null);
 
         boolean systolic = true;
@@ -157,10 +157,10 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 
         if (cursor != null) {
 
-            cursor.moveToFirst();
+            cursor.moveToLast();
         }
 
-        while (cursor.moveToNext()) {
+        while (!cursor.isBeforeFirst()) {
 
             if (cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_SYSTOLIC)) != 0 && systolic) {
 
@@ -191,9 +191,11 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
                 measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
                 weight = false;
             }
+
+            cursor.moveToPrevious();
         }
 
-        db.close();
+       // db.close();
 
         return measurement;
     }

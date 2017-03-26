@@ -1,12 +1,18 @@
 package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.content.Context;
+
+import android.content.DialogInterface;
+
 import android.os.AsyncTask;
+
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
@@ -215,6 +221,19 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         if(d1.before(d2))
         {
             date.setError(WRONG_DATE);
+            flag = false;
+        }
+        else if (AppointmentManager.exists(context, adate,atime)) {
+            AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+            warningDialog.setTitle(Constants.TITLE_WARNING);
+            warningDialog.setMessage("You already have an appointment at this slot");
+            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface alert, int button) {
+                    alert.dismiss();
+                }
+            });
+            warningDialog.show();
             flag = false;
         }
         if (flag == true) {
