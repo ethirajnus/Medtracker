@@ -41,7 +41,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    static String currentFragment;
+    public static String currentFragment;
 
     Context context;
     TabLayout tabLayout;
