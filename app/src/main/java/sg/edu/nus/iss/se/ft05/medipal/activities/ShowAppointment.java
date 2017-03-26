@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
@@ -27,7 +30,7 @@ public class ShowAppointment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_appointment);
+        setContentView(R.layout.activity_add_new_appointment);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
@@ -35,11 +38,14 @@ public class ShowAppointment extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         int id = bundle.getInt(ID);
 
-        TextView date, time, clinic, description;
-        date = (TextView) findViewById(R.id.appointment_date);
-        time = (TextView) findViewById(R.id.appointment_time);
-        clinic = (TextView) findViewById(R.id.appointment_clinic);
-       // description = (TextView) findViewById(R.id.appointment_description);
+        EditText date, time, clinic, description;
+        Button button;
+        date = (EditText) findViewById(R.id.new_appointment_date);
+        time = (EditText) findViewById(R.id.new_appointment_time);
+        clinic = (EditText) findViewById(R.id.new_appointment_clinic);
+        description = (EditText) findViewById(R.id.new_appointment_description);
+        button = (Button) findViewById(R.id.button);
+        button.setVisibility(View.GONE);
 
 
         context = getApplicationContext();
@@ -51,7 +57,13 @@ public class ShowAppointment extends AppCompatActivity {
         date.setText(appointment.getDate());
         time.setText(appointment.getTime());
         clinic.setText(appointment.getClinic());
-        //description.setText(appointment.getDescription());
+        description.setText(appointment.getDescription());
+
+        date.setEnabled(false);
+        time.setEnabled(false);
+        clinic.setEnabled(false);
+        description.setEnabled(false);
+
 
     }
 
