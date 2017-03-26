@@ -48,9 +48,6 @@ public class ConsumptionFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
-        fabEmail.setVisibility(View.GONE);
-
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateConsumption.class);
         context = getActivity().getApplicationContext();
         getActivity().setTitle(CONSUMPTION);

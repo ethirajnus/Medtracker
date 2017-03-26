@@ -60,9 +60,6 @@ public class HomeFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.VISIBLE);
 
-        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
-        fabEmail.setVisibility(View.GONE);
-
         tabs.setVisibility(View.VISIBLE);
         tabs.addTab(tabs.newTab());
         tabs.addTab(tabs.newTab());

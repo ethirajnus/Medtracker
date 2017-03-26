@@ -58,9 +58,6 @@ public class IceFragment extends Fragment implements OnStartDragListener {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
-        fabEmail.setVisibility(View.GONE);
-
         // Set floating action button
         ((MainActivity) getActivity()).setFloatingActionButtonAction(ICEAdditionActivity.class);
 

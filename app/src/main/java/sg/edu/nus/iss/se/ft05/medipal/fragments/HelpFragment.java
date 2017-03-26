@@ -26,9 +26,6 @@ public class HelpFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
-        fabEmail.setVisibility(View.GONE);
-
         getActivity().setTitle("Help");
 
         //hide the share button

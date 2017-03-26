@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity
 
         setFloatingActionButtonAction(AddOrUpdateMedicine.class);
         setFloatingActionButtonSOSAction();
-        setFloatingActionButtonEmailAction();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -172,21 +171,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-    public void setFloatingActionButtonEmailAction() {
-
-        FloatingActionButton fabEmail = (FloatingActionButton) findViewById(R.id.fabEmail);
-
-        fabEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Toast.makeText(context, "Send Email", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
 
     public void setFloatingActionButtonSOSAction() {
 
@@ -335,9 +319,6 @@ public class MainActivity extends AppCompatActivity
 
         FloatingActionButton fabSOS = (FloatingActionButton) findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
-
-        FloatingActionButton fabEmail = (FloatingActionButton) findViewById(R.id.fabEmail);
-        fabEmail.setVisibility(View.GONE);
 
         if (id == R.id.category) {
             setFragment(new CategoryFragment());

@@ -61,9 +61,6 @@ public class DefaultFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        FloatingActionButton fabEmail = (FloatingActionButton) getActivity().findViewById(R.id.fabEmail);
-        fabEmail.setVisibility(View.GONE);
-
         Calendar calendar = Calendar.getInstance();
         Date d = calendar.getTime();
         date = new SimpleDateFormat(DATE_FORMAT).format(d);
