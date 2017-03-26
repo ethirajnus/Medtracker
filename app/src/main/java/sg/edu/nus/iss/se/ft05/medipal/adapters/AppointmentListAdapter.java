@@ -1,8 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
-/**
- * Created by Dhruv on 18/3/2017.
- */
+
 
 import android.content.Context;
 import android.content.Intent;

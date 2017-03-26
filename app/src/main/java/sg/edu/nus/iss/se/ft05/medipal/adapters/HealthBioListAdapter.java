@@ -20,9 +20,6 @@ import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
-/**
- * @author Moushumi Seal
- */
 
 /**
  * Class for Health bio list processing

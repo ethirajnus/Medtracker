@@ -8,12 +8,11 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
 
-/**
- * Created by ethi on 10/03/17.
- */
+
 
 /**
  * Class for Category Manager
+ * Created by ethi on 10/03/17.
  */
 public class CategoryManager {
 

@@ -3,12 +3,11 @@ package sg.edu.nus.iss.se.ft05.medipal.Util;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 
-/**
- * Created by ethi on 19/03/17.
- */
+
 
 /**
  * Class for Appointment reminder job service
+ * Created by ethi on 19/03/17.
  */
 public class AppointmentReminderJobService extends JobService {
     /**

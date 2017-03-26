@@ -5,12 +5,11 @@ import android.content.Context;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ReminderDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
-/**
- * Created by ethi on 13/03/17.
- */
+
 
 /**
  * Class for Reminder Manager
+ * Created by ethi on 13/03/17.
  */
 public class ReminderManager {
 

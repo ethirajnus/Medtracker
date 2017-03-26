@@ -24,12 +24,10 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERID;
 
 
-/**
- * Created by ethi on 12/03/17.
- */
 
 /**
  * Class for Medicine Manager
+ *  Created by ethi on 12/03/17.
  */
 public class MedicineManager {
 

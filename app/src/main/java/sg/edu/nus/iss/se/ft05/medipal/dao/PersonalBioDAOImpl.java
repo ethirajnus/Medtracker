@@ -9,9 +9,7 @@ import android.util.Log;
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 
-/**
- * @author Moushumi Seal
- */
+
 
 /**
  * Implementation class for personal bio database operations

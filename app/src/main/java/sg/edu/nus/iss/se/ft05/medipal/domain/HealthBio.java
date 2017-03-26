@@ -1,8 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.domain;
 
-/**
- * Created by e0146812 on 3/25/2017.
- */
+
 
 /**
  * Domain class for Health bio

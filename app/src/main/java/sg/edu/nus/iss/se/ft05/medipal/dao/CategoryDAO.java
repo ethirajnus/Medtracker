@@ -5,12 +5,10 @@ import android.database.Cursor;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
 
 
-/**
- * Created by ethi on 10/03/17.
- */
+
 
 /**
- * Interface for catergory database operations
+ * Interface for category database operations
  */
 public interface CategoryDAO {
     /**

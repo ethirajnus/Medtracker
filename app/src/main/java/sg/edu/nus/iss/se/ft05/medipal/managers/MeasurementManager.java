@@ -7,12 +7,10 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.MeasurementDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MeasurementDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 
-/**
- * Created by ashu on 15-03-2017.
- */
 
 /**
  * Class for Measurement manager
+ * Created by ashu on 15-03-2017.
  */
 public class MeasurementManager {
 

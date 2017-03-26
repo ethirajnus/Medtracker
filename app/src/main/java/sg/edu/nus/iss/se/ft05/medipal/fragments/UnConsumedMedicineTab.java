@@ -42,12 +42,11 @@ import java.util.Map;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
-/**
- * Created by ethi on 24/03/17.
- */
+
 
 /**
  * Class for unconsumed medicine tab
+ * Created by ethi on 24/03/17.
  */
 public class UnConsumedMedicineTab extends Fragment implements View.OnClickListener {
 

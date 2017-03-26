@@ -4,6 +4,9 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
  * Created by e0146812 on 3/26/2017.
  */
 
+/**
+ * Domain class for consumption
+ */
 public class Consumption {
 
     private int id, medicineId, quantity;

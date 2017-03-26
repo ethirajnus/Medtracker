@@ -5,9 +5,7 @@ import android.database.Cursor;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
-/**
- * Created by ethi on 13/03/17.
- */
+
 
 /**
  * Interface for reminder database opertaion

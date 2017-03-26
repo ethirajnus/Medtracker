@@ -1,11 +1,10 @@
 package sg.edu.nus.iss.se.ft05.medipal.domain;
 
-/**
- * Created by aakash on 15-03-2017.
- */
+
 
 /**
  * Domain class for Measurement
+ * Created by aakash on 15-03-2017.
  */
 public class Measurement {
 

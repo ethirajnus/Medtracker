@@ -9,9 +9,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
-/**
- * Created by ethi on 13/03/17.
- */
+
 
 /**
  * Implementation class for reminder database operation

@@ -38,7 +38,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
 /**
- * Class for consumption reprort
+ * Class for consumption report
  */
 public class ConsumptionReportTab extends Fragment implements View.OnClickListener {
 

@@ -13,9 +13,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 
-/**
- * Created by ethi on 06/03/17.
- */
+
 
 /**
  * Class for initial drawable

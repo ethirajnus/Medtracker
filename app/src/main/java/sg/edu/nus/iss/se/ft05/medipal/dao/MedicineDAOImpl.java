@@ -9,9 +9,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
-/**
- * Created by ethi on 12/03/17.
- */
+
 
 /**
  * Implementation class for medicine database operations

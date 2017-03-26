@@ -21,12 +21,11 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.HealthBioListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
-/**
- * @author Moushumi Seal
- */
+
 
 /**
  * Class for Health bio fragment operations
+ * @author Moushumi Seal
  */
 public class HealthBioFragment extends Fragment {
 

@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by ethi on 06/03/17.
- */
+
 
 /**
  * class for color generator

@@ -13,9 +13,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
-/**
- * Created by Dhruv on 18/3/2017.
- */
+
 
 /**
  * Implementation class for appointment database operations

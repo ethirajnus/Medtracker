@@ -6,12 +6,11 @@ import android.os.PersistableBundle;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
-/**
- * Created by ethi on 15/03/17.
- */
+
 
 /**
  * Class for Medicine consumption reminder job service
+ * Created by ethi on 15/03/17.
  */
 public class MedicineConsumptionReminderJobService  extends JobService {
 

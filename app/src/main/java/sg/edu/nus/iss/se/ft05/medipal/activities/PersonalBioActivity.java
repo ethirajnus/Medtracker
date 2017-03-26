@@ -30,9 +30,7 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 import sg.edu.nus.iss.se.ft05.medipal.managers.PersonalBioManager;
 
-/**
- * @author Moushumi Seal
- */
+
 
 /**
  * Class for personal bio activity

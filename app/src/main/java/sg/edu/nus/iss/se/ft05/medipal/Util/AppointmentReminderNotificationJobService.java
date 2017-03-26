@@ -7,9 +7,7 @@ import android.os.PersistableBundle;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CLINIC;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
 
-/**
- * Created by ethi on 19/03/17.
- */
+
 
 /**
  * Class for appointment reminder notification job service
