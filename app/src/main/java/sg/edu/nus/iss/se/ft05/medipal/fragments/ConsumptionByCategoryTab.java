@@ -1,8 +1,10 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -13,7 +15,9 @@ import android.view.View;
 import android.os.Bundle;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
+import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
@@ -25,6 +29,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.content.Context;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -59,6 +64,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
     private Cursor cursor;
     private Integer medicineCategoryId;
     private String month;
+    private Consumption consumption;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,13 +104,32 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                mAdapter.swapCursor(Consumption.findAll(context));
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                Consumption consumption = Consumption.findById(context, id);
-                consumption.delete(context);
-                //update the list
-                mAdapter.swapCursor(Consumption.findAll(context));
+                consumption = Consumption.findById(context, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        consumption.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        //update the list
+                        mAdapter.swapCursor(Consumption.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
         }).attachToRecyclerView(consumptionRecyclerView);
