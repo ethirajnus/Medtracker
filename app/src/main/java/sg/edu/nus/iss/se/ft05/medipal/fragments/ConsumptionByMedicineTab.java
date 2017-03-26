@@ -20,7 +20,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import android.widget.AdapterView;
@@ -68,7 +68,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
     private String month;
     private EditText week;
     private String dateFrom,dateTo;
-    private Consumption consumption;
+    private ConsumptionManager consumptionManager;
 
 
     @Override
@@ -91,7 +91,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        cursor = Consumption.findAll(context);
+        cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -112,9 +112,10 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                consumption = Consumption.findById(context, id);
+                consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(context, id);
                 //update the list
-                mAdapter.swapCursor(Consumption.findAll(context));
+                mAdapter.swapCursor(ConsumptionManager.findAll(context));
 
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
@@ -123,10 +124,10 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        consumption.delete(context);
+                        consumptionManager.delete(context);
                         Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                         //update the list
-                        mAdapter.swapCursor(Consumption.findAll(context));
+                        mAdapter.swapCursor(ConsumptionManager.findAll(context));
                         alert.dismiss();
                     }
                 });
@@ -299,7 +300,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
 
     private void triggerFilterForYear() {
         year = spinYear.getSelectedItem().toString();
-        cursor = Consumption.fetchByMedicineAndYear(context, medicineId, year);
+        cursor = ConsumptionManager.fetchByMedicineAndYear(context, medicineId, year);
         mAdapter.swapCursor(cursor);
     }
 
@@ -308,7 +309,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         if (month.length() == 1) {
             month = "0" + month;
         }
-        cursor = Consumption.fetchByMedicineAndMonth(context, medicineId, year, month);
+        cursor = ConsumptionManager.fetchByMedicineAndMonth(context, medicineId, year, month);
         mAdapter.swapCursor(cursor);
     }
 
@@ -328,12 +329,12 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         Date EndDate = calendar.getTime();
         dateFrom = formatter.format(StartDate);
         dateTo = formatter.format(EndDate);
-        cursor = Consumption.fetchByMedicineAndBetweenDates(context, medicineId,dateFrom,dateTo );
+        cursor = ConsumptionManager.fetchByMedicineAndBetweenDates(context, medicineId,dateFrom,dateTo );
         mAdapter.swapCursor(cursor);
     }
 
     private void triggerFilterForDate() {
-        cursor = Consumption.fetchByMedicineAndDate(context, medicineId, date.getText().toString());
+        cursor = ConsumptionManager.fetchByMedicineAndDate(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);
     }
 

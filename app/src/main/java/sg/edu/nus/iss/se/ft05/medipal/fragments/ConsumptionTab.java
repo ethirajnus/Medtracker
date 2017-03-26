@@ -18,7 +18,7 @@ import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
 
 public class ConsumptionTab extends Fragment {
@@ -26,7 +26,7 @@ public class ConsumptionTab extends Fragment {
     private TextView textView;
     private Cursor cursor;
     private String date;
-    private List<Consumption> consumptions;
+    private List<ConsumptionManager> consumptionManagers;
     private static final String CONSUMPTIONS = "Today's Consumptions";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private String content = "";
@@ -57,7 +57,7 @@ public class ConsumptionTab extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.all_consumptions_list_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
-        Cursor cursor = Consumption.filterDate(context, date);
+        Cursor cursor = ConsumptionManager.filterDate(context, date);
         mAdapter = new ConsumptionListAdapter(context, cursor);
         recyclerView.setAdapter(mAdapter);
         return view;
