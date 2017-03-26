@@ -21,9 +21,7 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.activities.DisplayMeasurement;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
-/**
- * Created by ashu on 14-03-2017.
- */
+
 
 /**
  * class for measurement list processing

@@ -43,12 +43,11 @@ import java.util.Map;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
 
-/**
- * Created by ethi on 23/03/17.
- */
+
 
 /**
  * Class for consumption based on medicine
+ * Created by ethi on 23/03/17.
  */
 public class ConsumptionByMedicineTab extends Fragment implements View.OnClickListener {
 

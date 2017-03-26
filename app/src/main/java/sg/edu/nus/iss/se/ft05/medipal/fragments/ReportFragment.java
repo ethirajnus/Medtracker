@@ -14,12 +14,11 @@ import android.view.ViewGroup;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.REPORT;
 
-/**
- * Created by ethi on 24/03/17.
- */
+
 
 /**
  * Class for Report fragment operations
+ * Created by ethi on 24/03/17.
  */
 public class ReportFragment extends Fragment {
 

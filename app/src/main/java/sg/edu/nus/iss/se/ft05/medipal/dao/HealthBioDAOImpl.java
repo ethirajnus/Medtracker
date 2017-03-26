@@ -10,9 +10,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 
-/**
- * @author Moushumi Seal
- */
+
 
 /**
  * Implementation class for health bio database operation

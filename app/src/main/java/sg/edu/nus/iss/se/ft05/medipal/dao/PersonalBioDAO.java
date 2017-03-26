@@ -5,9 +5,7 @@ import android.database.Cursor;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 
 
-/**
- * @author Moushumi Seal
- */
+
 
 /**
  * Interface for personal bio database operations

@@ -10,9 +10,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
-/**
- * Created by ashu on 15-03-2017.
- */
+
 
 /**
  * Implementatin class for measurement database operations

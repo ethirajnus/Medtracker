@@ -4,9 +4,7 @@ import android.database.Cursor;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 
-/**
- * Created by ethi on 12/03/17.
- */
+
 
 /**
  * Interface for medicine database operations

@@ -18,9 +18,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
-/**
- * Created by ethi on 08/03/17.
- */
+
 
 /**
  * Class for consumption fragement operatiosn

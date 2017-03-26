@@ -22,9 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
-/**
- * Created by ethi on 15/03/17.
- */
+
 
 /**
  * class for reminder tasks

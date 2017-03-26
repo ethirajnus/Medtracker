@@ -9,9 +9,7 @@ import android.support.annotation.NonNull;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
-/**
- * Created by ethi on 15/03/17.
- */
+
 
 /**
  * class for reminder utils
@@ -35,6 +33,10 @@ public class ReminderUtils {
         sMedicineReminderInitialized = true;
     }
 
+    /**
+     *
+     * @param context
+     */
     public static void syncMedicineReminder(Context context) {
         if (jobConsumptionScheduler != null) {
             jobConsumptionScheduler.cancelAll();
@@ -56,6 +58,10 @@ public class ReminderUtils {
         sAppointmentReminderInitialized = true;
     }
 
+    /**
+     *
+     * @param context
+     */
     public static void syncAppointmentReminder(Context context) {
         if (jobAppointmentScheduler != null) {
             jobAppointmentScheduler.cancelAll();

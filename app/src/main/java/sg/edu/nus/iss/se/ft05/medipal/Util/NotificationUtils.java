@@ -21,9 +21,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.NOTIFICATION;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.QUANTITY;
 
-/**
- * Created by ethi on 14/03/17.
- */
+
 
 /**
  * class for notification

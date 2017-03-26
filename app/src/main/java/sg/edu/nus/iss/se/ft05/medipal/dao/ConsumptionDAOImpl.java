@@ -12,9 +12,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
-/**
- * Created by ethi on 10/03/17.
- */
+
 
 /**
  * Implementation class for consumption database operations

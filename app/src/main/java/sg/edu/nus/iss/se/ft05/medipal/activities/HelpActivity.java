@@ -22,9 +22,6 @@ import android.widget.TextView;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
-/**
- * @author Moushumi Seal
- */
 
 /**
  * Class for Help activity

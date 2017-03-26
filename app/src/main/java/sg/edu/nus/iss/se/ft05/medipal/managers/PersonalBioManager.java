@@ -7,12 +7,11 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 
-/**
- * @author Moushumi Seal
- */
+
 
 /**
  * Class for Persnal bio manager
+ * @author Moushumi Seal
  */
 public class PersonalBioManager {
 

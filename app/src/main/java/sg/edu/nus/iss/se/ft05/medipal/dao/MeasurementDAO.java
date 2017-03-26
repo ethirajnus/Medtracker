@@ -5,9 +5,7 @@ import android.database.Cursor;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 
 
-/**
- * Created by ashu on 15-03-2017.
- */
+
 
 /**
  * Interface for Measurement database operations

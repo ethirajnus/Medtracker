@@ -35,9 +35,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CONSUMPTION_NOT_SAVED;
 
-/**
- * @author Moushumi Seal
- */
+
 
 /**
  * Class for add /update health bio activity

@@ -7,12 +7,10 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.HealthBioDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.HealthBioDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 
-/**
- * @author Moushumi Seal
- */
 
 /**
  * Class for Health Bio Manager
+ * @author Moushumi Seal
  */
 public class HealthBioManager {
 

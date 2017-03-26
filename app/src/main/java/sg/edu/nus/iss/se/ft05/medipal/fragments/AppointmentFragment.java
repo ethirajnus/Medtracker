@@ -22,12 +22,10 @@ import sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 
-/**
- * Created by ethi on 08/03/17.
- */
 
 /**
  * Class for Appointment fragement
+ * Created by ethi on 08/03/17.
  */
 public class AppointmentFragment extends Fragment {
     private RecyclerView recyclerView;

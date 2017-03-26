@@ -54,12 +54,10 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_SYSTOL
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_TEMPERATURE;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_WEIGHT;
 
-/**
- * Created by ethi on 25/03/17.
- */
 
 /**
  * Class for Measurement report
+ * Created by ethi on 25/03/17.
  */
 public class MeasurementReportTab extends Fragment implements View.OnClickListener{
 

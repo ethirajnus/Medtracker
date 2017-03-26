@@ -21,9 +21,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
-/**
- * Created by ethi on 11/03/17.
- */
+
 
 /**
  * Class for Consumption list processing

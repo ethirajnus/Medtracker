@@ -52,7 +52,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_QUANTI
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_TIME;
 
 /**
- * Class for consumption reprort
+ * Class for consumption report
  */
 public class ConsumptionReportTab extends Fragment implements View.OnClickListener {
 

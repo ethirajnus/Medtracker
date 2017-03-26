@@ -9,9 +9,6 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
-/**
- * Created by ethi on 10/03/17.
- */
 
 /**
  * Implementation class for category database operations
