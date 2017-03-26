@@ -12,6 +12,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
  * Created by ashu on 15-03-2017.
  */
 
+/**
+ * Class for Measurement manager
+ */
 public class MeasurementManager {
 
     private static MeasurementDAO measurementAll;
@@ -31,12 +34,23 @@ public class MeasurementManager {
     public MeasurementManager() {
     }
 
+    /**
+     * Method for finding all measurements
+     * @param context
+     * @return
+     */
     public static Cursor findAll(Context context) {
 
         measurementAll = new MeasurementDAOImpl(context);
         return measurementAll.findAll();
     }
 
+    /**
+     * Method to find measurement by ID
+     * @param context
+     * @param id
+     * @return
+     */
     public Measurement findById(Context context, int id) {
 
         measurementAll = new MeasurementDAOImpl(context);
@@ -46,24 +60,44 @@ public class MeasurementManager {
         return measurement;
     }
 
+    /**
+     * Save Measurement
+     * @param context
+     * @return
+     */
     public long save(Context context) {
 
         measurementDAO = new MeasurementDAOImpl(context);
         return measurementDAO.insert(measurement);
     }
 
+    /**
+     * Update Measurement
+     * @param context
+     * @return
+     */
     public int update(Context context) {
 
         measurementDAO = new MeasurementDAOImpl(context);
         return measurementDAO.update(measurement);
     }
 
+    /**
+     * Delete Measurement
+     * @param context
+     * @return
+     */
     public int delete(Context context) {
 
         measurementDAO = new MeasurementDAOImpl(context);
         return measurementDAO.delete(measurement.getId());
     }
 
+    /**
+     * Method to get Measuremnt details
+     * @param context
+     * @return
+     */
     public int getMaxId(Context context) {
 
         measurementDAO = new MeasurementDAOImpl(context);

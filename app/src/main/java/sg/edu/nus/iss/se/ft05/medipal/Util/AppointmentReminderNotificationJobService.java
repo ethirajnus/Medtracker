@@ -11,8 +11,15 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
  * Created by ethi on 19/03/17.
  */
 
+/**
+ * Class for appointment reminder notification job service
+ */
 public class AppointmentReminderNotificationJobService extends JobService {
-
+    /**
+     *
+     * @param jobParameters
+     * @return
+     */
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
         PersistableBundle b = jobParameters.getExtras();
@@ -23,6 +30,11 @@ public class AppointmentReminderNotificationJobService extends JobService {
         return true;
     }
 
+    /**
+     *
+     * @param jobParameters
+     * @return
+     */
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         return true;

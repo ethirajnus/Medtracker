@@ -28,6 +28,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERI
  * Created by ethi on 12/03/17.
  */
 
+/**
+ * Class for Medicine Manager
+ */
 public class MedicineManager {
 
     private static MedicineDAO medicineAll;
@@ -54,19 +57,34 @@ public class MedicineManager {
 
     }
 
-
+    /**
+     * Method for finding all medicine
+     * @param context
+     * @return
+     */
     public static Cursor findAll(Context context) {
         medicineAll = new MedicineDAOImpl(context);
         Cursor cursor = medicineAll.findAll();
         return cursor;
     }
 
+    /**
+     * Method to find medicine by id
+     * @param context
+     * @param id
+     * @return
+     */
     public Medicine findById(Context context, int id) {
         medicineDAO = new MedicineDAOImpl(context);
         medicine = medicineDAO.findById(id);
         return medicine;
     }
 
+    /**
+     * Delete Medicine
+     * @param context
+     * @return
+     */
     public int delete(Context context) {
         medicineDAO = new MedicineDAOImpl(context);
         ReminderManager reminderManager = new ReminderManager();
@@ -76,16 +94,31 @@ public class MedicineManager {
         return medicineDAO.delete(medicine.getId());
     }
 
+    /**
+     * Save Medicine
+     * @param context
+     * @return
+     */
     public long save(Context context) {
         medicineDAO = new MedicineDAOImpl(context);
         return medicineDAO.insert(medicine);
     }
 
+    /**
+     * Update Medicine
+     * @param context
+     * @return
+     */
     public int update(Context context) {
         medicineDAO = new MedicineDAOImpl(context);
         return medicineDAO.update(medicine);
     }
 
+    /**
+     * List Medicine
+     * @param context
+     * @return
+     */
     public static Map<Integer, Integer> listAllMedicine(Context context) {
         Cursor cursor = MedicineManager.findAll(context);
         Map<Integer, Integer> medicineHashMap = new HashMap();
