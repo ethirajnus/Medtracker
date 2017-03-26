@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -148,10 +149,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        consumptionManager.delete(context);
-                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
-                        //update the list
-                        mAdapter.swapCursor(ConsumptionManager.findAll(context));
+                        new DeleteConsumption().execute();
                         alert.dismiss();
                     }
                 });
@@ -168,6 +166,20 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         return view;
     }
 
+    private class DeleteConsumption extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return consumptionManager.delete(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+            //update the list
+            mAdapter.swapCursor(ConsumptionManager.findAll(context));
+        }
+    }
 
     private void findViewsById() {
         medicine = (Spinner) view.findViewById(R.id.consumptionMedicine);

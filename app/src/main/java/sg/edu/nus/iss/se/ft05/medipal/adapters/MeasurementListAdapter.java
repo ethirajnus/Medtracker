@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -30,6 +31,7 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
 
     private Cursor mCursor;
     private Context mContext;
+    MeasurementManager measurementManager;
 
     public MeasurementListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
@@ -98,12 +100,10 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                MeasurementManager measurementManager = new MeasurementManager();
+                measurementManager = new MeasurementManager();
                 measurementManager.findById(mContext, id);
 
-                measurementManager.delete(mContext);
-                //update the list
-                swapCursor(MeasurementManager.findAll(mContext));
+                new DeleteMeasurement().execute();
             }
         });
 
@@ -118,6 +118,19 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
 
     }
 
+    private class DeleteMeasurement extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return measurementManager.delete(mContext)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            //update the list
+            swapCursor(MeasurementManager.findAll(mContext));
+        }
+    }
     /**
      *
      * @return

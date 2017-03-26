@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -44,6 +45,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     private static final int ICE_PERMISSIONS_REQUEST_SMS = 2;
 
     private final OnStartDragListener mDragStartListener;
+    ICEContactsManager iceContactsManager;
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
@@ -111,16 +113,13 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                 public void onClick(View v) {
 
-                    ICEContactsManager iceContactsManager = new ICEContactsManager();
+                    iceContactsManager = new ICEContactsManager();
 
                     iceContactsManager.findById(context, id);
 
                     iceContactsManager.updatePriority(context);
 
-                    iceContactsManager.delete(context);
-
-                    //update the list
-                    swapCursor(ICEContactsManager.findAll(context));
+                    new DeleteAppointment().execute();
                 }
             });
 
@@ -215,6 +214,20 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         }
 
 
+    }
+
+    private class DeleteAppointment extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return iceContactsManager.delete(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            //update the list
+            swapCursor(ICEContactsManager.findAll(context));
+        }
     }
 
     /**

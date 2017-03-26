@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
     // Holds on to the cursor to display the health bio list
     private Cursor mCursor;
     private Context mContext;
+    HealthBioManager healthBioManager;
 
     private static final String LOG = "HealthBioListAdapter";
 
@@ -81,11 +83,9 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                HealthBioManager healthBioManager = new HealthBioManager();
+                healthBioManager = new HealthBioManager();
                 healthBioManager.findById(mContext, id);
-                healthBioManager.delete(mContext);
-                //update the list
-                swapCursor(HealthBioManager.findAll(mContext));
+                new DeleteHealthBio().execute();
             }
         });
 
@@ -111,6 +111,19 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
         holder.icon.setImageDrawable(drawable);
     }
 
+    private class DeleteHealthBio extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return healthBioManager.delete(mContext)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            //update the list
+            swapCursor(HealthBioManager.findAll(mContext));
+        }
+    }
     /**
      * Swaps the Cursor currently held in the adapter with a new one
      * and triggers a UI refresh

@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
     // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
+    ConsumptionManager consumptionManager;
 
     public ConsumptionListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
@@ -93,11 +95,9 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                ConsumptionManager consumptionManager = new ConsumptionManager();
+                consumptionManager = new ConsumptionManager();
                 consumptionManager.findById(mContext, id);
-                consumptionManager.delete(mContext);
-                //update the list
-                swapCursor(ConsumptionManager.findAll(mContext));
+                new DeleteConsumption().execute();
             }
         });
 
@@ -112,6 +112,19 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
     }
 
+    private class DeleteConsumption extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return consumptionManager.delete(mContext)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            //update the list
+            swapCursor(ConsumptionManager.findAll(mContext));
+        }
+    }
     /**
      *
      * @return

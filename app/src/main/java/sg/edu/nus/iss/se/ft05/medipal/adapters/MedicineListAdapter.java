@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
     // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
+    MedicineManager medicineManager;
 
     public MedicineListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
@@ -88,12 +90,9 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                MedicineManager medicineManager = new MedicineManager();
+                medicineManager = new MedicineManager();
                 medicineManager.findById(mContext, id);
-                medicineManager.delete(mContext);
-                ReminderUtils.syncMedicineReminder(mContext);
-                //update the list
-                swapCursor(MedicineManager.findAll(mContext));
+                new DeleteMedicine().execute();
             }
         });
 
@@ -143,6 +142,20 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
     }
 
+    private class DeleteMedicine extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return medicineManager.delete(mContext)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            ReminderUtils.syncMedicineReminder(mContext);
+            //update the list
+            swapCursor(MedicineManager.findAll(mContext));
+        }
+    }
     /**
      *
      * @return
