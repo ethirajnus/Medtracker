@@ -34,7 +34,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     Button saveButton;
     EditText systolic, diastolic, pulse, temperature, weight, measuredOn;
-    Context context = getApplicationContext();
+    Context context;
 
     private MeasurementManager measurementManager;
 
@@ -44,6 +44,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_add_measurement);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        context=getApplicationContext();
 
         findViewsById();
         setListeners();
@@ -95,18 +96,9 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
             int measurementWeight = Integer.parseInt(temp);
             String measurementMeasuredOn = new SimpleDateFormat(DATE_FORMAT).format(d);
 
-            MeasurementManager measurementManager = new MeasurementManager(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
+            measurementManager = new MeasurementManager(measurementSystolic, measurementDiastolic, measurementPulse, measurementTemperature, measurementWeight, measurementMeasuredOn);
 
-            //new SaveMeasurement().execute();
-            if (measurementManager.save(getApplicationContext()) == -1) {
-
-                Toast.makeText(getApplicationContext(), "Measurement was not inserted properly,Please try again later", Toast.LENGTH_SHORT).show();
-
-            } else {
-
-                navigateToMainActivity();
-
-            }
+            new SaveMeasurement().execute();
         }
     }
 
