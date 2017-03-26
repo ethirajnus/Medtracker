@@ -327,16 +327,6 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         calendar.setTime(selectedDateObj);
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
         Date StartDate = calendar.getTime();
-<<<<<<< HEAD
-        calendar.add(Calendar.DATE,6);
-        Date EndDate = calendar.getTime();
-        dateFrom = formatter.format(StartDate);
-        dateTo = formatter.format(EndDate);
-        cursor = Consumption.fetchByCategoryAndBetweenDates(context, medicineCategoryId,dateFrom,dateTo );
-        mAdapter.swapCursor(cursor);
-    }
-
-=======
         calendar.add(Calendar.DATE, 6);
         Date EndDate = calendar.getTime();
         dateFrom = formatter.format(StartDate);
@@ -344,7 +334,6 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         cursor = ConsumptionManager.fetchByCategoryAndBetweenDates(context, medicineCategoryId, dateFrom, dateTo);
         mAdapter.swapCursor(cursor);
     }
->>>>>>> master
 
 
     private void populateDropDownList() {
@@ -375,11 +364,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
 
         spinYear.setAdapter(yearAdapter);
-<<<<<<< HEAD
-        spinYear.setSelection(years.size() -1);
-=======
         spinYear.setSelection(years.size() - 1);
->>>>>>> master
 
         ArrayList<String> months = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {

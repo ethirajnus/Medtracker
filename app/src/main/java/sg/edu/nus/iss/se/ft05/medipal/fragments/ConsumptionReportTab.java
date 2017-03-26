@@ -42,6 +42,7 @@ import java.util.Locale;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
@@ -69,6 +70,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private Date dateObjFrom, dateObjTo;
     private Calendar dateCalendarFrom, dateCalendarTo;
     private ConsumptionManager consumptionManager;
+    private Cursor cursor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,11 +98,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-<<<<<<< HEAD
-        cursor = Consumption.findAll(context);
-=======
-        Cursor cursor = ConsumptionManager.findAll(context);
->>>>>>> master
+        cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -254,11 +252,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     }
 
     private void triggerFilterForDate() {
-<<<<<<< HEAD
-        cursor = Consumption.betweenDate(context,dateFromText,dateToText);
-=======
-        Cursor cursor = ConsumptionManager.betweenDate(context, dateFromText, dateToText);
->>>>>>> master
+        cursor = ConsumptionManager.betweenDate(context, dateFromText, dateToText);
         mAdapter.swapCursor(cursor);
     }
 
@@ -268,24 +262,12 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         // handle item selection
         switch (item.getItemId()) {
             case R.id.share_consumption:
-<<<<<<< HEAD
                 SendEmail();
-=======
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "consumption");
-                intent.putExtra(Intent.EXTRA_TEXT, fetchContent());
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivity(intent);
-                }
->>>>>>> master
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-<<<<<<< HEAD
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void SendEmail(){
         String filename="consumption.csv";
@@ -349,15 +331,12 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
             consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
             consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
             consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
-            consumptions+= consumption.getMedicine(context).getName()+","+consumption.toString();
+            ConsumptionManager consumptionManager = new ConsumptionManager();
+            consumptionManager.setConsumption(consumption);
+            consumptions+= consumptionManager.getMedicine(context).getName()+","+consumption.toString();
             cursor.moveToNext();
         }
         return consumptions;
-=======
-    private String fetchContent() {
-        return "good";
-
->>>>>>> master
     }
 
 

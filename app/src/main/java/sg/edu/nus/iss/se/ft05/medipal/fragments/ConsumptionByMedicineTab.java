@@ -332,26 +332,6 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         mAdapter.swapCursor(cursor);
     }
 
-    private void triggerFilterForWeek() {
-        Date selectedDateObj = new Date();
-        String selectedDate = week.getText().toString();
-        try {
-            selectedDateObj = formatter.parse(selectedDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDateObj);
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        Date StartDate = calendar.getTime();
-        calendar.add(Calendar.DATE,6);
-        Date EndDate = calendar.getTime();
-        dateFrom = formatter.format(StartDate);
-        dateTo = formatter.format(EndDate);
-        cursor = Consumption.fetchByMedicineAndBetweenDates(context, medicineId,dateFrom,dateTo );
-        mAdapter.swapCursor(cursor);
-    }
-
     private void triggerFilterForDate() {
         cursor = ConsumptionManager.fetchByMedicineAndDate(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);

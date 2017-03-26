@@ -331,25 +331,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         mAdapter.swapCursor(cursor);
     }
 
-    private void triggerFilterForWeek() {
-        Date selectedDateObj = new Date();
-        String selectedDate = week.getText().toString();
-        try {
-            selectedDateObj = formatter.parse(selectedDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDateObj);
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        Date StartDate = calendar.getTime();
-        calendar.add(Calendar.DATE,6);
-        Date EndDate = calendar.getTime();
-        dateFrom = formatter.format(StartDate);
-        dateTo = formatter.format(EndDate);
-        cursor = Consumption.fetchByMedicineAndBetweenDatesUnconsumed(context, medicineId,dateFrom,dateTo );
-        mAdapter.swapCursor(cursor);
-    }
+
 
     private void triggerFilterForDate() {
         cursor = ConsumptionManager.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());

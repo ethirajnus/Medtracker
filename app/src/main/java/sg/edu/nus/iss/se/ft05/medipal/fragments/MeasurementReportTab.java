@@ -46,10 +46,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
-import static sg.edu.nus.iss.se.ft05.medipal.R.id.consumption;
-import static sg.edu.nus.iss.se.ft05.medipal.R.id.date;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_DIASTOLIC;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_PULSE;
@@ -276,7 +273,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     }
 
 
-<<<<<<< HEAD
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void SendEmail(){
         String filename="measurement.csv";
@@ -288,20 +284,11 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         intent.putExtra(Intent.EXTRA_SUBJECT, "measurement");
         intent.putExtra(Intent.EXTRA_TEXT, "Please find the report attached for  Measurement");
         intent .putExtra(Intent.EXTRA_STREAM, path);
-=======
-    private void SendEmail(){
-        createFile(context,"measurement.csv,",fetchContent());
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-        intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "measurement");
->>>>>>> master
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
     }
 
-<<<<<<< HEAD
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void createFile(Context context, String sFileName, String sBody) {
@@ -332,23 +319,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
             }
 
-=======
-    public void createFile(Context context, String sFileName, String sBody) {
-        try {
-            File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
-            if (!root.exists()) {
-                root.mkdirs();
-            }
-            File gpxfile = new File(root, sFileName);
-            FileWriter writer = new FileWriter(gpxfile);
-            writer.append(sBody);
-            writer.flush();
-            writer.close();
-            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
->>>>>>> master
     }
 
     private String fetchContent() {
@@ -359,10 +329,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
     private String fetchMeasurementAsString() {
         cursor.moveToFirst();
-<<<<<<< HEAD
-=======
-        Log.v("check",String.valueOf(cursor.getCount()));
->>>>>>> master
         String measurements = "";
         while (!cursor.isAfterLast()) {
             Measurement measurement = new Measurement();
@@ -371,14 +337,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
             measurement.setPulse(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_PULSE)));
             measurement.setTemperature(cursor.getFloat(cursor.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
             measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
-<<<<<<< HEAD
-=======
-//            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
-//            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
-//            consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
-//            consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
-            Log.v("msg",measurement.toString());
->>>>>>> master
             measurements+= measurement.toString();
             cursor.moveToNext();
         }
