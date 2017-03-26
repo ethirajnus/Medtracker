@@ -24,6 +24,9 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
  * @author Moushumi Seal
  */
 
+/**
+ * Class for Health bio list processing
+ */
 public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdapter.HealthBioViewHolder> {
 
     // Holds on to the cursor to display the health bio list
@@ -37,6 +40,12 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
         this.mCursor = cursor;
     }
 
+    /**
+     * Method execution while creating UI
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public HealthBioViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Get the RecyclerView item layout
@@ -46,6 +55,11 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
         return new HealthBioViewHolder(view);
     }
 
+    /**
+     * Method execution while binding UI
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(HealthBioViewHolder holder, int position) {
         // Move the mCursor to the position of the item to be displayed
@@ -118,6 +132,10 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mCursor.getCount();

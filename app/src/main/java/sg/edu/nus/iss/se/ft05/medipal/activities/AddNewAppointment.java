@@ -39,6 +39,9 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+/**
+ *  Class for adding new Appointment
+ */
 public class AddNewAppointment extends AppCompatActivity implements View.OnClickListener {
     EditText date, time, clinic, test, pre_test;
     private int mHour, mMinute;
@@ -46,7 +49,8 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
     Context context;
-    boolean flag = true;//To ensure that all input fields are valid
+
+            boolean flag = true;//To ensure that all input fields are valid
     private static final String BLANK_DATE_MESSAGE = "Appointment date required";
     private static final String WRONG_TIME = "Please choose a slot at least one hour from now";
     private static final String BLANK_TIME_MESSAGE = "Appointment time required";
@@ -55,6 +59,10 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
     private static final String WRONG_DATE = "Date cannot be before today";
     AppointmentManager appointmentManager;
 
+    /**
+     * Methos to run while creating UI for add
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +82,10 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         if (view == date)
@@ -84,6 +96,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
+
     private void findViewsById() {
         date = (EditText) findViewById(R.id.new_appointment_date);
         date.setInputType(InputType.TYPE_NULL);
@@ -93,6 +106,10 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     *
+     * @throws java.text.ParseException
+     */
     private void setDateTimeField() throws java.text.ParseException {
         date.setOnClickListener(this);
         final Calendar now = Calendar.getInstance();
@@ -181,6 +198,12 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
 
     }
 
+
+    /**
+     * Validate Fields
+     * @param view
+     * @throws java.text.ParseException
+     */
     public void createAppointment(View view) throws java.text.ParseException {
 
         date = (EditText) findViewById(R.id.new_appointment_date);
@@ -198,6 +221,7 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         atest = test.getText().toString();
         apre_test = pre_test.getText().toString();
         flag = true;
+
 
         if (clinic.getText().toString().length() == 0) {
             clinic.setError(BLANK_CLINIC_MESSAGE);

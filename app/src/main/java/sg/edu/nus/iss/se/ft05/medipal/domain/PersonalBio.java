@@ -4,8 +4,12 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
  * Created by e0146812 on 3/25/2017.
  */
 
+/**
+ * Domain class for Personal Bio
+ */
 public class PersonalBio {
 
+    //Variables
     private int id;
     private String name;
     private String dob;

@@ -20,7 +20,9 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 
-
+/**
+ * Class for Appointment tab
+ */
 public class AppointmentTab extends Fragment {
     private Context context;
     private TextView textView;
@@ -37,12 +39,22 @@ public class AppointmentTab extends Fragment {
         // Required empty public constructor
     }
 
-
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -28,6 +28,9 @@ import static org.junit.Assert.assertTrue;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
+/**
+ * Class for Appointment database operations instrumented test
+ */
 public class AppointmentDAOInstrumentedTest {
 
 
@@ -148,6 +151,11 @@ public class AppointmentDAOInstrumentedTest {
         findByIdTesting(1, appointment1);
     }
 
+    /**
+     *
+     * @param id
+     * @param appointmentTest
+     */
     private void findByIdTesting(int id, Appointment appointmentTest) {
 
         Appointment appointment = appointmentDAOImpl.findById(id);

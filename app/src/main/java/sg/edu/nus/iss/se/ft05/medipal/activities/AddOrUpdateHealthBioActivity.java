@@ -38,6 +38,10 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CONSUMPTION_NOT
 /**
  * @author Moushumi Seal
  */
+
+/**
+ * Class for add /update health bio activity
+ */
 public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
     private EditText mCondition, mStartDate;
@@ -55,6 +59,10 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
     private Context context;
     private HealthBioManager healthBioManager;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +123,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
 
     }
 
+
     private void setListeners() {
         mSaveBtn.setOnClickListener(this);
         mStartDate.setOnClickListener(this);
@@ -132,7 +141,10 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                 newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
-
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -153,6 +165,11 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         }
     }
 
+    /**
+     *
+     * @param v
+     * @param hasFocus
+     */
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
@@ -166,6 +183,10 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         }
     }
 
+    /**
+     *
+     * @param id
+     */
     private void updateHealthbioValues(int id) {
 
         healthBioManager = new HealthBioManager();
@@ -178,10 +199,12 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             mRadio_Allergy.setChecked(true);
     }
 
+
     private void updateSaveButton() {
         mSaveBtn.setTag(Constants.UPDATE);
         mSaveBtn.setText(Constants.UPDATE);
     }
+
 
     private void findViewsById() {
         mCondition = (EditText) findViewById(R.id.condition);
@@ -276,6 +299,10 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         finish();
     }
 
+    /**
+     *
+     * @return
+     */
     private boolean isValid() {
         boolean isValid = true;
         if (TextUtils.isEmpty(mCondition.getText().toString().trim()) && TextUtils.isEmpty(mStartDate.getText())) {

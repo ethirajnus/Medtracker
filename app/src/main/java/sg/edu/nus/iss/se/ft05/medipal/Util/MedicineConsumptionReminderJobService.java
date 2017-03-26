@@ -10,9 +10,16 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
  * Created by ethi on 15/03/17.
  */
 
+/**
+ * Class for Medicine consumption reminder job service
+ */
 public class MedicineConsumptionReminderJobService  extends JobService {
 
-
+    /**
+     *
+     * @param jobParameters
+     * @return
+     */
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
         PersistableBundle b = jobParameters.getExtras();
@@ -24,6 +31,11 @@ public class MedicineConsumptionReminderJobService  extends JobService {
         return true;
     }
 
+    /**
+     *
+     * @param jobParameters
+     * @return
+     */
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         return true;

@@ -7,8 +7,15 @@ import android.app.job.JobService;
  * Created by ethi on 19/03/17.
  */
 
+/**
+ * Class for Appointment reminder job service
+ */
 public class AppointmentReminderJobService extends JobService {
-
+    /**
+     *
+     * @param jobParameters
+     * @return
+     */
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
         ReminderTasks.executeTask(AppointmentReminderJobService.this, ReminderTasks.ACTION_APPOINTMENT_REMINDER);
@@ -16,6 +23,11 @@ public class AppointmentReminderJobService extends JobService {
         return true;
     }
 
+    /**
+     *
+     * @param jobParameters
+     * @return
+     */
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         return true;

@@ -26,6 +26,9 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
  * @author Moushumi Seal
  */
 
+/**
+ * Class for Help activity
+ */
 public class HelpActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
@@ -36,6 +39,10 @@ public class HelpActivity extends AppCompatActivity {
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +101,10 @@ public class HelpActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param currentPage
+     */
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
 
@@ -124,7 +135,10 @@ public class HelpActivity extends AppCompatActivity {
 
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
+        /**
+         *
+         * @param position
+         */
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);

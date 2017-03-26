@@ -15,11 +15,18 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 import static sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine.DOSAGE_REVERSE_HASH_MAP;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE;
 
+/**
+ * class to show medicine details
+ */
 public class ShowMedicine extends AppCompatActivity {
 
     private TextView name, description, category, reminder, quantity, dosage, consumeQuantity, threshold, dateIssued, expireFactor, frequency, startTime, interval;
     private Context context;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,11 @@ public class ShowMedicine extends AppCompatActivity {
         updateValues(medicineManager, reminder);
     }
 
+    /**
+     *
+     * @param medicineManager
+     * @param reminderMedicine
+     */
     private void updateValues(MedicineManager medicineManager, Reminder reminderMedicine) {
 
         Medicine medicine = medicineManager.getMedicine();
@@ -55,6 +67,7 @@ public class ShowMedicine extends AppCompatActivity {
         interval.setText(String.valueOf(reminderMedicine.getInterval()));
 
     }
+
 
     private void findViewsById() {
         name = (TextView) findViewById(R.id.medicineName);
