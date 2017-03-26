@@ -232,7 +232,6 @@ public class AppointmentDAOInstrumentedTest {
                     break;
             }
         }
-
     }
 
     @Test
