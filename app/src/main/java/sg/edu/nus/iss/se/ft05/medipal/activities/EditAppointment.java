@@ -3,13 +3,16 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -20,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -39,7 +43,8 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog fromDatePickerDialog;
     private TimePickerDialog timePickerDialog;
-    private EditText date, time, clinic, test, pre_test;
+    private EditText date, time, clinic, description;
+    private Button button;
     AppointmentManager appointmentManager;
     private Context context;
     private boolean flag = true; //flag is to ensure that all fields have been filled properly
@@ -61,6 +66,8 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+        button= (Button) findViewById(R.id.button);
+        button.setText("MODIFY");
 
         context = getApplicationContext();
 
@@ -72,18 +79,18 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         appointmentManager = new AppointmentManager();
         Appointment appointment = appointmentManager.findById(getApplicationContext(), id);
 
-        date = (EditText) findViewById(R.id.appointment_date);
-        time = (EditText) findViewById(R.id.appointment_time);
-        clinic = (EditText) findViewById(R.id.appointment_clinic);
-        test = (EditText) findViewById(R.id.appointment_test);
-        pre_test = (EditText) findViewById(R.id.appointment_pre_test);
+        date = (EditText) findViewById(R.id.new_appointment_date);
+        time = (EditText) findViewById(R.id.new_appointment_time);
+        clinic = (EditText) findViewById(R.id.new_appointment_clinic);
+        description = (EditText) findViewById(R.id.new_appointment_description);
+
 
 
         date.setText(appointment.getDate());
         time.setText(appointment.getTime());
         clinic.setText(appointment.getClinic());
-        test.setText(appointment.getTest());
-        pre_test.setText(appointment.getPreTest());
+        description.setText(appointment.getDescription());
+
 
 
         findViewsById();
@@ -97,7 +104,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
      * @param view
      */
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)   {
 
         if (view == date)
             fromDatePickerDialog.show();
@@ -105,15 +112,18 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         else if (view == time)
             timePickerDialog.show();
 
+        /*else if(view == button)
+            editAppointment(view);*/
+
     }
 
 
     private void findViewsById() {
 
-        date = (EditText) findViewById(R.id.appointment_date);
+        date = (EditText) findViewById(R.id.new_appointment_date);
         date.setInputType(InputType.TYPE_NULL);
         date.requestFocus();
-        time = (EditText) findViewById(R.id.appointment_time);
+        time = (EditText) findViewById(R.id.new_appointment_time);
         time.setInputType(InputType.TYPE_NULL);
     }
 
@@ -193,12 +203,16 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
     }
 
+
+    public void editAppointment(View view)  {
+
     /**
      *
      * @param view
      * @throws java.text.ParseException
      */
     public void editAppointment(View view) throws java.text.ParseException {
+
 
         boolean flag = true;
         Calendar calendar = Calendar.getInstance();
@@ -218,18 +232,31 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             flag = false;
         }
 
-        if (test.getText().toString().length() == 0) {
-            test.setError(BLANK_TEST_MESSAGE);
+        if (description.getText().toString().length() == 0) {
+            description.setError(BLANK_TEST_MESSAGE);
             flag = false;
         }
 
-        Date d2 = calendar.getTime();
+       /* Date d2 = calendar.getTime();
         String secondDate = new SimpleDateFormat(DATE_FORMAT).format(d2);
         Date d1 = new SimpleDateFormat(DATE_FORMAT).parse(date.getText().toString());
         d2 = new SimpleDateFormat(DATE_FORMAT).parse(secondDate);
 
         if (d1.before(d2)) {
             date.setError(WRONG_DATE);
+            flag = false;
+        }*/
+        else if (AppointmentManager.exists(context, date.getText().toString(),time.getText().toString())) {
+            AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+            warningDialog.setTitle(Constants.TITLE_WARNING);
+            warningDialog.setMessage(APPOINTMENT_CLASH);
+            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface alert, int button) {
+                    alert.dismiss();
+                }
+            });
+            warningDialog.show();
             flag = false;
         }
 
@@ -241,11 +268,14 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
             appointment.setDate(date.getText().toString());
             appointment.setTime(time.getText().toString());
             appointment.setClinic(clinic.getText().toString());
-            appointment.setTest(test.getText().toString());
-            appointment.setPreTest(pre_test.getText().toString());
+            appointment.setDescription(description.getText().toString());
             appointment.setId(id);
 
             appointmentManager.setAppointment(appointment);
+
+            if(appointmentManager.update(context) == -1)
+            {
+                Toast.makeText(context, APPOINTMENT_NOT_UPDATED, Toast.LENGTH_SHORT).show();
 
             new UpdateAppointment().execute();
         }
@@ -262,6 +292,7 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
         protected void onPostExecute(Boolean result) {
             if(result){
                 Toast.makeText(context, APPOINTMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
+
             } else {
                 ReminderUtils.syncAppointmentReminder(context);
                 navigateToMainAcitivity();

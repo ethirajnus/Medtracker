@@ -11,7 +11,6 @@ import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
 /**
@@ -49,9 +48,9 @@ public class AppointmentManager {
 
     }
 
-    public AppointmentManager(String date, String time, String clinic, String test, String pre_test) {
+    public AppointmentManager(String date, String time, String clinic, String description) {
 
-        appointment = new Appointment(date, time, clinic, test, pre_test);
+        appointment = new Appointment(date, time, clinic, description);
     }
 
     /**

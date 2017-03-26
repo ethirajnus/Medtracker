@@ -63,8 +63,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String APPOINTMENT_KEY_APPOINTMENT_DATE = "date";
     public static final String APPOINTMENT_KEY_APPOINTMENT_TIME = "time";
     public static final String APPOINTMENT_KEY_APPOINTMENT_CLINIC = "clinic";
-    public static final String APPOINTMENT_KEY_APPOINTMENT_TEST = "test";
-    public static final String APPOINTMENT_KEY_APPOINTMENT_PRE_TEST = "pre_test";
+    public static final String APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION = "description";
+
 
 
     public static final String CONSUMPTION_KEY_ID = "id";
@@ -124,7 +124,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_APPOINTMENT = "CREATE TABLE "
             + TABLE_APPOINTMENT + "(" + APPOINTMENT_KEY_ID + " INTEGER PRIMARY KEY," + APPOINTMENT_KEY_APPOINTMENT_DATE
             + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_TIME + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_CLINIC
-            + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_TEST + " TEXT," + APPOINTMENT_KEY_APPOINTMENT_PRE_TEST + " TEXT" + ")";
+            + " TEXT," +  APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION + " TEXT" + ")";
 
     private static final String CREATE_TABLE_MEDICINE = "CREATE TABLE "
             + TABLE_MEDICINE + "(" + MEDICINE_KEY_ID + " INTEGER PRIMARY KEY," + MEDICINE_KEY_MEDICINE

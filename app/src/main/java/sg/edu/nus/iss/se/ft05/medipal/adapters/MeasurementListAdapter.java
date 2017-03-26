@@ -81,7 +81,7 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         } else {
             holder.textPulse.setText(formatText(Constants.PULSE, pulse + Constants.PULSE_UNIT));
         }
-        if(temperature.equals(String.valueOf(0))){
+        if(temperature.equals(String.valueOf(0.0))){
             holder.textTemperature.setText(formatText(Constants.TEMPERATURE, " - "));
         } else {
             holder.textTemperature.setText(formatText(Constants.TEMPERATURE, temperature + Constants.TEMPERATURE_UNIT));

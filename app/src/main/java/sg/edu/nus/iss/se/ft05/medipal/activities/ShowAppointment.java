@@ -35,12 +35,12 @@ public class ShowAppointment extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         int id = bundle.getInt(ID);
 
-        TextView date, time, clinic, test, pre_test;
+        TextView date, time, clinic, description;
         date = (TextView) findViewById(R.id.appointment_date);
         time = (TextView) findViewById(R.id.appointment_time);
         clinic = (TextView) findViewById(R.id.appointment_clinic);
-        test = (TextView) findViewById(R.id.appointment_test);
-        pre_test = (TextView) findViewById(R.id.appointment_pre_test);
+       // description = (TextView) findViewById(R.id.appointment_description);
+
 
         context = getApplicationContext();
 
@@ -51,8 +51,8 @@ public class ShowAppointment extends AppCompatActivity {
         date.setText(appointment.getDate());
         time.setText(appointment.getTime());
         clinic.setText(appointment.getClinic());
-        test.setText(appointment.getTest());
-        pre_test.setText(appointment.getPreTest());
+        //description.setText(appointment.getDescription());
+
     }
 
 }

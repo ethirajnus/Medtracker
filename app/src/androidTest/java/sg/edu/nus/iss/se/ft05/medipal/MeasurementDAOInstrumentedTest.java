@@ -245,15 +245,15 @@ public class MeasurementDAOInstrumentedTest {
         assertNotNull(measurement);
 
         assertNotNull(measurement.getSystolic());
-        assertEquals(measurement5.getSystolic(), measurement.getSystolic());
+        assertEquals(measurement6.getSystolic(), measurement.getSystolic());
         assertNotNull(measurement.getDiastolic());
-        assertEquals(measurement5.getDiastolic(), measurement.getDiastolic());
+        assertEquals(measurement6.getDiastolic(), measurement.getDiastolic());
         assertNotNull(measurement.getPulse());
-        assertEquals(measurement5.getPulse(), measurement.getPulse());
+        assertEquals(measurement6.getPulse(), measurement.getPulse());
         assertNotNull(measurement.getWeight());
-        assertEquals(measurement5.getWeight(), measurement.getWeight());
+        assertEquals(measurement6.getWeight(), measurement.getWeight());
         assertNotNull(measurement.getTemperature());
-        assertEquals("" + measurement5.getTemperature(), "" + measurement.getTemperature());
+        assertEquals("" + measurement6.getTemperature(), "" + measurement.getTemperature());
     }
 
     @Test

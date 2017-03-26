@@ -42,6 +42,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     /**
      * Method to run while creating UI for add/display
+     *
      * @param savedInstanceState
      */
     @Override
@@ -50,7 +51,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_add_measurement);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        context=getApplicationContext();
+        context = getApplicationContext();
 
         findViewsById();
         setListeners();
@@ -90,7 +91,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void saveMeasurement() {
 
-        if(isValid()) {
+        if (isValid()) {
             setEmptyFieldsToZero();
             Date d = Calendar.getInstance().getTime();
             String temp = systolic.getText().toString();
@@ -100,7 +101,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
             temp = pulse.getText().toString();
             int measurementPulse = Integer.parseInt(temp);
             temp = temperature.getText().toString();
-            int measurementTemperature = Integer.parseInt(temp);
+            float measurementTemperature = Float.parseFloat(temp);
             temp = weight.getText().toString();
             int measurementWeight = Integer.parseInt(temp);
             String measurementMeasuredOn = new SimpleDateFormat(DATE_FORMAT).format(d);
@@ -113,7 +114,6 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
     /**
      * Navigation to Main Activity
-     *
      */
     @Override
     public void onBackPressed() {
@@ -124,12 +124,12 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return measurementManager.save(context)==-1;
+            return measurementManager.save(context) == -1;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if(result){
+            if (result) {
                 Toast.makeText(context, MEASUREMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
                 navigateToMainActivity();
@@ -147,12 +147,11 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
     }
 
     /**
-     *
      * @return
      */
-    private boolean isValid(){
-        boolean isValid  = true;
-        if(TextUtils.isEmpty(systolic.getText().toString().trim())
+    private boolean isValid() {
+        boolean isValid = true;
+        if (TextUtils.isEmpty(systolic.getText().toString().trim())
                 && TextUtils.isEmpty(diastolic.getText().toString().trim())
                 && TextUtils.isEmpty(pulse.getText().toString().trim())
                 && TextUtils.isEmpty(temperature.getText().toString().trim())
@@ -168,34 +167,34 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
                 }
             });
             warningDialog.show();
-        }else if(TextUtils.isEmpty(systolic.getText().toString().trim())
-                && !TextUtils.isEmpty(diastolic.getText().toString().trim())){
+        } else if (TextUtils.isEmpty(systolic.getText().toString().trim())
+                && !TextUtils.isEmpty(diastolic.getText().toString().trim())) {
             systolic.setError(Constants.EMPTY_SYSTOLIC);
             systolic.requestFocus();
             isValid = false;
-        } else if(!TextUtils.isEmpty(systolic.getText().toString().trim())
-                && TextUtils.isEmpty(diastolic.getText().toString().trim())){
+        } else if (!TextUtils.isEmpty(systolic.getText().toString().trim())
+                && TextUtils.isEmpty(diastolic.getText().toString().trim())) {
             diastolic.setError(Constants.EMPTY_DIASTOLIC);
             diastolic.requestFocus();
             isValid = false;
         }
-        if(systolic.getText().toString().trim().matches(Constants.PATTERN_ZERO)){
+        if (systolic.getText().toString().trim().matches(Constants.PATTERN_ZERO)) {
             systolic.setError(Constants.INVALID_SYSTOLIC);
             systolic.requestFocus();
             isValid = false;
-        }else if(diastolic.getText().toString().trim().matches(Constants.PATTERN_ZERO)){
+        } else if (diastolic.getText().toString().trim().matches(Constants.PATTERN_ZERO)) {
             diastolic.setError(Constants.INVALID_DIASTOLIC);
             diastolic.requestFocus();
             isValid = false;
-        }else if(pulse.getText().toString().trim().matches(Constants.PATTERN_ZERO)){
+        } else if (pulse.getText().toString().trim().matches(Constants.PATTERN_ZERO)) {
             pulse.setError(Constants.INVALID_PULSE);
             pulse.requestFocus();
             isValid = false;
-        }else if(temperature.getText().toString().trim().matches(Constants.PATTERN_ZERO)){
+        } else if (temperature.getText().toString().trim().matches(Constants.PATTERN_ZERO)) {
             temperature.setError(Constants.INVALID_TEMPERATURE);
             temperature.requestFocus();
             isValid = false;
-        }else if(weight.getText().toString().trim().matches(Constants.PATTERN_ZERO)){
+        } else if (weight.getText().toString().trim().matches(Constants.PATTERN_ZERO)) {
             weight.setError(Constants.INVALID_WEIGHT);
             weight.requestFocus();
             isValid = false;
@@ -204,16 +203,16 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void setEmptyFieldsToZero(){
-        if(TextUtils.isEmpty(systolic.getText().toString().trim()))
+    private void setEmptyFieldsToZero() {
+        if (TextUtils.isEmpty(systolic.getText().toString().trim()))
             systolic.setText(String.valueOf(0));
-        if(TextUtils.isEmpty(diastolic.getText().toString().trim()))
+        if (TextUtils.isEmpty(diastolic.getText().toString().trim()))
             diastolic.setText(String.valueOf(0));
-        if(TextUtils.isEmpty(pulse.getText().toString().trim()))
+        if (TextUtils.isEmpty(pulse.getText().toString().trim()))
             pulse.setText(String.valueOf(0));
-        if(TextUtils.isEmpty(temperature.getText().toString().trim()))
+        if (TextUtils.isEmpty(temperature.getText().toString().trim()))
             temperature.setText(String.valueOf(0));
-        if(TextUtils.isEmpty(weight.getText().toString().trim()))
+        if (TextUtils.isEmpty(weight.getText().toString().trim()))
             weight.setText(String.valueOf(0));
     }
 }

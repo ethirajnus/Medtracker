@@ -66,7 +66,30 @@ public interface ConsumptionDAO {
      */
     public int totalQuantityConsumed(int medicineId);
 
-    /**
+
+/**
+     * list consumption by medicine id
+     * @param medicineId
+     * @return
+     */
+    public List<Consumption> findByMedicineID(int medicineId);
+
+  /**
+     * delete medicine
+     * @param medicineId
+     * @return
+     */
+    public int deleteAllForMedicine(int medicineId);
+
+  /**
+     * data between date
+     * @param dateFrom
+     * @param dateTo
+     * @return date
+     */
+    public Cursor betweenDate(String dateFrom, String dateTo);
+
+      /**
      * Fetch medicine categoryid
      * @param medicineCategoryId
      * @return
@@ -88,12 +111,6 @@ public interface ConsumptionDAO {
      */
     public Cursor fetchByMedicineAndDate(int medicineId, String date);
 
-    /**
-     * list consumption by medicine id
-     * @param medicineId
-     * @return
-     */
-    public List<Consumption> findByMedicineID(int medicineId);
 
     /**
      * fetch consumption by medicine and year
@@ -170,21 +187,6 @@ public interface ConsumptionDAO {
      * @return
      */
     public Cursor fetchByMedicineAndMonthUnconsumed(Integer medicineId, String year, String month);
-
-    /**
-     * delete medicine
-     * @param medicineId
-     * @return
-     */
-    public int deleteAllForMedicine(int medicineId);
-
-    /**
-     * data between date
-     * @param dateFrom
-     * @param dateTo
-     * @return date
-     */
-    public Cursor betweenDate(String dateFrom, String dateTo);
 
     /**
      * fetch category between dates
