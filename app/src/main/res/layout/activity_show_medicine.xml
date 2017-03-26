@@ -1,208 +1,244 @@
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="16dp"
-    android:orientation="vertical">
-            <TextView
-                android:id="@+id/medicineLabelName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fullName"
-                android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/medicineName"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+        <TextView
+            android:id="@+id/medicineLabelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fullName"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/medinceLabelDescription"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/medicineName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/reminderLabelInterval"
+            android:layout_alignParentEnd="true" />
 
-                android:layout_height="wrap_content"
-                android:text="@string/medicineDescription"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/medinceLabelDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicineLabelName"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineDescription"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/medicineDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                />
+        <TextView
+            android:id="@+id/medicineDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/reminderLabelInterval"
+            android:layout_alignStart="@+id/medicineQuantity" />
 
-            <TextView
-                android:id="@+id/medicineLabelCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/medicineCategory"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/medicineCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"                />
-
-            <TextView
-                android:id="@+id/medicineLabelReminder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/medicineReminder"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"
-                />
-            <TextView
-                android:id="@+id/medicineReminder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                />
-
-            <TextView
-                android:id="@+id/medicineLabelQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/medicineQuantity"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/medicineQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                />
-
-            <TextView
-                android:id="@+id/medicineLabelDosage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/medicineDosage"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/medicineLabelCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medinceLabelDescription"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineCategory"
+            android:textStyle="bold" />
 
 
-            <TextView
-                android:id="@+id/medicineDosage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"/>
+        <TextView
+            android:id="@+id/medicineCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineDescription"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/medicineLabelCategory" />
 
-            <TextView
-                android:id="@+id/medicineLabelConsumeQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+        <TextView
+            android:id="@+id/medicineLabelReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicineLabelCategory"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineReminder"
+            android:textStyle="bold" />
 
-                android:text="@string/medicineConsumeQuantity"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/medicineReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineCategory"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/medicineLabelReminder" />
 
-            <TextView
-                android:id="@+id/medicineConsumeQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-               />
+        <TextView
+            android:id="@+id/medicineLabelQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicineLabelReminder"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineQuantity"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/medicineLabelThreshold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/medicineThreshold"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/medicineQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineReminder"
+            android:layout_marginTop="8dp"
+            android:layout_alignStart="@+id/reminderFrequency" />
 
-            <TextView
-                android:id="@+id/medicineThreshold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-               />
-
-            <TextView
-                android:id="@+id/medicineLabelDateIssued"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/medicineDateIssued"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/medicineDateIssued"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                />
-            <TextView
-                android:id="@+id/medicineLabelExpireFactor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/medicineExpireFactor"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/medicineExpireFactor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-               />
-
-            <TextView
-                android:id="@+id/reminderLabelFrequency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/reminderFrequency"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/reminderFrequency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-/>
-            <TextView
-                android:id="@+id/reminderLabelStartTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/reminderStartTime"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/reminderStartTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-/>
-            <TextView
-                android:id="@+id/reminderLabelInterval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/reminderInterval"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/reminderInterval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-
-                />
+        <TextView
+            android:id="@+id/medicineLabelDosage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicineLabelQuantity"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineDosage"
+            android:textStyle="bold" />
 
 
-</LinearLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/medicineDosage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineQuantity"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/medicineDescription" />
+
+        <TextView
+            android:id="@+id/medicineLabelConsumeQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicineLabelDosage"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineConsumeQuantity"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/medicineConsumeQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineDosage"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/medicineLabelConsumeQuantity" />
+
+        <TextView
+            android:id="@+id/medicineLabelThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicineLabelConsumeQuantity"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineThreshold"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/medicineThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineConsumeQuantity"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/medicineLabelConsumeQuantity" />
+
+        <TextView
+            android:id="@+id/medicineLabelDateIssued"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicineLabelThreshold"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineDateIssued"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/medicineDateIssued"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineThreshold"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/medicineLabelDateIssued" />
+
+        <TextView
+            android:id="@+id/medicineLabelExpireFactor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/medicineExpireFactor"
+            android:textStyle="bold"
+            android:layout_below="@+id/medicineLabelDateIssued"/>
+
+        <TextView
+            android:id="@+id/medicineExpireFactor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineDateIssued"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/medicineLabelExpireFactor"/>
+
+        <TextView
+            android:id="@+id/reminderLabelFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/reminderFrequency"
+            android:textStyle="bold"
+            android:layout_below="@+id/medicineLabelExpireFactor"/>
+
+        <TextView
+            android:id="@+id/reminderFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/medicineExpireFactor"
+            android:layout_toRightOf="@+id/reminderLabelFrequency"/>
+
+        <TextView
+            android:id="@+id/reminderLabelStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/reminderStartTime"
+            android:textStyle="bold"
+            android:layout_below="@+id/reminderLabelFrequency"/>
+
+        <TextView
+            android:id="@+id/reminderStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/reminderLabelStartTime"
+            android:layout_toRightOf="@+id/reminderFrequency"/>
+
+        <TextView
+            android:id="@+id/reminderLabelInterval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/medicineLabelName"
+            android:text="@string/reminderInterval"
+            android:textStyle="bold"
+            android:layout_above="@+id/medinceLabelDescription"
+            android:layout_below="@+id/medicineLabelName" />
+
+        <TextView
+            android:id="@+id/reminderInterval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/reminderStartTime"
+            android:layout_toEndOf="@+id/medicineLabelDateIssued" />
+
+
+    </RelativeLayout>
+</ScrollView>

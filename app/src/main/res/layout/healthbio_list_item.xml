@@ -27,7 +27,7 @@
         android:textAllCaps="true"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/conditionType"
@@ -38,7 +38,7 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/healthbioImageIcon"
         android:layout_weight="1"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/startDate"
@@ -51,7 +51,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/healthbioImageIcon"
         android:layout_weight="1"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorSecondaryText"
         />
 
 
