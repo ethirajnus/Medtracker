@@ -19,7 +19,6 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
-import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentListAdapter.AppointmentViewHolder> {
@@ -51,7 +50,6 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         String test = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TEST));
         String pre_test = mCursor.getString(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_PRE_TEST));
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID));
-        //String info = date + "\n" + time + "\n" + clinic;
 
 
         holder.itemView.setTag(id);
@@ -88,18 +86,6 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             }
         });
 
-       /* holder.appointmentInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ShowAppointment.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("id", id);
-                intent.putExtras(bundle);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-
-            }
-        });*/
 
     }
 

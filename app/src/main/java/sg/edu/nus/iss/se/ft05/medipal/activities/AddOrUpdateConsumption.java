@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -233,13 +234,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         if (saveButton.getTag().toString().equalsIgnoreCase(NEW)) {
             consumption = new Consumption(consumptionMedicine, consumptionQuantity, consumptionDate, consumptionTime);
             if (isValid()) {
-                if (consumption.save(context) == -1) {
-                    Toast.makeText(context, CONSUMPTION_NOT_SAVED, Toast.LENGTH_SHORT).show();
-                } else {
-                    checkAndTriggerReplenishReminder();
-                    navigateToMainAcitivity();
-
-                }
+                new SaveConsumption().execute();
             }
 
         } else {
@@ -258,6 +253,23 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
         }
 
+    }
+
+    private class SaveConsumption extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return consumption.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, CONSUMPTION_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainAcitivity();
+            }
+        }
     }
 
     public void checkAndTriggerReplenishReminder() {
@@ -305,7 +317,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int button) {
                     alert.dismiss();
@@ -319,7 +331,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(CONSUMPTION_FREQUENCY_NOT_MORE_THAN_ERROR_MESSAGE + frequency + CONSUMPTION_TIMES);
-                warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface alert, int button) {
                         alert.dismiss();
@@ -333,7 +345,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                         AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                         warningDialog.setTitle(Constants.TITLE_WARNING);
                         warningDialog.setMessage(CONSUMPTION_NOT_BEFORE_ERROR_MESSAGE);
-                        warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+                        warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface alert, int button) {
                                 alert.dismiss();

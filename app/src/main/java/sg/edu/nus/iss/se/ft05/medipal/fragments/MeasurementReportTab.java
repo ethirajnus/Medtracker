@@ -2,12 +2,14 @@ package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -36,6 +38,7 @@ import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
@@ -119,13 +122,32 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                mAdapter.swapCursor(MeasurementManager.findAll(context));
+                // Inside, get the viewHolder's itemView's tag and store in a long variable id
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
-                //remove from DB
-                Measurement measurement = measurementManager.findById(context, id);
-                measurementManager.delete(context);
-                //update the list
-                mAdapter.swapCursor(measurementManager.findAll(context));
+                measurementManager = new MeasurementManager();
+                measurementManager.findById(context, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        measurementManager.delete(context);
+                        Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                        mAdapter.swapCursor(MeasurementManager.findAll(context));
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
 
         }).attachToRecyclerView(measurementRecyclerView);

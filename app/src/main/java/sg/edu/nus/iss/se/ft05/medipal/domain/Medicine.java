@@ -6,7 +6,7 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 public class Medicine {
 
     private int id, categoryId, reminderId, quantity, dosage, consumeQuantity, threshold, expireFactor;
-    private Boolean remind;
+    private boolean remind;
     private String dateIssued;
     private String name, description;
 
@@ -70,11 +70,11 @@ public class Medicine {
         this.expireFactor = expireFactor;
     }
 
-    public Boolean getRemind() {
+    public boolean getRemind() {
         return remind;
     }
 
-    public void setRemind(Boolean remind) {
+    public void setRemind(boolean remind) {
         this.remind = remind;
     }
 
@@ -111,7 +111,7 @@ public class Medicine {
 
     }
 
-    public Medicine(String name, String description, int categoryId, int reminderId, Boolean remind, int quantity, int dosage, int consumeQuantity, int threshold, String dateIssued, int expireFactor) {
+    public Medicine(String name, String description, int categoryId, int reminderId, boolean remind, int quantity, int dosage, int consumeQuantity, int threshold, String dateIssued, int expireFactor) {
 
         this.categoryId = categoryId;
         this.reminderId = reminderId;

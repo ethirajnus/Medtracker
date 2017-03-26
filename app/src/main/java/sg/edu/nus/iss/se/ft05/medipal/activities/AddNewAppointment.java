@@ -26,6 +26,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 import java.text.SimpleDateFormat;
 
 import android.text.InputType;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -220,13 +221,26 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
             //All input fields are valid
             AppointmentManager appointmentManager = new AppointmentManager(adate, atime, aclinic, atest, apre_test);
             Log.v("date",adate);
-            appointmentManager.save(context);
-            ReminderUtils.syncAppointmentReminder(context);
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            if(appointmentManager.save(context) == -1)
+            {
+                Toast.makeText(context, APPOINTMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                ReminderUtils.syncAppointmentReminder(context);
+                navigateToMainAcitivity();
+
+            }
+
+            /*Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             MainActivity.currentFragment = AppointmentFragment.class.getName();
             startActivity(intent);
-            finish();
+            finish();*/
         }
+    }
+    public void navigateToMainAcitivity() {
+        Intent intent = new Intent(context, MainActivity.class);
+        MainActivity.currentFragment = AppointmentFragment.class.getName();
+        startActivity(intent);
+        finish();
     }
 
 }

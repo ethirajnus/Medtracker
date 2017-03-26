@@ -2,7 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.model;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.EditText;
+
 
 import java.util.ArrayList;
 import java.util.List;

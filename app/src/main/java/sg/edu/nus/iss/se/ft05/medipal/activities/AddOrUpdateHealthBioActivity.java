@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
+
+import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CONSUMPTION_NOT_SAVED;
 
 /**
  * @author Moushumi Seal
@@ -208,12 +211,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             if (mSaveBtn.getTag().toString().equalsIgnoreCase(Constants.NEW)) {
                 healthBioManager = new HealthBioManager(condition, conditionType, startDate);
 
-                if (healthBioManager.save(context) == -1)
-                    Toast.makeText(context, R.string.insert_error, Toast.LENGTH_SHORT).show();
-                else {
-                    Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show();
-                    navigate();
-                }
+                new SaveHealthBio().execute();
 
             } else {
 
@@ -230,6 +228,24 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                     Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
                     navigate();
                 }
+            }
+        }
+    }
+
+    private class SaveHealthBio extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return healthBioManager.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, R.string.insert_error, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show();
+                navigate();
             }
         }
     }
@@ -253,7 +269,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(R.string.warning_allMandatory);
-            warningDialog.setPositiveButton(Constants.OK_BUTTON, new DialogInterface.OnClickListener() {
+            warningDialog.setPositiveButton(Constants.BUTTON_OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface alert, int which) {
                     alert.dismiss();

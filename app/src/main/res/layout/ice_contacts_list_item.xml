@@ -23,7 +23,8 @@
         android:layout_weight="1"
         android:textAllCaps="true"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorSecondaryText"/>
 
     <ImageView
         android:id="@+id/deleteIcon_list_ice_delete"
@@ -63,7 +64,8 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/imageIcon_list_ice_contacts"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/textView_list_ice_phone"
@@ -73,6 +75,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/textView_list_ice_type"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText"/>
 
 </RelativeLayout>

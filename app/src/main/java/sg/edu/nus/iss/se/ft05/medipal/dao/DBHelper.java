@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
-import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
@@ -144,7 +143,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_MEASUREMENT = "CREATE TABLE "
             + TABLE_MEASUREMENT + "(" + MEASUREMENT_KEY_ID + " INTEGER PRIMARY KEY," + MEASUREMENT_KEY_SYSTOLIC
             + " INTEGER," + MEASUREMENT_KEY_DIASTOLIC + " INTEGER," + MEASUREMENT_KEY_PULSE + " INTEGER,"
-            + MEASUREMENT_KEY_TEMPERATURE + " INTEGER," + MEASUREMENT_KEY_WEIGHT + " INTEGER,"
+            + MEASUREMENT_KEY_TEMPERATURE + " REAL," + MEASUREMENT_KEY_WEIGHT + " INTEGER,"
             + MEASUREMENT_KEY_MEASURED_ON + " TEXT" + ")";
 
 
