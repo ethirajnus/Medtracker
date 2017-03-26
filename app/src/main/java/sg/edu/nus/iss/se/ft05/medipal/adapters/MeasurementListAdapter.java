@@ -25,6 +25,9 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
  * Created by ashu on 14-03-2017.
  */
 
+/**
+ * class for measurement list processing
+ */
 public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementListAdapter.MeasurementViewHolder> {
 
     private Cursor mCursor;
@@ -35,6 +38,12 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         this.mCursor = cursor;
     }
 
+    /**
+     * Method execution while creating UI
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public MeasurementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -44,6 +53,11 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         return new MeasurementViewHolder(view);
     }
 
+    /**
+     * Method execution while binding UI
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(MeasurementViewHolder holder, int position) {
 
@@ -106,6 +120,10 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mCursor.getCount();
@@ -147,6 +165,12 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         }
     }
 
+    /**
+     *
+     * @param boldText
+     * @param normalText
+     * @return
+     */
     private SpannableString formatText(String boldText, String normalText){
         SpannableString str = new SpannableString(boldText + normalText);
         str.setSpan(new StyleSpan(Typeface.BOLD), 0, boldText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

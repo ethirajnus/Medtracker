@@ -14,8 +14,9 @@ import android.view.ViewGroup;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
 
-
-
+/**
+ * Class for Home Fragment operations
+ */
 public class HomeFragment extends Fragment {
     private String title="MediPal";
     private TabLayout tabs;
@@ -26,6 +27,13 @@ public class HomeFragment extends Fragment {
         setRetainInstance(true);
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
@@ -111,6 +119,10 @@ public class HomeFragment extends Fragment {
             }
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public int getCount() {
             return mNumOfTabs;

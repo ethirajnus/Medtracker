@@ -1,14 +1,16 @@
-package sg.edu.nus.iss.se.ft05.medipal.model;
+package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 import org.junit.Test;
-
-import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 /**
  * Created by Ashish Katre on 3/20/2017.
+ */
+
+/**
+ * Class for Healthbio test
  */
 public class HealthBioTest {
 

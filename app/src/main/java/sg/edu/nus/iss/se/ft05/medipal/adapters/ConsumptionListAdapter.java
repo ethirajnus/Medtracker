@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
@@ -25,6 +25,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
  * Created by ethi on 11/03/17.
  */
 
+/**
+ * Class for Consumption list processing
+ */
 public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionListAdapter.ConsumptionViewHolder> {
 
     // Holds on to the cursor to display the waitlist
@@ -36,6 +39,12 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         this.mCursor = cursor;
     }
 
+    /**
+     * Method execution while creating UI
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ConsumptionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Get the RecyclerView item layout
@@ -44,6 +53,11 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         return new ConsumptionViewHolder(view);
     }
 
+    /**
+     * Method execution while binding UI
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ConsumptionListAdapter.ConsumptionViewHolder holder, int position) {
         // Move the mCursor to the position of the item to be displayed
@@ -80,10 +94,12 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Consumption consumption = Consumption.findById(mContext, id);
-                consumption.delete(mContext);
+
+                ConsumptionManager consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(mContext, id);
+                consumptionManager.delete(mContext);
                 //update the list
-                swapCursor(Consumption.findAll(mContext));
+                swapCursor(ConsumptionManager.findAll(mContext));
             }
         });
 
@@ -98,6 +114,10 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mCursor.getCount();

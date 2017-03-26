@@ -16,7 +16,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
@@ -26,6 +26,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
  * Created by ethi on 15/03/17.
  */
 
+/**
+ * class for reminder tasks
+ */
 public class ReminderTasks {
 
     public static int medicineConsumptionReminder = 0;
@@ -59,9 +62,9 @@ public class ReminderTasks {
             String yesterdayDate = new SimpleDateFormat(DATE_FORMAT).format(yesterday.getTime());
             List<String> medicineTimeList = medicineManager.findConsumptionTime(context, medicineId);
             for (String time : medicineTimeList) {
-                if (!Consumption.exists(context, medicineId, yesterdayDate, time)) {
-                    Consumption consumption = new Consumption(medicineId, 0, yesterdayDate, time);
-                    consumption.save(context);
+                if (!ConsumptionManager.exists(context, medicineId, yesterdayDate, time)) {
+                    ConsumptionManager consumptionManager = new ConsumptionManager(medicineId, 0, yesterdayDate, time);
+                    consumptionManager.save(context);
                 }
             }
             if (medicineManager.getMedicine().getRemind()) {

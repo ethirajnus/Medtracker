@@ -33,6 +33,10 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PersonalBioManager;
 /**
  * @author Moushumi Seal
  */
+
+/**
+ * Class for personal bio activity
+ */
 public class PersonalBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
     private EditText mName, mDob, mIdNo, mBuildingName, mLocation,
@@ -50,6 +54,10 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
     private Context context;
     private PersonalBioManager personalBioManager;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +88,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         findViewsById();
         setListeners();
     }
+
 
     private void findViewsById() {
         mName = (EditText) findViewById(R.id.name);
@@ -119,7 +128,10 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -141,6 +153,11 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     *
+     * @param v
+     * @param hasFocus
+     */
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
@@ -154,7 +171,10 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
+    /**
+     *
+     * @param enable
+     */
     private void makeFieldsEditable(boolean enable) {
         mDob.setEnabled(enable);
         mDob.setOnClickListener(null);
@@ -176,7 +196,10 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
+    /**
+     *
+     * @param id
+     */
     private void getPersonalbioValuesById(int id) {
 
         personalBioManager = new PersonalBioManager();

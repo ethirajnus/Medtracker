@@ -20,7 +20,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import android.widget.AdapterView;
@@ -46,6 +46,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
  * Created by ethi on 24/03/17.
  */
 
+/**
+ * Class for unconsumed medicine tab
+ */
 public class UnConsumedMedicineTab extends Fragment implements View.OnClickListener {
 
     View view;
@@ -67,15 +70,25 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
     private String month;
     private EditText week;
     private String dateFrom,dateTo;
-    private Consumption consumption;
+    private ConsumptionManager consumptionManager;
 
-
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,7 +103,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        cursor = Consumption.findAll(context);
+        cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -106,14 +119,20 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
                 return false;
             }
 
+            /**
+             *
+             * @param viewHolder
+             * @param swipeDir
+             */
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                consumption = Consumption.findById(context, id);
+                consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(context, id);
                 //update the list
-                mAdapter.swapCursor(Consumption.findAll(context));
+                mAdapter.swapCursor(ConsumptionManager.findAll(context));
 
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
@@ -122,10 +141,10 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        consumption.delete(context);
+                        consumptionManager.delete(context);
                         Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                         //update the list
-                        mAdapter.swapCursor(Consumption.findAll(context));
+                        mAdapter.swapCursor(ConsumptionManager.findAll(context));
                         alert.dismiss();
                     }
                 });
@@ -298,7 +317,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
     private void triggerFilterForYear() {
         year = spinYear.getSelectedItem().toString();
-        cursor = Consumption.fetchByMedicineAndYearUnconsumed(context, medicineId, year);
+        cursor = ConsumptionManager.fetchByMedicineAndYearUnconsumed(context, medicineId, year);
         mAdapter.swapCursor(cursor);
     }
 
@@ -307,7 +326,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         if (month.length() == 1) {
             month = "0" + month;
         }
-        cursor = Consumption.fetchByMedicineAndMonthUnconsumed(context, medicineId, year, month);
+        cursor = ConsumptionManager.fetchByMedicineAndMonthUnconsumed(context, medicineId, year, month);
         mAdapter.swapCursor(cursor);
     }
 
@@ -327,12 +346,14 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         Date EndDate = calendar.getTime();
         dateFrom = formatter.format(StartDate);
         dateTo = formatter.format(EndDate);
-        cursor = Consumption.fetchByMedicineAndBetweenDatesUnconsumed(context, medicineId,dateFrom,dateTo );
+        cursor = ConsumptionManager.fetchByMedicineAndBetweenDatesUnconsumed(context, medicineId,dateFrom,dateTo );
         mAdapter.swapCursor(cursor);
     }
 
+
+
     private void triggerFilterForDate() {
-        cursor = Consumption.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());
+        cursor = ConsumptionManager.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);
     }
 
@@ -377,6 +398,10 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
     }
 
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

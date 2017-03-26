@@ -15,9 +15,9 @@ import java.util.Map;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.MedicineDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.TIME_FORMAT;
 import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
@@ -28,6 +28,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERI
  * Created by ethi on 12/03/17.
  */
 
+/**
+ * Class for Medicine Manager
+ */
 public class MedicineManager {
 
     private static MedicineDAO medicineAll;
@@ -54,38 +57,68 @@ public class MedicineManager {
 
     }
 
-
+    /**
+     * Method for finding all medicine
+     * @param context
+     * @return
+     */
     public static Cursor findAll(Context context) {
         medicineAll = new MedicineDAOImpl(context);
         Cursor cursor = medicineAll.findAll();
         return cursor;
     }
 
+    /**
+     * Method to find medicine by id
+     * @param context
+     * @param id
+     * @return
+     */
     public Medicine findById(Context context, int id) {
         medicineDAO = new MedicineDAOImpl(context);
         medicine = medicineDAO.findById(id);
         return medicine;
     }
 
+    /**
+     * Delete Medicine
+     * @param context
+     * @return
+     */
     public int delete(Context context) {
         medicineDAO = new MedicineDAOImpl(context);
         ReminderManager reminderManager = new ReminderManager();
         reminderManager.setReminder(getReminder(context));
         reminderManager.delete(context);
-        Consumption.deleteAllForMedicine(context,medicine.getId());
+        ConsumptionManager.deleteAllForMedicine(context, medicine.getId());
         return medicineDAO.delete(medicine.getId());
     }
 
+    /**
+     * Save Medicine
+     * @param context
+     * @return
+     */
     public long save(Context context) {
         medicineDAO = new MedicineDAOImpl(context);
         return medicineDAO.insert(medicine);
     }
 
+    /**
+     * Update Medicine
+     * @param context
+     * @return
+     */
     public int update(Context context) {
         medicineDAO = new MedicineDAOImpl(context);
         return medicineDAO.update(medicine);
     }
 
+    /**
+     * List Medicine
+     * @param context
+     * @return
+     */
     public static Map<Integer, Integer> listAllMedicine(Context context) {
         Cursor cursor = MedicineManager.findAll(context);
         Map<Integer, Integer> medicineHashMap = new HashMap();
@@ -120,7 +153,7 @@ public class MedicineManager {
 
     public List<Consumption> consumptions(Context context) {
 
-        return Consumption.findByMedicineID(context, medicine.getId());
+        return ConsumptionManager.findByMedicineID(context, medicine.getId());
 
     }
 

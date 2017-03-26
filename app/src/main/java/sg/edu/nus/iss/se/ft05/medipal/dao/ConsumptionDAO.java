@@ -4,60 +4,91 @@ import android.database.Cursor;
 
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 
 /**
  * Created by ethi on 10/03/17.
  */
 
+/**
+ * Interface for consumption database operations
+ */
 public interface ConsumptionDAO {
 
-    int delete(int id);
+    /**
+     * Delete operation
+     *
+     * @param id
+     * @return
+     */
+    public int delete(int id);
 
-    Cursor findAll();
+    /**
+     * Select all function
+     *
+     * @return
+     */
+    public Cursor findAll();
 
-    long insert(Consumption consumption);
+    /**
+     * Insert opertion
+     *
+     * @param consumption
+     * @return
+     */
+    public long insert(Consumption consumption);
 
-    int update(Consumption consumption);
+    /**
+     * Update operation
+     *
+     * @param consumption
+     * @return
+     */
+    public int update(Consumption consumption);
 
-    Consumption findById(int id);
+    /**
+     * @param id
+     * @return
+     */
+    public Consumption findById(int id);
 
-    List<Consumption> findByDate(String date);
+    public List<Consumption> findByDate(String date);
 
-    int totalQuantityConsumed(int medicineId);
+    public int totalQuantityConsumed(int medicineId);
 
-    Cursor fetchByCategory(int medicineCategoryId);
+    public Cursor fetchByCategory(int medicineCategoryId);
 
-    Cursor fetchByMedicine(int medicineId);
+    public Cursor fetchByMedicine(int medicineId);
 
-    Cursor fetchByMedicineAndDate(int medicineId, String date);
+    public Cursor fetchByMedicineAndDate(int medicineId, String date);
 
-    List<Consumption> findByMedicineID(int medicineId);
+    public List<Consumption> findByMedicineID(int medicineId);
 
-    Cursor fetchByMedicineAndYear(Integer medicineId, String year);
+    public Cursor fetchByMedicineAndYear(Integer medicineId, String year);
 
-    Cursor fetchByMedicineAndMonth(Integer medicineId, String year, String month);
+    public Cursor fetchByMedicineAndMonth(Integer medicineId, String year, String month);
 
-    Cursor fetchByMedicineDateAndTime(int medicineId, String date, String time);
+    public Cursor fetchByMedicineDateAndTime(int medicineId, String date, String time);
 
-    Cursor fetchByCategoryAndDate(Integer medicineCategoryId, String date);
+    public Cursor fetchByCategoryAndDate(Integer medicineCategoryId, String date);
 
-    Cursor fetchByCategoryAndYear(Integer medicineCategoryId, String year);
+    public Cursor fetchByCategoryAndYear(Integer medicineCategoryId, String year);
 
-    Cursor fetchByCategoryAndMonth(Integer medicineCategoryId, String year, String month);
+    public Cursor fetchByCategoryAndMonth(Integer medicineCategoryId, String year, String month);
 
-    Cursor fetchByMedicineAndDateUnconsumed(Integer medicineId, String date);
+    public Cursor fetchByMedicineAndDateUnconsumed(Integer medicineId, String date);
 
-    Cursor fetchByMedicineAndYearUnconsumed(Integer medicineId, String year);
+    public Cursor fetchByMedicineAndYearUnconsumed(Integer medicineId, String year);
 
-    Cursor fetchByMedicineAndMonthUnconsumed(Integer medicineId, String year, String month);
+    public Cursor fetchByMedicineAndMonthUnconsumed(Integer medicineId, String year, String month);
 
-    int deleteAllForMedicine(int medicineId);
+    public int deleteAllForMedicine(int medicineId);
 
-    Cursor betweenDate(String dateFrom, String dateTo);
+    public Cursor betweenDate(String dateFrom, String dateTo);
 
-    Cursor fetchByCategoryAndBetweenDates(int categoryId, String dateFrom, String dateTo);
+    public Cursor fetchByCategoryAndBetweenDates(int categoryId, String dateFrom, String dateTo);
 
-    Cursor fetchByMedicineAndBetweenDates(int medicineId, String dateFrom, String dateTo);
-    Cursor fetchByMedicineAndBetweenDatesUnconsumed(int medicineId, String dateFrom, String dateTo);
+    public Cursor fetchByMedicineAndBetweenDates(int medicineId, String dateFrom, String dateTo);
+
+    public Cursor fetchByMedicineAndBetweenDatesUnconsumed(int medicineId, String dateFrom, String dateTo);
 }

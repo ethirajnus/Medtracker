@@ -44,7 +44,9 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
-
+/**
+ * Class for addition and update of Medicine
+ */
 public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
@@ -98,6 +100,10 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         return result;
     }
 
+    /**
+     * Method to run while creating UI for addition/edit
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +124,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         }
 
     }
+
 
     private void populateDropDownList() {
         Cursor mCursor = CategoryManager.fetchAllCategoriesWithId(context);
@@ -148,6 +155,10 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
     }
 
+    /**
+     * update the medicine values
+     * @param id
+     */
     private void updateMedicineValues(int id) {
 
         medicineManager = new MedicineManager();
@@ -175,6 +186,7 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         saveButton.setTag(UPDATE);
         saveButton.setText(UPDATE);
     }
+
 
     private void findViewsById() {
         name = (EditText) findViewById(R.id.medicineName);
@@ -254,6 +266,10 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         });
     }
 
+    /**
+     * View
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -353,6 +369,10 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * Validate fields and return
+     * @return
+     */
     private boolean checkFormat() {
 
         boolean isValid = true;
@@ -400,6 +420,10 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         return isValid;
     }
 
+    /**
+     * Validate fields and return
+     * @return
+     */
     private boolean isValid() {
         boolean isValid = true;
         if (medicineManager.getMedicine().getConsumeQuantity() > medicineManager.getMedicine().getQuantity()) {
@@ -451,6 +475,9 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         return isValid;
     }
 
+    /**
+     * Navigation to Main Activity
+     */
     public void navigateToMainAcitivity() {
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = MedicineFragment.class.getName();

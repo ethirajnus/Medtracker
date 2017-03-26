@@ -28,6 +28,9 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
+/**
+ * Class for Appointment list processing
+ */
 public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentListAdapter.AppointmentViewHolder> {
 
     private Cursor mCursor;
@@ -38,6 +41,12 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         this.mCursor = cursor;
     }
 
+    /**
+     * Method execution while creating UI
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public AppointmentListAdapter.AppointmentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -46,6 +55,11 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         return new AppointmentListAdapter.AppointmentViewHolder(view);
     }
 
+    /**
+     * Method execution while binding UI
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(AppointmentListAdapter.AppointmentViewHolder holder, int position) {
 
@@ -101,6 +115,10 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         holder.icon.setImageDrawable(drawable);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mCursor.getCount();

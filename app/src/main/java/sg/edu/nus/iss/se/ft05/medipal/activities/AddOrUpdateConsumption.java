@@ -33,14 +33,18 @@ import java.util.Map;
 import sg.edu.nus.iss.se.ft05.medipal.Util.NotificationUtils;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
+/**
+ * Class for add and update consumption
+ */
 public class AddOrUpdateConsumption extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Button saveButton;
@@ -51,7 +55,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
     DatePickerDialog datePickerDialog;
     Calendar dateCalendar;
     private TimePickerDialog timePickerDialog;
-    private Consumption consumption;
+    private ConsumptionManager consumptionManager;
     private List<String> medicineList;
     private Map<String, Integer> medicinesMap;
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
@@ -60,6 +64,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
     private int consumptionMedicine;
     private List<String> timeList;
 
+    /**
+     *  Method to run while creating UI for addition
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +94,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     private void populateDropDownList() {
         Cursor mCursor = MedicineManager.fetchAllMedicinesWithId(context);
         medicineList = new ArrayList<>();
@@ -107,6 +116,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     private void populateTimeForMedicine() {
 
         MedicineManager medicineManager = new MedicineManager();
@@ -122,14 +132,19 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+    /**
+     * Update consumption values
+     * @param id
+     */
     private void updateConsumptionValues(int id) {
-        consumption = Consumption.findById(context, id);
+
+        consumptionManager = new ConsumptionManager();
+        Consumption consumption = consumptionManager.findById(context, id);
         consumptionMedicine = consumption.getMedicineId();
         MedicineManager medicineManager = new MedicineManager();
         medicine.setSelection(medicineList.indexOf(medicineManager.findById(context, consumptionMedicine).getName()));
         quantity.setText(String.valueOf(consumption.getQuantity()));
         date.setText(consumption.getDate());
-
     }
 
     private void updateSaveButton() {
@@ -169,8 +184,8 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 consumptionMedicine = medicinesMap.get(medicine.getSelectedItem());
                 populateTimeForMedicine();
-                if (consumption != null && consumption.getTime() != null)
-                    time.setSelection(timeList.indexOf(consumption.getTime()));
+                if (consumptionManager != null && consumptionManager.getConsumption().getTime() != null)
+                    time.setSelection(timeList.indexOf(consumptionManager.getConsumption().getTime()));
 
             }
 
@@ -200,6 +215,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     private void findViewsById() {
         medicine = (Spinner) findViewById(R.id.consumptionMedicine);
         quantity = (EditText) findViewById(R.id.consumptionQuantity);
@@ -209,6 +225,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         saveButton.setTag(NEW);
     }
 
+    /**
+     * View
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -223,6 +243,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Save consumption
+     */
     public void saveOrUpdateConsumption() {
         boolean isValidFormat = checkFormat();
         if (!isValidFormat) {
@@ -231,16 +254,16 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         int consumptionQuantity = Integer.parseInt(quantity.getText().toString());
         String consumptionDate = date.getText().toString();
         if (saveButton.getTag().toString().equalsIgnoreCase(NEW)) {
-            consumption = new Consumption(consumptionMedicine, consumptionQuantity, consumptionDate, consumptionTime);
+            consumptionManager = new ConsumptionManager(consumptionMedicine, consumptionQuantity, consumptionDate, consumptionTime);
             if (isValid()) {
                 new SaveConsumption().execute();
             }
 
         } else {
-            consumption.setMedicineId(consumptionMedicine);
-            consumption.setQuantity(consumptionQuantity);
-            consumption.setDate(consumptionDate);
-            consumption.setTime(consumptionTime);
+            consumptionManager.getConsumption().setMedicineId(consumptionMedicine);
+            consumptionManager.getConsumption().setQuantity(consumptionQuantity);
+            consumptionManager.getConsumption().setDate(consumptionDate);
+            consumptionManager.getConsumption().setTime(consumptionTime);
             if (isValid()) {
                 new UpdateConsumption().execute();
             }
@@ -249,11 +272,12 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
     }
 
+
     private class UpdateConsumption extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return consumption.update(context) == -1;
+            return consumptionManager.update(context) == -1;
         }
 
         @Override
@@ -270,7 +294,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return consumption.save(context) == -1;
+            return consumptionManager.save(context) == -1;
         }
 
         @Override
@@ -283,14 +307,19 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         }
     }
 
+
     public void checkAndTriggerReplenishReminder() {
-        int totalQuantity = Consumption.totalQuantityConsumed(context, consumption.getMedicineId());
-        Medicine medicine = consumption.getMedicine(context);
+        int totalQuantity = ConsumptionManager.totalQuantityConsumed(context, consumptionManager.getConsumption().getMedicineId());
+        Medicine medicine = consumptionManager.getMedicine(context);
         if (totalQuantity >= (medicine.getQuantity() - medicine.getThreshold())) {
             NotificationUtils.replenishReminder(context, medicine.getName(), medicine.getId());
         }
     }
 
+    /**
+     * Validate fields
+     * @return
+     */
     private boolean checkFormat() {
         boolean isValid = true;
         if (quantity.getText().toString().isEmpty()) {
@@ -305,6 +334,9 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         return isValid;
     }
 
+    /**
+     * Navigation to Main Activity
+     */
     public void navigateToMainAcitivity() {
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = ConsumptionFragment.class.getName();
@@ -312,19 +344,22 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         finish();
     }
 
-
+    /**
+     * VAlidate fields and return
+     * @return
+     */
     private boolean isValid() {
         boolean isValid = true;
         MedicineManager medicineManager = new MedicineManager();
-        Medicine consumptionMedicine = consumption.getMedicine(context);
+        Medicine consumptionMedicine = consumptionManager.getMedicine(context);
         medicineManager.setMedicine(consumptionMedicine);
         int consumeQuantity = consumptionMedicine.getConsumeQuantity();
         int frequency = medicineManager.getReminder(context).getFrequency();
-        if (consumption.getQuantity() > consumeQuantity) {
+        if (consumptionManager.getConsumption().getQuantity() > consumeQuantity) {
             quantity.setError(CONSUMPTION_QUANTITY_MORE_THAN_ERROR_MESSAGE + consumeQuantity);
             quantity.requestFocus();
             isValid = false;
-        } else if (Consumption.exists(context, consumption.getMedicineId(), consumption.getDate(), consumption.getTime())) {
+        } else if (ConsumptionManager.exists(context, consumptionManager.getConsumption().getMedicineId(), consumptionManager.getConsumption().getDate(), consumptionManager.getConsumption().getTime())) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
             warningDialog.setMessage(MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME);
@@ -337,8 +372,8 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             warningDialog.show();
             isValid = false;
         } else {
-            List<Consumption> consumptions = Consumption.findByDate(context, consumption.getDate());
-            if (consumptions.size() >= frequency) {
+            List<Consumption> consumption = ConsumptionManager.findByDate(context, consumptionManager.getConsumption().getDate());
+            if (consumption.size() >= frequency) {
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(CONSUMPTION_FREQUENCY_NOT_MORE_THAN_ERROR_MESSAGE + frequency + CONSUMPTION_TIMES);
@@ -352,7 +387,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
                 isValid = false;
             } else {
                 try {
-                    if (formatter.parse(consumption.getDate()).before(formatter.parse(consumptionMedicine.getDateIssued()))) {
+                    if (formatter.parse(consumptionManager.getConsumption().getDate()).before(formatter.parse(consumptionMedicine.getDateIssued()))) {
                         AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
                         warningDialog.setTitle(Constants.TITLE_WARNING);
                         warningDialog.setMessage(CONSUMPTION_NOT_BEFORE_ERROR_MESSAGE);

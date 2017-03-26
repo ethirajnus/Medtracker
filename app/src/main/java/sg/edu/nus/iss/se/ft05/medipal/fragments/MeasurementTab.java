@@ -12,7 +12,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
-
+/**
+ * Class for Measurement tab
+ */
 public class MeasurementTab extends Fragment {
     //private Context context;
     private TextView weight, pulse, systolic, diastolic, temperature;
@@ -22,12 +24,23 @@ public class MeasurementTab extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

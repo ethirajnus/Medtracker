@@ -16,9 +16,13 @@ import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
+/**
+ * Class for Default fragement
+ */
 public class DefaultFragment extends Fragment {
 
     private Context context;
@@ -26,7 +30,7 @@ public class DefaultFragment extends Fragment {
     private Cursor cursor;
     private String date;
     private List<Appointment> appointmentList;
-    private List<Consumption> consumptions;
+    private List<Consumption> consumptionList;
     private static final String APPOINTMENTS = "Today's Appointments";
     private static final String MEASUREMENTS = "Your most recent measurements";
     private static final String CONSUMPTIONS = "Your consumptions";
@@ -36,7 +40,13 @@ public class DefaultFragment extends Fragment {
 
     private String content = "";
 
-
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,7 +61,7 @@ public class DefaultFragment extends Fragment {
         appointmentList = AppointmentManager.findByDate(context, date);
 
         date = new SimpleDateFormat(DATE_FORMAT_1).format(d);
-        consumptions = Consumption.findByDate(context, date);
+        consumptionList = ConsumptionManager.findByDate(context, date);
         content = content + APPOINTMENTS + "\n";
 
 
@@ -66,9 +76,11 @@ public class DefaultFragment extends Fragment {
         content = content + CONSUMPTIONS + "\n";
 
 
-        for (Consumption consumption : consumptions) {
+        for (Consumption consumption : consumptionList) {
 
-            content = content + "Medicine: " + consumption.getMedicine(context).getName() + "\n";
+            ConsumptionManager consumptionManagerMedicine = new ConsumptionManager();
+            consumptionManagerMedicine.setConsumption(consumption);
+            content = content + "Medicine: " + consumptionManagerMedicine.getMedicine(context).getName() + "\n";
             content = content + "Quantity:" + consumption.getQuantity() + "\n";
             content = content + "Time:" + consumption.getTime() + "\n";
         }

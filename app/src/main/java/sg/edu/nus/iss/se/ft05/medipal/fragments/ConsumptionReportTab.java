@@ -1,19 +1,24 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +30,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,31 +42,39 @@ import java.util.Locale;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_DATE;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_MEDICINEID;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_QUANTITY;
+import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_TIME;
 
 /**
- * Created by ethi on 25/03/17.
+ * Class for consumption reprort
  */
+public class ConsumptionReportTab extends Fragment implements View.OnClickListener {
 
-public class ConsumptionReportTab extends Fragment implements View.OnClickListener{
-
-
-
+    private static final int PERMISSION_EXTERNAL_STORAGE_WRITE = 1;
     private RecyclerView consumptionRecyclerView;
     private Context context;
     private ConsumptionListAdapter mAdapter;
     private View view;
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             DATE_FORMAT, Locale.ENGLISH);
-    private EditText dateFrom,dateTo;
-    private DatePickerDialog datePickerDialogFrom,datePickerDialogTo;
-    private String dateFromText,dateToText;
-    private Date dateObjFrom,dateObjTo;
-    private Calendar dateCalendarFrom,dateCalendarTo;
-    private Consumption consumption;
+    private EditText dateFrom, dateTo;
+    private DatePickerDialog datePickerDialogFrom, datePickerDialogTo;
+    private String dateFromText, dateToText;
+    private Date dateObjFrom, dateObjTo;
+    private Calendar dateCalendarFrom, dateCalendarTo;
+    private ConsumptionManager consumptionManager;
+    private Cursor cursor;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +82,24 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
     }
 
+    /**
+     *
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.consumption_report_share, menu);
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,7 +113,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        Cursor cursor = Consumption.findAll(context);
+        cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -107,22 +135,23 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
                 //update the list
-                mAdapter.swapCursor(Consumption.findAll(context));
+                mAdapter.swapCursor(ConsumptionManager.findAll(context));
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                consumption = Consumption.findById(context, id);
-                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(context, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(R.string.warning_delete);
                 warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        consumption.delete(context);
+                        consumptionManager.delete(context);
                         Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                         //update the list
-                        mAdapter.swapCursor(Consumption.findAll(context));
+                        mAdapter.swapCursor(ConsumptionManager.findAll(context));
                         alert.dismiss();
                     }
                 });
@@ -149,7 +178,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         dateTo = (EditText) view.findViewById(R.id.toDate);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         dateFrom.setOnClickListener(this);
         dateTo.setOnClickListener(this);
         Calendar newCalendar = Calendar.getInstance();
@@ -187,7 +216,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                     dateFromText = dateFrom.getText().toString();
 
                     dateToText = dateTo.getText().toString();
-                    if(dateToText.length() != 0)
+                    if (dateToText.length() != 0)
                         checkDateAndSwapCursor();
                 }
             }
@@ -209,10 +238,10 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                 if (s.length() != 0) {
                     dateFromText = dateFrom.getText().toString();
                     dateToText = dateTo.getText().toString();
-                    if(dateFromText.length() != 0)
+                    if (dateFromText.length() != 0)
                         checkDateAndSwapCursor();
                 }
-                
+
 
             }
 
@@ -224,48 +253,111 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
 
     }
-    
-    private void checkDateAndSwapCursor(){
+
+    private void checkDateAndSwapCursor() {
         try {
             dateObjFrom = formatter.parse(dateFromText);
             dateObjTo = formatter.parse(dateToText);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(dateObjTo.after(dateObjFrom)){
+        if (dateObjTo.after(dateObjFrom)) {
             triggerFilterForDate();
         }
     }
 
     private void triggerFilterForDate() {
-        Cursor cursor = Consumption.betweenDate(context,dateFromText,dateToText);
+        cursor = ConsumptionManager.betweenDate(context, dateFromText, dateToText);
         mAdapter.swapCursor(cursor);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
         switch (item.getItemId()) {
             case R.id.share_consumption:
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "consumption");
-                intent.putExtra(Intent.EXTRA_TEXT,fetchContent());
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+                SendEmail();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private String fetchContent() {
-         return "good";
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void SendEmail(){
+        String filename="consumption.csv";
+        createFile(context,filename,fetchContent());
+        File myFile = new File("/sdcard/"+"/MediPal/"+filename);
+        Uri path = Uri.fromFile(myFile);
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Consumption");
+        intent.putExtra(Intent.EXTRA_TEXT, "Please find the report attached for  Consumption");
+        intent .putExtra(Intent.EXTRA_STREAM, path);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void createFile(Context context, String sFileName, String sBody) {
+
+
+        if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            Toast.makeText(context, "App does not have Permission to Store File", Toast.LENGTH_SHORT).show();
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_EXTERNAL_STORAGE_WRITE);
+
+        } else {
+            try {
+                File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
+                if (!root.exists()) {
+                    root.mkdirs();
+                }
+                File gpxfile = new File(root, sFileName);
+                FileWriter writer = new FileWriter(gpxfile);
+                writer.append(sBody);
+                writer.flush();
+                writer.close();
+                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private String fetchContent() {
+        return new StringBuilder().append("Consumption\n\n")
+                .append("Medicine,Quantity,Date,Time\n")
+                .append(fetchMeasurementAsString()).toString();
+    }
+
+    private String fetchMeasurementAsString() {
+        cursor.moveToFirst();
+        String consumptions = "";
+        while (!cursor.isAfterLast()) {
+            Consumption consumption = new Consumption();
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
+            ConsumptionManager consumptionManager = new ConsumptionManager();
+            consumptionManager.setConsumption(consumption);
+            consumptions+= consumptionManager.getMedicine(context).getName()+","+consumption.toString();
+            cursor.moveToNext();
+        }
+        return consumptions;
+    }
+
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
