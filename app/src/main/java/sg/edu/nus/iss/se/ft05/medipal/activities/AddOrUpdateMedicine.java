@@ -312,15 +312,26 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
             reminderManagerMedicine.getReminder().setInterval(reminderInterval);
             reminderManagerMedicine.update(context);
             if (isValid()) {
-                if (medicineManager.update(context) == -1) {
-                    Toast.makeText(context, MEDICINE_NOT_UPDATED, Toast.LENGTH_SHORT).show();
-                } else {
-                    ReminderUtils.syncMedicineReminder(context);
-                    navigateToMainAcitivity();
-                }
+                new UpdateMedicine().execute();
             }
+        }
+    }
 
+    private class UpdateMedicine extends AsyncTask<Void, Void, Boolean> {
 
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return medicineManager.update(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, MEDICINE_NOT_UPDATED, Toast.LENGTH_SHORT).show();
+            } else {
+                ReminderUtils.syncMedicineReminder(context);
+                navigateToMainAcitivity();
+            }
         }
     }
 
