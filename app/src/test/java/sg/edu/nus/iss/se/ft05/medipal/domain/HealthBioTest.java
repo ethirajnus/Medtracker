@@ -1,8 +1,6 @@
-package sg.edu.nus.iss.se.ft05.medipal.model;
+package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 import org.junit.Test;
-
-import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;

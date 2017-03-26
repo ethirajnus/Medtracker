@@ -1,10 +1,6 @@
-package sg.edu.nus.iss.se.ft05.medipal.model;
+package sg.edu.nus.iss.se.ft05.medipal.domain;
 
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
