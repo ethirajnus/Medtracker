@@ -58,29 +58,42 @@ public class AppointmentDAOInstrumentedTest {
             cursor.moveToNext();
         }
 
-        appointment1 = new Appointment("2017-01-01", "01:01", "Wellness1", "blood sugar1", "fasting1");
+        appointment1 = new Appointment("2017-01-01", "01:01", "Wellness1", "blood sugar1");
 
         appointmentDAOImpl.insert(appointment1);
 
-        appointment2 = new Appointment("2017-01-02", "01:02", "Wellness2", "blood sugar2", "fasting2");
+        appointment2 = new Appointment("2017-01-02", "01:02", "Wellness2", "blood sugar2");
 
         appointmentDAOImpl.insert(appointment2);
 
-        appointmentDAOImpl.insert(new Appointment("2017-01-03", "01:03", "Wellness3", "blood sugar3", "fasting3"));
+        appointmentDAOImpl.insert(new Appointment("2017-01-03", "01:03", "Wellness3", "blood sugar3"));
 
-        appointmentDAOImpl.insert(new Appointment("2017-01-04", "01:04", "Wellness4", "blood sugar4", "fasting4"));
+        appointmentDAOImpl.insert(new Appointment("2017-01-04", "01:04", "Wellness4", "blood sugar4"));
 
 
-        appointment6 = new Appointment("2017-01-02", "01:06", "Wellness6", "blood sugar6", "fasting6");
+        appointment6 = new Appointment("2017-01-02", "01:06", "Wellness6", "blood sugar6");
 
         appointmentDAOImpl.insert(appointment6);
 
-        appointment5 = new Appointment("2017-01-05", "01:05", "Wellness5", "blood sugar5", "fasting5");
+        appointment5 = new Appointment("2017-01-05", "01:05", "Wellness5", "blood sugar5");
         appointment5.setId(3);
     }
 
     @After
     public void finish() {
+
+        Cursor cursor = appointmentDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            appointmentDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID)));
+            cursor.moveToNext();
+        }
 
         appointmentDAOImpl.close();
     }
@@ -107,8 +120,7 @@ public class AppointmentDAOInstrumentedTest {
             String date = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DATE));
             String time = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TIME));
             String clinic = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_CLINIC));
-            String test = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TEST));
-            String preTest = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_PRE_TEST));
+            String description = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION));
 
             assertNotNull(id);
 
@@ -121,10 +133,8 @@ public class AppointmentDAOInstrumentedTest {
                     assertEquals(appointment1.getTime(), time);
                     assertNotNull(clinic);
                     assertEquals(appointment1.getClinic(), clinic);
-                    assertNotNull(test);
-                    assertEquals(appointment1.getTest(), test);
-                    assertNotNull(preTest);
-                    assertEquals(appointment1.getPreTest(), preTest);
+                    assertNotNull(description);
+                    assertEquals(appointment1.getDescription(), description);
                     break;
 
                 case 2:
@@ -134,10 +144,8 @@ public class AppointmentDAOInstrumentedTest {
                     assertEquals(appointment2.getTime(), time);
                     assertNotNull(clinic);
                     assertEquals(appointment2.getClinic(), clinic);
-                    assertNotNull(test);
-                    assertEquals(appointment2.getTest(), test);
-                    assertNotNull(preTest);
-                    assertEquals(appointment2.getPreTest(), preTest);
+                    assertNotNull(description);
+                    assertEquals(appointment2.getDescription(), description);
                     break;
             }
 
@@ -152,7 +160,6 @@ public class AppointmentDAOInstrumentedTest {
     }
 
     /**
-     *
      * @param id
      * @param appointmentTest
      */
@@ -168,10 +175,8 @@ public class AppointmentDAOInstrumentedTest {
         assertEquals(appointmentTest.getTime(), appointment.getTime());
         assertNotNull(appointment.getClinic());
         assertEquals(appointmentTest.getClinic(), appointment.getClinic());
-        assertNotNull(appointment.getTest());
-        assertEquals(appointmentTest.getTest(), appointment.getTest());
-        assertNotNull(appointment.getPreTest());
-        assertEquals(appointmentTest.getPreTest(), appointment.getPreTest());
+        assertNotNull(appointment.getDescription());
+        assertEquals(appointmentTest.getDescription(), appointment.getDescription());
     }
 
     @Test
@@ -212,10 +217,8 @@ public class AppointmentDAOInstrumentedTest {
                     assertEquals(appointment2.getTime(), appointment.getTime());
                     assertNotNull(appointment.getClinic());
                     assertEquals(appointment2.getClinic(), appointment.getClinic());
-                    assertNotNull(appointment.getTest());
-                    assertEquals(appointment2.getTest(), appointment.getTest());
-                    assertNotNull(appointment.getPreTest());
-                    assertEquals(appointment2.getPreTest(), appointment.getPreTest());
+                    assertNotNull(appointment.getDescription());
+                    assertEquals(appointment2.getDescription(), appointment.getDescription());
                     break;
 
                 case 5:
@@ -225,10 +228,8 @@ public class AppointmentDAOInstrumentedTest {
                     assertEquals(appointment6.getTime(), appointment.getTime());
                     assertNotNull(appointment.getClinic());
                     assertEquals(appointment6.getClinic(), appointment.getClinic());
-                    assertNotNull(appointment.getTest());
-                    assertEquals(appointment6.getTest(), appointment.getTest());
-                    assertNotNull(appointment.getPreTest());
-                    assertEquals(appointment6.getPreTest(), appointment.getPreTest());
+                    assertNotNull(appointment.getDescription());
+                    assertEquals(appointment6.getDescription(), appointment.getDescription());
                     break;
             }
         }
@@ -247,8 +248,7 @@ public class AppointmentDAOInstrumentedTest {
             String date = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DATE));
             String time = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TIME));
             String clinic = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_CLINIC));
-            String test = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_TEST));
-            String preTest = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_PRE_TEST));
+            String description = cursor.getString(cursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION));
 
             assertNotNull(id);
 
@@ -261,10 +261,8 @@ public class AppointmentDAOInstrumentedTest {
                     assertEquals(appointment2.getTime(), time);
                     assertNotNull(clinic);
                     assertEquals(appointment2.getClinic(), clinic);
-                    assertNotNull(test);
-                    assertEquals(appointment2.getTest(), test);
-                    assertNotNull(preTest);
-                    assertEquals(appointment2.getPreTest(), preTest);
+                    assertNotNull(description);
+                    assertEquals(appointment2.getDescription(), description);
                     break;
 
                 case 5:
@@ -274,10 +272,8 @@ public class AppointmentDAOInstrumentedTest {
                     assertEquals(appointment6.getTime(), time);
                     assertNotNull(clinic);
                     assertEquals(appointment6.getClinic(), clinic);
-                    assertNotNull(test);
-                    assertEquals(appointment6.getTest(), test);
-                    assertNotNull(preTest);
-                    assertEquals(appointment6.getPreTest(), preTest);
+                    assertNotNull(description);
+                    assertEquals(appointment6.getDescription(), description);
                     break;
             }
 

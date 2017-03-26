@@ -69,6 +69,19 @@ public class HealthBioDAOInstrumentedTest {
     @After
     public void finish() {
 
+        Cursor cursor = healthBioImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            healthBioImpl.delete(cursor.getInt(cursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID)));
+            cursor.moveToNext();
+        }
+
         healthBioImpl.close();
     }
 

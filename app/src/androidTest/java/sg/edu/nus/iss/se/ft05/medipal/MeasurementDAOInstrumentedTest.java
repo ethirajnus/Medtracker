@@ -84,6 +84,19 @@ public class MeasurementDAOInstrumentedTest {
     @After
     public void finish() {
 
+        Cursor cursor = measurementDAOImpl.findAll();
+
+        if (null != cursor) {
+
+            cursor.moveToFirst();
+        }
+
+        while (!cursor.isAfterLast()) {
+
+            measurementDAOImpl.delete(cursor.getInt(cursor.getColumnIndex(DBHelper.MEASUREMENT_KEY_ID)));
+            cursor.moveToNext();
+        }
+
         measurementDAOImpl.close();
     }
 
