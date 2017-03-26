@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -232,16 +233,28 @@ public class EditAppointment extends AppCompatActivity implements View.OnClickLi
 
             appointmentManager.setAppointment(appointment);
 
-            if(appointmentManager.update(context) == -1)
-            {
+            new UpdateAppointment().execute();
+        }
+    }
+
+    private class UpdateAppointment extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return appointmentManager.update(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
                 Toast.makeText(context, APPOINTMENT_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
                 ReminderUtils.syncAppointmentReminder(context);
                 navigateToMainAcitivity();
-
             }
         }
     }
+
     public void navigateToMainAcitivity() {
         Intent intent = new Intent(context, MainActivity.class);
         MainActivity.currentFragment = AppointmentFragment.class.getName();

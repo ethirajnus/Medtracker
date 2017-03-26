@@ -77,11 +77,10 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             setTitle(EDIT_CONSUMPTION);
         } else if (b != null && b.getString(ACTION).equalsIgnoreCase(NOTIFICATION)) {
             MedicineManager medicineManager = new MedicineManager();
-            medicine.setSelection(medicineList.indexOf(medicineManager.findById(context,b.getInt(ID) ).getName()));
+            medicine.setSelection(medicineList.indexOf(medicineManager.findById(context, b.getInt(ID)).getName()));
             quantity.setText(String.valueOf(b.getInt(QUANTITY)));
             date.setText(formatter.format(Calendar.getInstance().getTime()));
-        }
-        else {
+        } else {
             setTitle(NEW_CONSUMPTION);
         }
 
@@ -243,28 +242,40 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             consumption.setDate(consumptionDate);
             consumption.setTime(consumptionTime);
             if (isValid()) {
-                if (consumption.update(context) == -1) {
-                    Toast.makeText(context, CONSUMPTION_NOT_UPDATED, Toast.LENGTH_SHORT).show();
-                } else {
-                    checkAndTriggerReplenishReminder();
-                    navigateToMainAcitivity();
-                }
+                new UpdateConsumption().execute();
             }
 
         }
 
     }
 
-    private class SaveConsumption extends AsyncTask<Void, Void, Boolean> {
+    private class UpdateConsumption extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return consumption.save(context)==-1;
+            return consumption.update(context) == -1;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if(result){
+            if (result) {
+                Toast.makeText(context, CONSUMPTION_NOT_UPDATED, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainAcitivity();
+            }
+        }
+    }
+
+    private class SaveConsumption extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return consumption.save(context) == -1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result) {
                 Toast.makeText(context, CONSUMPTION_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
                 navigateToMainAcitivity();

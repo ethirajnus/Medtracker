@@ -222,12 +222,25 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                 healthBio.setId(healthBioManager.getHealthBio().getId());
                 healthBioManager.setHealthBio(healthBio);
 
-                if (healthBioManager.update(context) == -1)
-                    Toast.makeText(context, R.string.update_error, Toast.LENGTH_SHORT).show();
-                else {
-                    Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
-                    navigate();
-                }
+                new UpdateHealthBio().execute();
+            }
+        }
+    }
+
+    private class UpdateHealthBio extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return healthBioManager.update(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, R.string.update_error, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
+                navigate();
             }
         }
     }
