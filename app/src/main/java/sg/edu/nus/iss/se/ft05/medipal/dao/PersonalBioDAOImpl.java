@@ -13,6 +13,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
  * @author Moushumi Seal
  */
 
+/**
+ * Implementation class for personal bio database operations
+ */
 public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
 
     private static final String LOG = "PersonalBioDAOImpl";
@@ -21,6 +24,11 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
         super(context);
     }
 
+    /**
+     * Delete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
 
@@ -29,6 +37,10 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * Select all operation
+     * @return
+     */
     @Override
     public Cursor findAll() {
 
@@ -38,6 +50,11 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     * select operation with where clause using ID
+     * @param id
+     * @return
+     */
     @Override
     public PersonalBio findById(int id) {
 
@@ -69,6 +86,11 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
         return personalBio;
     }
 
+    /**
+     * Insert operation
+     * @param personalBio
+     * @return
+     */
     @Override
     public long insert(PersonalBio personalBio) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -87,6 +109,11 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
 
     }
 
+    /**
+     * Update operation
+     * @param personalBio
+     * @return
+     */
     @Override
     public int update(PersonalBio personalBio) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -104,6 +131,13 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
                 new String[]{String.valueOf(personalBio.getId())});
     }
 
+    /**
+     *
+     * @param name
+     * @param dob
+     * @param idNo
+     * @return
+     */
     @Override
     public int findPersonalBioId(String name, String dob, String idNo) {
 

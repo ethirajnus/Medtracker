@@ -23,11 +23,21 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
  * @author Moushumi Seal
  */
 
+/**
+ * Class for Health bio fragment operations
+ */
 public class HealthBioFragment extends Fragment {
 
     private HealthBioListAdapter mAdapter;
     private Context context;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

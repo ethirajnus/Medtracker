@@ -13,12 +13,20 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
  * Created by ethi on 10/03/17.
  */
 
+/**
+ * Implementation class for category database operations
+ */
 public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
 
     public CategoryDAOImpl(Context context) {
         super(context);
     }
 
+    /**
+     * Delete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
 
@@ -27,6 +35,10 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * Select all operation
+     * @return
+     */
     @Override
     public Cursor findAll() {
 
@@ -37,6 +49,12 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
 
     }
 
+    /**
+     *
+     * @param column
+     * @param value
+     * @return
+     */
     @Override
     public Category findByField(String column, Object value) {
 
@@ -85,6 +103,11 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
         return db.insert(TABLE_CATEGORY, null, values);
     }
 
+    /**
+     * Update operation
+     * @param category
+     * @return
+     */
     @Override
     public int update(Category category) {
 
@@ -100,7 +123,10 @@ public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
                 new String[]{String.valueOf(category.getId())});
     }
 
-
+    /**
+     *
+     * @return
+     */
     public Cursor fetchAllCategoriesWithId() {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ID_CATEGORY + TABLE_CATEGORY;

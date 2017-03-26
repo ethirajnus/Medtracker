@@ -14,6 +14,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
  * @author Moushumi Seal
  */
 
+/**
+ * Implementation class for health bio database operation
+ */
 public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
 
     private static final String LOG = "HealthBioDAOImpl";
@@ -22,6 +25,11 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
         super(context);
     }
 
+    /**
+     * Delete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
 
@@ -30,6 +38,10 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * select all operation
+     * @return
+     */
     @Override
     public Cursor findAll() {
 
@@ -39,6 +51,11 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     * select operation with where clause using ID
+     * @param id
+     * @return
+     */
     @Override
     public HealthBio findById(int id) {
 

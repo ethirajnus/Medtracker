@@ -16,6 +16,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
  * Created by ethi on 10/03/17.
  */
 
+/**
+ * Implementation class for consumption database operations
+ */
 public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     private static final String LOG = "ConsumptionDAOImpl";
@@ -24,6 +27,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         super(context);
     }
 
+    /**
+     * Delete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -31,6 +39,10 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * Select all operation
+     * @return
+     */
     @Override
     public Cursor findAll() {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION;
@@ -40,6 +52,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     }
 
+    /**
+     * select operation with where clause using ID
+     * @param id
+     * @return
+     */
     @Override
     public Consumption findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -77,6 +94,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.insert(TABLE_CONSUMPTION, null, values);
     }
 
+    /**
+     * Update operation
+     * @param consumption
+     * @return
+     */
     @Override
     public int update(Consumption consumption) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -91,6 +113,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
                 new String[]{String.valueOf(consumption.getId())});
     }
 
+    /**
+     * list consumption
+     * @param date
+     * @return
+     */
     @Override
     public List<Consumption> findByDate(String date) {
         List<Consumption> consumptions = new ArrayList();
@@ -116,7 +143,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     }
 
-
+    /**
+     *
+     * @param date
+     * @return
+     */
     public Cursor filterDate(String date) {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
@@ -127,6 +158,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return cursor;
     }
 
+    /**
+     *
+     * @param medicineId
+     * @return
+     */
     @Override
     public int totalQuantityConsumed(int medicineId) {
         String selectQuery = DATABASE_COMMAND_SELECT_SUM + DATABASE_COMMAND_OPEN_BRACKET + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_SELECT_FROM + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId;
@@ -139,6 +175,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     }
 
+    /**
+     *
+     * @param medicineCategoryId
+     * @return
+     */
     @Override
     public Cursor fetchByCategory(int medicineCategoryId) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET;
@@ -146,6 +187,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @return
+     */
     @Override
     public Cursor fetchByMedicine(int medicineId) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId;
@@ -153,6 +199,12 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @param date
+     * @return
+     */
     @Override
     public Cursor fetchByMedicineAndDate(int medicineId, String date) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
@@ -160,7 +212,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
-
+    /**
+     *
+     * @param medicineId
+     * @return
+     */
     @Override
     public List<Consumption> findByMedicineID(int medicineId) {
 
@@ -188,6 +244,12 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     }
 
+    /**
+     *
+     * @param medicineId
+     * @param year
+     * @return
+     */
     @Override
     public Cursor fetchByMedicineAndYear(Integer medicineId, String year) {
 
@@ -196,6 +258,13 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @param year
+     * @param month
+     * @return
+     */
     @Override
     public Cursor fetchByMedicineAndMonth(Integer medicineId, String year, String month) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-" + month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE;
@@ -203,6 +272,13 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @param date
+     * @param time
+     * @return
+     */
     @Override
     public Cursor fetchByMedicineDateAndTime(int medicineId, String date, String time) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_TIME + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + time + DATABASE_COMMAND_SINGLE_QUOTE;
@@ -210,6 +286,12 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineCategoryId
+     * @param date
+     * @return
+     */
     @Override
     public Cursor fetchByCategoryAndDate(Integer medicineCategoryId, String date) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
@@ -218,6 +300,12 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineCategoryId
+     * @param year
+     * @return
+     */
     @Override
     public Cursor fetchByCategoryAndYear(Integer medicineCategoryId, String year) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-__-__" + DATABASE_COMMAND_SINGLE_QUOTE;
@@ -226,6 +314,13 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineCategoryId
+     * @param year
+     * @param month
+     * @return
+     */
     @Override
     public Cursor fetchByCategoryAndMonth(Integer medicineCategoryId, String year, String month) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineCategoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-" + month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE;
@@ -234,6 +329,12 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @param date
+     * @return
+     */
     @Override
     public Cursor fetchByMedicineAndDateUnconsumed(Integer medicineId, String date) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
@@ -241,6 +342,12 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @param year
+     * @return
+     */
     @Override
     public Cursor fetchByMedicineAndYearUnconsumed(Integer medicineId, String year) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-__-__" + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
@@ -249,6 +356,13 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @param year
+     * @param month
+     * @return
+     */
     @Override
     public Cursor fetchByMedicineAndMonthUnconsumed(Integer medicineId, String year, String month) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + " LIKE " + DATABASE_COMMAND_SINGLE_QUOTE + year + "-" + month + "-__" + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
@@ -257,6 +371,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @param medicineId
+     * @return
+     */
     @Override
     public int deleteAllForMedicine(int medicineId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -264,6 +383,12 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
                 new String[]{String.valueOf(medicineId)});
     }
 
+    /**
+     *
+     * @param dateFrom
+     * @param dateTo
+     * @return
+     */
     @Override
     public Cursor betweenDate(String dateFrom, String dateTo) {
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN +  DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND  + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;

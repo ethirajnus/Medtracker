@@ -15,6 +15,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
  * Created by ashu on 15-03-2017.
  */
 
+/**
+ * Implementatin class for measurement database operations
+ */
 public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 
     private static final String LOG = "MeasurementDAOImpl";
@@ -23,6 +26,11 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         super(context);
     }
 
+    /**
+     * Delete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
 
@@ -32,6 +40,10 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * Select all operation
+     * @return
+     */
     @Override
     public Cursor findAll() {
 
@@ -45,6 +57,11 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 
     }
 
+    /**
+     * select operation with where clause using ID
+     * @param id
+     * @return
+     */
     @Override
     public Measurement findById(int id) {
 
@@ -94,6 +111,11 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         return db.insert(TABLE_MEASUREMENT, null, values);
     }
 
+    /**
+     * Update operation
+     * @param measurement
+     * @return
+     */
     @Override
     public int update(Measurement measurement) {
 
@@ -113,6 +135,10 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
                 new String[]{String.valueOf(measurement.getId())});
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Cursor fetchAllMeasurementsWithId() {
 
@@ -121,6 +147,10 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         return db.rawQuery(selectQuery, null);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int fetchMaxId() {
 
@@ -140,6 +170,10 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         return id;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Measurement findLatest() {
 
@@ -197,6 +231,12 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
         return measurement;
     }
 
+    /**
+     *
+     * @param dateFrom
+     * @param dateTo
+     * @return
+     */
     @Override
     public Cursor betweenDate(String dateFrom, String dateTo) {
 

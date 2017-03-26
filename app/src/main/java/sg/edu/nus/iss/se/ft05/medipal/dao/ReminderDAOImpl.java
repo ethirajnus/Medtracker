@@ -13,6 +13,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
  * Created by ethi on 13/03/17.
  */
 
+/**
+ * Implementation class for reminder database operation
+ */
 public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
 
     public ReminderDAOImpl(Context context) {
@@ -20,6 +23,11 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
         super(context);
     }
 
+    /**
+     * Delete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
 
@@ -28,6 +36,11 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * select operation with where clause using ID
+     * @param id
+     * @return
+     */
     @Override
     public Reminder findById(int id) {
 
@@ -53,6 +66,11 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
         return reminder;
     }
 
+    /**
+     * Insert operation
+     * @param reminder
+     * @return
+     */
     @Override
     public long insert(Reminder reminder) {
 
@@ -66,6 +84,11 @@ public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
         return db.insert(TABLE_REMINDER, null, values);
     }
 
+    /**
+     * Update operation
+     * @param reminder
+     * @return
+     */
     @Override
     public int update(Reminder reminder) {
 

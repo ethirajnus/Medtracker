@@ -4,6 +4,9 @@ package sg.edu.nus.iss.se.ft05.medipal.constants;
  * Created by mseal on 16/03/17.
  */
 
+/**
+ * Class for constants
+ */
 public class Constants {
 
     public static final String UPDATE = "Update";

@@ -17,6 +17,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
  * Created by Dhruv on 18/3/2017.
  */
 
+/**
+ * Implementation class for appointment database operations
+ */
 public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
     private static final String LOG = "AppointmentDAOImpl";
@@ -27,6 +30,11 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         super(context);
     }
 
+    /**
+     * DElete operation
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
 
@@ -38,6 +46,10 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         return result;
     }
 
+    /**
+     * Select all operation
+     * @return
+     */
     @Override
     public Cursor findAll() {
 
@@ -51,6 +63,11 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         return cursor;
     }
 
+    /**
+     * select operation with where clause using ID
+     * @param id
+     * @return
+     */
     @Override
     public Appointment findById(int id) {
 
@@ -80,6 +97,11 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         return appointment;
     }
 
+    /**
+     * Insert operation
+     * @param appointment
+     * @return
+     */
     @Override
     public long insert(Appointment appointment) {
 
@@ -99,6 +121,11 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         return result;
     }
 
+    /**
+     * Update operation
+     * @param appointment
+     * @return
+     */
     @Override
     public int update(Appointment appointment) {
 
@@ -119,6 +146,11 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         return result;
     }
 
+    /**
+     * List
+     * @param date
+     * @return
+     */
     @Override
     public List<Appointment> findByDate(String date) {
 
@@ -159,6 +191,11 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         return appointmentList;
     }
 
+    /**
+     * Filter date
+     * @param date
+     * @return
+     */
     @Override
     public Cursor filterDate(String date) {
 

@@ -4,11 +4,16 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
  * Created by Dhruv on 12/3/2017.
  */
 
+/**
+ * Domain class for appointment
+ */
 public class Appointment {
 
+    //variable
     private int id;
     private String date, time, clinic, test, pre_test;
 
+    //getters and settere
     public void setId(int id) {
 
         this.id = id;

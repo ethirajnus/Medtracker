@@ -38,6 +38,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
  * Created by ethi on 25/03/17.
  */
 
+/**
+ * Class for Measurement report
+ */
 public class MeasurementReportTab extends Fragment implements View.OnClickListener{
 
 
@@ -55,6 +58,10 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     private Calendar dateCalendarFrom,dateCalendarTo;
     private MeasurementManager measurementManager;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +69,24 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
     }
 
+    /**
+     *
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.measurement_report_share, menu);
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -218,7 +237,11 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         mAdapter.swapCursor(cursor);
     }
 
-
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
@@ -237,7 +260,10 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     }
 
 
-
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

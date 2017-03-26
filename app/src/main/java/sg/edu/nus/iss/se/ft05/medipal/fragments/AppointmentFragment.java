@@ -22,6 +22,9 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
  * Created by ethi on 08/03/17.
  */
 
+/**
+ * Class for Appointment fragement
+ */
 public class AppointmentFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -29,6 +32,13 @@ public class AppointmentFragment extends Fragment {
     private Context context;
     private static final String TITLE = "Appointments";
 
+    /**
+     * method for processing when creating view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

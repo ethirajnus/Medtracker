@@ -17,7 +17,9 @@ import sg.edu.nus.iss.se.ft05.medipal.activities.AddMeasurement;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
 
-
+/**
+ * Class for Measurement fragment operations
+ */
 public class MeasurementFragment extends Fragment {
 
     private MeasurementListAdapter mAdapter;
@@ -27,6 +29,13 @@ public class MeasurementFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

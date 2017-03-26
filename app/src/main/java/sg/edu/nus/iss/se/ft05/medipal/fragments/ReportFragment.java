@@ -22,6 +22,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.REPORT;
  * Created by ethi on 24/03/17.
  */
 
+/**
+ * Class for Report fragment operations
+ */
 public class ReportFragment extends Fragment {
 
     private Context context;
@@ -30,6 +33,13 @@ public class ReportFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
 	@Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,11 +99,21 @@ public class ReportFragment extends Fragment {
             this.mNumOfTabs = NumOfTabs;
         }
 
+        /**
+         *
+         * @param position
+         * @return
+         */
         @Override
         public CharSequence getPageTitle(int position) {
             return tabTitles[position];
         }
 
+        /**
+         *
+         * @param position
+         * @return
+         */
         @Override
         public Fragment getItem(int position) {
 
@@ -109,6 +129,10 @@ public class ReportFragment extends Fragment {
             }
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public int getCount() {
             return mNumOfTabs;

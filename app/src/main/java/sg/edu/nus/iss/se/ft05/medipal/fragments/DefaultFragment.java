@@ -19,6 +19,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
 
+/**
+ * Class for Default fragement
+ */
 public class DefaultFragment extends Fragment {
 
     private Context context;
@@ -36,7 +39,13 @@ public class DefaultFragment extends Fragment {
 
     private String content = "";
 
-
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

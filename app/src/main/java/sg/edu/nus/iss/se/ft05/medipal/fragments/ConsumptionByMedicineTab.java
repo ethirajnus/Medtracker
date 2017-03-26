@@ -41,6 +41,9 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
  * Created by ethi on 23/03/17.
  */
 
+/**
+ * Class for consumption based on medicine
+ */
 public class ConsumptionByMedicineTab extends Fragment implements View.OnClickListener {
 
     View view;
@@ -61,12 +64,23 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
     private String year;
     private String month;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,13 +104,24 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         consumptionRecyclerView.setAdapter(mAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
+            /**
+             *
+             * @param recyclerView
+             * @param viewHolder
+             * @param target
+             * @return
+             */
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 //do nothing, we only care about swiping
                 return false;
             }
 
+            /**
+             *
+             * @param viewHolder
+             * @param swipeDir
+             */
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 //get the id of the item being swiped
@@ -111,6 +136,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         }).attachToRecyclerView(consumptionRecyclerView);
         return view;
     }
+
 
     private void findViewsById() {
         medicine = (Spinner) view.findViewById(R.id.consumptionMedicine);
@@ -286,6 +312,10 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
 
     }
 
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
