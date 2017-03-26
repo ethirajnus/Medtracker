@@ -95,8 +95,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         appointment.setDate((c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DATE))));
         appointment.setTime(c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TIME)));
         appointment.setClinic(c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_CLINIC)));
-        appointment.setTest(c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TEST)));
-        appointment.setPreTest(c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST)));
+        appointment.setDescription(c.getString(c.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION)));
+
 
 
         db.close();
@@ -119,8 +119,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         values.put(APPOINTMENT_KEY_APPOINTMENT_DATE, appointment.getDate());
         values.put(APPOINTMENT_KEY_APPOINTMENT_TIME, appointment.getTime());
         values.put(APPOINTMENT_KEY_APPOINTMENT_CLINIC, appointment.getClinic());
-        values.put(APPOINTMENT_KEY_APPOINTMENT_TEST, appointment.getTest());
-        values.put(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST, appointment.getPreTest());
+        values.put(APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION, appointment.getDescription());
+
 
         // insert row
         long result = db.insert(TABLE_APPOINTMENT, null, values);
@@ -145,8 +145,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
         values.put(APPOINTMENT_KEY_APPOINTMENT_DATE, appointment.getDate());
         values.put(APPOINTMENT_KEY_APPOINTMENT_TIME, appointment.getTime());
         values.put(APPOINTMENT_KEY_APPOINTMENT_CLINIC, appointment.getClinic());
-        values.put(APPOINTMENT_KEY_APPOINTMENT_TEST, appointment.getTest());
-        values.put(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST, appointment.getPreTest());
+        values.put(APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION, appointment.getDescription());
+
 
         // updating row
         int result = db.update(TABLE_APPOINTMENT, values, APPOINTMENT_KEY_ID + DATABASE_COMMAND_SYMBOL,
@@ -188,10 +188,10 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
             appointment.setId(cursor.getInt(cursor.getColumnIndex(APPOINTMENT_KEY_ID)));
             appointment.setDate((cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DATE))));
             appointment.setTime(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TIME)));
-            appointment.setTest(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_TEST)));
-            appointment.setPreTest(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST)));
+            appointment.setDescription(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_DESCRIPTION)));
+
             appointment.setClinic(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_CLINIC)));
-            appointment.setPreTest(cursor.getString(cursor.getColumnIndex(APPOINTMENT_KEY_APPOINTMENT_PRE_TEST)));
+
 
             appointmentList.add(appointment);
 

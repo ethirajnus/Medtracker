@@ -1,75 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp">
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/deleteIcon"
-        android:layout_height="20dp"
-        android:layout_width="20dp"
-        android:layout_weight="1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="22dp"
-        android:src="@android:drawable/ic_menu_delete"
-        />
-
-    <ImageView
-        android:id="@+id/editIcon"
-        android:layout_height="20dp"
-        android:layout_width="20dp"
-        android:layout_weight="1"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:src="@android:drawable/ic_menu_edit"
-        android:layout_alignTop="@+id/deleteIcon"
-        android:layout_toStartOf="@+id/deleteIcon"
-        android:layout_marginEnd="19dp" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="TextView"
-        android:textColor="@color/colorSecondaryText"/>
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@+id/date"
-        android:text="TextView"
-        android:textColor="@color/colorSecondaryText"/>
+        android:id="@+id/appointmentImageIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
 
     <TextView
         android:id="@+id/clinic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="TextView"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_toRightOf="@id/appointmentImageIcon"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:textColor="@color/colorSecondaryText"/>
+
+    <ImageView
+        android:id="@+id/deleteIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="22dp"
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_menu_delete" />
+
+    <ImageView
+        android:id="@+id/editIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="22dp"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_toLeftOf="@id/deleteIcon"/>
+
+    <TextView
+        android:id="@+id/dateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clinic"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/appointmentImageIcon"
+        android:layout_weight="1"
         android:textColor="@color/colorSecondaryText"/>
 
     <TextView
-        android:id="@+id/test"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/editIcon"
-        android:text="TextView"
-        android:textColor="@color/colorSecondaryText"/>
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/dateTime"
+        android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_toRightOf="@id/appointmentImageIcon"/>
 
-    <TextView
-        android:id="@+id/pre_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/test"
-        android:layout_alignEnd="@+id/time"
-        android:text="TextView"
-        android:textColor="@color/colorSecondaryText"/>
 
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/description"
+        android:background="@color/colorDivider" />
 </RelativeLayout>
