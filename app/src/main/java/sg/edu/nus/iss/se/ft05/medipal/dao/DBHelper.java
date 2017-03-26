@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
-import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
