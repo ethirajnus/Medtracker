@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,7 +33,7 @@ import java.util.Locale;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
@@ -42,8 +41,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
  * Created by ethi on 25/03/17.
  */
 
-public class ConsumptionReportTab extends Fragment implements View.OnClickListener{
-
+public class ConsumptionReportTab extends Fragment implements View.OnClickListener {
 
 
     private RecyclerView consumptionRecyclerView;
@@ -52,12 +50,12 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private View view;
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             DATE_FORMAT, Locale.ENGLISH);
-    private EditText dateFrom,dateTo;
-    private DatePickerDialog datePickerDialogFrom,datePickerDialogTo;
-    private String dateFromText,dateToText;
-    private Date dateObjFrom,dateObjTo;
-    private Calendar dateCalendarFrom,dateCalendarTo;
-    private Consumption consumption;
+    private EditText dateFrom, dateTo;
+    private DatePickerDialog datePickerDialogFrom, datePickerDialogTo;
+    private String dateFromText, dateToText;
+    private Date dateObjFrom, dateObjTo;
+    private Calendar dateCalendarFrom, dateCalendarTo;
+    private ConsumptionManager consumptionManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get all guest info from the database and save in a cursor
-        Cursor cursor = Consumption.findAll(context);
+        Cursor cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
@@ -107,22 +105,23 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
                 //update the list
-                mAdapter.swapCursor(Consumption.findAll(context));
+                mAdapter.swapCursor(ConsumptionManager.findAll(context));
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-                consumption = Consumption.findById(context, id);
-                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                consumptionManager = new ConsumptionManager();
+                consumptionManager.findById(context, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(R.string.warning_delete);
                 warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface alert, int which) {
                         //remove from DB
-                        consumption.delete(context);
+                        consumptionManager.delete(context);
                         Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                         //update the list
-                        mAdapter.swapCursor(Consumption.findAll(context));
+                        mAdapter.swapCursor(ConsumptionManager.findAll(context));
                         alert.dismiss();
                     }
                 });
@@ -149,7 +148,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         dateTo = (EditText) view.findViewById(R.id.toDate);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         dateFrom.setOnClickListener(this);
         dateTo.setOnClickListener(this);
         Calendar newCalendar = Calendar.getInstance();
@@ -187,7 +186,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                     dateFromText = dateFrom.getText().toString();
 
                     dateToText = dateTo.getText().toString();
-                    if(dateToText.length() != 0)
+                    if (dateToText.length() != 0)
                         checkDateAndSwapCursor();
                 }
             }
@@ -209,10 +208,10 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                 if (s.length() != 0) {
                     dateFromText = dateFrom.getText().toString();
                     dateToText = dateTo.getText().toString();
-                    if(dateFromText.length() != 0)
+                    if (dateFromText.length() != 0)
                         checkDateAndSwapCursor();
                 }
-                
+
 
             }
 
@@ -224,21 +223,21 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
 
     }
-    
-    private void checkDateAndSwapCursor(){
+
+    private void checkDateAndSwapCursor() {
         try {
             dateObjFrom = formatter.parse(dateFromText);
             dateObjTo = formatter.parse(dateToText);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(dateObjTo.after(dateObjFrom)){
+        if (dateObjTo.after(dateObjFrom)) {
             triggerFilterForDate();
         }
     }
 
     private void triggerFilterForDate() {
-        Cursor cursor = Consumption.betweenDate(context,dateFromText,dateToText);
+        Cursor cursor = ConsumptionManager.betweenDate(context, dateFromText, dateToText);
         mAdapter.swapCursor(cursor);
     }
 
@@ -251,7 +250,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                 intent.setData(Uri.parse("mailto:")); // only email apps should handle this
                 intent.putExtra(Intent.EXTRA_EMAIL, "xcx");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "consumption");
-                intent.putExtra(Intent.EXTRA_TEXT,fetchContent());
+                intent.putExtra(Intent.EXTRA_TEXT, fetchContent());
                 if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivity(intent);
                 }
@@ -261,7 +260,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     }
 
     private String fetchContent() {
-         return "good";
+        return "good";
 
     }
 

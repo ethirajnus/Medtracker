@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.model.Consumption;
+import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
@@ -95,7 +95,8 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     @Override
     public List<Consumption> findByDate(String date) {
-        List<Consumption> consumptions = new ArrayList();
+
+        List<Consumption> consumptionList = new ArrayList();
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + date + DATABASE_COMMAND_SINGLE_QUOTE;
 
@@ -105,17 +106,18 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
             cursor.moveToFirst();
         }
         while (!cursor.isAfterLast()) {
+
             Consumption consumption = new Consumption();
             consumption.setId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_ID)));
             consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_MEDICINEID)));
             consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
             consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
             consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
-            consumptions.add(consumption);
+            consumptionList.add(consumption);
             cursor.moveToNext();
         }
         db.close();
-        return consumptions;
+        return consumptionList;
 
     }
 
@@ -167,7 +169,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
     @Override
     public List<Consumption> findByMedicineID(int medicineId) {
 
-        List<Consumption> consumptions = new ArrayList();
+        List<Consumption> consumptionList = new ArrayList();
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId;
 
@@ -184,11 +186,11 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
             consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(CONSUMPTION_KEY_QUANTITY)));
             consumption.setDate(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_DATE)));
             consumption.setTime(cursor.getString(cursor.getColumnIndex(CONSUMPTION_KEY_TIME)));
-            consumptions.add(consumption);
+            consumptionList.add(consumption);
             cursor.moveToNext();
         }
         db.close();
-        return consumptions;
+        return consumptionList;
 
     }
 
@@ -270,7 +272,7 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     @Override
     public Cursor betweenDate(String dateFrom, String dateTo) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN +  DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND  + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN + DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -280,21 +282,23 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 
     @Override
     public Cursor fetchByCategoryAndBetweenDates(int categoryId, String dateFrom, String dateTo) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + categoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN +  DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND  + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_IN + DATABASE_COMMAND_OPEN_BRACKET + DATABASE_COMMAND_SELECT + DATABASE_COMMAND_ID + DATABASE_COMMAND_SELECT_FROM + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE + MEDICINE_KEY_CATID + DATABASE_COMMAND_SYMBOL_EQUAL + categoryId + DATABASE_COMMAND_CLOSE_BRACKET + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN + DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;
+        ;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineAndBetweenDates(int medicineId, String dateFrom, String dateTo) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN +  DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND  + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN + DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;
+        ;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
 
     @Override
     public Cursor fetchByMedicineAndBetweenDatesUnconsumed(int medicineId, String dateFrom, String dateTo) {
-        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN +  DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND  + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_MEDICINEID + DATABASE_COMMAND_SYMBOL_EQUAL + medicineId + DATABASE_COMMAND_AND + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN + DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + CONSUMPTION_KEY_QUANTITY + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_ZERO;
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
