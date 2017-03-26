@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -233,13 +234,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
         if (saveButton.getTag().toString().equalsIgnoreCase(NEW)) {
             consumption = new Consumption(consumptionMedicine, consumptionQuantity, consumptionDate, consumptionTime);
             if (isValid()) {
-                if (consumption.save(context) == -1) {
-                    Toast.makeText(context, CONSUMPTION_NOT_SAVED, Toast.LENGTH_SHORT).show();
-                } else {
-                    checkAndTriggerReplenishReminder();
-                    navigateToMainAcitivity();
-
-                }
+                new SaveConsumption().execute();
             }
 
         } else {
@@ -258,6 +253,23 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
 
         }
 
+    }
+
+    private class SaveConsumption extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return consumption.save(context)==-1;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Toast.makeText(context, CONSUMPTION_NOT_SAVED, Toast.LENGTH_SHORT).show();
+            } else {
+                navigateToMainAcitivity();
+            }
+        }
     }
 
     public void checkAndTriggerReplenishReminder() {

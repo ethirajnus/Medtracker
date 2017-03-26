@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
-import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
