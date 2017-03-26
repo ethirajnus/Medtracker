@@ -227,7 +227,7 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         }
 
         int priority = cursor.getInt(cursor.getColumnIndex(DATABASE_COMMAND_SELECT_MAXP));
-        sqLiteDatabase.close();
+        //sqLiteDatabase.close();
 
         return priority;
     }
