@@ -264,4 +264,14 @@ public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
                 new String[]{String.valueOf(medicineId)});
     }
 
+    @Override
+    public Cursor betweenDate(String dateFrom, String dateTo) {
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_CONSUMPTION + DATABASE_COMMAND_SELECT_WHERE + CONSUMPTION_KEY_DATE + DATABASE_COMMAND_BETWEEN +  DATABASE_COMMAND_SINGLE_QUOTE + dateFrom + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND  + DATABASE_COMMAND_SINGLE_QUOTE + dateTo + DATABASE_COMMAND_SINGLE_QUOTE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        return cursor;
+    }
+
 }

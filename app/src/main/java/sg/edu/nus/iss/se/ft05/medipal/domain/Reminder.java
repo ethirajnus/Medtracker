@@ -10,6 +10,7 @@ public class Reminder {
     private String startTime;
 
     public int getFrequency() {
+
         return frequency;
     }
 

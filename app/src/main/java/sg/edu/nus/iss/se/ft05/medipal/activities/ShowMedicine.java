@@ -43,7 +43,7 @@ public class ShowMedicine extends AppCompatActivity {
         name.setText(medicine.getName());
         description.setText(medicine.getDescription());
         category.setText(new CategoryManager().findById(getApplicationContext(), medicine.getCategoryId()).getCategoryName());
-        this.reminder.setText(medicine.getRemind().toString());
+        this.reminder.setText(""+medicine.getRemind());
         quantity.setText(String.valueOf(medicine.getQuantity()));
         dosage.setText(DOSAGE_REVERSE_HASH_MAP.get(medicine.getDosage()));
         consumeQuantity.setText(String.valueOf(medicine.getConsumeQuantity()));
