@@ -8,6 +8,10 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 /**
  * Created by ethi on 13/03/17.
  */
+
+/**
+ * Class for Reminder Manager
+ */
 public class ReminderManager {
 
     private Reminder reminder;
@@ -31,12 +35,23 @@ public class ReminderManager {
 
     }
 
+    /**
+     * Save operation
+     * @param context
+     * @return
+     */
     public long save(Context context) {
 
         reminderDAO = new ReminderDAOImpl(context);
         return reminderDAO.insert(reminder);
     }
 
+    /**
+     * Method to find reminder by id
+     * @param context
+     * @param id
+     * @return
+     */
     public Reminder findById(Context context, int id) {
 
         reminderDAO = new ReminderDAOImpl(context);
@@ -44,12 +59,22 @@ public class ReminderManager {
         return reminder;
     }
 
+    /**
+     * Update Reminder
+     * @param context
+     * @return
+     */
     public int update(Context context) {
 
         reminderDAO = new ReminderDAOImpl(context);
         return reminderDAO.update(reminder);
     }
 
+    /**
+     * Delete Reminder
+     * @param context
+     * @return
+     */
     public int delete(Context context) {
 
         reminderDAO = new ReminderDAOImpl(context);

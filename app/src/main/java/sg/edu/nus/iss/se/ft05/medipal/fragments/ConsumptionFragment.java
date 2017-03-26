@@ -22,12 +22,22 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
  * Created by ethi on 08/03/17.
  */
 
+/**
+ * Class for consumption fragement operatiosn
+ */
 public class ConsumptionFragment extends Fragment {
 
     private ConsumptionListAdapter mAdapter;
     private Context context;
     private TabLayout tabs;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,11 +101,21 @@ public class ConsumptionFragment extends Fragment {
             this.mNumOfTabs = NumOfTabs;
         }
 
+        /**
+         *
+         * @param position
+         * @return
+         */
         @Override
         public CharSequence getPageTitle(int position) {
             return tabTitles[position];
         }
 
+        /**
+         *
+         * @param position
+         * @return
+         */
         @Override
         public Fragment getItem(int position) {
 
@@ -115,6 +135,10 @@ public class ConsumptionFragment extends Fragment {
             }
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public int getCount() {
             return mNumOfTabs;

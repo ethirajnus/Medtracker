@@ -42,12 +42,11 @@ import java.util.Map;
 
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
-
 /**
- * Created by ethi on 23/03/17.
+ * Class for consumption based on category
  */
-
 public class ConsumptionByCategoryTab extends Fragment implements View.OnClickListener {
+
 
     private RecyclerView consumptionRecyclerView;
     private Context context;
@@ -69,12 +68,23 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
     private String dateFrom, dateTo;
     private ConsumptionManager consumptionManager;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,13 +108,24 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         consumptionRecyclerView.setAdapter(mAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
+            /**
+             *
+             * @param recyclerView
+             * @param viewHolder
+             * @param target
+             * @return
+             */
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 //do nothing, we only care about swiping
                 return false;
             }
 
+            /**
+             *
+             * @param viewHolder
+             * @param swipeDir
+             */
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 mAdapter.swapCursor(ConsumptionManager.findAll(context));
@@ -141,6 +162,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         return view;
     }
 
+
     private void findViewsById() {
 
         category = (Spinner) view.findViewById(R.id.medicineCategory);
@@ -151,8 +173,11 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         week = (EditText) view.findViewById(R.id.categoryWeek);
     }
 
+
     private void setListeners() {
+
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 medicineCategoryId = categoriesMap.get(category.getSelectedItem());
@@ -193,6 +218,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
 
         filterBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String filterByText = filterBy.getSelectedItem().toString();
@@ -295,6 +321,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
     }
 
+
     private void triggerFilterForYear() {
         year = spinYear.getSelectedItem().toString();
         cursor = ConsumptionManager.fetchByCategoryAndYear(context, medicineCategoryId, year);
@@ -376,6 +403,10 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
     }
 
+    /**
+     * view
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

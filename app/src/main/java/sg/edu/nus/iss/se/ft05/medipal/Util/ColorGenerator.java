@@ -8,6 +8,9 @@ import java.util.Random;
  * Created by ethi on 06/03/17.
  */
 
+/**
+ * class for color generator
+ */
 public class ColorGenerator {
 
     public static ColorGenerator DEFAULT;

@@ -4,6 +4,9 @@ package sg.edu.nus.iss.se.ft05.medipal.constants;
  * Created by mseal on 15/03/17.
  */
 
+/**
+ * Class for DB constants
+ */
 public class DbConstants {
 
     //Tables..
