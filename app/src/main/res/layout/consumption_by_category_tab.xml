@@ -76,6 +76,15 @@
         />
 
     <EditText
+        android:id="@+id/categoryWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:hint="Date"
+        android:layout_below="@id/medicineLabelCategory"
+        android:layout_toRightOf="@id/categoryFilterBy"
+        android:textIsSelectable="true"/>
+    <EditText
         android:id="@+id/categoryMedicineDateIssued"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
