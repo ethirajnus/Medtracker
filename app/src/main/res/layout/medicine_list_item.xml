@@ -23,7 +23,8 @@
         android:layout_weight="1"
         android:textAllCaps="true"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorSecondaryText"/>
 
     <ImageView
         android:id="@+id/deleteIcon"
@@ -54,7 +55,8 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/medicineImageIcon"
         android:layout_weight="1"
-        android:text="@string/medicineCategory" />
+        android:text="@string/medicineCategory"
+        android:textColor="@color/colorSecondaryText"/>
 
 
     <TextView
@@ -65,7 +67,8 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/medicineLabelCategory"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/medicineLabelReminder"
@@ -76,7 +79,8 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/medicineCategory"
         android:layout_weight="1"
-        android:text="@string/categoryReminder" />
+        android:text="@string/categoryReminder"
+        android:textColor="@color/colorSecondaryText"/>
 
     <Switch
         android:id="@+id/medicineReminder"
@@ -97,7 +101,8 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/medicineImageIcon"
         android:layout_weight="1"
-        android:text="Date Issued: " />
+        android:text="Date Issued: "
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/medicineDateIssued"
@@ -106,7 +111,8 @@
         android:layout_below="@id/medicineCategory"
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@+id/medicineLabelDateIssued"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/medicineLabelExpireFactor"
@@ -117,7 +123,8 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/medicineDateIssued"
         android:layout_weight="1"
-        android:text="ExpireFactor: " />
+        android:text="ExpireFactor: "
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/medicineExpireFactor"
@@ -126,7 +133,8 @@
         android:layout_below="@id/medicineReminder"
         android:layout_marginTop="12dp"
         android:layout_toRightOf="@+id/medicineLabelExpireFactor"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/medicineDescription"
@@ -138,7 +146,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/medicineImageIcon"
         android:layout_weight="1"
-
+        android:textColor="@color/colorSecondaryText"
         />
 
     <View
