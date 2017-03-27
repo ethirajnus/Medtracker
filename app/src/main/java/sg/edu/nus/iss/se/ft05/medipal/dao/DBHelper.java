@@ -15,7 +15,7 @@ import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
 
 
 /**
- * Created by ethi on 10/03/17.
+ * Created by ethiraj srinivasan on 10/03/17.
  * Updated by Ashish Katre on 13-03-17.
  */
 
