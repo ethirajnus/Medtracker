@@ -345,6 +345,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         year = spinYear.getSelectedItem().toString();
         cursor = ConsumptionManager.fetchByMedicineAndYear(context, medicineId, year);
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
     private void triggerFilterForMonth() {
@@ -354,6 +355,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         }
         cursor = ConsumptionManager.fetchByMedicineAndMonth(context, medicineId, year, month);
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
     private void triggerFilterForWeek() {
@@ -374,11 +376,13 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         dateTo = formatter.format(EndDate);
         cursor = ConsumptionManager.fetchByMedicineAndBetweenDates(context, medicineId,dateFrom,dateTo );
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
     private void triggerFilterForDate() {
         cursor = ConsumptionManager.fetchByMedicineAndDate(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
 
