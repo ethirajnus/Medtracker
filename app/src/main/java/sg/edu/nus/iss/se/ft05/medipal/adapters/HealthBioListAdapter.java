@@ -25,6 +25,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 /**
  * Class for Health bio list processing
+ *
  * @author Moushumi Seal
  */
 public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdapter.HealthBioViewHolder> {
@@ -34,15 +35,21 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
     private Context mContext;
     HealthBioManager healthBioManager;
 
+    private RecyclerView healthBioRecyclerView;
+    private TextView tv_noHealthbio;
+
     private static final String LOG = "HealthBioListAdapter";
 
-    public HealthBioListAdapter(Context context, Cursor cursor) {
+    public HealthBioListAdapter(Context context, Cursor cursor, RecyclerView healthBioRecyclerView, TextView tv_noHealthbio) {
         this.mContext = context;
         this.mCursor = cursor;
+        this.healthBioRecyclerView = healthBioRecyclerView;
+        this.tv_noHealthbio = tv_noHealthbio;
     }
 
     /**
      * Method execution while creating UI
+     *
      * @param parent
      * @param viewType
      * @return
@@ -58,6 +65,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
     /**
      * Method execution while binding UI
+     *
      * @param holder
      * @param position
      */
@@ -75,7 +83,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
 
         holder.textCondition.setText(condition);
-        if(conditionType.equalsIgnoreCase(Constants.CONDITION_TYPE_CONDITION))
+        if (conditionType.equalsIgnoreCase(Constants.CONDITION_TYPE_CONDITION))
             conditionType = Constants.CONDITION;
         else
             conditionType = Constants.ALLERGY;
@@ -117,7 +125,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return healthBioManager.delete(mContext)==-1;
+            return healthBioManager.delete(mContext) == -1;
         }
 
         @Override
@@ -128,6 +136,7 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
                 Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * Swaps the Cursor currently held in the adapter with a new one
      * and triggers a UI refresh
@@ -144,10 +153,12 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
+
+        tv_noHealthbio.setVisibility((this.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+        healthBioRecyclerView.setVisibility((this.getItemCount() == 0) ? View.GONE : View.VISIBLE);
     }
 
     /**
-     *
      * @return
      */
     @Override

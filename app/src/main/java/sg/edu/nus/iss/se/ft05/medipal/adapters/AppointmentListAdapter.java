@@ -1,7 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,21 +30,28 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 /**
  * Class for Appointment list processing
+ *
  * @author Dhruv Mandan Gopal
  */
 public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentListAdapter.AppointmentViewHolder> {
 
     private Cursor mCursor;
     private Context mContext;
-    AppointmentManager appointmentManager;
+    private AppointmentManager appointmentManager;
 
-    public AppointmentListAdapter(Context context, Cursor cursor) {
+    private RecyclerView recyclerView;
+    private TextView noAppointments;
+
+    public AppointmentListAdapter(Context context, Cursor cursor, RecyclerView recyclerView, TextView noAppointments) {
         this.mContext = context;
         this.mCursor = cursor;
+        this.recyclerView = recyclerView;
+        this.noAppointments = noAppointments;
     }
 
     /**
      * Method execution while creating UI
+     *
      * @param parent
      * @param viewType
      * @return
@@ -60,6 +66,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
     /**
      * Method execution while binding UI
+     *
      * @param holder
      * @param position
      */
@@ -78,8 +85,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
         holder.itemView.setTag(id);
         holder.dateTime.setText(date + " " + time);
-        holder.clinic.setText(formatText(clinic,""));
-        holder.description.setText(formatText("Description: ",description));
+        holder.clinic.setText(formatText(clinic, ""));
+        holder.description.setText(formatText("Description: ", description));
 
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +138,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return appointmentManager.delete(mContext)==-1;
+            return appointmentManager.delete(mContext) == -1;
         }
 
         @Override
@@ -145,7 +152,6 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -161,26 +167,29 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
+
+        noAppointments.setVisibility((this.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility((this.getItemCount() == 0) ? View.GONE : View.VISIBLE);
     }
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
         ImageView delete, edit, icon;
-        TextView clinic,description,pre_test,dateTime;
+        TextView clinic, description, pre_test, dateTime;
 
         public AppointmentViewHolder(View itemView) {
             super(itemView);
-            icon = (ImageView) itemView.findViewById(R.id.appointmentImageIcon) ;
+            icon = (ImageView) itemView.findViewById(R.id.appointmentImageIcon);
             edit = (ImageView) itemView.findViewById(R.id.editIcon);
             delete = (ImageView) itemView.findViewById(R.id.deleteIcon);
             clinic = (TextView) itemView.findViewById(R.id.clinic);
-            description= (TextView) itemView.findViewById(R.id.description);
-            dateTime= (TextView) itemView.findViewById(R.id.dateTime);
+            description = (TextView) itemView.findViewById(R.id.description);
+            dateTime = (TextView) itemView.findViewById(R.id.dateTime);
         }
     }
 
-    private SpannableString formatText(String boldText, String normalText){
+    private SpannableString formatText(String boldText, String normalText) {
         SpannableString str = new SpannableString(boldText + normalText);
         str.setSpan(new StyleSpan(Typeface.BOLD), 0, boldText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return  str;
+        return str;
     }
 }

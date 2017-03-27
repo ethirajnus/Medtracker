@@ -55,6 +55,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     private Cursor cursor;
     private Context context;
     private Activity activity;
+    private RecyclerView iceRecyclerView;
+    private TextView noICE;
 
     /**
      * Constructor
@@ -62,12 +64,14 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
      * @param context
      * @param cursor
      */
-    public ContactsListAdapter(Context context, Cursor cursor, OnStartDragListener dragStartListener, Activity activity) {
+    public ContactsListAdapter(Context context, Cursor cursor, OnStartDragListener dragStartListener, Activity activity, TextView noICE, RecyclerView iceRecyclerView) {
 
         this.mDragStartListener = dragStartListener;
         this.context = context;
         this.cursor = cursor;
         this.activity = activity;
+        this.noICE = noICE;
+        this.iceRecyclerView = iceRecyclerView;
     }
 
     /**
@@ -120,6 +124,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     iceContactsManager.findById(context, id);
 
                     iceContactsManager.updatePriority(context);
+
 
                     new DeleteAppointment().execute();
                 }
@@ -221,11 +226,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return iceContactsManager.delete(context)==-1;
+            return iceContactsManager.delete(context) == -1;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
+
             //update the list
             swapCursor(ICEContactsManager.findAll(context));
             if(!result)
@@ -263,9 +269,13 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
         if (newCursor != null) {
 
+
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
+
+        noICE.setVisibility((this.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+        iceRecyclerView.setVisibility((this.getItemCount() == 0) ? View.GONE : View.VISIBLE);
     }
 
     /**
