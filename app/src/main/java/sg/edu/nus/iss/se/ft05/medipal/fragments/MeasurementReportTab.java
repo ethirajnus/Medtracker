@@ -340,7 +340,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                     writer.append(sBody);
                     writer.flush();
                     writer.close();
-                    Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

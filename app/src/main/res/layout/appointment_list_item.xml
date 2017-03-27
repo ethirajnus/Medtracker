@@ -62,6 +62,7 @@
         android:layout_marginTop="8dp"
         android:layout_below="@+id/dateTime"
         android:layout_weight="1"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textColor="@color/colorSecondaryText"
         android:layout_toRightOf="@id/appointmentImageIcon"/>
 
