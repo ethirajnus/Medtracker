@@ -46,6 +46,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Class for addition and update of Medicine
+ * @author Ethiraj Srinivasan
  */
 public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -216,8 +217,8 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
                 startTime.setText(hourOfDay + COLON + minute);
             }
         },
-                newCalendar.get(Calendar.HOUR_OF_DAY),
-                newCalendar.get(Calendar.MINUTE), true);
+                newCalendar.get(Calendar.HOUR),
+                newCalendar.get(Calendar.MINUTE), false);
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 dateCalendar = Calendar.getInstance();

@@ -41,6 +41,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 /**
  * Class for Main Activity
+ * @author Ethiraj Srinivasan
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

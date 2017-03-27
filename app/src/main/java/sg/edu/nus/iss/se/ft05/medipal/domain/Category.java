@@ -4,6 +4,7 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 /**
  * Domain class for category
+ * @author Ethiraj Srinivasan
  */
 public class Category {
 

@@ -20,6 +20,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * A placeholder fragment containing a simple view.
+ * @author Ethiraj Srinivasan
  */
 public class CategoryFragment extends Fragment {
 

@@ -11,6 +11,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
 
 /**
  * Class for appointment reminder notification job service
+ * @author Ethiraj Srinivasan
  */
 public class AppointmentReminderNotificationJobService extends JobService {
     /**

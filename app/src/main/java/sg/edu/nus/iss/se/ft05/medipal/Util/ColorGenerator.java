@@ -8,6 +8,7 @@ import java.util.Random;
 
 /**
  * class for color generator
+ * @author Ethiraj Srinivasan
  */
 public class ColorGenerator {
 

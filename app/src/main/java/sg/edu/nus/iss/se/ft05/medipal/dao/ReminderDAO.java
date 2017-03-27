@@ -9,6 +9,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
 /**
  * Interface for reminder database opertaion
+ * @author Ethiraj Srinivasan
  */
 public interface ReminderDAO {
 

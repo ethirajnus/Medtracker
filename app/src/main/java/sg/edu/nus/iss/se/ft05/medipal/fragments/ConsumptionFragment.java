@@ -22,7 +22,8 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
 /**
- * Class for consumption fragement operatiosn
+ * Class for consumption fragement operation
+ * @author Ethiraj Srinivasan
  */
 public class ConsumptionFragment extends Fragment {
 

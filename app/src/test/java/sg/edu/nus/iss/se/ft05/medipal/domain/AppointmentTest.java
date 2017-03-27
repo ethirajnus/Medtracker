@@ -29,15 +29,13 @@ public class AppointmentTest {
         appointment.setDate("2017-01-01");
         appointment.setTime("21:20");
         appointment.setClinic("Wellness");
-        appointment.setTest("blood sugar");
-        appointment.setPreTest("fasting");
+        appointment.setDescription("blood sugar");
 
         assertEquals(appointment.getId(), 10);
         assertEquals("2017-01-01", appointment.getDate());
         assertEquals("21:20", appointment.getTime());
         assertEquals("Wellness", appointment.getClinic());
-        assertEquals("blood sugar", appointment.getTest());
-        assertEquals("fasting", appointment.getPreTest());
+        assertEquals("blood sugar", appointment.getDescription());
     }
 
     /**
@@ -46,13 +44,12 @@ public class AppointmentTest {
     @Test
     public void testAppointmentFull() {
 
-        appointment = new Appointment("2017-01-01", "21:20", "Wellness", "blood sugar", "fasting");
+        appointment = new Appointment("2017-01-01", "21:20", "Wellness", "blood sugar");
 
         assertNotNull(appointment);
         assertEquals("2017-01-01", appointment.getDate());
         assertEquals("21:20", appointment.getTime());
         assertEquals("Wellness", appointment.getClinic());
-        assertEquals("blood sugar", appointment.getTest());
-        assertEquals("fasting", appointment.getPreTest());
+        assertEquals("blood sugar", appointment.getDescription());
     }
 }

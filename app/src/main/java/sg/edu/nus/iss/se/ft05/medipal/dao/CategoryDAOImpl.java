@@ -12,6 +12,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Implementation class for category database operations
+ * @author Ethiraj Srinivasan
  */
 public class CategoryDAOImpl extends DBHelper implements CategoryDAO {
 

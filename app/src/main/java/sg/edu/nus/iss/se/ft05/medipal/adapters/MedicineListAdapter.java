@@ -30,6 +30,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * class for medicine list processing
+ * @author Ethiraj Srinivasan
  */
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
 

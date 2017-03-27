@@ -26,6 +26,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * class for reminder tasks
+ * @author Ethiraj Srinivasan
  */
 public class ReminderTasks {
 

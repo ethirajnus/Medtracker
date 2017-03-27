@@ -17,6 +17,7 @@ import android.graphics.drawable.shapes.RoundRectShape;
 
 /**
  * Class for initial drawable
+ * @author Ethiraj Srinivasan
  */
 public class InitialDrawable extends ShapeDrawable {
 
