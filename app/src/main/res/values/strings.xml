@@ -3,8 +3,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
     <string name="action_enable_help">Enable Help Screens</string>
+    <string name="action_about">About</string>
 
     <!-- Personal Bio -->
     <string name="title_activity_add_personalBio">Personal Details</string>
@@ -186,5 +186,15 @@
     <string name="reportIcon">Report</string>
     <string name="helpIcon">Help</string>
     <string name="exitIcon">Exit</string>
+
+    <!-- About page -->
+    <string name="aboutApp">\"The MediPal Application helps you track and record your health statistics and manage medication.\"</string>
+    <string name="createdBy">Credits: <b>FT05</b></string>
+    <string name="aakash">Aakash Deep Mangalore</string>
+    <string name="abinaya">Abinaya Devrasu</string>
+    <string name="ashish">Ashish Shrikant Katre</string>
+    <string name="dhruv">Dhruv Madan Gopal</string>
+    <string name="ethiraj">Ethiraj Srinivasan</string>
+    <string name="moushumi">Moushumi Seal</string>
 
 </resources>

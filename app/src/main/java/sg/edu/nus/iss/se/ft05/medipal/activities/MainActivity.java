@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import sg.edu.nus.iss.se.ft05.medipal.fragments.AboutFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
@@ -252,6 +253,9 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_help) {
             setFragment(new HelpFragment());
+            return true;
+        }else if (id == R.id.action_about) {
+            setFragment(new AboutFragment());
             return true;
         }
         return super.onOptionsItemSelected(item);

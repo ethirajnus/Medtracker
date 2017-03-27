@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.se.ft05.medipal.fragments;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -8,18 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 
 /**
- * Class for Help Fragment operations
- * @author Aakash Deep Mangalore
+ * Class for About the application
+ * @author Moushumi Seal
  */
-public class HelpFragment extends Fragment {
-
-    public HelpFragment() {
-        // Required empty public constructor
-    }
-
+public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,13 +26,13 @@ public class HelpFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        getActivity().setTitle(R.string.helpIcon);
+        getActivity().setTitle(R.string.action_about);
 
         //hide the share button
         setHasOptionsMenu(true);
         getActivity().invalidateOptionsMenu();
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.help_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_about, container, false);
     }
 }
