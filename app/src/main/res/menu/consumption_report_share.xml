@@ -2,9 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/share_consumption"
-        android:icon="@drawable/ic_menu_share"
-        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_email_white_24dp"
         android:orderInCategory="10"
-        android:title="@string/edit">
-    </item>
+        android:title="email"
+        app:showAsAction="ifRoom"></item>
 </menu>
