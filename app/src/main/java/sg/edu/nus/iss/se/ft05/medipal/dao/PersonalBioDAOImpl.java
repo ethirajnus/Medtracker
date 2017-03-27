@@ -43,7 +43,6 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
     public Cursor findAll() {
 
         String selectQuery = "SELECT  * FROM " + DbConstants.TABLE_PERSONAL_BIO;
-        Log.e(LOG, selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
@@ -65,7 +64,6 @@ public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
                 .append(" = ")
                 .append(id);
 
-        Log.e(LOG, selectQuery.toString());
         Cursor c = db.rawQuery(selectQuery.toString(), null);
         if (c != null) {
             c.moveToFirst();

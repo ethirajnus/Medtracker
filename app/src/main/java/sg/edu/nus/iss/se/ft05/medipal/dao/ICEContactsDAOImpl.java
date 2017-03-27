@@ -59,8 +59,6 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_ICE_CONTACTS + DATABASE_COMMAND_ORDER_BY + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_ASC;
 
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
@@ -86,8 +84,6 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_ICE_CONTACTS + DATABASE_COMMAND_SELECT_WHERE
                 + ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
-
-        Log.e(LOG, selectQuery);
 
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
@@ -148,7 +144,6 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         // insert row
         long result = sqLiteDatabase.insert(TABLE_ICE_CONTACTS, null, values);
 
-        Log.d(LOG, " Result of Insertion : " + result);
         sqLiteDatabase.close();
 
         return result;
@@ -175,8 +170,6 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         // updating row
         int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_ID + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(contact.getId())});
-
-        Log.d(LOG, " Result of Update : " + result);
 
         db.close();
 
@@ -205,7 +198,6 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         int result = db.update(TABLE_ICE_CONTACTS, values, ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_SYMBOL,
                 new String[]{String.valueOf(currentPriority)});
 
-        Log.d(LOG, " Result of Update priority : " + result);
         db.close();
 
         return result;
@@ -222,8 +214,6 @@ public class ICEContactsDAOImpl extends DBHelper implements ICEContactsDAO {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         String selectQuery = DATABASE_COMMAND_SELECT_MAX_BEFORE + ICE_CONTACTS_KEY_PRIORITY + DATABASE_COMMAND_SELECT_MAX_BETWEEN + DATABASE_COMMAND_SELECT_MAXP + DATABASE_COMMAND_SELECT_FROM + TABLE_ICE_CONTACTS;
-
-        Log.e(LOG, selectQuery);
 
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 

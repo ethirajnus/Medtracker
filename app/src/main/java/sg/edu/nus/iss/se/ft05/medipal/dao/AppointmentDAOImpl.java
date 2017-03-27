@@ -55,8 +55,6 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         String selectQuery = SELECT + TABLE_APPOINTMENT;
 
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -77,8 +75,6 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         String selectQuery = SELECT + TABLE_APPOINTMENT + DATABASE_COMMAND_SELECT_WHERE
                 + APPOINTMENT_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
-
-        Log.e(LOG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -167,12 +163,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         String selectQuery = SELECT + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date + "'";
 
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-        Log.v("count", String.valueOf(cursor.getCount()));
 
         if (cursor != null) {
 
@@ -212,12 +204,8 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 
         String selectQuery = SELECT + TABLE_APPOINTMENT + " where " + APPOINTMENT_KEY_APPOINTMENT_DATE + " = '" + date + "'";
 
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-        Log.v("count", String.valueOf(cursor.getCount()));
 
         if (cursor != null) {
 
