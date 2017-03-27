@@ -11,10 +11,9 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ConsumptionDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 
 import static org.junit.Assert.assertEquals;

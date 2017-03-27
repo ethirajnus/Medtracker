@@ -42,16 +42,16 @@ import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.FROM_DATE_AFTER_TO_DATE;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_DATE;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_MEDICINEID;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_QUANTITY;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_TIME;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.FROM_DATE_AFTER_TO_DATE;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.CONSUMPTION_KEY_DATE;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.CONSUMPTION_KEY_MEDICINEID;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.CONSUMPTION_KEY_QUANTITY;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.CONSUMPTION_KEY_TIME;
 
 /**
  * Class for consumption report

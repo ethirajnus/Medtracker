@@ -31,24 +31,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Class for addition and update of Medicine
  * @author Ethiraj Srinivasan
  */
-public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddOrUpdateMedicineActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
     private EditText name, description, quantity, consumeQuantity, threshold, expirefactor, dateIssued, frequency, startTime, interval;

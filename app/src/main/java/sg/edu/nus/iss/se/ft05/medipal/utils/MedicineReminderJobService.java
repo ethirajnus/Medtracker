@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.Util;
+package sg.edu.nus.iss.se.ft05.medipal.utils;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
@@ -6,10 +6,10 @@ import android.app.job.JobService;
 
 
 /**
- * Class for Appointment reminder job service
- * Created by ethi on 19/03/17.
+ * Class for Medicine reminder job service
+ * Created by ethi on 15/03/17.
  */
-public class AppointmentReminderJobService extends JobService {
+public class MedicineReminderJobService extends JobService {
     /**
      *
      * @param jobParameters
@@ -17,7 +17,7 @@ public class AppointmentReminderJobService extends JobService {
      */
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
-        ReminderTasks.executeTask(AppointmentReminderJobService.this, ReminderTasks.ACTION_APPOINTMENT_REMINDER);
+        ReminderTasks.executeTask(MedicineReminderJobService.this, ReminderTasks.ACTION_MEDICINE_REMINDER);
         jobFinished(jobParameters, false);
         return true;
     }

@@ -19,13 +19,13 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Class for add and update category
  * @author Ethiraj Srinivasan
  */
-public class AddOrUpdateCategory extends AppCompatActivity implements View.OnClickListener {
+public class AddOrUpdateCategoryActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button saveButton;
     EditText name, code, description;

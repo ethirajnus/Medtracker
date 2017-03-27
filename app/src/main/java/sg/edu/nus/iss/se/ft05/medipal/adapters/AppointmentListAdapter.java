@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -22,16 +21,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
-import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ColorGenerator;
+import sg.edu.nus.iss.se.ft05.medipal.utils.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointmentActivity;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointmentActivity;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 
 /**
  * Class for Appointment list processing
@@ -128,7 +126,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, EditAppointment.class);
+                Intent intent = new Intent(mContext, EditAppointmentActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", id);
                 intent.putExtras(bundle);
@@ -141,7 +139,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ShowAppointment.class);
+                Intent intent = new Intent(mContext, ShowAppointmentActivity.class);
                 Bundle b = new Bundle();
                 b.putInt("id", id);
                 intent.putExtras(b);

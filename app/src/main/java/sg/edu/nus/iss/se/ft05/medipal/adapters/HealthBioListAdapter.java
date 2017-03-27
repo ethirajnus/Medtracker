@@ -17,13 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
-import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ColorGenerator;
+import sg.edu.nus.iss.se.ft05.medipal.utils.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateHealthBioActivity;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
-import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 

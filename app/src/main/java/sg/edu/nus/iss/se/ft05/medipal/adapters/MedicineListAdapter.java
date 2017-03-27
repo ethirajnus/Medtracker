@@ -18,19 +18,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
-import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
-import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicine;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ColorGenerator;
+import sg.edu.nus.iss.se.ft05.medipal.utils.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicineActivity;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicineActivity;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
 /**
@@ -132,7 +131,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AddOrUpdateMedicine.class);
+                Intent intent = new Intent(mContext, AddOrUpdateMedicineActivity.class);
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
@@ -155,7 +154,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ShowMedicine.class);
+                Intent intent = new Intent(mContext, ShowMedicineActivity.class);
                 Bundle b = new Bundle();
                 b.putInt("id", id);
                 intent.putExtras(b);

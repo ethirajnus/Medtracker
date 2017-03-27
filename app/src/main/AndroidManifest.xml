@@ -30,19 +30,19 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activities.AddOrUpdateMedicine"
+            android:name=".activities.AddOrUpdateMedicineActivity"
             android:parentActivityName=".activities.MainActivity" />
 
         <activity
-            android:name=".activities.AddNewAppointment"
+            android:name=".activities.AddNewAppointmentActivity"
             android:label="New Appointment"
             android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".activities.EditAppointment"
+            android:name=".activities.EditAppointmentActivity"
             android:label="Edit Appointment Details"
             android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".activities.ShowAppointment"
+            android:name=".activities.ShowAppointmentActivity"
             android:label="Appointment Information"
             android:parentActivityName=".activities.MainActivity" />
         <activity
@@ -51,31 +51,31 @@
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.AddOrUpdateCategory"
+            android:name=".activities.AddOrUpdateCategoryActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".activities.ShowMedicine"
+            android:name=".activities.ShowMedicineActivity"
             android:parentActivityName=".activities.MainActivity">
         </activity>
         <activity
-            android:name=".activities.AddMeasurement"
+            android:name=".activities.AddMeasurementActivity"
             android:label="@string/title_activity_add_measurement"
             android:parentActivityName=".activities.MainActivity" />
 
         <service
-            android:name=".Util.MedicineReminderJobService"
+            android:name=".utils.MedicineReminderJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".Util.MedicineConsumptionReminderJobService"
+            android:name=".utils.MedicineConsumptionReminderJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".Util.AppointmentReminderJobService"
+            android:name=".utils.AppointmentReminderJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".Util.AppointmentReminderNotificationJobService"
+            android:name=".utils.AppointmentReminderNotificationJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
@@ -83,7 +83,7 @@
             android:name=".activities.AddOrUpdateHealthBioActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".activities.AddOrUpdateConsumption"
+            android:name=".activities.AddOrUpdateConsumptionActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.ICEAdditionActivity"

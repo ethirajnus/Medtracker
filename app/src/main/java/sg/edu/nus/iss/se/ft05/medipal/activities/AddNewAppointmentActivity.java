@@ -11,14 +11,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +30,7 @@ import android.app.DatePickerDialog;
 import android.widget.TimePicker;
 import android.app.TimePickerDialog;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 import java.text.SimpleDateFormat;
 
@@ -44,7 +43,7 @@ import java.util.Date;
  *  Class for adding new Appointment
  *  @author Dhruv Mandan Gopal
  */
-public class AddNewAppointment extends AppCompatActivity implements View.OnClickListener {
+public class AddNewAppointmentActivity extends AppCompatActivity implements View.OnClickListener {
     EditText date, time, clinic, description;
     private int mHour, mMinute;
     private SimpleDateFormat dateFormatter;

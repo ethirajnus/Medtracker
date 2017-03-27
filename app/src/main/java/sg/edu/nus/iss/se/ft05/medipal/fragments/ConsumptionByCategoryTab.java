@@ -17,8 +17,8 @@ import android.os.Bundle;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.DATE_FORMAT;
 
 /**
  * Class for consumption based on category

@@ -22,7 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.IceFragment;
 
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Class for adding and updating new Emergency Contact
