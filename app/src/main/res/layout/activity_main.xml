@@ -65,6 +65,7 @@
                 app:backgroundTint="@android:color/holo_red_dark"/>
 
             <TextView
+                android:id="@+id/tv_sos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

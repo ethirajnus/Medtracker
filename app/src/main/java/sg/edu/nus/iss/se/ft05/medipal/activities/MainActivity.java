@@ -309,8 +309,10 @@ public class MainActivity extends AppCompatActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
 
-        FloatingActionButton fabSOS = (FloatingActionButton) findViewById(R.id.fabSOS);
+        FloatingActionButton fabSOS = (FloatingActionButton)findViewById(R.id.fabSOS);
+        TextView tvSOS = (TextView) findViewById(R.id.tv_sos);
         fabSOS.setVisibility(View.GONE);
+        tvSOS.setVisibility(View.GONE);
 
         if (id == R.id.category) {
             setFragment(new CategoryFragment());
@@ -341,6 +343,9 @@ public class MainActivity extends AppCompatActivity
 
             setFragment(new HomeFragment());
         } else if (id == R.id.exit) {
+            fab.setVisibility(View.GONE);
+            fabSOS.setVisibility(View.GONE);
+            tvSOS.setVisibility(View.GONE);
             new AlertDialog.Builder(this)
                     .setMessage(R.string.warning_exit)
                     .setCancelable(false)
@@ -349,7 +354,11 @@ public class MainActivity extends AppCompatActivity
                             finish();
                         }
                     })
-                    .setNegativeButton(Constants.BUTTON_NO, null)
+                    .setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            setFragment(new HomeFragment());
+                        }
+                    })
                     .show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

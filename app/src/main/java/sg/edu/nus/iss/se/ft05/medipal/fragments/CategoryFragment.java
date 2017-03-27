@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -39,7 +40,9 @@ public class CategoryFragment extends Fragment {
         fab.setVisibility(View.VISIBLE);
 
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        TextView tvSOS = (TextView) getActivity().findViewById(R.id.tv_sos);
         fabSOS.setVisibility(View.GONE);
+        tvSOS.setVisibility(View.GONE);
 
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateCategoryActivity.class);
         RecyclerView categoryRecyclerView;

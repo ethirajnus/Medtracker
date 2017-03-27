@@ -54,7 +54,9 @@ public class HealthBioFragment extends Fragment {
         fab.setVisibility(View.VISIBLE);
 
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        TextView tvSOS = (TextView) getActivity().findViewById(R.id.tv_sos);
         fabSOS.setVisibility(View.GONE);
+        tvSOS.setVisibility(View.GONE);
 
         // Set floating action button
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateHealthBioActivity.class);

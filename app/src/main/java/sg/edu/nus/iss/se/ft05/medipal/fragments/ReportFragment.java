@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
@@ -46,7 +47,9 @@ public class ReportFragment extends Fragment {
         fab.setVisibility(View.GONE);
 
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        TextView tvSOS = (TextView) getActivity().findViewById(R.id.tv_sos);
         fabSOS.setVisibility(View.GONE);
+        tvSOS.setVisibility(View.GONE);
 
         getActivity().setTitle(REPORT);
         context = getActivity().getApplicationContext();

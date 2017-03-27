@@ -57,7 +57,9 @@ public class MedicineFragment extends Fragment {
         fab.setVisibility(View.VISIBLE);
 
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
+        TextView tvSOS = (TextView) getActivity().findViewById(R.id.tv_sos);
         fabSOS.setVisibility(View.GONE);
+        tvSOS.setVisibility(View.GONE);
 
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateMedicineActivity.class);
 
