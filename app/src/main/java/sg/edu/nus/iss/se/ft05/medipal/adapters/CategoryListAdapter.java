@@ -25,7 +25,7 @@ import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
- * Created by ethi on 11/03/17.
+ * Created by ethiraj srinivasan on 11/03/17.
  */
 
 /**

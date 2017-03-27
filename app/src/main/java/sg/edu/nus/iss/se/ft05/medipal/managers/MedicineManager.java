@@ -27,7 +27,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEDICINE_KEY_REMI
 
 /**
  * Class for Medicine Manager
- *  Created by ethi on 12/03/17.
+ *  Created by ethiraj srinivasan on 12/03/17.
  */
 public class MedicineManager {
 

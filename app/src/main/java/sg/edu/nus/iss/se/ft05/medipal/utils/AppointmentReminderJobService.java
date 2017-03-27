@@ -7,7 +7,7 @@ import android.app.job.JobService;
 
 /**
  * Class for Appointment reminder job service
- * Created by ethi on 19/03/17.
+ * Created by ethiraj srinivasan on 19/03/17.
  */
 public class AppointmentReminderJobService extends JobService {
     /**

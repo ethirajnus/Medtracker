@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Instrumentation test, which will execute on an Android device.
+ *
  * @author Ethiraj Srinivasan
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
@@ -34,6 +35,7 @@ public class ConsumptionDAOInstrumentedTest {
     private Consumption consumption2;
     private Consumption consumption5;
     private Consumption consumption7;
+    private Consumption consumption8;
 
     @Before
     public void setUp() {
@@ -73,7 +75,9 @@ public class ConsumptionDAOInstrumentedTest {
 
         consumptionDAOImpl.insert(new Consumption(8, 88, "2017-01-08", "08:08"));
 
-        consumptionDAOImpl.insert(new Consumption(8, 99, "2017-01-09", "09:09"));
+        consumption8 = new Consumption(8, 0, "2017-01-09", "09:09");
+
+        consumptionDAOImpl.insert(consumption8);
 
         consumption7 = new Consumption(7, 77, "2017-01-07", "07:07");
         consumption7.setId(3);
@@ -273,5 +277,424 @@ public class ConsumptionDAOInstrumentedTest {
 
         assertNotNull(quantity);
         assertEquals(77, quantity);
+    }
+
+    @Test
+    public void testBetweenDate() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.betweenDate("2017-01-01", "2017-01-03");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 1:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption1.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption1.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption1.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption1.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicine() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicine(1);
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 1:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption1.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption1.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption1.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption1.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineAndDate() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndDate(1, "2017-01-01");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 1:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption1.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption1.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption1.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption1.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+
+    @Test
+    public void testFetchByMedicineAndYear() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndYear(1, "2017");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 1:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption1.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption1.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption1.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption1.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineDateAndTime() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineDateAndTime(1, "2017-01-01", "01:01");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 1:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption1.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption1.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption1.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption1.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineAndMonth() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndMonth(1, "2017", "1");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 1:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption1.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption1.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption1.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption1.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineAndDateUnconsumed() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndDateUnconsumed(8, "2017-01-09");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 8:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption8.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption8.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption8.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption8.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineAndYearUnconsumed() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndYearUnconsumed(8, "2017");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 8:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption8.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption8.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption8.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption8.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineAndMonthUnconsumed() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndMonthUnconsumed(8, "2017", "1");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 8:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption8.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption8.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption8.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption8.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineAndBetweenDates() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndMonthUnconsumed(1, "2017-01-01", "2017-01-02");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 1:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption1.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption1.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption1.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption1.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
+    }
+
+    @Test
+    public void testFetchByMedicineAndBetweenDatesUnconsumed() throws Exception {
+
+        Cursor cursor = consumptionDAOImpl.fetchByMedicineAndBetweenDatesUnconsumed(8, "2017-01-08", "2017-01-10");
+
+        assertNotNull(cursor);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            Consumption consumption = new Consumption();
+            consumption.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_ID)));
+            consumption.setMedicineId(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_MEDICINEID)));
+            consumption.setQuantity(cursor.getInt(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_QUANTITY)));
+            consumption.setDate(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_DATE)));
+            consumption.setTime(cursor.getString(cursor.getColumnIndex(DBHelper.CONSUMPTION_KEY_TIME)));
+
+            assertNotNull(consumption.getId());
+
+            switch (consumption.getId()) {
+
+                case 8:
+                    assertNotNull(consumption.getMedicineId());
+                    assertEquals(consumption8.getMedicineId(), consumption.getMedicineId());
+                    assertNotNull(consumption.getQuantity());
+                    assertEquals(consumption8.getQuantity(), consumption.getQuantity());
+                    assertNotNull(consumption.getDate());
+                    assertEquals(consumption8.getDate(), consumption.getDate());
+                    assertNotNull(consumption.getTime());
+                    assertEquals(consumption8.getTime(), consumption.getTime());
+                    break;
+            }
+
+            cursor.moveToNext();
+        }
     }
 }

@@ -48,7 +48,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.DATE_FORMAT;
 
 /**
  * Class for unconsumed medicine tab
- * Created by ethi on 24/03/17.
+ * Created by ethiraj srinivasan on 24/03/17.
  */
 public class UnConsumedMedicineTab extends Fragment implements View.OnClickListener {
 
