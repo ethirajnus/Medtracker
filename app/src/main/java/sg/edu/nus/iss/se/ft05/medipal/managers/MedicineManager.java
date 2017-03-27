@@ -177,4 +177,9 @@ public class MedicineManager {
         return timelist;
 
     }
+
+    public Medicine fetchMedicineByNameandDateIssued(Context context,String medicineName, String medicineDateIssued) {
+        medicineAll = new MedicineDAOImpl(context);
+        return medicineAll.fetchMedicineByNameandDateIssued(medicineName,medicineDateIssued);
+    }
 }

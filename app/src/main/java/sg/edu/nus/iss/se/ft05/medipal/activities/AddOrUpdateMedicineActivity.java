@@ -23,14 +23,17 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
@@ -68,6 +71,7 @@ public class AddOrUpdateMedicineActivity extends AppCompatActivity implements Vi
     private TimePickerDialog timePickerDialog;
     private ReminderManager reminderManagerMedicine;
     private Map<String, Integer> categoriesMap;
+    private String medicineName,medicineDateIssued;
 
     private static Map<Integer, String> createDosageReverseHashMap() {
         Map<Integer, String> result = new HashMap();
@@ -298,7 +302,7 @@ public class AddOrUpdateMedicineActivity extends AppCompatActivity implements Vi
         if (!isValidFormat) {
             return;
         }
-        String medicineName = name.getText().toString();
+        medicineName = name.getText().toString();
         String medicineDescription = description.getText().toString();
         int medicineCategory = categoriesMap.get(category.getSelectedItem());
         Boolean medicineRemind = reminder.isChecked();
@@ -306,7 +310,7 @@ public class AddOrUpdateMedicineActivity extends AppCompatActivity implements Vi
         int medicineDosage = DOSAGE_HASH_MAP.get(dosage.getSelectedItem());
         int medicineConsumeQuantity = Integer.parseInt(consumeQuantity.getText().toString());
         int medicineThreshold = Integer.parseInt(threshold.getText().toString());
-        String medicineDateIssued = dateIssued.getText().toString();
+        medicineDateIssued = dateIssued.getText().toString();
         int medicinceExpireFactor = Integer.parseInt(expirefactor.getText().toString());
         int reminderFrequency = Integer.parseInt(frequency.getText().toString());
         String reminderStartTime = startTime.getText().toString();
@@ -370,6 +374,29 @@ public class AddOrUpdateMedicineActivity extends AppCompatActivity implements Vi
             if(result){
                 Toast.makeText(context, MEDICINE_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
+                try {
+                    Medicine medicine = medicineManager.fetchMedicineByNameandDateIssued(context,medicineName,medicineDateIssued);
+                    Date dateIssued = formatter.parse(medicine.getDateIssued());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(dateIssued);
+                    Date currentDate = new Date();
+                    while(currentDate.after(dateIssued)){
+                        List<String> medicineTimeList = medicineManager.findConsumptionTime(context, medicine.getId());
+                        for (String time : medicineTimeList) {
+                            String dateTime = formatter.format(dateIssued.getTime());
+                            if (!ConsumptionManager.exists(context, medicine.getId(), dateTime, time) && !dateTime.equalsIgnoreCase(formatter.format(currentDate))) {
+                                ConsumptionManager consumptionManager = new ConsumptionManager(medicine.getId(), 0, dateTime, time);
+                                consumptionManager.save(context);
+                            }
+                        }
+                        calendar.add(Calendar.DATE,1);
+                        dateIssued = calendar.getTime();
+                    }
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 ReminderUtils.syncMedicineReminder(context);
                 navigateToMainAcitivity();
             }

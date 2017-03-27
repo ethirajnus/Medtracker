@@ -280,6 +280,7 @@ public class AddOrUpdateConsumptionActivity extends AppCompatActivity implements
             if (result) {
                 Toast.makeText(context, CONSUMPTION_NOT_UPDATED, Toast.LENGTH_SHORT).show();
             } else {
+                checkAndTriggerReplenishReminder();
                 navigateToMainAcitivity();
             }
         }
@@ -297,6 +298,7 @@ public class AddOrUpdateConsumptionActivity extends AppCompatActivity implements
             if (result) {
                 Toast.makeText(context, CONSUMPTION_NOT_SAVED, Toast.LENGTH_SHORT).show();
             } else {
+                checkAndTriggerReplenishReminder();
                 navigateToMainAcitivity();
             }
         }
