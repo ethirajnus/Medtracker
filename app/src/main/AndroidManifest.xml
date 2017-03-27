@@ -61,10 +61,6 @@
             android:name=".activities.AddMeasurement"
             android:label="@string/title_activity_add_measurement"
             android:parentActivityName=".activities.MainActivity" />
-        <activity
-            android:name=".activities.DisplayMeasurement"
-            android:label="@string/title_activity_display_measurement"
-            android:parentActivityName=".activities.MainActivity" />
 
         <service
             android:name=".Util.MedicineReminderJobService"
