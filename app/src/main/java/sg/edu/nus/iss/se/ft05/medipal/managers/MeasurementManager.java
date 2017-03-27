@@ -10,7 +10,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 
 /**
  * Class for Measurement manager
- * Created by ashu on 15-03-2017.
+ * @author Aakash Deep Mangalore
  */
 public class MeasurementManager {
 

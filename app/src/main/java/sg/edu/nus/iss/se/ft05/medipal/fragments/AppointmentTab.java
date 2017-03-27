@@ -22,6 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 
 /**
  * Class for Appointment tab
+ * @author Dhruv Mandan Gopal
  */
 public class AppointmentTab extends Fragment {
     private Context context;

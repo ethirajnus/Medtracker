@@ -7,11 +7,8 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 /**
- * Created by Ashish Katre on 3/20/2017.
- */
-
-/**
  * Class for Appointment test
+ * @author Dhruv Mandan Gopal
  */
 public class AppointmentTest {
 

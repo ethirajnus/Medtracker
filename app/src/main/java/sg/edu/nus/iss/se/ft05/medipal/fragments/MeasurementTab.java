@@ -19,6 +19,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 
 /**
  * Class for Measurement tab
+ * @author Moushumi Seal
  */
 public class MeasurementTab extends Fragment {
     //private Context context;

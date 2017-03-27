@@ -60,7 +60,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_WEIGHT
 
 /**
  * Class for Measurement report
- * Created by ethi on 25/03/17.
+ * @author Abinaya
  */
 public class MeasurementReportTab extends Fragment implements View.OnClickListener{
 

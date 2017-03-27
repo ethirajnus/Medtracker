@@ -25,6 +25,7 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 /**
  * class for measurement list processing
+ * @author Aakash Deep Mangalore
  */
 public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementListAdapter.MeasurementViewHolder> {
 

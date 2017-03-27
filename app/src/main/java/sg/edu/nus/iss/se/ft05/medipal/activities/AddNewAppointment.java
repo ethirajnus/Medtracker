@@ -42,6 +42,7 @@ import java.util.Date;
 
 /**
  *  Class for adding new Appointment
+ *  @author Dhruv Mandan Gopal
  */
 public class AddNewAppointment extends AppCompatActivity implements View.OnClickListener {
     EditText date, time, clinic, description;
