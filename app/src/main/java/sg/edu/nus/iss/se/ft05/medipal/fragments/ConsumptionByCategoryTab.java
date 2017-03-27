@@ -29,6 +29,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.content.Context;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -69,6 +70,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
     private String dateFrom, dateTo;
     private ConsumptionManager consumptionManager;
     private ArrayList<String> years;
+    private TextView noConsumptions;
 
     /**
      *
@@ -94,6 +96,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         view = inflater.inflate(R.layout.consumption_by_category_tab, container, false);
         consumptionRecyclerView = (RecyclerView) view.findViewById(R.id.all_consumption_list_view);
         context = getActivity().getApplicationContext();
+        noConsumptions = (TextView) view.findViewById(R.id.tv_noConsumptions);
 
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         consumptionRecyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -106,6 +109,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);
+        checkForEmptyList();
         findViewsById();
         populateDropDownList();
         setListeners();
@@ -174,6 +178,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
             Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
             //update the list
             mAdapter.swapCursor(ConsumptionManager.findAll(context));
+            checkForEmptyList();
         }
     }
 
@@ -441,5 +446,11 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         }
     }
 
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            noConsumptions.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            consumptionRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+        }
+    }
 
 }

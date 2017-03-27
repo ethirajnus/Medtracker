@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -71,6 +72,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private Calendar dateCalendarFrom, dateCalendarTo;
     private ConsumptionManager consumptionManager;
     private Cursor cursor;
+    private TextView noConsumptions;
 
     /**
      *
@@ -107,6 +109,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
         view = inflater.inflate(R.layout.consumption_report_tab, container, false);
         consumptionRecyclerView = (RecyclerView) view.findViewById(R.id.all_consumption_list_view);
+        noConsumptions = (TextView) view.findViewById(R.id.tv_noConsumptions);
         context = getActivity().getApplicationContext();
         findViewsById();
 
@@ -121,6 +124,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);
+        checkForEmptyList();
         setListeners();
         setValues();
 
@@ -153,6 +157,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                         Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                         //update the list
                         mAdapter.swapCursor(ConsumptionManager.findAll(context));
+                        checkForEmptyList();
                         alert.dismiss();
                     }
                 });
@@ -389,6 +394,12 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
                 datePickerDialogTo.getDatePicker().setMinDate(dateObjFrom.getTime());
                 datePickerDialogTo.show();
                 break;
+        }
+    }
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            noConsumptions.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            consumptionRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
         }
     }
 }

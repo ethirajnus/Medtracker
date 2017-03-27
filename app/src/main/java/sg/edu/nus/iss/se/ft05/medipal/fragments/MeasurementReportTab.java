@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -79,6 +80,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     private Calendar dateCalendarFrom,dateCalendarTo;
     private MeasurementManager measurementManager;
     private Cursor cursor;
+    private TextView noMeasurement;
 
     /**
      *
@@ -120,7 +122,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         measurementRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-
+        noMeasurement = (TextView) view.findViewById(R.id.tv_noMeasurement);
         // Get all guest info from the database and save in a cursor
         measurementManager = new MeasurementManager();
         String currentDate = formatter.format(Calendar.getInstance().getTime());
@@ -131,6 +133,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);
+        checkForEmptyList();
         setListeners();
         setValues();
 
@@ -160,6 +163,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                         measurementManager.delete(context);
                         Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
                         mAdapter.swapCursor(MeasurementManager.findAll(context));
+                        checkForEmptyList();
                         alert.dismiss();
                     }
                 });
@@ -402,6 +406,12 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                 datePickerDialogTo.getDatePicker().setMinDate(dateObjFrom.getTime());
                 datePickerDialogTo.show();
                 break;
+        }
+    }
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            noMeasurement.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            measurementRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
         }
     }
 }

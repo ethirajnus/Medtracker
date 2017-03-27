@@ -14,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
@@ -31,6 +32,8 @@ public class MeasurementFragment extends Fragment {
     private MeasurementListAdapter mAdapter;
     private Context context;
     private MeasurementManager measurementManager;
+    private RecyclerView measurementRecyclerView;
+    private TextView noMeasurement;
 
     public MeasurementFragment() {
         // Required empty public constructor
@@ -56,11 +59,13 @@ public class MeasurementFragment extends Fragment {
         fabSOS.setVisibility(View.GONE);
 
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddMeasurement.class);
-        RecyclerView measurementRecyclerView;
+
         context = getActivity().getApplicationContext();
         measurementRecyclerView = (RecyclerView) view.findViewById(R.id.all_measurement_list_view);
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         measurementRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        noMeasurement = (TextView) view.findViewById(R.id.tv_noMeasurement);
 
         // Get all guest info from the database and save in a cursor
         Cursor cursor = MeasurementManager.findAll(context);
@@ -70,6 +75,7 @@ public class MeasurementFragment extends Fragment {
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);
+        checkForEmptyList();
 
         //hide the share button
         setHasOptionsMenu(true);
@@ -134,6 +140,13 @@ public class MeasurementFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
             mAdapter.swapCursor(MeasurementManager.findAll(context));
+            checkForEmptyList();
+        }
+    }
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            noMeasurement.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            measurementRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
         }
     }
 }
