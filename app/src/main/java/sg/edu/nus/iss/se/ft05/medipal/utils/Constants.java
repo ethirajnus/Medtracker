@@ -53,7 +53,7 @@ public class Constants {
     //HealthBio
     public static final String TITLE_NEW_HEALTHBIO = "New Health Details";
     public static final String TITLE_EDIT_HEALTHBIO = "Edit HeaLth Details";
-    public static final String TITLE_VIEW_HEALTHBIO = "Health Details";
+    public static final String TITLE_VIEW_HEALTHBIO = "Health Conditions";
     public static final String CONDITION_TYPE_CONDITION = "C";
     public static final String CONDITION_TYPE_ALLERGY = "A";
     public static final String ALLERGY = "ALLERGY";
