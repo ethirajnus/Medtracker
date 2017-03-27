@@ -79,10 +79,11 @@
     <string name="tagAllergy">A</string>
     <string name="tagCondition">C</string>
 
-    <!-- Error Messages -->
+    <!-- Error/Warning Messages -->
     <string name="warning_allMandatory">All fields are mandatory!</string>
     <string name="warning_atleastOne">Please provide value for atleast one field!</string>
     <string name="warning_delete">Are you sure you want to delete?</string>
+    <string name="warning_exit">Are you sure you want to exit?</string>
     <string name="insert_error">Details were not inserted properly. Please try again later.</string>
     <string name="update_error">Details were not updated properly. Please try again later.</string>
 
@@ -163,5 +164,18 @@
     <string name="noConsumption">No Consumptions added!</string>
     <string name="noMedicine">No Medicines added!</string>
     <string name="noMeasurement">No Measurements added!</string>
+
+    <!-- Nav drawer icons -->
+    <string name="homeIcon">Home</string>
+    <string name="healthbioIcon">HealthBio</string>
+    <string name="measurementIcon">Measurement</string>
+    <string name="appointmentIcon">Appointments</string>
+    <string name="comsumptionIcon">Consumption</string>
+    <string name="medicineIcon">Medicines</string>
+    <string name="categoryIcon">Category</string>
+    <string name="iceIcon">ICE</string>
+    <string name="reportIcon">Report</string>
+    <string name="helpIcon">Help</string>
+    <string name="exitIcon">Exit</string>
 
 </resources>

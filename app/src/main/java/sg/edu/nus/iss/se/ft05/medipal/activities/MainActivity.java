@@ -2,6 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -333,6 +335,17 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.home) {
 
             setFragment(new HomeFragment());
+        } else if (id == R.id.exit) {
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.warning_exit)
+                    .setCancelable(false)
+                    .setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(Constants.BUTTON_NO, null)
+                    .show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
