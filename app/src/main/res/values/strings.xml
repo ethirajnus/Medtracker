@@ -167,13 +167,13 @@
 
     <!-- Nav drawer icons -->
     <string name="homeIcon">Home</string>
-    <string name="healthbioIcon">HealthBio</string>
-    <string name="measurementIcon">Measurement</string>
+    <string name="healthbioIcon">Health Conditions</string>
+    <string name="measurementIcon">Measurements</string>
     <string name="appointmentIcon">Appointments</string>
-    <string name="comsumptionIcon">Consumption</string>
+    <string name="comsumptionIcon">Consumptions</string>
     <string name="medicineIcon">Medicines</string>
-    <string name="categoryIcon">Category</string>
-    <string name="iceIcon">ICE</string>
+    <string name="categoryIcon">Categories</string>
+    <string name="iceIcon">Emergency Contacts</string>
     <string name="reportIcon">Report</string>
     <string name="helpIcon">Help</string>
     <string name="exitIcon">Exit</string>
