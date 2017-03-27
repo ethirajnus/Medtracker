@@ -29,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -71,6 +72,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
     private EditText week;
     private String dateFrom,dateTo;
     private ConsumptionManager consumptionManager;
+    private TextView noConsumptions;
 
     /**
      *
@@ -104,12 +106,14 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
         // Get all guest info from the database and save in a cursor
         cursor = ConsumptionManager.findAll(context);
+        noConsumptions = (TextView) view.findViewById(R.id.tv_noConsumptions);
 
         // Create an adapter for that cursor to display the data
         mAdapter = new ConsumptionListAdapter(context, cursor);
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);
+        checkForEmptyList();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -170,6 +174,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
             Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
             //update the list
             mAdapter.swapCursor(ConsumptionManager.findAll(context));
+            checkForEmptyList();
         }
     }
 
@@ -427,5 +432,13 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
                 break;
         }
     }
+
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            noConsumptions.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            consumptionRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+        }
+    }
+
 
 }

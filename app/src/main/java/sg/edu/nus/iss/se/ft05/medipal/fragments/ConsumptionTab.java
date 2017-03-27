@@ -34,6 +34,7 @@ public class ConsumptionTab extends Fragment {
     private String content = "";
     private RecyclerView recyclerView;
     private ConsumptionListAdapter mAdapter;
+    private TextView noConsumptions;
 
     public ConsumptionTab() {
         // Required empty public constructor
@@ -67,11 +68,16 @@ public class ConsumptionTab extends Fragment {
         date = new SimpleDateFormat(DATE_FORMAT).format(d);
         context = getActivity().getApplicationContext();
         recyclerView = (RecyclerView) view.findViewById(R.id.all_consumptions_list_view);
+        noConsumptions = (TextView) view.findViewById(R.id.tv_noConsumptions);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = ConsumptionManager.filterDate(context, date);
         mAdapter = new ConsumptionListAdapter(context, cursor);
         recyclerView.setAdapter(mAdapter);
+        if(mAdapter != null ){
+            noConsumptions.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+        }
         return view;
     }
 

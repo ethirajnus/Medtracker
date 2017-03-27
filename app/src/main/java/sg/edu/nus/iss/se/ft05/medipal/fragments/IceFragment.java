@@ -13,6 +13,7 @@ import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.managers.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.listeners.PhoneCallListener;
@@ -36,6 +37,8 @@ public class IceFragment extends Fragment implements OnStartDragListener {
     private ContactsListAdapter adapter;
 
     private ItemTouchHelper mItemTouchHelper;
+    private RecyclerView iceRecyclerView;
+    private TextView noICE;
 
     /**
      * method for processing when creating view
@@ -64,7 +67,8 @@ public class IceFragment extends Fragment implements OnStartDragListener {
         // retrieving context
         context = getActivity().getApplicationContext();
 
-        RecyclerView iceRecyclerView = (RecyclerView) view.findViewById(R.id.listView_ice_contacts);
+        iceRecyclerView = (RecyclerView) view.findViewById(R.id.listView_ice_contacts);
+        noICE = (TextView) view.findViewById(R.id.tv_noICE);
 
         iceRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -83,6 +87,7 @@ public class IceFragment extends Fragment implements OnStartDragListener {
         adapter = new ContactsListAdapter(context, cursor, this, getActivity());
 
         iceRecyclerView.setAdapter(adapter);
+        checkForEmptyList();
 
         // TODO change
 
@@ -170,5 +175,12 @@ public class IceFragment extends Fragment implements OnStartDragListener {
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
 
         mItemTouchHelper.startDrag(viewHolder);
+    }
+
+    private void checkForEmptyList(){
+        if(adapter != null ){
+            noICE.setVisibility((adapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            iceRecyclerView.setVisibility((adapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+        }
     }
 }

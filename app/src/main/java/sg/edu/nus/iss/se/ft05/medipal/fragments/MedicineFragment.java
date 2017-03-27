@@ -14,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
@@ -36,6 +37,8 @@ public class MedicineFragment extends Fragment {
     private MedicineListAdapter mAdapter;
     private Context context;
     private MedicineManager medicineManager;
+    private TextView noMedicine;
+    RecyclerView medicineRecyclerView;
 
     /**
      *
@@ -57,11 +60,13 @@ public class MedicineFragment extends Fragment {
         fabSOS.setVisibility(View.GONE);
 
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateMedicine.class);
-        RecyclerView medicineRecyclerView;
+
         context = getActivity().getApplicationContext();
         medicineRecyclerView = (RecyclerView) view.findViewById(R.id.all_medicines_list_view);
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         medicineRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        noMedicine = (TextView) view.findViewById(R.id.tv_noMedicine);
 
         // Get all medicine info from the database and save in a cursor
         Cursor cursor = MedicineManager.findAll(context);
@@ -72,6 +77,7 @@ public class MedicineFragment extends Fragment {
 
         // Link the adapter to the RecyclerView
         medicineRecyclerView.setAdapter(mAdapter);
+        checkForEmptyList();
 
         //hide the share button
         setHasOptionsMenu(true);
@@ -134,6 +140,13 @@ public class MedicineFragment extends Fragment {
             ReminderUtils.syncMedicineReminder(context);
             mAdapter.swapCursor(MedicineManager.findAll(context));
             Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+            checkForEmptyList();
+        }
+    }
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            noMedicine.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            medicineRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
         }
     }
 }

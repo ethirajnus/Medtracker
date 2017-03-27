@@ -14,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -34,6 +35,8 @@ public class HealthBioFragment extends Fragment {
     private HealthBioListAdapter mAdapter;
     private Context context;
     private HealthBioManager healthBioManager;
+    RecyclerView healthBioRecyclerView;
+    TextView tv_noHealthbio;
 
     /**
      *
@@ -60,16 +63,19 @@ public class HealthBioFragment extends Fragment {
         // retrieving context
         context = getActivity().getApplicationContext();
 
-        RecyclerView healthBioRecyclerView = (RecyclerView) view.findViewById(R.id.all_healthbio_list_view);
+        healthBioRecyclerView = (RecyclerView) view.findViewById(R.id.all_healthbio_list_view);
+        tv_noHealthbio = (TextView) view.findViewById(R.id.tv_noHealthbio);
 
         healthBioRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         // Get health bio from the database and save in a cursor
         Cursor cursor = HealthBioManager.findAll(context);
 
+
         // Create an adapter for that cursor to display the data
         mAdapter = new HealthBioListAdapter(context, cursor);
 
+        checkForEmptyList();
         // Link the adapter to the RecyclerView
         healthBioRecyclerView.setAdapter(mAdapter);
 
@@ -130,6 +136,14 @@ public class HealthBioFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
             mAdapter.swapCursor(HealthBioManager.findAll(context));
+            checkForEmptyList();
+        }
+    }
+
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            tv_noHealthbio.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            healthBioRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
         }
     }
 }

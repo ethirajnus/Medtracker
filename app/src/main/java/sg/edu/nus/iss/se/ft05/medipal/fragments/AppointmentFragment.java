@@ -14,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
@@ -32,6 +33,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 public class AppointmentFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private TextView noAppointments;
     private LinearLayoutManager linearLayoutManager;
     AppointmentManager appointmentManager;
     private AppointmentListAdapter mAdapter;
@@ -60,11 +62,14 @@ public class AppointmentFragment extends Fragment {
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddNewAppointment.class);
         context = getActivity().getApplicationContext();
         recyclerView = (RecyclerView) view.findViewById(R.id.all_appointments_list_view);
+        noAppointments = (TextView) view.findViewById(R.id.tv_noAppointments);
         linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = AppointmentManager.findAll(context);
         mAdapter = new AppointmentListAdapter(context, cursor);
         recyclerView.setAdapter(mAdapter);
+
+        checkForEmptyList();
 
         //hide the share button
         setHasOptionsMenu(true);
@@ -128,6 +133,14 @@ public class AppointmentFragment extends Fragment {
             ReminderUtils.syncAppointmentReminder(context);
             mAdapter.swapCursor(AppointmentManager.findAll(context));
             Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
+            checkForEmptyList();
+        }
+    }
+
+    private void checkForEmptyList(){
+        if(mAdapter != null ){
+            noAppointments.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
         }
     }
 }

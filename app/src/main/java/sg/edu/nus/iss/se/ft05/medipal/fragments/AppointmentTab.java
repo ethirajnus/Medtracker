@@ -33,6 +33,7 @@ public class AppointmentTab extends Fragment {
     private static final String APPOINTMENTS="Today's Appointments";
     private static final String DATE_FORMAT="yyyy-MM-dd";
     private String content="";
+    private TextView noAppointments;
 
 
     public AppointmentTab() {
@@ -67,12 +68,17 @@ public class AppointmentTab extends Fragment {
         date=new SimpleDateFormat(DATE_FORMAT).format(d);
         context=getActivity().getApplicationContext();
         recyclerView=(RecyclerView) view.findViewById(R.id.all_appointments_list_view);
+        noAppointments = (TextView) view.findViewById(R.id.tv_noAppointments);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = AppointmentManager.filterDate(context,date);
         mAdapter = new AppointmentListAdapter(context,cursor);
         recyclerView.setAdapter(mAdapter);
 
+            if(mAdapter != null ) {
+                noAppointments.setVisibility((mAdapter.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+                recyclerView.setVisibility((mAdapter.getItemCount() == 0) ? View.GONE : View.VISIBLE);
+            }
 
 
         return view;

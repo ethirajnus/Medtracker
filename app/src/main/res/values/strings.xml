@@ -157,4 +157,11 @@
     <string name="to">To</string>
     <string name="edit">Edit</string>
 
+    <!-- Strings for empty pages-->
+    <string name="noHealthbio">No Health details added!</string>
+    <string name="noAppointments">No Appointments added!</string>
+    <string name="noConsumption">No Consumptions added!</string>
+    <string name="noMedicine">No Medicines added!</string>
+    <string name="noMeasurement">No Measurements added!</string>
+
 </resources>
