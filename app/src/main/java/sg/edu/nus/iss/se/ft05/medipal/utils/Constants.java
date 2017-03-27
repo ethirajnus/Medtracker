@@ -117,6 +117,7 @@ public class Constants {
 
     //Consumption
     public static final String CONSUMPTION = "Consumption";
+    public static final String CONSUMPTIONS = "Consumptions";
     public static final String EDIT_CONSUMPTION = "Edit Consumption";
     public static final String NEW_CONSUMPTION = "New Consumption";
     public static final String CONSUMPTION_NOT_SAVED = "Consumption was not inserted properly,Please try again later";
