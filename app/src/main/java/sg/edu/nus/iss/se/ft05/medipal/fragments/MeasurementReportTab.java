@@ -60,30 +60,30 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_WEIGHT
 
 /**
  * Class for Measurement report
+ *
  * @author Abinaya
  */
-public class MeasurementReportTab extends Fragment implements View.OnClickListener{
+public class MeasurementReportTab extends Fragment implements View.OnClickListener {
 
 
     private static final int PERMISSION_EXTERNAL_STORAGE_READ = 0;
-    private static final int PERMISSION_EXTERNAL_STORAGE_WRITE =  1;
+    private static final int PERMISSION_EXTERNAL_STORAGE_WRITE = 1;
     private RecyclerView measurementRecyclerView;
     private Context context;
     private MeasurementListAdapter mAdapter;
     private View view;
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             DATE_FORMAT, Locale.ENGLISH);
-    private EditText dateFrom,dateTo;
-    private DatePickerDialog datePickerDialogFrom,datePickerDialogTo;
-    private String dateFromText,dateToText;
-    private Date dateObjFrom,dateObjTo;
-    private Calendar dateCalendarFrom,dateCalendarTo;
+    private EditText dateFrom, dateTo;
+    private DatePickerDialog datePickerDialogFrom, datePickerDialogTo;
+    private String dateFromText, dateToText;
+    private Date dateObjFrom, dateObjTo;
+    private Calendar dateCalendarFrom, dateCalendarTo;
     private MeasurementManager measurementManager;
     private Cursor cursor;
     private TextView noMeasurement;
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -94,7 +94,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     }
 
     /**
-     *
      * @param menu
      * @param inflater
      */
@@ -105,7 +104,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -125,10 +123,10 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         // Get all guest info from the database and save in a cursor
         measurementManager = new MeasurementManager();
         String currentDate = formatter.format(Calendar.getInstance().getTime());
-        cursor = measurementManager.betweenDate(context,currentDate,currentDate);
+        cursor = measurementManager.betweenDate(context, currentDate, currentDate);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new MeasurementListAdapter(context, cursor);
+        mAdapter = new MeasurementListAdapter(context, cursor, measurementRecyclerView, noMeasurement);
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);
@@ -152,7 +150,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                 int id = (int) viewHolder.itemView.getTag();
                 measurementManager = new MeasurementManager();
                 measurementManager.findById(context, id);
-                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(R.string.warning_delete);
                 warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
@@ -190,7 +188,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         noMeasurement = (TextView) view.findViewById(R.id.tv_noMeasurement);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         dateFrom.setOnClickListener(this);
         dateTo.setOnClickListener(this);
         Calendar newCalendar = Calendar.getInstance();
@@ -228,7 +226,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                     dateFromText = dateFrom.getText().toString();
 
                     dateToText = dateTo.getText().toString();
-                    if(dateToText.length() != 0)
+                    if (dateToText.length() != 0)
                         checkDateAndSwapCursor();
                 }
             }
@@ -250,7 +248,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                 if (s.length() != 0) {
                     dateFromText = dateFrom.getText().toString();
                     dateToText = dateTo.getText().toString();
-                    if(dateFromText.length() != 0)
+                    if (dateFromText.length() != 0)
                         checkDateAndSwapCursor();
                 }
 
@@ -266,30 +264,28 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
     }
 
-    private void checkDateAndSwapCursor(){
+    private void checkDateAndSwapCursor() {
         try {
             dateObjFrom = formatter.parse(dateFromText);
             dateObjTo = formatter.parse(dateToText);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(dateObjTo.before(dateObjFrom)){
+        if (dateObjTo.before(dateObjFrom)) {
             Toast.makeText(context, FROM_DATE_AFTER_TO_DATE, Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             triggerFilterForDate();
         }
     }
 
     private void triggerFilterForDate() {
-        cursor = measurementManager.betweenDate(context,dateFromText,dateToText);
+        cursor = measurementManager.betweenDate(context, dateFromText, dateToText);
         mAdapter.swapCursor(cursor);
         checkForEmptyList();
     }
 
 
     /**
-     *
      * @param item
      * @return
      */
@@ -307,16 +303,16 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void SendEmail(){
-        String filename="measurement.csv";
-        createFile(context,filename,fetchContent());
-        File myFile = new File("/sdcard/"+"/MediPal/"+filename);
+    private void SendEmail() {
+        String filename = "measurement.csv";
+        createFile(context, filename, fetchContent());
+        File myFile = new File("/sdcard/" + "/MediPal/" + filename);
         Uri path = Uri.fromFile(myFile);
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_SUBJECT, "measurement");
         intent.putExtra(Intent.EXTRA_TEXT, "Please find the report attached for  Measurement");
-        intent .putExtra(Intent.EXTRA_STREAM, path);
+        intent.putExtra(Intent.EXTRA_STREAM, path);
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
@@ -328,28 +324,28 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
 
         if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
 
-                Toast.makeText(context, "App does not have Permission to Store File", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "App does not have Permission to Store File", Toast.LENGTH_SHORT).show();
 
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_EXTERNAL_STORAGE_WRITE);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_EXTERNAL_STORAGE_WRITE);
 
-            } else {
-                try {
-                    File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
-                    if (!root.exists()) {
-                        root.mkdirs();
-                    }
-                    File gpxfile = new File(root, sFileName);
-                    FileWriter writer = new FileWriter(gpxfile);
-                    writer.append(sBody);
-                    writer.flush();
-                    writer.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        } else {
+            try {
+                File root = new File(Environment.getExternalStorageDirectory(), "MediPal");
+                if (!root.exists()) {
+                    root.mkdirs();
                 }
-
+                File gpxfile = new File(root, sFileName);
+                FileWriter writer = new FileWriter(gpxfile);
+                writer.append(sBody);
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+        }
 
     }
 
@@ -369,7 +365,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
             measurement.setPulse(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_PULSE)));
             measurement.setTemperature(cursor.getFloat(cursor.getColumnIndex(MEASUREMENT_KEY_TEMPERATURE)));
             measurement.setWeight(cursor.getInt(cursor.getColumnIndex(MEASUREMENT_KEY_WEIGHT)));
-            measurements+= measurement.toString();
+            measurements += measurement.toString();
             cursor.moveToNext();
         }
         return measurements;
@@ -377,6 +373,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
     /**
      * view
+     *
      * @param v
      */
     @Override
@@ -408,10 +405,11 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
                 break;
         }
     }
-    private void checkForEmptyList(){
-        if(mAdapter != null ){
-            noMeasurement.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
-            measurementRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+
+    private void checkForEmptyList() {
+        if (mAdapter != null) {
+            noMeasurement.setVisibility((mAdapter.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+            measurementRecyclerView.setVisibility((mAdapter.getItemCount() == 0) ? View.GONE : View.VISIBLE);
         }
     }
 }

@@ -27,9 +27,9 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
-
 /**
  * class for medicine list processing
+ *
  * @author Ethiraj Srinivasan
  */
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
@@ -39,13 +39,19 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
     private Context mContext;
     MedicineManager medicineManager;
 
-    public MedicineListAdapter(Context context, Cursor cursor) {
+    private TextView noMedicine;
+    private RecyclerView medicineRecyclerView;
+
+    public MedicineListAdapter(Context context, Cursor cursor, RecyclerView medicineRecyclerView, TextView noMedicine) {
         this.mContext = context;
         this.mCursor = cursor;
+        this.medicineRecyclerView = medicineRecyclerView;
+        this.noMedicine = noMedicine;
     }
 
     /**
      * Method execution while creating UI
+     *
      * @param parent
      * @param viewType
      * @return
@@ -60,6 +66,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
     /**
      * Method execution while binding UI
+     *
      * @param holder
      * @param position
      */
@@ -147,7 +154,7 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return medicineManager.delete(mContext)==-1;
+            return medicineManager.delete(mContext) == -1;
         }
 
         @Override
@@ -156,9 +163,11 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             //update the list
             swapCursor(MedicineManager.findAll(mContext));
         }
+
+
     }
+
     /**
-     *
      * @return
      */
     @Override
@@ -180,6 +189,9 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
+
+        noMedicine.setVisibility((this.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+        medicineRecyclerView.setVisibility((this.getItemCount() == 0) ? View.GONE : View.VISIBLE);
     }
 
     class MedicineViewHolder extends RecyclerView.ViewHolder {

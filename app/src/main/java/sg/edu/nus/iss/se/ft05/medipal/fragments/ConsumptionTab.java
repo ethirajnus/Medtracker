@@ -73,7 +73,7 @@ public class ConsumptionTab extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = ConsumptionManager.filterDate(context, date);
-        mAdapter = new ConsumptionListAdapter(context, cursor);
+        mAdapter = new ConsumptionListAdapter(context, cursor,recyclerView,noConsumptions);
         recyclerView.setAdapter(mAdapter);
         if(mAdapter != null ){
             noConsumptions.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);

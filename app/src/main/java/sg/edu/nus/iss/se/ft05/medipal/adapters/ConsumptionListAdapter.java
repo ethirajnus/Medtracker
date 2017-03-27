@@ -23,9 +23,9 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 
-
 /**
  * Class for Consumption list processing
+ *
  * @author Ethiraj Srinivasan
  */
 public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionListAdapter.ConsumptionViewHolder> {
@@ -35,13 +35,19 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
     private Context mContext;
     ConsumptionManager consumptionManager;
 
-    public ConsumptionListAdapter(Context context, Cursor cursor) {
+    private RecyclerView recyclerView;
+    private TextView noConsumptions;
+
+    public ConsumptionListAdapter(Context context, Cursor cursor, RecyclerView recyclerView, TextView noConsumptions) {
         this.mContext = context;
         this.mCursor = cursor;
+        this.recyclerView = recyclerView;
+        this.noConsumptions = noConsumptions;
     }
 
     /**
      * Method execution while creating UI
+     *
      * @param parent
      * @param viewType
      * @return
@@ -56,6 +62,7 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
     /**
      * Method execution while binding UI
+     *
      * @param holder
      * @param position
      */
@@ -117,7 +124,7 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return consumptionManager.delete(mContext)==-1;
+            return consumptionManager.delete(mContext) == -1;
         }
 
         @Override
@@ -126,8 +133,8 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
             swapCursor(ConsumptionManager.findAll(mContext));
         }
     }
+
     /**
-     *
      * @return
      */
     @Override
@@ -149,13 +156,15 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
+
+        noConsumptions.setVisibility((this.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility((this.getItemCount() == 0) ? View.GONE : View.VISIBLE);
     }
 
     class ConsumptionViewHolder extends RecyclerView.ViewHolder {
 
         TextView textMedicineName, textDateTime, textQuantity;
         ImageView icon, editIcon, deleteIcon;
-
 
         public ConsumptionViewHolder(View itemView) {
             super(itemView);
