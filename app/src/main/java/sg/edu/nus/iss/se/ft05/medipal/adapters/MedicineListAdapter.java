@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
@@ -155,6 +156,8 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             ReminderUtils.syncMedicineReminder(mContext);
             //update the list
             swapCursor(MedicineManager.findAll(mContext));
+            if(!result)
+                Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
     /**
