@@ -45,7 +45,6 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
     public Cursor findAll() {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_HEALTH_BIO;
-        Log.e(LOG, selectQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
@@ -67,7 +66,6 @@ public class HealthBioDAOImpl extends DBHelper implements HealthBioDAO {
                 .append(DATABASE_COMMAND_SYMBOL_EQUAL)
                 .append(id);
 
-        Log.e(LOG, selectQuery.toString());
         Cursor c = db.rawQuery(selectQuery.toString(), null);
         if (c != null) {
             c.moveToFirst();

@@ -101,7 +101,7 @@
     <string name="consumptionQuantity">Quantity</string>
     <string name="consumptionMedicine">Medicine</string>
     <string name="consumedOn">Consumed on</string>
-    <string name="consumptionFilterBy">Filter By</string>
+    <string name="consumptionFilterBy">Filter</string>
 
     <!-- Help -->
     <string name="faq">FAQ</string>

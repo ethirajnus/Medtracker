@@ -227,7 +227,6 @@ public class AddNewAppointment extends AppCompatActivity implements View.OnClick
         adesc = description.getText().toString();
 
         flag = true;
-        Log.v("date", adate);
         if (clinic.getText().toString().length() == 0) {
             clinic.setError(BLANK_CLINIC_MESSAGE);
             flag = false;

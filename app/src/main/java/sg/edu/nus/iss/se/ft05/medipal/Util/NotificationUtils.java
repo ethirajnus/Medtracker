@@ -134,10 +134,10 @@ public class NotificationUtils {
     }
 
     private static String constructNotificationMessageForAppointment(String clinicName) {
-        return "It is time to visit" + clinicName;
+        return "It is time to visit " + clinicName;
     }
 
     private static String constructNotificationMessageForReplenish(String medicineName) {
-        return "Please replenish this" + medicineName;
+        return "Please replenish this " + medicineName;
     }
 }

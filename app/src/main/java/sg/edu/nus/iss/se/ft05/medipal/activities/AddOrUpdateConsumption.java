@@ -88,6 +88,7 @@ public class AddOrUpdateConsumption extends AppCompatActivity implements View.On
             medicine.setSelection(medicineList.indexOf(medicineManager.findById(context, b.getInt(ID)).getName()));
             quantity.setText(String.valueOf(b.getInt(QUANTITY)));
             date.setText(formatter.format(Calendar.getInstance().getTime()));
+            setTitle(NEW_CONSUMPTION);
         } else {
             setTitle(NEW_CONSUMPTION);
         }

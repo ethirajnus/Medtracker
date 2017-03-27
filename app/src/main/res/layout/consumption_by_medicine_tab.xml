@@ -82,6 +82,7 @@
         android:layout_height="wrap_content"
         android:inputType="none"
         android:hint="Date"
+        android:visibility="invisible"
         android:layout_below="@id/consumptionMedicine"
         android:layout_toRightOf="@id/filterBy"
         android:textIsSelectable="true"/>
@@ -91,6 +92,7 @@
         android:layout_height="wrap_content"
         android:inputType="none"
         android:hint="Date"
+        android:visibility="invisible"
         android:layout_below="@id/consumptionMedicine"
         android:layout_toRightOf="@id/filterBy"
         android:textIsSelectable="true"/>

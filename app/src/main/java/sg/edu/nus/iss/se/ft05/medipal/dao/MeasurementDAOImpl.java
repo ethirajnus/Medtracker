@@ -46,8 +46,6 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT;
 
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
 
@@ -66,8 +64,6 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 
         String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEASUREMENT + DATABASE_COMMAND_SELECT_WHERE
                 + MEASUREMENT_KEY_ID + DATABASE_COMMAND_SYMBOL_EQUAL + id;
-
-        Log.e(LOG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
