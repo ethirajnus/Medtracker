@@ -26,6 +26,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
 
 /**
  * Class for Measurement fragment operations
+ * @author Aakash Deep Mangalore
  */
 public class MeasurementFragment extends Fragment {
 

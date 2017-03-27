@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Class for measurement database operations instrumented test
+ * @author Aakash Deep Mangalore
  */
 @RunWith(AndroidJUnit4.class)
 public class MeasurementDAOInstrumentedTest {

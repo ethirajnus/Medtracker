@@ -28,7 +28,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 
 /**
  * Class for Appointment fragement
- * Created by ethi on 08/03/17.
+ * @author Dhruv Mandan Gopal
  */
 public class AppointmentFragment extends Fragment {
 

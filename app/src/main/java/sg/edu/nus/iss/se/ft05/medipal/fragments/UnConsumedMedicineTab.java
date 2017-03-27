@@ -337,6 +337,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         year = spinYear.getSelectedItem().toString();
         cursor = ConsumptionManager.fetchByMedicineAndYearUnconsumed(context, medicineId, year);
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
     private void triggerFilterForMonth() {
@@ -346,6 +347,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         }
         cursor = ConsumptionManager.fetchByMedicineAndMonthUnconsumed(context, medicineId, year, month);
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
     private void triggerFilterForWeek() {
@@ -366,6 +368,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         dateTo = formatter.format(EndDate);
         cursor = ConsumptionManager.fetchByMedicineAndBetweenDatesUnconsumed(context, medicineId,dateFrom,dateTo );
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
 
@@ -373,6 +376,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
     private void triggerFilterForDate() {
         cursor = ConsumptionManager.fetchByMedicineAndDateUnconsumed(context, medicineId, date.getText().toString());
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
 

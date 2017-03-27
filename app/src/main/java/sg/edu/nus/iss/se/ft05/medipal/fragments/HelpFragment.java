@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 
+/**
+ * Class for Help agment operations
+ * @author Aakash Deep Mangalore
+ */
 public class HelpFragment extends Fragment {
 
     public HelpFragment() {

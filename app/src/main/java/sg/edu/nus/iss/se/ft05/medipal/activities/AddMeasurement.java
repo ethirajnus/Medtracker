@@ -31,6 +31,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Class for adding Measurement
+ * @author Aakash Deep Mangalore
  */
 public class AddMeasurement extends AppCompatActivity implements View.OnClickListener {
 
@@ -211,7 +212,7 @@ public class AddMeasurement extends AppCompatActivity implements View.OnClickLis
         if (TextUtils.isEmpty(pulse.getText().toString().trim()))
             pulse.setText(String.valueOf(0));
         if (TextUtils.isEmpty(temperature.getText().toString().trim()))
-            temperature.setText(String.valueOf(0.0));
+            temperature.setText(String.valueOf(0));
         if (TextUtils.isEmpty(weight.getText().toString().trim()))
             weight.setText(String.valueOf(0));
     }

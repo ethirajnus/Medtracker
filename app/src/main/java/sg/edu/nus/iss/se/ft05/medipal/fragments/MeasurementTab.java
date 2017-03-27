@@ -19,6 +19,7 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 
 /**
  * Class for Measurement tab
+ * @author Moushumi Seal
  */
 public class MeasurementTab extends Fragment {
     //private Context context;
@@ -79,7 +80,7 @@ public class MeasurementTab extends Fragment {
         } else {
             tv_pulse.setText(formatText(Constants.PULSE, pulse + Constants.PULSE_UNIT));
         }
-        if(temperature.equals(String.valueOf(0.0))){
+        if(temperature.matches(Constants.PATTERN_ZERO)){
             tv_temperature.setText(formatText(Constants.TEMPERATURE, " - "));
         } else {
             tv_temperature.setText(formatText(Constants.TEMPERATURE, temperature + Constants.TEMPERATURE_UNIT));

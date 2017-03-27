@@ -55,6 +55,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.CONSUMPTION_KEY_TIME;
 
 /**
  * Class for consumption report
+ * @author Abinaya
  */
 public class ConsumptionReportTab extends Fragment implements View.OnClickListener {
 
@@ -109,7 +110,6 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
         view = inflater.inflate(R.layout.consumption_report_tab, container, false);
         consumptionRecyclerView = (RecyclerView) view.findViewById(R.id.all_consumption_list_view);
-        noConsumptions = (TextView) view.findViewById(R.id.tv_noConsumptions);
         context = getActivity().getApplicationContext();
         findViewsById();
 
@@ -124,9 +124,9 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);
-        checkForEmptyList();
         setListeners();
         setValues();
+        checkForEmptyList();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -182,6 +182,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private void findViewsById() {
         dateFrom = (EditText) view.findViewById(R.id.fromDate);
         dateTo = (EditText) view.findViewById(R.id.toDate);
+        noConsumptions = (TextView) view.findViewById(R.id.tv_noConsumptions);
     }
 
     private void setListeners() {
@@ -278,6 +279,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     private void triggerFilterForDate() {
         cursor = ConsumptionManager.betweenDate(context, dateFromText, dateToText);
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

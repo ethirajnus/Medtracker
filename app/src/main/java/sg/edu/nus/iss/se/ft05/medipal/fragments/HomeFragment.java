@@ -21,6 +21,7 @@ import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 
 /**
  * Class for Home Fragment operations
+ * @author Dhruv Mandan Gopal
  */
 public class HomeFragment extends Fragment {
     private String title = "MediPal";

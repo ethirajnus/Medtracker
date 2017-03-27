@@ -60,7 +60,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_WEIGHT
 
 /**
  * Class for Measurement report
- * Created by ethi on 25/03/17.
+ * @author Abinaya
  */
 public class MeasurementReportTab extends Fragment implements View.OnClickListener{
 
@@ -122,7 +122,6 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
         // Set layout for the RecyclerView, because it's a list we are using the linear layout
         measurementRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        noMeasurement = (TextView) view.findViewById(R.id.tv_noMeasurement);
         // Get all guest info from the database and save in a cursor
         measurementManager = new MeasurementManager();
         String currentDate = formatter.format(Calendar.getInstance().getTime());
@@ -133,9 +132,9 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);
-        checkForEmptyList();
         setListeners();
         setValues();
+        checkForEmptyList();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -188,6 +187,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     private void findViewsById() {
         dateFrom = (EditText) view.findViewById(R.id.fromDate);
         dateTo = (EditText) view.findViewById(R.id.toDate);
+        noMeasurement = (TextView) view.findViewById(R.id.tv_noMeasurement);
     }
 
     private void setListeners(){
@@ -284,6 +284,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
     private void triggerFilterForDate() {
         cursor = measurementManager.betweenDate(context,dateFromText,dateToText);
         mAdapter.swapCursor(cursor);
+        checkForEmptyList();
     }
 
 

@@ -11,7 +11,8 @@ import java.util.List;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
 /**
- * Interface for Appointement database operatiosn
+ * Interface for Appointement database operation
+ * @author Dhruv Mandan Gopal
  */
 public interface AppointmentDAO {
     /**
