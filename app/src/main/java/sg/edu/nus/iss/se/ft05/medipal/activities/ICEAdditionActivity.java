@@ -41,7 +41,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     public static final String ICE_BUTTON_UPDATE_TEXT = "UPDATE";
     public static final String ICE_HEADER_NEW = "New Contact";
     public static final String ICE_HEADER_EDIT = "Edit Contact";
-    public static final String ICE_ERROR_INSERT = "Error adding Contact,Please try again later";
+    public static final String ICE_ERROR_INSERT = "Error adding Contact, Please try again later";
 
     // Contact types
     public static final String ICE_TYPE_NOK = "Next of Kin";
