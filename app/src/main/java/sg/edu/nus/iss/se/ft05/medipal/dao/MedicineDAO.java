@@ -8,6 +8,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 
 /**
  * Interface for medicine database operations
+ * @author Ethiraj Srinivasan
  */
 public interface MedicineDAO {
     /**

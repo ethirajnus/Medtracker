@@ -3,7 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 /**
  * Domain class for Reminder
- * Created by e0146812 on 3/25/2017.
+ * @author Ethiraj Srinivasan
  */
 public class Reminder {
 

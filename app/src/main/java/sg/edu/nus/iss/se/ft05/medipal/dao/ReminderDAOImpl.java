@@ -13,6 +13,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
 /**
  * Implementation class for reminder database operation
+ * @author Ethiraj Srinivasan
  */
 public class ReminderDAOImpl extends DBHelper implements ReminderDAO {
 

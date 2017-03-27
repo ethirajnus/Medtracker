@@ -13,6 +13,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * class for reminder utils
+ * @author Ethiraj Srinivasan
  */
 public class ReminderUtils {
 

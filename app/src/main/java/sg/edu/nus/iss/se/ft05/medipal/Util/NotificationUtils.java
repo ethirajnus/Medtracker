@@ -25,6 +25,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.QUANTITY;
 
 /**
  * class for notification
+ * @author Ethiraj Srinivasan
  */
 public class NotificationUtils {
 

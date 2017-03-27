@@ -16,6 +16,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Implementation class for consumption database operations
+ *  @author Ethiraj Srinivasan
  */
 public class ConsumptionDAOImpl extends DBHelper implements ConsumptionDAO {
 

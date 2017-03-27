@@ -45,6 +45,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
 /**
  * Class for consumption based on category
+ * @author Ethiraj Srinivasan
  */
 public class ConsumptionByCategoryTab extends Fragment implements View.OnClickListener {
 

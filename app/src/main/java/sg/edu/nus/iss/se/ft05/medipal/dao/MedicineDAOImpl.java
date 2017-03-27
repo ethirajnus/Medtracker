@@ -13,6 +13,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Implementation class for medicine database operations
+ * @author Ethiraj Srinivasan
  */
 public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
 

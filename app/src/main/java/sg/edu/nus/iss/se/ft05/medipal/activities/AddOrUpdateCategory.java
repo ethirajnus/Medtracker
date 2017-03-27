@@ -23,6 +23,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Class for add and update category
+ * @author Ethiraj Srinivasan
  */
 public class AddOrUpdateCategory extends AppCompatActivity implements View.OnClickListener {
 

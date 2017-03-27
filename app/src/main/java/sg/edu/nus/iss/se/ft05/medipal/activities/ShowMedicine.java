@@ -30,6 +30,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE;
 
 /**
  * class to show medicine details
+ * @author Ethiraj Srinivasan
  */
 public class ShowMedicine extends AppCompatActivity {
 

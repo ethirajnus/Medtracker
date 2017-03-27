@@ -9,6 +9,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
 
 /**
  * Interface for category database operations
+ * @author Ethiraj Srinivasan
  */
 public interface CategoryDAO {
     /**
