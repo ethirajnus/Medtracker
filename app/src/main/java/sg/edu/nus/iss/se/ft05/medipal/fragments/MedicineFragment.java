@@ -124,7 +124,7 @@ public class MedicineFragment extends Fragment {
             }
 
         }).attachToRecyclerView(medicineRecyclerView);
-        getActivity().setTitle(MEDICINE);
+        getActivity().setTitle(MEDICINES);
 
         return view;
 

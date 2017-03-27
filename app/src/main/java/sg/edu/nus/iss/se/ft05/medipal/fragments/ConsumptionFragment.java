@@ -21,9 +21,9 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
-
 /**
  * Class for consumption fragement operation
+ *
  * @author Ethiraj Srinivasan
  */
 public class ConsumptionFragment extends Fragment {
@@ -33,7 +33,6 @@ public class ConsumptionFragment extends Fragment {
     private TabLayout tabs;
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -54,7 +53,7 @@ public class ConsumptionFragment extends Fragment {
 
         ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateConsumptionActivity.class);
         context = getActivity().getApplicationContext();
-        getActivity().setTitle(CONSUMPTION);
+        getActivity().setTitle(CONSUMPTIONS);
 
         // Setting ViewPager for each Tabs
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -115,7 +114,6 @@ public class ConsumptionFragment extends Fragment {
         }
 
         /**
-         *
          * @param position
          * @return
          */
@@ -125,7 +123,6 @@ public class ConsumptionFragment extends Fragment {
         }
 
         /**
-         *
          * @param position
          * @return
          */
@@ -135,7 +132,7 @@ public class ConsumptionFragment extends Fragment {
             switch (position) {
                 case 0:
                     ConsumptionByCategoryTab categories = new ConsumptionByCategoryTab();
-                    return  categories;
+                    return categories;
                 case 1:
                     ConsumptionByMedicineTab medicines = new ConsumptionByMedicineTab();
                     return medicines;
@@ -149,7 +146,6 @@ public class ConsumptionFragment extends Fragment {
         }
 
         /**
-         *
          * @return
          */
         @Override
@@ -158,10 +154,6 @@ public class ConsumptionFragment extends Fragment {
         }
 
     }
-
-
-
-
 
 
 }
