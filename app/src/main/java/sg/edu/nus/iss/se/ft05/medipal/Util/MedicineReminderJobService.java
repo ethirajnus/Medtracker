@@ -7,7 +7,7 @@ import android.app.job.JobService;
 
 /**
  * Class for Medicine reminder job service
- * Created by ethi on 15/03/17.
+ * Created by ethiraj srinivasan on 15/03/17.
  */
 public class MedicineReminderJobService extends JobService {
     /**

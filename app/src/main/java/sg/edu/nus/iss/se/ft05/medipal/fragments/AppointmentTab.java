@@ -22,6 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 
 /**
  * Class for Appointment tab
+ *
  * @author Dhruv Mandan Gopal
  */
 public class AppointmentTab extends Fragment {
@@ -31,9 +32,9 @@ public class AppointmentTab extends Fragment {
     private AppointmentListAdapter mAdapter;
     private String date;
     private List<AppointmentManager> appointmentManagers;
-    private static final String APPOINTMENTS="Today's Appointments";
-    private static final String DATE_FORMAT="yyyy-MM-dd";
-    private String content="";
+    private static final String APPOINTMENTS = "Today's Appointments";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private String content = "";
     private TextView noAppointments;
 
 
@@ -42,7 +43,6 @@ public class AppointmentTab extends Fragment {
     }
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -51,7 +51,6 @@ public class AppointmentTab extends Fragment {
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -61,25 +60,25 @@ public class AppointmentTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.fragment_appointment_tab,container,false);
-        context=getActivity().getApplicationContext();
+        View view = inflater.inflate(R.layout.fragment_appointment_tab, container, false);
+        context = getActivity().getApplicationContext();
 
-        Calendar calendar=Calendar.getInstance();
-        Date d=calendar.getTime();
-        date=new SimpleDateFormat(DATE_FORMAT).format(d);
-        context=getActivity().getApplicationContext();
-        recyclerView=(RecyclerView) view.findViewById(R.id.all_appointments_list_view);
+        Calendar calendar = Calendar.getInstance();
+        Date d = calendar.getTime();
+        date = new SimpleDateFormat(DATE_FORMAT).format(d);
+        context = getActivity().getApplicationContext();
+        recyclerView = (RecyclerView) view.findViewById(R.id.all_appointments_list_view);
         noAppointments = (TextView) view.findViewById(R.id.tv_noAppointments);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
-        Cursor cursor = AppointmentManager.filterDate(context,date);
-        mAdapter = new AppointmentListAdapter(context,cursor);
+        Cursor cursor = AppointmentManager.filterDate(context, date);
+        mAdapter = new AppointmentListAdapter(context, cursor, recyclerView, noAppointments);
         recyclerView.setAdapter(mAdapter);
 
-            if(mAdapter != null ) {
-                noAppointments.setVisibility((mAdapter.getItemCount() == 0) ? View.VISIBLE : View.GONE);
-                recyclerView.setVisibility((mAdapter.getItemCount() == 0) ? View.GONE : View.VISIBLE);
-            }
+        if (mAdapter != null) {
+            noAppointments.setVisibility((mAdapter.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility((mAdapter.getItemCount() == 0) ? View.GONE : View.VISIBLE);
+        }
 
 
         return view;

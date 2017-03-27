@@ -28,6 +28,7 @@ import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 
 /**
  * Class for Appointment fragement
+ *
  * @author Dhruv Mandan Gopal
  */
 public class AppointmentFragment extends Fragment {
@@ -42,6 +43,7 @@ public class AppointmentFragment extends Fragment {
 
     /**
      * method for processing when creating view
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -66,7 +68,7 @@ public class AppointmentFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = AppointmentManager.findAll(context);
-        mAdapter = new AppointmentListAdapter(context, cursor);
+        mAdapter = new AppointmentListAdapter(context, cursor, recyclerView, noAppointments);
         recyclerView.setAdapter(mAdapter);
 
         checkForEmptyList();
@@ -88,32 +90,31 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
-                        int id = (int) viewHolder.itemView.getTag();
-                        appointmentManager = new AppointmentManager();
-                        appointmentManager.findById(context, id);
-                        mAdapter.swapCursor(AppointmentManager.findAll(context));
-                        AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
-                        warningDialog.setTitle(Constants.TITLE_WARNING);
-                        warningDialog.setMessage(R.string.warning_delete);
-                        warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface alert, int which) {
-                                //remove from DB
-                                new DeleteAppointment().execute();
-                                alert.dismiss();
-                            }
-                        });
-                        warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface alert, int which) {
-                                alert.dismiss();
-                            }
-                        });
-                        warningDialog.show();
+                int id = (int) viewHolder.itemView.getTag();
+                appointmentManager = new AppointmentManager();
+                appointmentManager.findById(context, id);
+                mAdapter.swapCursor(AppointmentManager.findAll(context));
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        new DeleteAppointment().execute();
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
             // attach the ItemTouchHelper to the RecyclerView
         }).attachToRecyclerView(recyclerView);
-
 
 
         getActivity().setTitle(TITLE);
@@ -125,7 +126,7 @@ public class AppointmentFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return appointmentManager.delete(context)==-1;
+            return appointmentManager.delete(context) == -1;
         }
 
         @Override
@@ -137,10 +138,10 @@ public class AppointmentFragment extends Fragment {
         }
     }
 
-    private void checkForEmptyList(){
-        if(mAdapter != null ){
-            noAppointments.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
-            recyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+    private void checkForEmptyList() {
+        if (mAdapter != null) {
+            noAppointments.setVisibility((mAdapter.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility((mAdapter.getItemCount() == 0) ? View.GONE : View.VISIBLE);
         }
     }
 }

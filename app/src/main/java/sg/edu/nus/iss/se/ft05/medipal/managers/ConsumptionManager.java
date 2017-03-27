@@ -12,7 +12,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 
 /**
- * Created by ethi on 10/03/17.
+ * Created by ethiraj srinivasan on 10/03/17.
  */
 
 

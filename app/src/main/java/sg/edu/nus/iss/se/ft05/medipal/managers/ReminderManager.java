@@ -9,7 +9,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
 /**
  * Class for Reminder Manager
- * Created by ethi on 13/03/17.
+ * Created by ethiraj srinivasan on 13/03/17.
  */
 public class ReminderManager {
 

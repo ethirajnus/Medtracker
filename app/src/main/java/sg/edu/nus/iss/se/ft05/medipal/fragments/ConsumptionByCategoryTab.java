@@ -46,6 +46,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
 
 /**
  * Class for consumption based on category
+ *
  * @author Ethiraj Srinivasan
  */
 public class ConsumptionByCategoryTab extends Fragment implements View.OnClickListener {
@@ -74,7 +75,6 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
     private TextView noConsumptions;
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -84,7 +84,6 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -106,7 +105,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new ConsumptionListAdapter(context, cursor);
+        mAdapter = new ConsumptionListAdapter(context, cursor, consumptionRecyclerView, noConsumptions);
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);
@@ -170,7 +169,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return consumptionManager.delete(context)==-1;
+            return consumptionManager.delete(context) == -1;
         }
 
         @Override
@@ -247,7 +246,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
                     spinMonth.setVisibility(View.INVISIBLE);
                     week.setVisibility(View.INVISIBLE);
                     date.setVisibility(View.INVISIBLE);
-                   triggerFilterForYear();
+                    triggerFilterForYear();
                 } else if ((filterByText.contentEquals("Month"))) {
                     spinYear.setVisibility(View.VISIBLE);
                     spinMonth.setVisibility(View.VISIBLE);
@@ -274,11 +273,6 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
             }
 
         });
-
-
-
-
-
 
 
         spinMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -434,6 +428,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
     /**
      * view
+     *
      * @param v
      */
     @Override
@@ -450,10 +445,10 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
         }
     }
 
-    private void checkForEmptyList(){
-        if(mAdapter != null ){
-            noConsumptions.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
-            consumptionRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+    private void checkForEmptyList() {
+        if (mAdapter != null) {
+            noConsumptions.setVisibility((mAdapter.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+            consumptionRecyclerView.setVisibility((mAdapter.getItemCount() == 0) ? View.GONE : View.VISIBLE);
         }
     }
 

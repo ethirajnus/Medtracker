@@ -10,7 +10,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Class for Medicine consumption reminder job service
- * Created by ethi on 15/03/17.
+ * Created by ethiraj srinivasan on 15/03/17.
  */
 public class MedicineConsumptionReminderJobService  extends JobService {
 

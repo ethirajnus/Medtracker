@@ -23,9 +23,9 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 
-
 /**
  * class for measurement list processing
+ *
  * @author Aakash Deep Mangalore
  */
 public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementListAdapter.MeasurementViewHolder> {
@@ -33,13 +33,21 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
     private Cursor mCursor;
     private Context mContext;
     MeasurementManager measurementManager;
-    public MeasurementListAdapter(Context context, Cursor cursor) {
+
+
+    private RecyclerView measurementRecyclerView;
+    private TextView noMeasurement;
+
+    public MeasurementListAdapter(Context context, Cursor cursor, RecyclerView measurementRecyclerView, TextView noMeasurement) {
         this.mContext = context;
         this.mCursor = cursor;
+        this.measurementRecyclerView = measurementRecyclerView;
+        this.noMeasurement = noMeasurement;
     }
 
     /**
      * Method execution while creating UI
+     *
      * @param parent
      * @param viewType
      * @return
@@ -54,6 +62,7 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
 
     /**
      * Method execution while binding UI
+     *
      * @param holder
      * @param position
      */
@@ -72,22 +81,24 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         String temperature = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEASUREMENT_KEY_TEMPERATURE));
         String weight = mCursor.getString(mCursor.getColumnIndex(DBHelper.MEASUREMENT_KEY_WEIGHT));
 
-        if(systolic.equals(String.valueOf(0)) && diastolic.equals(String.valueOf(0))){
-            holder.textSystolic.setText((formatText(Constants.BLOOD_PRESSURE," - ")));
+        if (systolic.equals(String.valueOf(0)) && diastolic.equals(String.valueOf(0))) {
+            holder.textSystolic.setText((formatText(Constants.BLOOD_PRESSURE, " - ")));
         } else {
-            holder.textSystolic.setText((formatText(Constants.BLOOD_PRESSURE,systolic + "/" +diastolic+ Constants.BLOOD_PRESSURE_UNIT)));
+            holder.textSystolic.setText((formatText(Constants.BLOOD_PRESSURE, systolic + "/" + diastolic + Constants.BLOOD_PRESSURE_UNIT)));
         }
-        if(pulse.equals(String.valueOf(0))){
-            holder.textPulse.setText((formatText(Constants.PULSE," - ")));
+        if (pulse.equals(String.valueOf(0))) {
+            holder.textPulse.setText((formatText(Constants.PULSE, " - ")));
         } else {
             holder.textPulse.setText(formatText(Constants.PULSE, pulse + Constants.PULSE_UNIT));
         }
+
         if(temperature.matches(Constants.PATTERN_ZERO)){
+
             holder.textTemperature.setText(formatText(Constants.TEMPERATURE, " - "));
         } else {
             holder.textTemperature.setText(formatText(Constants.TEMPERATURE, temperature + Constants.TEMPERATURE_UNIT));
         }
-        if(weight.equals(String.valueOf(0))){
+        if (weight.equals(String.valueOf(0))) {
             holder.textWeight.setText(formatText(Constants.WEIGHT, " - "));
         } else {
             holder.textWeight.setText(formatText(Constants.WEIGHT, weight + Constants.WEIGHT_UNIT));
@@ -118,7 +129,7 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return measurementManager.delete(mContext)==-1;
+            return measurementManager.delete(mContext) == -1;
         }
 
         @Override
@@ -129,8 +140,8 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
                 Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
-     *
      * @return
      */
     @Override
@@ -153,6 +164,9 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
+
+        noMeasurement.setVisibility((this.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+        measurementRecyclerView.setVisibility((this.getItemCount() == 0) ? View.GONE : View.VISIBLE);
     }
 
     class MeasurementViewHolder extends RecyclerView.ViewHolder {
@@ -175,14 +189,13 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
     }
 
     /**
-     *
      * @param boldText
      * @param normalText
      * @return
      */
-    private SpannableString formatText(String boldText, String normalText){
+    private SpannableString formatText(String boldText, String normalText) {
         SpannableString str = new SpannableString(boldText + normalText);
         str.setSpan(new StyleSpan(Typeface.BOLD), 0, boldText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return  str;
+        return str;
     }
 }

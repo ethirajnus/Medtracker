@@ -25,9 +25,9 @@ import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 
-
 /**
  * Class for Health bio fragment operations
+ *
  * @author Moushumi Seal
  */
 public class HealthBioFragment extends Fragment {
@@ -35,11 +35,10 @@ public class HealthBioFragment extends Fragment {
     private HealthBioListAdapter mAdapter;
     private Context context;
     private HealthBioManager healthBioManager;
-    RecyclerView healthBioRecyclerView;
-    TextView tv_noHealthbio;
+    private RecyclerView healthBioRecyclerView;
+    private TextView tv_noHealthbio;
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -73,7 +72,7 @@ public class HealthBioFragment extends Fragment {
 
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new HealthBioListAdapter(context, cursor);
+        mAdapter = new HealthBioListAdapter(context, cursor,healthBioRecyclerView,tv_noHealthbio);
 
         checkForEmptyList();
         // Link the adapter to the RecyclerView
@@ -98,7 +97,7 @@ public class HealthBioFragment extends Fragment {
                 healthBioManager.findById(context, id);
                 mAdapter.swapCursor(HealthBioManager.findAll(context));
 
-                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(),R.style.AppTheme_Dialog);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
                 warningDialog.setTitle(Constants.TITLE_WARNING);
                 warningDialog.setMessage(R.string.warning_delete);
                 warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
@@ -125,11 +124,12 @@ public class HealthBioFragment extends Fragment {
         return view;
 
     }
+
     private class DeleteHealthBio extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return healthBioManager.delete(context)==-1;
+            return healthBioManager.delete(context) == -1;
         }
 
         @Override
@@ -140,10 +140,10 @@ public class HealthBioFragment extends Fragment {
         }
     }
 
-    private void checkForEmptyList(){
-        if(mAdapter != null ){
-            tv_noHealthbio.setVisibility((mAdapter.getItemCount() == 0)? View.VISIBLE : View.GONE);
-            healthBioRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
+    private void checkForEmptyList() {
+        if (mAdapter != null) {
+            tv_noHealthbio.setVisibility((mAdapter.getItemCount() == 0) ? View.VISIBLE : View.GONE);
+            healthBioRecyclerView.setVisibility((mAdapter.getItemCount() == 0) ? View.GONE : View.VISIBLE);
         }
     }
 }
