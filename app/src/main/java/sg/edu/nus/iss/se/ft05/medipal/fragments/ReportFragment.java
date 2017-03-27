@@ -93,7 +93,7 @@ public class ReportFragment extends Fragment {
 
     static class Adapter extends FragmentStatePagerAdapter {
         int mNumOfTabs;
-        String[] tabTitles = {"Measurement", "Consumption"};
+        String[] tabTitles = {"Measurements", "Consumptions"};
 
         public Adapter(FragmentManager fm, int NumOfTabs) {
             super(fm);

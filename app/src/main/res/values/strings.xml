@@ -45,13 +45,13 @@
     <string name="medicineConsumeQuantity">Consume Quantity</string>
     <string name="medicineThreshold">Threshold</string>
     <string name="medicineDateIssued">Date Issued</string>
-    <string name="medicineExpireFactor">ExpireFactor</string>
+    <string name="medicineExpireFactor">ExpireFactor (months)</string>
     <string name="update">Update</string>
 
     <!-- Reminder  -->
     <string name="reminderFrequency">Frequency</string>
     <string name="reminderStartTime">StartTime</string>
-    <string name="reminderInterval">Interval</string>
+    <string name="reminderInterval">Interval (minutes)</string>
 
     <!-- Measurement -->
     <string name="measurement_fragment">Measurement Fragment</string>
@@ -106,49 +106,49 @@
 
     <!-- Help -->
     <string name="faq">FAQ</string>
-    <string name="question1">Q:Who is this application for?</string>
-    <string name="answer1">A:This application is for anyone in need of tracking their medical stuff.</string>
-    <string name="question2">Q:What is the purpose of measurement screen?</string>
-    <string name="answer2">A:The measurement screen helps keep track of your BloodPressure,Pulse,Temperature and weight based on date measurement.</string>
-    <string name="question3">Q:What is the purpose of category screen?</string>
-    <string name="answer3">A:The category screen gives the details of each category of medicines.</string>
-    <string name="question4">Q:What is the purpose of medicine screen?</string>
-    <string name="answer4">A:The medicine screen helps keep track of medicine detils like reminder, quantiy, expiry, etc..</string>
-    <string name="question5">Q:What is the purpose of appointment screen?</string>
-    <string name="answer5">A:The appointment screen helps keep track of medical appiontments for which a reminder is set.</string>
-    <string name="question6">Q:What is the purpose of ICE screen?</string>
-    <string name="answer6">A:The ICE screen has a list of people to be contacted in case of any medical emergency.</string>
-    <string name="question7">Q:What is the purpose of consumption screen?</string>
-    <string name="answer7">A:The consumption screen helps keep track of medicine consumed by the user.</string>
-    <string name="question8">Q:What is the purpose of HealthBio screen?</string>
-    <string name="answer8">A:The HealthBio screen keeps the details of any medical condition the user is having.</string>
-    <string name="question9">Q:What is the purpose of PersonalBio screen?</string>
-    <string name="answer9">A:The PersonalBio screen keeps the personal details of the user.</string>
+    <string name="question1">Q:What is the purpose of this application?</string>
+    <string name="answer1">A:This application is for anyone in need of tracking their medical data.</string>
+    <string name="question2">Q:What is the purpose of the measurement screen?</string>
+    <string name="answer2">A:The measurement screen helps keep track of your Blood Pressure, Pulse, Temperature and Weight based on date of measurement.</string>
+    <string name="question3">Q:What is the purpose of the category screen?</string>
+    <string name="answer3">A:The category screen gives the details of all the medicine categories</string>
+    <string name="question4">Q:What is the purpose of the medicine screen?</string>
+    <string name="answer4">A:The medicine screen helps keep track of medicine details like reminder, quantity, expiry, etc.</string>
+    <string name="question5">Q:What is the purpose of the appointment screen?</string>
+    <string name="answer5">A:The appointment screen helps keep track of medical appointments for which a reminder is set.</string>
+    <string name="question6">Q:What is the purpose of the Emergency Contacts screen?</string>
+    <string name="answer6">A:The Emergency Contacts screen has a list of people to be contacted in case of any medical emergency.</string>
+    <string name="question7">Q:What is the purpose of the consumption screen?</string>
+    <string name="answer7">A:The consumption screen helps keep track of medicines consumed by the user.</string>
+    <string name="question8">Q:What is the purpose of the Health Conditions screen?</string>
+    <string name="answer8">A:The Health Conditions screen keeps track of user\'s medical conditions</string>
+    <string name="question9">Q:What is the purpose of the Personal Details screen?</string>
+    <string name="answer9">A:The Personal Details screen keeps track of user\'s personal details</string>
 
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
-    <string name="slide_1_title">Category Screen</string>
-    <string name="slide_1_desc">Here you can view and edit the categry of medicine</string>
+    <string name="slide_1_title">Categories Screen</string>
+    <string name="slide_1_desc">Here you can view and edit the category of medicine</string>
 
-    <string name="slide_2_title">Medicine Screen</string>
+    <string name="slide_2_title">Medicines Screen</string>
     <string name="slide_2_desc">Keep track of your medicine stock and reminders</string>
 
-    <string name="slide_3_title">ICE Screen</string>
+    <string name="slide_3_title">Emergency Contacts Screen</string>
     <string name="slide_3_desc">Keep track of people to be contacted in case of an emergency. Names can be dragged up or down to change the priority</string>
 
-    <string name="slide_4_title">HealthBio Screen</string>
+    <string name="slide_4_title">Health Conditions Screen</string>
     <string name="slide_4_desc">Keep track of your medical conditions</string>
 
-    <string name="slide_5_title">Measurement Screen</string>
+    <string name="slide_5_title">Measurements Screen</string>
     <string name="slide_5_desc">Keep track of your measurements</string>
 
     <string name="slide_6_title">Appointments Screen</string>
     <string name="slide_6_desc">Keeps tack and reminds you about future appointments</string>
 
     <string name="slide_7_title">Disable this?</string>
-    <string name="slide_7_desc">Un-check the Enable Help Screens option from the right menu</string>
+    <string name="slide_7_desc">Un-check the Enable Help Screens option from the options menu</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
@@ -188,8 +188,8 @@
     <string name="exitIcon">Exit</string>
 
     <!-- About page -->
-    <string name="aboutApp">\"The MediPal Application helps you track and record your health statistics and manage medication.\"</string>
-    <string name="createdBy">Credits: <b>FT05</b></string>
+    <string name="aboutApp">\"The MediPal Application helps you track and record your health statistics and manage medications.\"</string>
+    <string name="createdBy">Credits: <b>Team FT05</b></string>
     <string name="aakash">Aakash Deep Mangalore</string>
     <string name="abinaya">Abinaya Devrasu</string>
     <string name="ashish">Ashish Shrikant Katre</string>
