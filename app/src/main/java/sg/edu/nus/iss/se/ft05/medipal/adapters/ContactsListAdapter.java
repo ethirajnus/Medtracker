@@ -228,6 +228,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         protected void onPostExecute(Boolean result) {
             //update the list
             swapCursor(ICEContactsManager.findAll(context));
+            if(!result)
+                Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
 

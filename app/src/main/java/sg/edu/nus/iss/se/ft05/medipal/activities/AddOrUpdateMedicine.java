@@ -214,7 +214,16 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                startTime.setText(hourOfDay + COLON + minute);
+                String hour, minutes;
+                if (hourOfDay < 10)
+                    hour = "0" + hourOfDay;
+                else
+                    hour = "" + hourOfDay;
+                if (minute < 10)
+                    minutes = "0" + minute;
+                else
+                    minutes = "" + minute;
+                startTime.setText(hour + COLON + minutes);
             }
         },
                 newCalendar.get(Calendar.HOUR),
