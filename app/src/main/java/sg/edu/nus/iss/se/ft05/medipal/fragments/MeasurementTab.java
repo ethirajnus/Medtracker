@@ -80,7 +80,7 @@ public class MeasurementTab extends Fragment {
         } else {
             tv_pulse.setText(formatText(Constants.PULSE, pulse + Constants.PULSE_UNIT));
         }
-        if(temperature.equals(String.valueOf(0.0))){
+        if(temperature.matches(Constants.PATTERN_ZERO)){
             tv_temperature.setText(formatText(Constants.TEMPERATURE, " - "));
         } else {
             tv_temperature.setText(formatText(Constants.TEMPERATURE, temperature + Constants.TEMPERATURE_UNIT));
