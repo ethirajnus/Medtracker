@@ -148,9 +148,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             // delete icon onclick listener
             holder.smsIcon.setOnClickListener(new View.OnClickListener() {
 
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 public void onClick(View v) {
-                    if (context.checkSelfPermission(Manifest.permission.SEND_SMS)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context.checkSelfPermission(Manifest.permission.SEND_SMS)
                             != PackageManager.PERMISSION_GRANTED) {
                         Toast.makeText(context, NO_SMS_PERMISSION, Toast.LENGTH_SHORT).show();
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, ICE_PERMISSIONS_REQUEST_SMS);
@@ -182,7 +181,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                 public void onClick(View v) {
 
-                    if (ActivityCompat.checkSelfPermission(context,
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ActivityCompat.checkSelfPermission(context,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         Toast.makeText(context, NO_CALL_PERMISSION, Toast.LENGTH_SHORT).show();
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE}, ICE_PERMISSIONS_REQUEST_CALL);

@@ -282,7 +282,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         checkForEmptyList();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
@@ -294,7 +294,7 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     private void SendEmail(){
         String filename="consumption.csv";
         createFile(context,filename,fetchContent());
@@ -311,11 +311,11 @@ public class ConsumptionReportTab extends Fragment implements View.OnClickListen
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     public void createFile(Context context, String sFileName, String sBody) {
 
 
-        if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
             Toast.makeText(context, "App does not have Permission to Store File", Toast.LENGTH_SHORT).show();
