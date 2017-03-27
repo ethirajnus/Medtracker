@@ -148,7 +148,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -160,7 +159,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setFloatingActionButtonAction(final Class activityClass) {
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +172,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setFloatingActionButtonSOSAction() {
-
         FloatingActionButton fabSOS = (FloatingActionButton) findViewById(R.id.fabSOS);
         fabSOS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,13 +242,7 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_enable_help) {
             item.setChecked(!item.isChecked());
             prefManager.setShowHelpScreens(item.isChecked());
@@ -260,7 +251,6 @@ public class MainActivity extends AppCompatActivity
             setFragment(new HelpFragment());
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -281,10 +271,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-//    public void updateTitle(String title){
-//        collapsingToolbarLayout.setTitle(title);
-//    }
-
     public void setFragment(Fragment fragment) {
         tabLayout.setVisibility(View.GONE);
         tabLayout.removeAllTabs();
@@ -293,15 +279,14 @@ public class MainActivity extends AppCompatActivity
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
 
-// Commit the transaction
+        // Commit the transaction
         transaction.commit();
         currentFragment = fragment.getClass().getName();
-
     }
 
     /**
@@ -313,7 +298,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
@@ -350,10 +334,8 @@ public class MainActivity extends AppCompatActivity
 
             setFragment(new HomeFragment());
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

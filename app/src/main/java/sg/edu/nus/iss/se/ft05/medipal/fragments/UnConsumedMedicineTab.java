@@ -262,7 +262,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
 
         });
@@ -314,7 +314,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
 
@@ -327,7 +327,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
 
@@ -443,6 +443,4 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
             consumptionRecyclerView.setVisibility((mAdapter.getItemCount() == 0)? View.GONE : View.VISIBLE);
         }
     }
-
-
 }

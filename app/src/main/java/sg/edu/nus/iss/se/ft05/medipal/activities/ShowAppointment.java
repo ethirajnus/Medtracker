@@ -28,7 +28,6 @@ public class ShowAppointment extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_appointment);
         ActionBar actionBar = getSupportActionBar();
@@ -47,11 +46,9 @@ public class ShowAppointment extends AppCompatActivity {
         button = (Button) findViewById(R.id.button);
         button.setVisibility(View.GONE);
 
-
         context = getApplicationContext();
 
         AppointmentManager appointmentManager = new AppointmentManager();
-
         Appointment appointment = appointmentManager.findById(context, id);
 
         date.setText(appointment.getDate());
@@ -63,8 +60,5 @@ public class ShowAppointment extends AppCompatActivity {
         time.setEnabled(false);
         clinic.setEnabled(false);
         description.setEnabled(false);
-
-
     }
-
 }

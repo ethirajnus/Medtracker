@@ -31,7 +31,6 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
  */
 public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionListAdapter.ConsumptionViewHolder> {
 
-    // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
     ConsumptionManager consumptionManager;
@@ -79,7 +78,6 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         holder.textQuantity.setText(quantity);
         holder.itemView.setTag(id);
 
-
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,13 +88,11 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
                 intent.putExtras(b);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
-
             }
         });
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 consumptionManager = new ConsumptionManager();
                 consumptionManager.findById(mContext, id);
                 new DeleteConsumption().execute();
@@ -107,11 +103,8 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
-
         InitialDrawable drawable = InitialDrawable.builder().buildRound(medicineName.toUpperCase().substring(0, 1), color);
-
         holder.icon.setImageDrawable(drawable);
-
     }
 
     private class DeleteConsumption extends AsyncTask<Void, Void, Boolean> {
@@ -158,7 +151,6 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
         TextView textMedicineName, textDateTime, textQuantity;
         ImageView icon, editIcon, deleteIcon;
-
 
         public ConsumptionViewHolder(View itemView) {
             super(itemView);

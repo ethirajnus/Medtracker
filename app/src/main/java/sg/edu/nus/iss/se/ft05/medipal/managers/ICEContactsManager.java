@@ -17,7 +17,6 @@ public class ICEContactsManager {
     //Dao
     private ICEContactsDAO iceContactsDAO;
 
-
     private ICEContact iceContact;
 
     /**

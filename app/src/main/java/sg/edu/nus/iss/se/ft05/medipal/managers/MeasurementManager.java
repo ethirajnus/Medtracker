@@ -95,11 +95,6 @@ public class MeasurementManager {
      * @param context
      * @return
      */
-    public int getMaxId(Context context) {
-
-        measurementDAO = new MeasurementDAOImpl(context);
-        return measurementDAO.fetchMaxId();
-    }
     public Measurement findLatest(Context context) {
 
         measurementDAO=new MeasurementDAOImpl(context);

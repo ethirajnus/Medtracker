@@ -33,7 +33,6 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
  */
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
 
-    // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
 
@@ -74,7 +73,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         Boolean remind = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_REMIND)) == 1;
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.CATEGORY_KEY_ID));
 
-
         holder.textName.setText(name);
         holder.textCode.setText(CODE + COLON + " " + code.toUpperCase());
         holder.textDescription.setText(description);
@@ -107,13 +105,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             }
         });
 
-
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
-
         InitialDrawable drawable = InitialDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
-
         holder.icon.setImageDrawable(drawable);
 
     }

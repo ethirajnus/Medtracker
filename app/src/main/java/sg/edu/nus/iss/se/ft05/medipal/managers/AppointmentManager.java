@@ -112,13 +112,6 @@ public class AppointmentManager {
         return appointmentDAO.delete(appointment.getId());
     }
 
-
-   /* public int updateReminder(Context context, boolean isChecked) {
-
-        appointmentDAO = new AppointmentDAOImpl(context);
-        return appointmentDAO.update(this);
-    }*/
-
     /**
      * List appointment
      * @param context

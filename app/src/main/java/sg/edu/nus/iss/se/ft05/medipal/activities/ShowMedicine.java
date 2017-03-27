@@ -132,7 +132,6 @@ public class ShowMedicine extends AppCompatActivity {
         startTime.setText(reminderMedicine.getStartTime());
         interval.setText(String.valueOf(reminderMedicine.getInterval()));
         saveButton.setVisibility(View.INVISIBLE);
-
     }
 
 

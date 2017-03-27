@@ -87,10 +87,7 @@ public class ReportFragment extends Fragment {
             }
         });
 
-
         return view;
-
-
     }
 
 

@@ -63,7 +63,6 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             DATE_FORMAT, Locale.ENGLISH);
 
-
     private static final Map<String, Integer> DOSAGE_HASH_MAP = createDosageHashMap();
     static final Map<Integer, String> DOSAGE_REVERSE_HASH_MAP = createDosageReverseHashMap();
     private TimePickerDialog timePickerDialog;
@@ -126,7 +125,6 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
     }
 
-
     private void populateDropDownList() {
         Cursor mCursor = CategoryManager.fetchAllCategoriesWithId(context);
         categoryList = new ArrayList<>();
@@ -153,7 +151,6 @@ public class AddOrUpdateMedicine extends AppCompatActivity implements View.OnCli
 
         // attaching data adapter to spinner
         dosage.setAdapter(dosageDataAdapter);
-
     }
 
     /**

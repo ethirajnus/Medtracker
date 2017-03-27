@@ -73,7 +73,6 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
         String startDate = mCursor.getString(mCursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_START_DATE));
         final int id = mCursor.getInt(mCursor.getColumnIndex(DbConstants.HEALTH_BIO_KEY_ID));
 
-
         holder.textCondition.setText(condition);
         if(conditionType.equalsIgnoreCase(Constants.CONDITION_TYPE_CONDITION))
             conditionType = Constants.CONDITION;
@@ -104,11 +103,9 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
             }
         });
 
-
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
-
         InitialDrawable drawable = InitialDrawable.builder().buildRound(condition.toUpperCase().substring(0, 1), color);
         holder.icon.setImageDrawable(drawable);
     }
@@ -159,7 +156,6 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
         TextView textCondition, textConditionType, textStartDate;
         ImageView icon, editIcon, deleteIcon;
-
 
         public HealthBioViewHolder(View itemView) {
             super(itemView);

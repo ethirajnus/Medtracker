@@ -232,7 +232,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
 
         });
@@ -322,7 +322,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
 
@@ -335,7 +335,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
 

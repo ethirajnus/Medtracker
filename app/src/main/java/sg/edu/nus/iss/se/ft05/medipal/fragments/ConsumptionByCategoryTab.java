@@ -140,7 +140,6 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
                 //get the id of the item being swiped
                 int id = (int) viewHolder.itemView.getTag();
                 //remove from DB
-
                 consumptionManager = new ConsumptionManager();
                 consumptionManager.findById(context, id);
                 AlertDialog.Builder warningDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
@@ -271,7 +270,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
 
         });
@@ -291,7 +290,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
 
@@ -304,7 +303,7 @@ public class ConsumptionByCategoryTab extends Fragment implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
+
             }
         });
 
