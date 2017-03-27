@@ -17,15 +17,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicineActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MedicineListAdapter;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
 /**
@@ -59,7 +59,7 @@ public class MedicineFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateMedicine.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateMedicineActivity.class);
 
         context = getActivity().getApplicationContext();
         medicineRecyclerView = (RecyclerView) view.findViewById(R.id.all_medicines_list_view);
@@ -73,7 +73,7 @@ public class MedicineFragment extends Fragment {
 
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new MedicineListAdapter(context, cursor,medicineRecyclerView,noMedicine);
+        mAdapter = new MedicineListAdapter(context, getActivity(), cursor,medicineRecyclerView,noMedicine);
 
         // Link the adapter to the RecyclerView
         medicineRecyclerView.setAdapter(mAdapter);

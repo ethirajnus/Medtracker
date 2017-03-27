@@ -1,10 +1,10 @@
-package sg.edu.nus.iss.se.ft05.medipal.Util;
+package sg.edu.nus.iss.se.ft05.medipal.utils;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.os.PersistableBundle;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
 

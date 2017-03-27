@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.REPORT;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.REPORT;
 
 
 /**

@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.Util;
+package sg.edu.nus.iss.se.ft05.medipal.utils;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;

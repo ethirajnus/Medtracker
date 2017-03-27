@@ -3,7 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.managers;
 import android.content.Context;
 import android.database.Cursor;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;

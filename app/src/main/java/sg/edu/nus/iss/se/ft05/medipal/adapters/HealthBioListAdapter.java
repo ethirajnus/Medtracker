@@ -1,10 +1,13 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
-import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ColorGenerator;
+import sg.edu.nus.iss.se.ft05.medipal.utils.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateHealthBioActivity;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
-import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
 
 
@@ -34,14 +36,16 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
     private Cursor mCursor;
     private Context mContext;
     HealthBioManager healthBioManager;
+    private Activity mActivity;
 
     private RecyclerView healthBioRecyclerView;
     private TextView tv_noHealthbio;
 
     private static final String LOG = "HealthBioListAdapter";
 
-    public HealthBioListAdapter(Context context, Cursor cursor, RecyclerView healthBioRecyclerView, TextView tv_noHealthbio) {
+    public HealthBioListAdapter(Context context, Activity activity,Cursor cursor, RecyclerView healthBioRecyclerView, TextView tv_noHealthbio) {
         this.mContext = context;
+        this.mActivity = activity;
         this.mCursor = cursor;
         this.healthBioRecyclerView = healthBioRecyclerView;
         this.tv_noHealthbio = tv_noHealthbio;
@@ -93,9 +97,26 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                healthBioManager = new HealthBioManager();
-                healthBioManager.findById(mContext, id);
-                new DeleteHealthBio().execute();
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(mActivity, R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        healthBioManager = new HealthBioManager();
+                        healthBioManager.findById(mContext, id);
+                        new DeleteHealthBio().execute();
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
         });
 

@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.Util;
+package sg.edu.nus.iss.se.ft05.medipal.utils;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -20,7 +20,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
 

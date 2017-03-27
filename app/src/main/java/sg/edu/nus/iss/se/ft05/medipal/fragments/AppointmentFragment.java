@@ -17,11 +17,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointment;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointmentActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.AppointmentListAdapter;
 
@@ -61,14 +61,14 @@ public class AppointmentFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddNewAppointment.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddNewAppointmentActivity.class);
         context = getActivity().getApplicationContext();
         recyclerView = (RecyclerView) view.findViewById(R.id.all_appointments_list_view);
         noAppointments = (TextView) view.findViewById(R.id.tv_noAppointments);
         linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = AppointmentManager.findAll(context);
-        mAdapter = new AppointmentListAdapter(context, cursor, recyclerView, noAppointments);
+        mAdapter = new AppointmentListAdapter(context, getActivity(), cursor, recyclerView, noAppointments);
         recyclerView.setAdapter(mAdapter);
 
         checkForEmptyList();

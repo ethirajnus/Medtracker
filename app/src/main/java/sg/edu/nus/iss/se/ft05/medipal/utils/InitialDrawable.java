@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.Util;
+package sg.edu.nus.iss.se.ft05.medipal.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

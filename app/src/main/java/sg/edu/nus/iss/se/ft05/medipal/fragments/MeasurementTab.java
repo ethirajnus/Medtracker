@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;

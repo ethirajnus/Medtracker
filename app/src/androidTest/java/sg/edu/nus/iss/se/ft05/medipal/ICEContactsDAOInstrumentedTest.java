@@ -1,8 +1,6 @@
 package sg.edu.nus.iss.se.ft05.medipal;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -11,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 

@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.dao;
+package sg.edu.nus.iss.se.ft05.medipal.daoutils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants;
 
 
 /**

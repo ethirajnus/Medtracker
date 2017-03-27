@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.Util.NotificationUtils;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.utils.NotificationUtils;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
@@ -40,13 +40,13 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Class for add and update consumption
  * @author Ethiraj Srinivasan
  */
-public class AddOrUpdateConsumption extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddOrUpdateConsumptionActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Button saveButton;
     private EditText quantity, date;

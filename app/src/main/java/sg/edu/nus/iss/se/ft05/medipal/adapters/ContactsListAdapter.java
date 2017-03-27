@@ -3,6 +3,7 @@ package sg.edu.nus.iss.se.ft05.medipal.adapters;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -24,14 +26,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.listeners.OnStartDragListener;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ICEContactsManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Class for Contact List processing
@@ -119,14 +122,27 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                 public void onClick(View v) {
 
-                    iceContactsManager = new ICEContactsManager();
-
-                    iceContactsManager.findById(context, id);
-
-                    iceContactsManager.updatePriority(context);
-
-
-                    new DeleteAppointment().execute();
+                    AlertDialog.Builder warningDialog = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
+                    warningDialog.setTitle(Constants.TITLE_WARNING);
+                    warningDialog.setMessage(R.string.warning_delete);
+                    warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface alert, int which) {
+                            //remove from DB
+                            iceContactsManager = new ICEContactsManager();
+                            iceContactsManager.findById(context, id);
+                            iceContactsManager.updatePriority(context);
+                            new DeleteAppointment().execute();
+                            alert.dismiss();
+                        }
+                    });
+                    warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface alert, int which) {
+                            alert.dismiss();
+                        }
+                    });
+                    warningDialog.show();
                 }
             });
 

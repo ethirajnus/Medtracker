@@ -28,13 +28,10 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HealthBioFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.HealthBioManager;
-
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CONSUMPTION_NOT_SAVED;
-
 
 
 /**

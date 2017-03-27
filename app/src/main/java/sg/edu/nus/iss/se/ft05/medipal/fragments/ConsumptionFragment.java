@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumptionActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
 
@@ -49,7 +49,7 @@ public class ConsumptionFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateConsumption.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateConsumptionActivity.class);
         context = getActivity().getApplicationContext();
         getActivity().setTitle(CONSUMPTION);
 

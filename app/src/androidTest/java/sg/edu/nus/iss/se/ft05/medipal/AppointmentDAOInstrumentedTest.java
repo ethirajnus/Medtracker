@@ -12,10 +12,8 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
-import sg.edu.nus.iss.se.ft05.medipal.dao.ICEContactsDAOImpl;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
-import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

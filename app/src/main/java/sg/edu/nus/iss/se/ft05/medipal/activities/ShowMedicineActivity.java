@@ -10,14 +10,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
@@ -25,14 +24,14 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ReminderManager;
 
-import static sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicine.DOSAGE_REVERSE_HASH_MAP;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE;
+import static sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateMedicineActivity.DOSAGE_REVERSE_HASH_MAP;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.MEDICINE;
 
 /**
  * class to show medicine details
  * @author Ethiraj Srinivasan
  */
-public class ShowMedicine extends AppCompatActivity {
+public class ShowMedicineActivity extends AppCompatActivity {
 
     private EditText name, description, quantity, consumeQuantity, threshold, expireFactor, dateIssued, frequency, startTime, interval;
     private CheckBox reminder;

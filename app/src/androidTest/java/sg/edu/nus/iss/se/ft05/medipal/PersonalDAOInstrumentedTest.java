@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 

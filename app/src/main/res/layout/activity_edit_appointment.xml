@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory"
+    tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategoryActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -29,7 +29,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointment">
+            tools:context="sg.edu.nus.iss.se.ft05.medipal.activities.AddNewAppointmentActivity">
 
 
             <TextView

@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.constants;
+package sg.edu.nus.iss.se.ft05.medipal.daoutils;
 
 /**
  * Created by mseal on 15/03/17.

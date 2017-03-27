@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.Util;
+package sg.edu.nus.iss.se.ft05.medipal.utils;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -7,7 +7,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
 
