@@ -121,7 +121,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-
                     AlertDialog.Builder warningDialog = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
                     warningDialog.setTitle(Constants.TITLE_WARNING);
                     warningDialog.setMessage(R.string.warning_delete);
@@ -151,16 +150,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                 @RequiresApi(api = Build.VERSION_CODES.M)
                 public void onClick(View v) {
-
                     if (context.checkSelfPermission(Manifest.permission.SEND_SMS)
                             != PackageManager.PERMISSION_GRANTED) {
-
                         Toast.makeText(context, NO_SMS_PERMISSION, Toast.LENGTH_SHORT).show();
-
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, ICE_PERMISSIONS_REQUEST_SMS);
 
                     } else {
-
                         SmsManager smsManager = SmsManager.getDefault();
                         smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergancy please call immidiately", null, null);
                         Toast.makeText(context, SMS_SENT, Toast.LENGTH_SHORT).show();
@@ -172,7 +167,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             holder.editIcon.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-
                     Intent intent = new Intent(context, ICEAdditionActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString(ICEAdditionActivity.ICE_BUNDLE_ACTION, ICEAdditionActivity.ICE_BUNDLE_ACTION_EDIT);
@@ -180,7 +174,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     intent.putExtras(bundle);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-
                 }
             });
 
@@ -191,19 +184,13 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
                     if (ActivityCompat.checkSelfPermission(context,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-
                         Toast.makeText(context, NO_CALL_PERMISSION, Toast.LENGTH_SHORT).show();
-
-
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE}, ICE_PERMISSIONS_REQUEST_CALL);
 
                     } else {
-
                         Toast.makeText(context, CALLING, Toast.LENGTH_SHORT).show();
-
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
                         callIntent.setData(Uri.parse("tel:" + phone));
-
                         try {
                             callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(callIntent);
@@ -222,19 +209,14 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-
-                    //
-
                     if (MotionEvent.ACTION_UP == MotionEventCompat.getActionMasked(event) || MotionEvent.ACTION_DOWN == MotionEventCompat.getActionMasked(event)) {
 
                         mDragStartListener.onStartDrag(holder);
                     }
-
                     return true;
                 }
             });
         }
-
 
     }
 
@@ -272,7 +254,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
      *
      * @param newCursor the new cursor that will replace the existing one
      */
-
     public void swapCursor(Cursor newCursor) {
 
         // Always close the previous mCursor first
@@ -280,9 +261,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
             cursor.close();
         }
-
         cursor = newCursor;
-
         if (newCursor != null) {
 
 
@@ -323,14 +302,10 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             deleteIcon = (ImageView) itemView.findViewById(R.id.deleteIcon_list_ice_delete);
             smsIcon = (ImageView) itemView.findViewById(R.id.smsIcon_list_ice_sms);
         }
-
-
         public void onItemSelected() {
 
             itemView.setBackgroundColor(activity.getResources().getColor(R.color.colorControlNormal));
         }
-
-
         public void onItemClear() {
 
             itemView.setBackgroundColor(activity.getResources().getColor(android.R.color.transparent));
@@ -355,8 +330,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     public boolean onItemMove(int fromPosition, int toPosition) {
 
         Toast.makeText(context, FROM_POSITION + fromPosition + TO_POSITION + toPosition, Toast.LENGTH_SHORT).show();
-
-
         ICEContactsDAOImpl iceContactsDAOImpl = new ICEContactsDAOImpl(context);
 
         fromPosition++;
@@ -380,11 +353,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                 // chnage priority ++
             }
         }
-
         iceContactsDAOImpl.updatePriority(-1, toPosition);
-
         swapCursor(ICEContactsManager.findAll(context));
-
         return true;
     }
 }

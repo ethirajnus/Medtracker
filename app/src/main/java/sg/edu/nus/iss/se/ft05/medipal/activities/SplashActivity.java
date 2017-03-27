@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_screen);
         prefManager = new PrefManager(this);
-        /* New Handler to start the Menu-Activity
+        /* Handler to start the Next Activity
          * and close this Splash-Screen after some seconds.*/
         new Handler().postDelayed(new Runnable(){
             @Override

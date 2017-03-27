@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import sg.edu.nus.iss.se.ft05.medipal.utils.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.utils.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.utils.ReminderUtils;
@@ -87,12 +86,10 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.APPOINTMENT_KEY_ID));
 
-
         holder.itemView.setTag(id);
         holder.dateTime.setText(date + " " + time);
         holder.clinic.setText(formatText(clinic, ""));
         holder.description.setText(formatText("Description: ", description));
-
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -151,9 +148,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
-
         InitialDrawable drawable = InitialDrawable.builder().buildRound(clinic.toUpperCase().substring(0, 1), color);
-
         holder.icon.setImageDrawable(drawable);
     }
 

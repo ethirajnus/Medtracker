@@ -121,7 +121,7 @@ public class MeasurementFragment extends Fragment {
                 warningDialog.show();
             }
 
-            //attach the ItemTouchHelper to the waitlistRecyclerView
+            //attach the ItemTouchHelper to the RecyclerView
         }).attachToRecyclerView(measurementRecyclerView);
 
         getActivity().setTitle("Measurements");

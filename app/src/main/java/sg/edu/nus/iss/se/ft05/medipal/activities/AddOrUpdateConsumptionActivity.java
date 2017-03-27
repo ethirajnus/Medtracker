@@ -96,7 +96,6 @@ public class AddOrUpdateConsumptionActivity extends AppCompatActivity implements
 
     }
 
-
     private void populateDropDownList() {
         Cursor mCursor = MedicineManager.fetchAllMedicinesWithId(context);
         medicineList = new ArrayList<>();
@@ -107,7 +106,6 @@ public class AddOrUpdateConsumptionActivity extends AppCompatActivity implements
             medicineList.add(medicineName); //add the item
             medicinesMap.put(medicineName, id);
         }
-
         ArrayAdapter<String> medicineDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, medicineList);
 
         // Drop down layout style - list view with radio button
@@ -115,12 +113,9 @@ public class AddOrUpdateConsumptionActivity extends AppCompatActivity implements
 
         // attaching data adapter to spinner
         medicine.setAdapter(medicineDataAdapter);
-
     }
 
-
     private void populateTimeForMedicine() {
-
         MedicineManager medicineManager = new MedicineManager();
         timeList = medicineManager.findConsumptionTime(context, consumptionMedicine);
         ArrayAdapter<String> timeListDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeList);
@@ -130,8 +125,6 @@ public class AddOrUpdateConsumptionActivity extends AppCompatActivity implements
 
         // attaching data adapter to spinner
         time.setAdapter(timeListDataAdapter);
-
-
     }
 
     /**

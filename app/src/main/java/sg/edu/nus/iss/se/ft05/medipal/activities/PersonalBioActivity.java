@@ -45,7 +45,6 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
     private Calendar dateCalendar;
     private TextView mTv_bloodType;
 
-
     private static final SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH);
 
     DatePickerDialog datePickerDialog;
@@ -86,7 +85,6 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         findViewsById();
         setListeners();
     }
-
 
     private void findViewsById() {
         mName = (EditText) findViewById(R.id.name);

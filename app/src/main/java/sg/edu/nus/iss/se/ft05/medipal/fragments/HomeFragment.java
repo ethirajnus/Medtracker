@@ -98,10 +98,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     // Add Fragments to Tabs
-
-
     static class Adapter extends FragmentStatePagerAdapter {
         int mNumOfTabs;
         String[] tabTitles = {"Appointments", "Consumptions", "Measurements"};

@@ -53,9 +53,7 @@ public class AddNewAppointmentActivity extends AppCompatActivity implements View
 
     private Button button;
 
-
-
-            boolean flag = true;//To ensure that all input fields are valid
+    boolean flag = true;//To ensure that all input fields are valid
     private static final String BLANK_DATE_MESSAGE = "Appointment date required";
     private static final String WRONG_TIME = "Please choose a slot at least one hour from now";
     private static final String BLANK_TIME_MESSAGE = "Appointment time required";
@@ -177,7 +175,6 @@ public class AddNewAppointmentActivity extends AppCompatActivity implements View
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
                         if (hourOfDay < 10)
                             hour = "0" + hourOfDay;
                         else
@@ -186,8 +183,6 @@ public class AddNewAppointmentActivity extends AppCompatActivity implements View
                             minutes = "0" + minute;
                         else
                             minutes = "" + minute;
-
-
                         if (today.equals(appointment_date)) {
                             if ((newCalendar.get(Calendar.HOUR_OF_DAY) + 1) < hourOfDay) {
                                 time.setError(null);
@@ -203,11 +198,8 @@ public class AddNewAppointmentActivity extends AppCompatActivity implements View
                         } else {
                             time.setText(hour + ":" + minutes);
                         }
-
                     }
                 }, mHour, mMinute, false);
-
-
     }
 
 
@@ -218,9 +210,6 @@ public class AddNewAppointmentActivity extends AppCompatActivity implements View
         clinic = (EditText) findViewById(R.id.new_appointment_clinic);
         description = (EditText) findViewById(R.id.new_appointment_description);
         String adate = "", atime = "", aclinic = "", adesc = "";
-        //Calendar calendar=Calendar.getInstance();
-        //Date d1=calendar.getTime(),d2=calendar.getTime();
-        // String secondDate=new SimpleDateFormat(DATE_FORMAT).format(d2);
         adate = date.getText().toString();
         atime = time.getText().toString();
         aclinic = clinic.getText().toString();
@@ -259,20 +248,10 @@ public class AddNewAppointmentActivity extends AppCompatActivity implements View
         if (flag == true) {
 
             //All input fields are valid
-
-
             appointmentManager = new AppointmentManager(adate, atime, aclinic, adesc);
-
-
-
-
             new SaveAppointment().execute();
         }
     }
-
-
-
-
 
     private class SaveAppointment extends AsyncTask<Void, Void, Boolean> {
 
@@ -298,5 +277,4 @@ public class AddNewAppointmentActivity extends AppCompatActivity implements View
         startActivity(intent);
         finish();
     }
-
 }

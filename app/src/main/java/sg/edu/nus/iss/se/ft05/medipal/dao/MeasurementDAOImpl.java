@@ -87,7 +87,7 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
     }
 
     /*
-     * Creating a category
+     * Creating a measurement
      */
     @Override
     public long insert(Measurement measurement) {
@@ -223,8 +223,6 @@ public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 
             cursor.moveToPrevious();
         }
-
-       // db.close();
 
         return measurement;
     }
