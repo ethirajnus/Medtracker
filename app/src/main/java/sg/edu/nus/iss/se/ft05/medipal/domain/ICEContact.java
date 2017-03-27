@@ -2,7 +2,7 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 /**
  * Domain class of contact
- * Created by e0146812 on 3/19/2017.
+ * Created by Ashish katre on 3/19/2017.
  */
 public class ICEContact {
 

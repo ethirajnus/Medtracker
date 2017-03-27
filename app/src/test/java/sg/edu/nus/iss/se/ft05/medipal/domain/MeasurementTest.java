@@ -5,12 +5,10 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
-/**
- * Created by Ashish Katre on 3/20/2017.
- */
 
 /**
  * Class for Measurement test
+ * @author Aakash Deep Mangalore
  */
 public class MeasurementTest {
 

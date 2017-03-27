@@ -9,6 +9,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
 
 /**
  * Interface for Measurement database operations
+ * @author Aakash Deep Mangalore
  */
 public interface MeasurementDAO {
     /**

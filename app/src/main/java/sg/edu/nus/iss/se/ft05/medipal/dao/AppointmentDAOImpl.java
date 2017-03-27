@@ -17,6 +17,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Implementation class for appointment database operations
+ * @author Dhruv Mandan Gopal
  */
 public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
 

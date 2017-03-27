@@ -31,6 +31,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
 
 /**
  * Class for adding Measurement
+ * @author Aakash Deep Mangalore
  */
 public class AddMeasurement extends AppCompatActivity implements View.OnClickListener {
 

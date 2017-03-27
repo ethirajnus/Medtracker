@@ -14,7 +14,7 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.AppointmentDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
 /**
- * Class for Appointment manager
+ * @author Dhruv Mandan Gopal
  */
 public class AppointmentManager {
     private static AppointmentDAO appointmentAll;

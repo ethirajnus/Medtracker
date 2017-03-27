@@ -30,6 +30,7 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
 
 /**
  * Class for Appointment list processing
+ * @author Dhruv Mandan Gopal
  */
 public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentListAdapter.AppointmentViewHolder> {
 
@@ -87,6 +88,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
                 appointmentManager.findById(mContext, id);
 
                 new DeleteAppointment().execute();
+
             }
         });
 

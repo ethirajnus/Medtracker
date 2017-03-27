@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 /**
  * Class for Appointment database operations instrumented test
+ * @author Dhruv Mandan Gopal
  */
 public class AppointmentDAOInstrumentedTest {
 

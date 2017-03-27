@@ -19,7 +19,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.REPORT;
 
 /**
  * Class for Report fragment operations
- * Created by ethi on 24/03/17.
+ * Created by Abinaya on 24/03/17.
  */
 public class ReportFragment extends Fragment {
 
