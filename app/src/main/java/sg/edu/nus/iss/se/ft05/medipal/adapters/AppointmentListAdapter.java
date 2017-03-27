@@ -22,6 +22,7 @@ import android.widget.TextView;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
@@ -99,6 +100,18 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ShowAppointment.class);
+                Bundle b = new Bundle();
+                b.putInt("id", id);
+                intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
         });
 
