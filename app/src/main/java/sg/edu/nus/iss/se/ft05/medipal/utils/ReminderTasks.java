@@ -6,10 +6,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.os.PersistableBundle;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
@@ -38,16 +40,22 @@ public class ReminderTasks {
     static JobScheduler jobAppointmentScheduler;
     private static long set_time, current_time, interval;
     private static Medicine medicine;
+    private static final SimpleDateFormat formatter = new SimpleDateFormat(
+            DATE_FORMAT, Locale.ENGLISH);
 
     public static void executeTask(Context context, String action) {
         if (ACTION_MEDICINE_REMINDER.equals(action)) {
-            medicineConsumptionReminder(context);
+            try {
+                medicineConsumptionReminder(context);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         } else if (ACTION_APPOINTMENT_REMINDER.equals(action)) {
             appointmentReminder(context);
         }
     }
 
-    synchronized public static void medicineConsumptionReminder(Context context) {
+    synchronized public static void medicineConsumptionReminder(Context context) throws ParseException {
         int medicineId, reminderId;
         Map<Integer, Integer> medicineList = MedicineManager.listAllMedicine(context);
         for (Map.Entry<Integer, Integer> entry : medicineList.entrySet()) {
@@ -55,15 +63,19 @@ public class ReminderTasks {
             reminderId = entry.getValue();
             MedicineManager medicineManager = new MedicineManager();
             medicine = medicineManager.findById(context, medicineId);
+            Date dateissued = new SimpleDateFormat(DATE_FORMAT).parse(medicine.getDateIssued());
             //add Consumption
             Calendar yesterday = Calendar.getInstance();
-            yesterday.add(Calendar.DATE, -1);
-            String yesterdayDate = new SimpleDateFormat(DATE_FORMAT).format(yesterday.getTime());
-            List<String> medicineTimeList = medicineManager.findConsumptionTime(context, medicineId);
-            for (String time : medicineTimeList) {
-                if (!ConsumptionManager.exists(context, medicineId, yesterdayDate, time)) {
-                    ConsumptionManager consumptionManager = new ConsumptionManager(medicineId, 0, yesterdayDate, time);
-                    consumptionManager.save(context);
+            if(yesterday.after(dateissued)){
+                yesterday.add(Calendar.DATE, -1);
+                String yesterdayDate = new SimpleDateFormat(DATE_FORMAT).format(yesterday.getTime());
+                List<String> medicineTimeList = medicineManager.findConsumptionTime(context, medicineId);
+                for (String time : medicineTimeList) {
+                    Calendar calendar = Calendar.getInstance();
+                    if (!ConsumptionManager.exists(context, medicineId, yesterdayDate, time) && !yesterdayDate.contentEquals(formatter.format(calendar.getTime()))) {
+                        ConsumptionManager consumptionManager = new ConsumptionManager(medicineId, 0, yesterdayDate, time);
+                        consumptionManager.save(context);
+                    }
                 }
             }
             if (medicineManager.getMedicine().getRemind()) {

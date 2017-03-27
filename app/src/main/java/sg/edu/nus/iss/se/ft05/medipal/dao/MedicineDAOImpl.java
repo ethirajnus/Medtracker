@@ -146,4 +146,34 @@ public class MedicineDAOImpl extends DBHelper implements MedicineDAO {
         return db.rawQuery(selectQuery, null);
 
     }
+
+    @Override
+    public Medicine fetchMedicineByNameandDateIssued(String medicineName, String medicineDateIssued) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = DATABASE_COMMAND_SELECT_ALL + TABLE_MEDICINE + DATABASE_COMMAND_SELECT_WHERE
+                + MEDICINE_KEY_MEDICINE + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE +  medicineName + DATABASE_COMMAND_SINGLE_QUOTE + DATABASE_COMMAND_AND + MEDICINE_KEY_DATE_ISSUED + DATABASE_COMMAND_SYMBOL_EQUAL + DATABASE_COMMAND_SINGLE_QUOTE + medicineDateIssued + DATABASE_COMMAND_SINGLE_QUOTE;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null) {
+
+            c.moveToFirst();
+        }
+
+        Medicine medicine = new Medicine();
+
+        medicine.setId(c.getInt(c.getColumnIndex(MEDICINE_KEY_ID)));
+        medicine.setName((c.getString(c.getColumnIndex(MEDICINE_KEY_MEDICINE))));
+        medicine.setDescription(c.getString(c.getColumnIndex(MEDICINE_KEY_DESCRIPTION)));
+        medicine.setCategoryId(c.getInt(c.getColumnIndex(MEDICINE_KEY_CATID)));
+        medicine.setReminderId(c.getInt(c.getColumnIndex(MEDICINE_KEY_REMINDERID)));
+        medicine.setRemind(c.getInt(c.getColumnIndex(CATEGORY_KEY_REMIND)) == 1);
+        medicine.setQuantity(c.getInt(c.getColumnIndex(MEDICINE_KEY_QUANTITY)));
+        medicine.setDosage(c.getInt(c.getColumnIndex(MEDICINE_KEY_DOSAGE)));
+        medicine.setConsumeQuantity(c.getInt(c.getColumnIndex(MEDICINE_KEY_CONSUME_QUALITY)));
+        medicine.setThreshold(c.getInt(c.getColumnIndex(MEDICINE_KEY_THRESHOLD)));
+        medicine.setDateIssued(c.getString(c.getColumnIndex(MEDICINE_KEY_DATE_ISSUED)));
+        medicine.setExpireFactor(c.getInt(c.getColumnIndex(MEDICINE_KEY_EXPIRE_FACTOR)));
+        db.close();
+        return medicine;
+    }
 }

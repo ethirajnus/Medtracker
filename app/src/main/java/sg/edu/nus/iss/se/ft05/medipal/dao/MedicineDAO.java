@@ -50,4 +50,6 @@ public interface MedicineDAO {
      * @return
      */
     public Cursor fetchAllMedicinesWithId();
+
+    Medicine fetchMedicineByNameandDateIssued(String medicineName, String medicineDateIssued);
 }
