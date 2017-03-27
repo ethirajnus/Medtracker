@@ -68,6 +68,7 @@ public class Constants {
     public static final String MEDICINE_NAME = "medicineName";
     public static final String CONSUMPTION_MESSAGE = "Please Consume";
     public static final String MEDICINE = "Medicine";
+    public static final String MEDICINES = "Medicines";
     public static final String EDIT_MEDICINE = "Edit Medicine";
     public static final String NEW_MEDICINE = "New Medicine";
     public static final String MEDICINE_NOT_SAVED = "Medicine was not inserted properly,Please try again later";
@@ -103,6 +104,7 @@ public class Constants {
 
     //Category
     public static final String CATEGORY = "Category";
+    public static final String CATEGORIES = "Categories";
     public static final String EDIT_CATEGORY = "Edit Category";
     public static final String NEW_CATEGORY = "New Category";
     public static final String CATEGORY_NAME_ERROR_MESSAGE = "Please provide category name!";

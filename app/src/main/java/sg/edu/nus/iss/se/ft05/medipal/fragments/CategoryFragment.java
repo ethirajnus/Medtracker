@@ -16,16 +16,19 @@ import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategoryActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.CategoryListAdapter;
+
 import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * A placeholder fragment containing a simple view.
+ *
  * @author Ethiraj Srinivasan
  */
 public class CategoryFragment extends Fragment {
 
     private CategoryListAdapter mAdapter;
     private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class CategoryFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddOrUpdateCategoryActivity.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddOrUpdateCategoryActivity.class);
         RecyclerView categoryRecyclerView;
         context = getActivity().getApplicationContext();
 
@@ -59,7 +62,7 @@ public class CategoryFragment extends Fragment {
         // Link the adapter to the RecyclerView
         categoryRecyclerView.setAdapter(mAdapter);
 
-        getActivity().setTitle(CATEGORY);
+        getActivity().setTitle(CATEGORIES);
 
         return view;
 
