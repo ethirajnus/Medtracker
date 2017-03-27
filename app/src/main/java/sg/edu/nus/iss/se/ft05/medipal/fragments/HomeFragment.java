@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ICEAdditionActivity;
@@ -60,6 +61,8 @@ public class HomeFragment extends Fragment {
 
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.VISIBLE);
+        TextView tvSOS = (TextView) getActivity().findViewById(R.id.tv_sos);
+        tvSOS.setVisibility(View.VISIBLE);
 
         tabs.setVisibility(View.VISIBLE);
         tabs.addTab(tabs.newTab());
