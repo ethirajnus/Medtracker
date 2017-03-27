@@ -19,9 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,18 +42,17 @@ import java.util.Locale;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Measurement;
-import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.FROM_DATE_AFTER_TO_DATE;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_DIASTOLIC;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_PULSE;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_SYSTOLIC;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_TEMPERATURE;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEASUREMENT_KEY_WEIGHT;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.FROM_DATE_AFTER_TO_DATE;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEASUREMENT_KEY_DIASTOLIC;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEASUREMENT_KEY_PULSE;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEASUREMENT_KEY_SYSTOLIC;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEASUREMENT_KEY_TEMPERATURE;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEASUREMENT_KEY_WEIGHT;
 
 
 /**
@@ -126,7 +123,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         cursor = measurementManager.betweenDate(context, currentDate, currentDate);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new MeasurementListAdapter(context, cursor, measurementRecyclerView, noMeasurement);
+        mAdapter = new MeasurementListAdapter(context, getActivity(), cursor, measurementRecyclerView, noMeasurement);
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);

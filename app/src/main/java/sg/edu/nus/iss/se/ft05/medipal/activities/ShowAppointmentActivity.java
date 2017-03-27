@@ -8,18 +8,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.ID;
 
 /**
  * Class to show appointment details
  */
-public class ShowAppointment extends AppCompatActivity {
+public class ShowAppointmentActivity extends AppCompatActivity {
     private Context context;
 
     /**

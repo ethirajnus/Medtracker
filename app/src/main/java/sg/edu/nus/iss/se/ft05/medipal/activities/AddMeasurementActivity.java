@@ -22,18 +22,18 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Class for adding Measurement
  * @author Aakash Deep Mangalore
  */
-public class AddMeasurement extends AppCompatActivity implements View.OnClickListener {
+public class AddMeasurementActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button saveButton;
     EditText systolic, diastolic, pulse, temperature, weight, measuredOn;

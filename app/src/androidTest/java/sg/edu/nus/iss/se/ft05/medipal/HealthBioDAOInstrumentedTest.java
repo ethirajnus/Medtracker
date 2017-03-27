@@ -9,11 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants;
 import sg.edu.nus.iss.se.ft05.medipal.dao.HealthBioDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
-import sg.edu.nus.iss.se.ft05.medipal.domain.ICEContact;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

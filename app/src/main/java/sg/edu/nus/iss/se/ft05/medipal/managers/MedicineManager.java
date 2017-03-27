@@ -19,9 +19,9 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Medicine;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Reminder;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.TIME_FORMAT;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_ID;
-import static sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper.MEDICINE_KEY_REMINDERID;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.TIME_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEDICINE_KEY_ID;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper.MEDICINE_KEY_REMINDERID;
 
 
 

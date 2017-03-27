@@ -72,7 +72,7 @@ public class AppointmentTab extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = AppointmentManager.filterDate(context, date);
-        mAdapter = new AppointmentListAdapter(context, cursor, recyclerView, noAppointments);
+        mAdapter = new AppointmentListAdapter(context, getActivity(), cursor, recyclerView, noAppointments);
         recyclerView.setAdapter(mAdapter);
 
         if (mAdapter != null) {

@@ -19,8 +19,8 @@ import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.ConsumptionListAdapter;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.DATE_FORMAT;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.DATE_FORMAT;
 
 
 
@@ -111,7 +111,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new ConsumptionListAdapter(context, cursor,consumptionRecyclerView, noConsumptions);
+        mAdapter = new ConsumptionListAdapter(context, getActivity(), cursor,consumptionRecyclerView, noConsumptions);
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);

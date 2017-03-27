@@ -4,10 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants.*;
 
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.HealthBio;
 
 

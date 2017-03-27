@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.se.ft05.medipal.Util;
+package sg.edu.nus.iss.se.ft05.medipal.utils;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,16 +10,16 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption;
-import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
-import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicine;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumptionActivity;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointmentActivity;
+import sg.edu.nus.iss.se.ft05.medipal.activities.ShowMedicineActivity;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ACTION;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CONSUMPTION_MESSAGE;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.ID;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.MEDICINE;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.NOTIFICATION;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.QUANTITY;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.ACTION;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.CONSUMPTION_MESSAGE;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.ID;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.MEDICINE;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.NOTIFICATION;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.QUANTITY;
 
 
 
@@ -35,7 +35,7 @@ public class NotificationUtils {
     private static int REPLENISH_REMINDER_NOTIFICATION_ID = 0;
 
     private static PendingIntent consumptionIntent(Context context, int medicineId, int quantity) {
-        Intent startActivityIntent = new Intent(context, AddOrUpdateConsumption.class);
+        Intent startActivityIntent = new Intent(context, AddOrUpdateConsumptionActivity.class);
         Bundle b = new Bundle();
         b.putInt(ID,medicineId);
         b.putInt(QUANTITY,quantity);
@@ -49,7 +49,7 @@ public class NotificationUtils {
     }
 
     private static PendingIntent appointmentIntent(Context context,int appointmentId) {
-        Intent startActivityIntent = new Intent(context, ShowAppointment.class);
+        Intent startActivityIntent = new Intent(context, ShowAppointmentActivity.class);
         Bundle b = new Bundle();
         b.putInt(ID,appointmentId);
         startActivityIntent.putExtras(b);
@@ -61,7 +61,7 @@ public class NotificationUtils {
     }
 
     private static PendingIntent replenishIntent(Context context,int medicineId) {
-        Intent startActivityIntent = new Intent(context, ShowMedicine.class);
+        Intent startActivityIntent = new Intent(context, ShowMedicineActivity.class);
         Bundle b = new Bundle();
         b.putInt(ID,medicineId);
         startActivityIntent.putExtras(b);

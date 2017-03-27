@@ -5,7 +5,7 @@ import android.database.Cursor;
 
 import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.CategoryDAOImpl;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Category;
 
 

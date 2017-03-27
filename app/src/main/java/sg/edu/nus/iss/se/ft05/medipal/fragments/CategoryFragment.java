@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategoryActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.CategoryListAdapter;
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,7 +38,7 @@ public class CategoryFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddOrUpdateCategory.class);
+        ((MainActivity)getActivity()).setFloatingActionButtonAction(AddOrUpdateCategoryActivity.class);
         RecyclerView categoryRecyclerView;
         context = getActivity().getApplicationContext();
 

@@ -8,9 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Consumption;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants.*;
 
 
 

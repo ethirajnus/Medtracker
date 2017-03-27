@@ -17,12 +17,12 @@ import java.util.Arrays;
 
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
-import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategory;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ColorGenerator;
+import sg.edu.nus.iss.se.ft05.medipal.utils.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateCategoryActivity;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Created by ethiraj srinivasan on 11/03/17.
@@ -94,7 +94,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AddOrUpdateCategory.class);
+                Intent intent = new Intent(mContext, AddOrUpdateCategoryActivity.class);
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);

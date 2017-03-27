@@ -28,7 +28,7 @@ import sg.edu.nus.iss.se.ft05.medipal.fragments.HelpFragment;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.HomeFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.CategoryFragment;
 import sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionFragment;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         context = getApplicationContext();
 
-        setFloatingActionButtonAction(AddOrUpdateMedicine.class);
+        setFloatingActionButtonAction(AddOrUpdateMedicineActivity.class);
         setFloatingActionButtonSOSAction();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

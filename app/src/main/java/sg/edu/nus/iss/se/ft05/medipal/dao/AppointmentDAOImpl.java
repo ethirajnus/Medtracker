@@ -4,14 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.domain.Appointment;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.daoutils.DbConstants.*;
 
 
 

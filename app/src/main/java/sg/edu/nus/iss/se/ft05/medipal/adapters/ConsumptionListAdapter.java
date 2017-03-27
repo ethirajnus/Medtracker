@@ -1,10 +1,13 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +16,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
-import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumption;
-import sg.edu.nus.iss.se.ft05.medipal.dao.DBHelper;
+import sg.edu.nus.iss.se.ft05.medipal.utils.ColorGenerator;
+import sg.edu.nus.iss.se.ft05.medipal.utils.InitialDrawable;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddOrUpdateConsumptionActivity;
+import sg.edu.nus.iss.se.ft05.medipal.daoutils.DBHelper;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 
-import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.*;
+import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 
 /**
@@ -33,14 +37,16 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
     private Cursor mCursor;
     private Context mContext;
+    private Activity mActivity;
     ConsumptionManager consumptionManager;
 
     private RecyclerView recyclerView;
     private TextView noConsumptions;
 
-    public ConsumptionListAdapter(Context context, Cursor cursor, RecyclerView recyclerView, TextView noConsumptions) {
+    public ConsumptionListAdapter(Context context, Activity activity, Cursor cursor, RecyclerView recyclerView, TextView noConsumptions) {
         this.mContext = context;
         this.mCursor = cursor;
+        this.mActivity = activity;
         this.recyclerView = recyclerView;
         this.noConsumptions = noConsumptions;
     }
@@ -88,7 +94,7 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AddOrUpdateConsumption.class);
+                Intent intent = new Intent(mContext, AddOrUpdateConsumptionActivity.class);
                 Bundle b = new Bundle();
                 b.putString(ACTION, EDIT);
                 b.putInt(ID, id);
@@ -100,9 +106,26 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                consumptionManager = new ConsumptionManager();
-                consumptionManager.findById(mContext, id);
-                new DeleteConsumption().execute();
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(mActivity, R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        consumptionManager = new ConsumptionManager();
+                        consumptionManager.findById(mContext, id);
+                        new DeleteConsumption().execute();
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
         });
 

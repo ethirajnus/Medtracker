@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.utils.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
-import sg.edu.nus.iss.se.ft05.medipal.activities.AddMeasurement;
+import sg.edu.nus.iss.se.ft05.medipal.activities.AddMeasurementActivity;
 import sg.edu.nus.iss.se.ft05.medipal.activities.MainActivity;
 import sg.edu.nus.iss.se.ft05.medipal.adapters.MeasurementListAdapter;
 
@@ -59,7 +59,7 @@ public class MeasurementFragment extends Fragment {
         FloatingActionButton fabSOS = (FloatingActionButton) getActivity().findViewById(R.id.fabSOS);
         fabSOS.setVisibility(View.GONE);
 
-        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddMeasurement.class);
+        ((MainActivity) getActivity()).setFloatingActionButtonAction(AddMeasurementActivity.class);
 
         context = getActivity().getApplicationContext();
         measurementRecyclerView = (RecyclerView) view.findViewById(R.id.all_measurement_list_view);
@@ -72,7 +72,7 @@ public class MeasurementFragment extends Fragment {
         Cursor cursor = MeasurementManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new MeasurementListAdapter(context, cursor,measurementRecyclerView,noMeasurement);
+        mAdapter = new MeasurementListAdapter(context, getActivity(), cursor,measurementRecyclerView,noMeasurement);
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);
