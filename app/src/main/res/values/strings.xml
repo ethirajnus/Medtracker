@@ -135,7 +135,7 @@
     <string name="slide_2_desc">Keep track of your medicine stock and reminders</string>
 
     <string name="slide_3_title">ICE Screen</string>
-    <string name="slide_3_desc">Keep track of people to be contacted in case of an emergency</string>
+    <string name="slide_3_desc">Keep track of people to be contacted in case of an emergency. Names can be dragged up or down to change the priority</string>
 
     <string name="slide_4_title">Disable this?</string>
     <string name="slide_4_desc">Uncheck the Enable Help Screens option from the right menu</string>
