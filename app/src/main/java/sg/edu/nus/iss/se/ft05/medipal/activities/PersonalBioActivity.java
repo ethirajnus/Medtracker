@@ -29,7 +29,7 @@ import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAO;
 import sg.edu.nus.iss.se.ft05.medipal.dao.PersonalBioDAOImpl;
 import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 import sg.edu.nus.iss.se.ft05.medipal.managers.PersonalBioManager;
-
+import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 
 /**
@@ -68,7 +68,6 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
         if (b != null) {
             switch (b.getString(Constants.ACTION)) {
                 case Constants.VIEW:
-                    mName.setEnabled(false);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     getSupportActionBar().setHomeButtonEnabled(true);
                     mSaveBtn.setText(Constants.EDIT);
@@ -174,6 +173,7 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
      * @param enable
      */
     private void makeFieldsEditable(boolean enable) {
+        mName.setEnabled(enable);
         mDob.setEnabled(enable);
         mDob.setOnClickListener(null);
         mIdNo.setEnabled(enable);
@@ -285,6 +285,8 @@ public class PersonalBioActivity extends AppCompatActivity implements View.OnCli
                 Toast.makeText(context, R.string.update_success, Toast.LENGTH_SHORT).show();
                 makeFieldsEditable(false);
                 mSaveBtn.setText(Constants.EDIT);
+                PrefManager prefManager = new PrefManager(context);
+                prefManager.setUserName(mName.getText().toString());
             }
         }
     }
