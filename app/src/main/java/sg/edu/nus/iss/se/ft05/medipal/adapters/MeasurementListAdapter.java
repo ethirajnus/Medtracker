@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
@@ -90,7 +91,9 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         } else {
             holder.textPulse.setText(formatText(Constants.PULSE, pulse + Constants.PULSE_UNIT));
         }
-        if (temperature.equals(String.valueOf(0.0))) {
+
+        if(temperature.matches(Constants.PATTERN_ZERO)){
+
             holder.textTemperature.setText(formatText(Constants.TEMPERATURE, " - "));
         } else {
             holder.textTemperature.setText(formatText(Constants.TEMPERATURE, temperature + Constants.TEMPERATURE_UNIT));
@@ -136,6 +139,8 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         protected void onPostExecute(Boolean result) {
             //update the list
             swapCursor(MeasurementManager.findAll(mContext));
+            if(!result)
+                Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
 

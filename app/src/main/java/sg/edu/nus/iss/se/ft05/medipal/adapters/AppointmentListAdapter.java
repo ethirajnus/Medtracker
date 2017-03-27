@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
@@ -145,6 +146,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             ReminderUtils.syncAppointmentReminder(mContext);
             //update the list
             swapCursor(AppointmentManager.findAll(mContext));
+            if(!result)
+              Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
 

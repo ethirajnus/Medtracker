@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -131,6 +132,8 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         protected void onPostExecute(Boolean result) {
             //update the list
             swapCursor(ConsumptionManager.findAll(mContext));
+            if(!result)
+              Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
 

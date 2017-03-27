@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
@@ -131,6 +132,8 @@ public class HealthBioListAdapter extends RecyclerView.Adapter<HealthBioListAdap
         protected void onPostExecute(Boolean result) {
             //update the list
             swapCursor(HealthBioManager.findAll(mContext));
+            if(!result)
+                Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
 
