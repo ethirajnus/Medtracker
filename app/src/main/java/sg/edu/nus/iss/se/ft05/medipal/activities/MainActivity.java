@@ -41,6 +41,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PrefManager;
 
 /**
  * Class for Main Activity
+ *
  * @author Ethiraj Srinivasan
  */
 public class MainActivity extends AppCompatActivity
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         context = getApplicationContext();
 
-        setFloatingActionButtonAction(AddOrUpdateMedicineActivity.class);
+        setFloatingActionButtonAction(MainActivity.class);
         setFloatingActionButtonSOSAction();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -81,21 +81,21 @@ public class Constants {
     public static final String MEDICINE_EXPIRE_FACTOR_ERROR_MESSAGE = "Please enter expire factor";
     public static final String MEDICINE_FREQUENCY_ERROR_MESSAGE = "Please enter frequency";
     public static final String MEDICINE_START_TIME_ERROR_MESSAGE = "Please enter start time";
-    public static final String MEDICINE_INTERVAL_ERROR_MESSAGE =  "Please enter interval";
+    public static final String MEDICINE_INTERVAL_ERROR_MESSAGE = "Please enter interval";
     public static final String MEDICINE_CONSUME_QUALITY_LESS_THAN_QUANTITY = "Consume Quantity should be less than Quantity";
     public static final String MEDICINE_THRESHOLD_LESS_THAN_QUANTITY = "Threshold should be less than Quantity";
     public static final String MEDICINE_EXPIRE_FACTOR_LESS_THAN_24 = "Expire Factor should be less than 25";
     public static final String MEDICINE_REMINDER_CANNOT_TURN_OFF_CATEGORY = "Reminder cannot be turned off for this category of medicine";
     public static final String MEDICINE_PROPER_COMBINATION_OF_FREQUENCY_TIME_INTERVAL = "Input proper combination of Frequency,Start Time and Interval";
     public static final String MEDICINE_SHOULD_NOT_BE_USED_MORE_THAN_ONCE_AT_SAME_TIME = "Medicine already consumed at this time";
-    
+
     //Miscellaneous
     public static final int MINUTE = 60000;
     public static final int HOUR = 60;
     public static final int DAY = 24;
     public static final String ID = "id";
     public static final String COLON = ":";
-    public static final String CODE ="Code";
+    public static final String CODE = "Code";
     public static final String QUANTITY = "quantity";
     public static final String NOTIFICATION = "notification";
     public static final String FROM_DATE_AFTER_TO_DATE = "From Date cannot be less than To Date";
@@ -131,7 +131,7 @@ public class Constants {
     public static final String CLINIC = "clinic";
     public static final String APPOINTMENT_NOT_SAVED = "Appointment not inserted properly, Please try again later";
     public static final String APPOINTMENT_NOT_UPDATED = "Appointment not updated properly, Please try again later";
-    public static final String APPOINTMENT_CLASH="You already have an appointment at this slot";
+    public static final String APPOINTMENT_CLASH = "You already have an appointment at this slot";
 
 
     //Report
@@ -157,12 +157,12 @@ public class Constants {
     public static final String MEASUREMENT_NOT_SAVED = "Measurement was not inserted properly,Please try again later";
 
     //ICE
-    public static final String LIMIT_REACHED = "Maximum 5 ICEContactsManager Allowed Please delete atleast 1 existing contactManager to add new contactManager";
+    public static final String LIMIT_REACHED = "Maximum 5 Contacts Allowed";
     public static final String NO_SMS_PERMISSION = "App does not have Permission to send SMS";
     public static final String SMS_SENT = "SMS Sent";
     public static final String NO_CALL_PERMISSION = "App does not have Permission to Call";
     public static final String CALLING = "Calling";
-    public static final String FROM_POSITION = "Positions: from : ";
-    public static final String TO_POSITION = "to : ";
+    public static final String FROM_POSITION = "Priority changed from ";
+    public static final String TO_POSITION = " to ";
 
 }

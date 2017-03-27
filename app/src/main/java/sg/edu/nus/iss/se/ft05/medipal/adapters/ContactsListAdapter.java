@@ -38,7 +38,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
 
 /**
  * Class for Contact List processing
- * Created by Ashish Katre on 11/03/17.
+ * Created by Ashish Katre.
  */
 
 public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactsViewHolder> implements ItemTouchHelperAdapter {
@@ -162,7 +162,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
                     } else {
 
                         SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergancy please call immidiately", null, null);
+                        smsManager.sendTextMessage(String.valueOf(phone), null, "Sender is in emergency please call immediately", null, null);
                         Toast.makeText(context, SMS_SENT, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -250,7 +250,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
             //update the list
             swapCursor(ICEContactsManager.findAll(context));
-            if(!result)
+            if (!result)
                 Toast.makeText(context, R.string.delete_success, Toast.LENGTH_SHORT).show();
         }
     }
@@ -354,7 +354,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
      */
     public boolean onItemMove(int fromPosition, int toPosition) {
 
-        Toast.makeText(context, FROM_POSITION + fromPosition + TO_POSITION + toPosition, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, FROM_POSITION + (fromPosition + 1) + TO_POSITION + (toPosition + 1), Toast.LENGTH_SHORT).show();
 
 
         ICEContactsDAOImpl iceContactsDAOImpl = new ICEContactsDAOImpl(context);
