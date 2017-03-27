@@ -51,7 +51,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     // Error messages
     public static final String ICE_ERROR_NAME = "Please Enter Name";
     public static final String ICE_ERROR_DESC = "Please Enter Description";
-    public static final String ICE_ERROR_PHONE = "Please enter Contact Number";
+    public static final String ICE_ERROR_PHONE = "Please enter atleast 8 digit Contact Number";
 
     // Elements of UI
     private EditText name;
@@ -65,6 +65,7 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
     private ICEContact contact;
     private ICEContactsManager newContactManager;
     public Context context;
+
     /**
      * Method to run while creating UI for addition/Edit
      *
@@ -172,12 +173,12 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected Boolean doInBackground(Void... params) {
             //context = getApplicationContext();
-            return contactManager.update(context)==-1;
+            return contactManager.update(context) == -1;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if(result){
+            if (result) {
                 Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
             } else {
                 navigateToMainAcitivity(context);
@@ -189,12 +190,12 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return newContactManager.save(context)==-1;
+            return newContactManager.save(context) == -1;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if(result){
+            if (result) {
                 Toast.makeText(context, ICE_ERROR_INSERT, Toast.LENGTH_SHORT).show();
             } else {
                 navigateToMainAcitivity(context);
@@ -227,6 +228,11 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
         }
 
         if (TextUtils.isEmpty(contactPhone)) {
+
+            phone.setError(ICE_ERROR_PHONE);
+            checkFields = false;
+
+        } else if (contactPhone.length() < 8) {
 
             phone.setError(ICE_ERROR_PHONE);
             checkFields = false;
