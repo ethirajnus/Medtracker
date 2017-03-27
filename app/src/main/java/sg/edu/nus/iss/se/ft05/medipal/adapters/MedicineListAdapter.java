@@ -1,10 +1,13 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.MedicineFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.CategoryManager;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MedicineManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
@@ -38,13 +43,15 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
     // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
+    private Activity mActivity;
     MedicineManager medicineManager;
 
     private TextView noMedicine;
     private RecyclerView medicineRecyclerView;
 
-    public MedicineListAdapter(Context context, Cursor cursor, RecyclerView medicineRecyclerView, TextView noMedicine) {
+    public MedicineListAdapter(Context context, Activity activity, Cursor cursor, RecyclerView medicineRecyclerView, TextView noMedicine) {
         this.mContext = context;
+        this.mActivity = activity;
         this.mCursor = cursor;
         this.medicineRecyclerView = medicineRecyclerView;
         this.noMedicine = noMedicine;
@@ -99,9 +106,26 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                medicineManager = new MedicineManager();
-                medicineManager.findById(mContext, id);
-                new DeleteMedicine().execute();
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(mActivity,R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        medicineManager = new MedicineManager();
+                        medicineManager.findById(mContext, id);
+                        new DeleteMedicine().execute();
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
         });
 

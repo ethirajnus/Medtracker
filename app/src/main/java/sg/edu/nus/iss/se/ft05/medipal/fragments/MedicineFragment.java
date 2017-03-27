@@ -73,7 +73,7 @@ public class MedicineFragment extends Fragment {
 
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new MedicineListAdapter(context, cursor,medicineRecyclerView,noMedicine);
+        mAdapter = new MedicineListAdapter(context, getActivity(), cursor,medicineRecyclerView,noMedicine);
 
         // Link the adapter to the RecyclerView
         medicineRecyclerView.setAdapter(mAdapter);

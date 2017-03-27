@@ -1,13 +1,16 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -23,6 +26,8 @@ import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
 import sg.edu.nus.iss.se.ft05.medipal.Util.InitialDrawable;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ReminderUtils;
 import sg.edu.nus.iss.se.ft05.medipal.activities.ShowAppointment;
+import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.AppointmentManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.activities.EditAppointment;
@@ -38,12 +43,14 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     private Cursor mCursor;
     private Context mContext;
     private AppointmentManager appointmentManager;
+    private Activity mActivity;
 
     private RecyclerView recyclerView;
     private TextView noAppointments;
 
-    public AppointmentListAdapter(Context context, Cursor cursor, RecyclerView recyclerView, TextView noAppointments) {
+    public AppointmentListAdapter(Context context, Activity activity, Cursor cursor, RecyclerView recyclerView, TextView noAppointments) {
         this.mContext = context;
+        this.mActivity = activity;
         this.mCursor = cursor;
         this.recyclerView = recyclerView;
         this.noAppointments = noAppointments;
@@ -91,11 +98,29 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                appointmentManager = new AppointmentManager();
 
-                appointmentManager.findById(mContext, id);
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(mActivity, R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        appointmentManager = new AppointmentManager();
 
-                new DeleteAppointment().execute();
+                        appointmentManager.findById(mContext, id);
+
+                        new DeleteAppointment().execute();
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
 
             }
         });

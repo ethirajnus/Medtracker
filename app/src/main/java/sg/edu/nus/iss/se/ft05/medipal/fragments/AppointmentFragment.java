@@ -68,7 +68,7 @@ public class AppointmentFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         Cursor cursor = AppointmentManager.findAll(context);
-        mAdapter = new AppointmentListAdapter(context, cursor, recyclerView, noAppointments);
+        mAdapter = new AppointmentListAdapter(context, getActivity(), cursor, recyclerView, noAppointments);
         recyclerView.setAdapter(mAdapter);
 
         checkForEmptyList();

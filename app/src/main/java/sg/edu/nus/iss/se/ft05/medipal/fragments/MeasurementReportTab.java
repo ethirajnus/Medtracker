@@ -126,7 +126,7 @@ public class MeasurementReportTab extends Fragment implements View.OnClickListen
         cursor = measurementManager.betweenDate(context, currentDate, currentDate);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new MeasurementListAdapter(context, cursor, measurementRecyclerView, noMeasurement);
+        mAdapter = new MeasurementListAdapter(context, getActivity(), cursor, measurementRecyclerView, noMeasurement);
 
         // Link the adapter to the RecyclerView
         measurementRecyclerView.setAdapter(mAdapter);

@@ -109,7 +109,7 @@ public class UnConsumedMedicineTab extends Fragment implements View.OnClickListe
         noConsumptions = (TextView) view.findViewById(R.id.tv_noConsumptions);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new ConsumptionListAdapter(context, cursor,consumptionRecyclerView,noConsumptions);
+        mAdapter = new ConsumptionListAdapter(context, getActivity(),cursor,consumptionRecyclerView,noConsumptions);
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);

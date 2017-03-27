@@ -111,7 +111,7 @@ public class ConsumptionByMedicineTab extends Fragment implements View.OnClickLi
         cursor = ConsumptionManager.findAll(context);
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new ConsumptionListAdapter(context, cursor,consumptionRecyclerView, noConsumptions);
+        mAdapter = new ConsumptionListAdapter(context, getActivity(), cursor,consumptionRecyclerView, noConsumptions);
 
         // Link the adapter to the RecyclerView
         consumptionRecyclerView.setAdapter(mAdapter);

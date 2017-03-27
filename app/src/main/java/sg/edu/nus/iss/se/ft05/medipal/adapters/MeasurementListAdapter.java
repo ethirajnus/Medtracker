@@ -1,9 +1,12 @@
 package sg.edu.nus.iss.se.ft05.medipal.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import sg.edu.nus.iss.se.ft05.medipal.constants.Constants;
+import sg.edu.nus.iss.se.ft05.medipal.fragments.MeasurementFragment;
 import sg.edu.nus.iss.se.ft05.medipal.managers.MeasurementManager;
 import sg.edu.nus.iss.se.ft05.medipal.R;
 import sg.edu.nus.iss.se.ft05.medipal.Util.ColorGenerator;
@@ -32,13 +36,15 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
 
     private Cursor mCursor;
     private Context mContext;
+    private Activity mActivity;
     MeasurementManager measurementManager;
 
     private RecyclerView measurementRecyclerView;
     private TextView noMeasurement;
 
-    public MeasurementListAdapter(Context context, Cursor cursor, RecyclerView measurementRecyclerView, TextView noMeasurement) {
+    public MeasurementListAdapter(Context context, Activity activity, Cursor cursor, RecyclerView measurementRecyclerView, TextView noMeasurement) {
         this.mContext = context;
+        this.mActivity = activity;
         this.mCursor = cursor;
         this.measurementRecyclerView = measurementRecyclerView;
         this.noMeasurement = noMeasurement;
@@ -110,10 +116,26 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                measurementManager = new MeasurementManager();
-                measurementManager.findById(mContext, id);
-
-                new DeleteMeasurement().execute();
+                AlertDialog.Builder warningDialog = new AlertDialog.Builder(mActivity,R.style.AppTheme_Dialog);
+                warningDialog.setTitle(Constants.TITLE_WARNING);
+                warningDialog.setMessage(R.string.warning_delete);
+                warningDialog.setPositiveButton(Constants.BUTTON_YES, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        //remove from DB
+                        measurementManager = new MeasurementManager();
+                        measurementManager.findById(mContext, id);
+                        new DeleteMeasurement().execute();
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.setNegativeButton(Constants.BUTTON_NO, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface alert, int which) {
+                        alert.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
         });
 

@@ -72,7 +72,7 @@ public class HealthBioFragment extends Fragment {
 
 
         // Create an adapter for that cursor to display the data
-        mAdapter = new HealthBioListAdapter(context, cursor,healthBioRecyclerView,tv_noHealthbio);
+        mAdapter = new HealthBioListAdapter(context, getActivity(), cursor,healthBioRecyclerView,tv_noHealthbio);
 
         checkForEmptyList();
         // Link the adapter to the RecyclerView
