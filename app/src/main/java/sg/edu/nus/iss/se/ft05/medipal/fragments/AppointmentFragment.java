@@ -113,7 +113,7 @@ public class AppointmentFragment extends Fragment {
                 });
                 warningDialog.show();
             }
-            // attach the ItemTouchHelper to the waitlistRecyclerView
+            // attach the ItemTouchHelper to the RecyclerView
         }).attachToRecyclerView(recyclerView);
 
 

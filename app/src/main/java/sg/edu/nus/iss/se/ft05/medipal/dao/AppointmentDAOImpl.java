@@ -213,9 +213,6 @@ public class AppointmentDAOImpl extends DBHelper implements AppointmentDAO {
             cursor.moveToFirst();
         }
 
-
-       // db.close();
-
         return cursor;
     }
 

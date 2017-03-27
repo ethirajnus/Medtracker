@@ -123,7 +123,7 @@ public class ConsumptionManager {
     }
 
     /**
-     * Lsit all consumption
+     * List all consumption
      *
      * @param context
      * @param date
@@ -376,14 +376,4 @@ public class ConsumptionManager {
         consumptionAll = new ConsumptionDAOImpl(context);
         return consumptionAll.fetchByMedicineAndBetweenDatesUnconsumed(medicineId, dateFrom, dateTo);
     }
-
-
-
-
-
-
-
-
-
-
 }

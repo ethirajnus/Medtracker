@@ -75,9 +75,7 @@ public class ReminderManager {
      * @return
      */
     public int delete(Context context) {
-
         reminderDAO = new ReminderDAOImpl(context);
         return reminderDAO.delete(this.reminder.getId());
-        // TODO Priority
     }
 }

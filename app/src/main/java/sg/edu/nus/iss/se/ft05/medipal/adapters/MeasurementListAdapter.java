@@ -38,6 +38,7 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
     private Activity mActivity;
     MeasurementManager measurementManager;
 
+
     private RecyclerView measurementRecyclerView;
     private TextView noMeasurement;
 
@@ -58,7 +59,6 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
      */
     @Override
     public MeasurementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         // Get the RecyclerView item layout
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.measurement_list_item, parent, false);
@@ -138,13 +138,10 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
             }
         });
 
-
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
-
         InitialDrawable drawable = InitialDrawable.builder().buildRound("" + id, color);
-
         holder.icon.setImageDrawable(drawable);
 
     }

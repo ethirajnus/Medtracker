@@ -35,7 +35,6 @@ import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
  */
 public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionListAdapter.ConsumptionViewHolder> {
 
-    // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
     private Activity mActivity;
@@ -92,7 +91,6 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         holder.textQuantity.setText(quantity);
         holder.itemView.setTag(id);
 
-
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +101,6 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
                 intent.putExtras(b);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
-
             }
         });
 
@@ -136,11 +133,8 @@ public class ConsumptionListAdapter extends RecyclerView.Adapter<ConsumptionList
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
-
         InitialDrawable drawable = InitialDrawable.builder().buildRound(medicineName.toUpperCase().substring(0, 1), color);
-
         holder.icon.setImageDrawable(drawable);
-
     }
 
     private class DeleteConsumption extends AsyncTask<Void, Void, Boolean> {

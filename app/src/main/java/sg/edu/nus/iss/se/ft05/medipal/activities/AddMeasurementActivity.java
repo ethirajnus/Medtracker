@@ -60,15 +60,11 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         setTitle("New Measurement");
     }
 
-    /**
-     * view
-     */
     private void setListeners() {
         saveButton.setOnClickListener(this);
     }
 
     private void findViewsById() {
-        //id = (EditText) findViewById(R.id.measurementId);
         systolic = (EditText) findViewById(R.id.measurementSystolic);
         diastolic = (EditText) findViewById(R.id.measurementDiastolic);
         pulse = (EditText) findViewById(R.id.measurementPulse);
@@ -202,7 +198,6 @@ public class AddMeasurementActivity extends AppCompatActivity implements View.On
         }
         return isValid;
     }
-
 
     private void setEmptyFieldsToZero() {
         if (TextUtils.isEmpty(systolic.getText().toString().trim()))

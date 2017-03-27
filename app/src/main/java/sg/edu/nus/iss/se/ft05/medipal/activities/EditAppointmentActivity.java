@@ -37,7 +37,6 @@ import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
  */
 public class EditAppointmentActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     private int mHour, mMinute, id;
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog fromDatePickerDialog;
@@ -83,19 +82,13 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
         clinic = (EditText) findViewById(R.id.new_appointment_clinic);
         description = (EditText) findViewById(R.id.new_appointment_description);
 
-
-
         date.setText(appointment.getDate());
         time.setText(appointment.getTime());
         clinic.setText(appointment.getClinic());
         description.setText(appointment.getDescription());
 
-
-
         findViewsById();
-
         setDateTimeField();
-
     }
 
     /**
@@ -110,12 +103,7 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
 
         else if (view == time)
             timePickerDialog.show();
-
-        /*else if(view == button)
-            editAppointment(view);*/
-
     }
-
 
     private void findViewsById() {
 
@@ -163,7 +151,6 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
                             .get(Calendar.YEAR), newCalendar
                             .get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
             }
-
         };
 
         time.setOnClickListener(this);
@@ -200,7 +187,6 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
                     }
                 }, mHour, mMinute, false);
 
-
     }
 
 
@@ -211,8 +197,6 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
          * @param view
          * @throws java.text.ParseException
          */
-
-
         boolean flag = true;
         Calendar calendar = Calendar.getInstance();
 
@@ -236,15 +220,6 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
             flag = false;
         }
 
-       /* Date d2 = calendar.getTime();
-        String secondDate = new SimpleDateFormat(DATE_FORMAT).format(d2);
-        Date d1 = new SimpleDateFormat(DATE_FORMAT).parse(date.getText().toString());
-        d2 = new SimpleDateFormat(DATE_FORMAT).parse(secondDate);
-
-        if (d1.before(d2)) {
-            date.setError(WRONG_DATE);
-            flag = false;
-        }*/
         else if (AppointmentManager.exists(context, date.getText().toString(), time.getText().toString())) {
             AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
             warningDialog.setTitle(Constants.TITLE_WARNING);
@@ -262,7 +237,6 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
         if (flag) {
 
             Appointment appointment = new Appointment();
-
             //All input fields are valid
             appointment.setDate(date.getText().toString());
             appointment.setTime(time.getText().toString());
@@ -272,12 +246,6 @@ public class EditAppointmentActivity extends AppCompatActivity implements View.O
 
             appointmentManager.setAppointment(appointment);
             new UpdateAppointment().execute();
-
-           /* if (appointmentManager.update(context) == -1) {
-                Toast.makeText(context, APPOINTMENT_NOT_UPDATED, Toast.LENGTH_SHORT).show();
-
-
-            }*/
         }
     }
     private class UpdateAppointment extends AsyncTask<Void, Void, Boolean> {

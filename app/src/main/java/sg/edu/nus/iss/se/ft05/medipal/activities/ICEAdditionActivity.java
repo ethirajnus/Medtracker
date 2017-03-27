@@ -151,8 +151,6 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
      * Processing of save or update contactManager
      */
     private void saveOrUpdateContact() {
-
-
         if (ICE_BUTTON_NEW.equalsIgnoreCase(button.getTag().toString())) {
 
             newContactManager = new ICEContactsManager(contact, this);
@@ -244,13 +242,11 @@ public class ICEAdditionActivity extends AppCompatActivity implements View.OnCli
 
                 contact = new ICEContact();
             }
-
             contact.setName(contactName);
             contact.setDescription(contactDesc);
             contact.setPhone(Long.parseLong(contactPhone));
             contact.setType(contactType);
         }
-
         return checkFields;
     }
 

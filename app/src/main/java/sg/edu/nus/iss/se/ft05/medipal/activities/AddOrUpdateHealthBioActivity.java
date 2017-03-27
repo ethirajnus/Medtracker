@@ -116,9 +116,7 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             mSaveBtn.setText(Constants.SAVE);
             setTitle(Constants.TITLE_NEW_HEALTHBIO);
         }
-
     }
-
 
     private void setListeners() {
         mSaveBtn.setOnClickListener(this);
@@ -195,12 +193,10 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
             mRadio_Allergy.setChecked(true);
     }
 
-
     private void updateSaveButton() {
         mSaveBtn.setTag(Constants.UPDATE);
         mSaveBtn.setText(Constants.UPDATE);
     }
-
 
     private void findViewsById() {
         mCondition = (EditText) findViewById(R.id.condition);
@@ -215,7 +211,6 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         mSaveBtn.setTag(Constants.NEW);
     }
 
-
     public void saveOrUpdateHealthbio() {
         String condition = mCondition.getText().toString().trim();
         String startDate = mStartDate.getText().toString();
@@ -223,15 +218,12 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
         mRadioBtn_ConditionType = (RadioButton) findViewById(selectedId);
         String conditionType = mRadioBtn_ConditionType.getTag().toString();
 
-
         Context context = getApplicationContext();
 
         if (isValid()) {
             if (mSaveBtn.getTag().toString().equalsIgnoreCase(Constants.NEW)) {
                 healthBioManager = new HealthBioManager(condition, conditionType, startDate);
-
                 new SaveHealthBio().execute();
-
             } else {
 
                 HealthBio healthBio = new HealthBio();
@@ -240,7 +232,6 @@ public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements V
                 healthBio.setStartDate(startDate);
                 healthBio.setId(healthBioManager.getHealthBio().getId());
                 healthBioManager.setHealthBio(healthBio);
-
                 new UpdateHealthBio().execute();
             }
         }

@@ -39,7 +39,6 @@ import static sg.edu.nus.iss.se.ft05.medipal.utils.Constants.*;
  */
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
 
-    // Holds on to the cursor to display the waitlist
     private Cursor mCursor;
     private Context mContext;
     private Activity mActivity;
@@ -93,7 +92,6 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
         final int id = mCursor.getInt(mCursor.getColumnIndex(DBHelper.MEDICINE_KEY_ID));
 
-
         holder.textName.setText(name);
         holder.textCategory.setText(category);
         holder.textDescription.setText(description);
@@ -101,7 +99,6 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
         holder.textDateIssued.setText(dateIssued);
         holder.textExpireFactor.setText(expireFactor);
         holder.itemView.setTag(id);
-
 
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -163,15 +160,11 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             }
         });
 
-
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
         int color = generator.getRandomColor();
-
         InitialDrawable drawable = InitialDrawable.builder().buildRound(name.toUpperCase().substring(0, 1), color);
-
         holder.icon.setImageDrawable(drawable);
-
     }
 
     private class DeleteMedicine extends AsyncTask<Void, Void, Boolean> {
