@@ -14,6 +14,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.DbConstants.*;
 
 /**
  * Implementatin class for measurement database operations
+ * @author Aakash Deep Mangalore
  */
 public class MeasurementDAOImpl extends DBHelper implements MeasurementDAO {
 

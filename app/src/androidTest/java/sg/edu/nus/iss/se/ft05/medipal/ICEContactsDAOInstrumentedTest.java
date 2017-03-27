@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Class for ICE contacts database operations instrumented test
+ * @author Ashish Katre
  */
 @RunWith(AndroidJUnit4.class)
 public class ICEContactsDAOInstrumentedTest {

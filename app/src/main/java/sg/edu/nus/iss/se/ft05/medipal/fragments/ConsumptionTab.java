@@ -22,6 +22,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.ConsumptionManager;
 
 /**
  * Class for consumption tab
+ * @author Dhruv Mandan Gopal
  */
 public class ConsumptionTab extends Fragment {
     private Context context;
