@@ -23,7 +23,8 @@
         android:layout_weight="1"
         android:textAllCaps="true"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorSecondaryText" />
 
 
     <ImageView
@@ -47,7 +48,8 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/categoryImageIcon"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText" />
 
     <TextView
         android:id="@+id/categoryReminderLabel"
@@ -58,7 +60,8 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/categoryCode"
         android:layout_weight="1"
-        android:text="@string/categoryReminder"/>
+        android:text="@string/categoryReminder"
+        android:textColor="@color/colorSecondaryText"/>
 
     <Switch
         android:id="@+id/categoryReminder"
@@ -82,6 +85,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/categoryImageIcon"
         android:layout_weight="1"
+        android:textColor="@color/colorSecondaryText"
 
         />
 
