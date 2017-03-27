@@ -4,6 +4,7 @@ package sg.edu.nus.iss.se.ft05.medipal.domain;
 
 /**
  * Domain class for Health bio
+ * @author Moushumi Seal
  */
 public class HealthBio {
 

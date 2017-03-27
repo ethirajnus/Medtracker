@@ -22,7 +22,7 @@
         android:layout_toRightOf="@id/measurementImageIcon"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorSecondaryText"/>
 
     <ImageView
         android:id="@+id/measurementDeleteIcon"
@@ -43,7 +43,7 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/measurementImageIcon"
         android:layout_weight="1"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:id="@+id/measurementPulse"
@@ -53,7 +53,7 @@
         android:layout_marginTop="8dp"
         android:layout_below="@+id/measurementBloodPressure"
         android:layout_weight="1"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorSecondaryText"
         android:layout_toRightOf="@id/measurementImageIcon"/>
 
     <TextView
@@ -64,7 +64,7 @@
         android:layout_below="@+id/measurementPulse"
         android:layout_weight="1"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorSecondaryText"
         android:layout_toRightOf="@id/measurementImageIcon"/>
 
     <TextView
@@ -77,7 +77,7 @@
         android:layout_weight="1"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorSecondaryText"/>
 
 
     <View

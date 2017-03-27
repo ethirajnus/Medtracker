@@ -34,6 +34,7 @@ import sg.edu.nus.iss.se.ft05.medipal.managers.PersonalBioManager;
 
 /**
  * Class for personal bio activity
+ * @author Moushumi Seal
  */
 public class PersonalBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 

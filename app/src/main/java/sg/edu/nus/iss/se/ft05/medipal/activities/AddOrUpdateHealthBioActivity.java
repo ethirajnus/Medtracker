@@ -39,6 +39,7 @@ import static sg.edu.nus.iss.se.ft05.medipal.constants.Constants.CONSUMPTION_NOT
 
 /**
  * Class for add /update health bio activity
+ * @author Moushumi Seal
  */
 public class AddOrUpdateHealthBioActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 

@@ -13,6 +13,7 @@ import sg.edu.nus.iss.se.ft05.medipal.domain.PersonalBio;
 
 /**
  * Implementation class for personal bio database operations
+ * @author Moushumi Seal
  */
 public class PersonalBioDAOImpl extends DBHelper implements PersonalBioDAO {
 
