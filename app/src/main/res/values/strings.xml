@@ -189,7 +189,7 @@
 
     <!-- About page -->
     <string name="aboutApp">\"The MediPal Application helps you track and record your health statistics and manage medications.\"</string>
-    <string name="createdBy">Credits: <b>Team FT05</b></string>
+    <string name="createdBy">Credits</string>
     <string name="aakash">Aakash Deep Mangalore</string>
     <string name="abinaya">Abinaya Devrasu</string>
     <string name="ashish">Ashish Shrikant Katre</string>
