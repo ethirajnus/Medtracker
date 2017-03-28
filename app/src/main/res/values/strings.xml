@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MediPal</string>
+    <string name="app_name">MedTracker</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -188,7 +188,7 @@
     <string name="exitIcon">Exit</string>
 
     <!-- About page -->
-    <string name="aboutApp">\"The MediPal Application helps you track and record your health statistics and manage medications.\"</string>
+    <string name="aboutApp">\"The MedTracker Application helps you track and record your health statistics and manage medications.\"</string>
     <string name="createdBy">Credits</string>
     <string name="aakash">Aakash Deep Mangalore</string>
     <string name="abinaya">Abinaya Devrasu</string>

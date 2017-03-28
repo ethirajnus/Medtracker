@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:orientation="vertical"
-        tools:context="com.ethigeek.medipal.fragments.HelpFragment">
+        tools:context="com.ethigeek.medtracker.fragments.HelpFragment">
 
         <TextView
             android:layout_width="match_parent"

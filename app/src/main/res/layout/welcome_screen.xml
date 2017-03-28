@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/icon" />
 
     <TextView
-        android:id="@+id/tv_medipal"
+        android:id="@+id/tv_medtracker"
         android:layout_width="match_parent"
         android:layout_height="138dp"
         android:fontFamily="sans-serif"

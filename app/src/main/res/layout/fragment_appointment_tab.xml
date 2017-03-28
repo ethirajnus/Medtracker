@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    tools:context="com.ethigeek.medipal.fragments.AppointmentTab">
+    tools:context="com.ethigeek.medtracker.fragments.AppointmentTab">
 
     <TextView
         android:id="@+id/tv_noAppointments"

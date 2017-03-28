@@ -13,7 +13,7 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:orientation="vertical"
-        tools:context="com.ethigeek.medipal.fragments.AboutFragment">
+        tools:context="com.ethigeek.medtracker.fragments.AboutFragment">
 
 
         <ImageView
@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/icon" />
 
         <TextView
-            android:id="@+id/tv_medipal"
+            android:id="@+id/tv_medtracker"
             android:layout_width="match_parent"
             android:layout_height="96dp"
             android:fontFamily="sans-serif"

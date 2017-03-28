@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ethigeek.medipal.activities.AddOrUpdateCategoryActivity"
+    tools:context="com.ethigeek.medtracker.activities.AddOrUpdateCategoryActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -28,7 +28,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            tools:context="com.ethigeek.medipal.activities.AddNewAppointmentActivity">
+            tools:context="com.ethigeek.medtracker.activities.AddNewAppointmentActivity">
 
 
             <TextView
