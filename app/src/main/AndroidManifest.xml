@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sg.edu.nus.iss.se.ft05.medipal">
+    package="com.ethigeek.medipal">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -15,7 +15,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.ethigeek.medipal.activities.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,70 +24,70 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.ethigeek.medipal.activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activities.AddOrUpdateMedicineActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:name="com.ethigeek.medipal.activities.AddOrUpdateMedicineActivity"
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
 
         <activity
-            android:name=".activities.AddNewAppointmentActivity"
+            android:name="com.ethigeek.medipal.activities.AddNewAppointmentActivity"
             android:label="New Appointment"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
         <activity
-            android:name=".activities.EditAppointmentActivity"
+            android:name="com.ethigeek.medipal.activities.EditAppointmentActivity"
             android:label="Edit Appointment Details"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
         <activity
-            android:name=".activities.ShowAppointmentActivity"
+            android:name="com.ethigeek.medipal.activities.ShowAppointmentActivity"
             android:label="Appointment Information"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
         <activity
-            android:name=".activities.PersonalBioActivity"
+            android:name="com.ethigeek.medipal.activities.PersonalBioActivity"
             android:label="@string/title_activity_add_personalBio"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.AddOrUpdateCategoryActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:name="com.ethigeek.medipal.activities.AddOrUpdateCategoryActivity"
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
         <activity
-            android:name=".activities.ShowMedicineActivity"
-            android:parentActivityName=".activities.MainActivity">
+            android:name="com.ethigeek.medipal.activities.ShowMedicineActivity"
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity">
         </activity>
         <activity
-            android:name=".activities.AddMeasurementActivity"
+            android:name="com.ethigeek.medipal.activities.AddMeasurementActivity"
             android:label="@string/title_activity_add_measurement"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
 
         <service
-            android:name=".utils.MedicineReminderJobService"
+            android:name="com.ethigeek.medipal.utils.MedicineReminderJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".utils.MedicineConsumptionReminderJobService"
+            android:name="com.ethigeek.medipal.utils.MedicineConsumptionReminderJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".utils.AppointmentReminderJobService"
+            android:name="com.ethigeek.medipal.utils.AppointmentReminderJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".utils.AppointmentReminderNotificationJobService"
+            android:name="com.ethigeek.medipal.utils.AppointmentReminderNotificationJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
-            android:name=".activities.AddOrUpdateHealthBioActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:name="com.ethigeek.medipal.activities.AddOrUpdateHealthBioActivity"
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
         <activity
-            android:name=".activities.AddOrUpdateConsumptionActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:name="com.ethigeek.medipal.activities.AddOrUpdateConsumptionActivity"
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
         <activity
-            android:name=".activities.ICEAdditionActivity"
-            android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.HelpActivity"
+            android:name="com.ethigeek.medipal.activities.ICEAdditionActivity"
+            android:parentActivityName="com.ethigeek.medipal.activities.MainActivity" />
+        <activity android:name="com.ethigeek.medipal.activities.HelpActivity"
             android:theme="@style/AppTheme.Help"/>
     </application>
 

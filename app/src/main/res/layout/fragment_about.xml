@@ -13,7 +13,7 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:orientation="vertical"
-        tools:context="sg.edu.nus.iss.se.ft05.medipal.fragments.AboutFragment">
+        tools:context="com.ethigeek.medipal.fragments.AboutFragment">
 
 
         <ImageView

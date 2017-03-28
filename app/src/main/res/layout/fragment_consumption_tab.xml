@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.edu.nus.iss.se.ft05.medipal.fragments.ConsumptionTab">
+    tools:context="com.ethigeek.medipal.fragments.ConsumptionTab">
     <TextView
         android:id="@+id/tv_noConsumptions"
         android:layout_width="match_parent"

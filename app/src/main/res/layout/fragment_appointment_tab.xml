@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    tools:context="sg.edu.nus.iss.se.ft05.medipal.fragments.AppointmentTab">
+    tools:context="com.ethigeek.medipal.fragments.AppointmentTab">
 
     <TextView
         android:id="@+id/tv_noAppointments"

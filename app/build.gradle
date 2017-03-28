@@ -5,7 +5,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "sg.edu.nus.iss.se.ft05.medipal"
+        applicationId "com.ethigeek.medipal"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
